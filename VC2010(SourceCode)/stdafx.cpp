@@ -1,11 +1,11 @@
-
-// stdafx.cpp : •W€ƒCƒ“ƒNƒ‹[ƒh FileListCreator.pch ‚Ì‚İ‚ğ
-// ŠÜ‚Şƒ\[ƒX ƒtƒ@ƒCƒ‹‚ÍAƒvƒŠƒRƒ“ƒpƒCƒ‹Ï‚İƒwƒbƒ_[‚É‚È‚è‚Ü‚·B
-// stdafx.obj ‚É‚ÍƒvƒŠƒRƒ“ƒpƒCƒ‹‚³‚ê‚½Œ^î•ñ‚ªŠÜ‚Ü‚ê‚Ü‚·B
+ï»¿
+// stdafx.cpp : æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ FileListCreator.pch ã®ã¿ã‚’
+// å«ã‚€ã‚½ãƒ¼ã‚¹ ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€ãƒ—ãƒªã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿ãƒ˜ãƒƒãƒ€ãƒ¼ã«ãªã‚Šã¾ã™ã€‚
+// stdafx.obj ã«ã¯ãƒ—ãƒªã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã•ã‚ŒãŸå‹æƒ…å ±ãŒå«ã¾ã‚Œã¾ã™ã€‚
 
 #include "stdafx.h"
 
-////’Ç‰Á
+////è¿½åŠ 
 #ifdef _UNICODE
 #if defined _M_IX86
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")

@@ -1,26 +1,26 @@
-#pragma once
+Ôªø#pragma once
 #include "afxwin.h"
 
 
-// ReplaceDlg É_ÉCÉAÉçÉO
+// ReplaceDlg „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class ReplaceDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(ReplaceDlg)
 
 public:
-	ReplaceDlg(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	ReplaceDlg(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~ReplaceDlg();
 
-	virtual BOOL OnInitDialog();//Tí«â¡
+	virtual BOOL OnInitDialog();//TËøΩÂä†
 
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_Replace };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 	
-	virtual BOOL PreTranslateMessage(MSG* pMsg); //í«â¡2011.10.14
+	virtual BOOL PreTranslateMessage(MSG* pMsg); //ËøΩÂä†2011.10.14
 	DECLARE_MESSAGE_MAP()
 public:
 	CComboBox m_xcCombo_SearchBOX;

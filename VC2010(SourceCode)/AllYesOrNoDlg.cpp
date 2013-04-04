@@ -1,4 +1,4 @@
-// AllYesOrNoDlg.cpp : ŽÀ‘•ƒtƒ@ƒCƒ‹
+ï»¿// AllYesOrNoDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 
 
-// AllYesOrNoDlg ƒ_ƒCƒAƒƒO
+// AllYesOrNoDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(AllYesOrNoDlg, CDialogEx)
 
@@ -31,4 +31,4 @@ BEGIN_MESSAGE_MAP(AllYesOrNoDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// AllYesOrNoDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// AllYesOrNoDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼

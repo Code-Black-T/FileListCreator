@@ -1,21 +1,21 @@
-#pragma once
+Ôªø#pragma once
 
 
-// AllYesOrNoDlg É_ÉCÉAÉçÉO
+// AllYesOrNoDlg „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class AllYesOrNoDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(AllYesOrNoDlg)
 
 public:
-	AllYesOrNoDlg(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	AllYesOrNoDlg(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~AllYesOrNoDlg();
 
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_AllYesOrNo };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 
 	DECLARE_MESSAGE_MAP()
 };

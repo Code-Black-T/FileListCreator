@@ -1,18 +1,18 @@
-// InputBoxDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿// InputBoxDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
 #include "FileListCreator.h"
 
-//’Ç‰Á¥
+//è¿½åŠ â–¼
 #include "FileListCreatorDlg.h"
-//’Ç‰Á£
+//è¿½åŠ â–²
 
 #include "InputBoxDlg.h"
 #include "afxdialogex.h"
 
 
-// InputBoxDlg ƒ_ƒCƒAƒƒO
+// InputBoxDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(InputBoxDlg, CDialogEx)
 
@@ -45,7 +45,7 @@ BEGIN_MESSAGE_MAP(InputBoxDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// InputBoxDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// InputBoxDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 BOOL InputBoxDlg::OnInitDialog()
 {
@@ -62,7 +62,7 @@ BOOL InputBoxDlg::OnInitDialog()
 
 	InputBoxDlg::m_xcCombo_For_X.InsertString(-1,_T(" [DEL] "));
 
-	TCHAR c = _T('A'); //’Ç‰Á 2012.12.01
+	TCHAR c = _T('A'); //è¿½åŠ  2012.12.01
 
     while (c <= _T('Z')){
 		CString tempStr;
@@ -84,7 +84,7 @@ BOOL InputBoxDlg::OnInitDialog()
 		CString FileNameStr;
 		FileNameStr = _T("LIST_")+ KeepTime;
 
-		KeepFileNameStr = FileNameStr; //’Ç‰Á 2012.12.01
+		KeepFileNameStr = FileNameStr; //è¿½åŠ  2012.12.01
 
 		m_xcCombo_InputFileName.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(FileNameStr)));
 	//	break;
@@ -109,7 +109,7 @@ void InputBoxDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= InputBoxDlg::m_xcCombo_InputFileName.GetCount() -1){
 				CString ComboText;
-				InputBoxDlg::m_xcCombo_InputFileName.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				InputBoxDlg::m_xcCombo_InputFileName.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					InputBoxDlg::m_xcCombo_InputFileName.SetCurSel(k);
@@ -153,7 +153,7 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= InputBoxDlg::m_xcCombo_InputFileName.GetCount() -1){
 			CString ComboText;
-			InputBoxDlg::m_xcCombo_InputFileName.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			InputBoxDlg::m_xcCombo_InputFileName.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData1 = WriteData1 + ComboText + _T("\n");
 			}
@@ -164,10 +164,10 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	CString       wstr, rstr;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -175,7 +175,7 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -198,7 +198,7 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//http://www.g-ishihara.com/mfc_fi_01.htm
 		if (mySwitch == _T("read")){
 
-			if ( PathFileExists( CurDir + _T("\\InputFileName.dat") ) ){ //’Ç‰Á 2012.06.15
+			if ( PathFileExists( CurDir + _T("\\InputFileName.dat") ) ){ //è¿½åŠ  2012.06.15
 
 				FILE *fp;
 				_tfopen_s(&fp,CurDir + _T("\\InputFileName.dat"), _T("r, ccs=UNICODE"));
@@ -217,7 +217,7 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 				}
 				InputBoxDlg::m_xcCombo_InputFileName.SetCurSel(0);
 
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				stdFile1.Close();
 				fclose(fp);
 			}
@@ -236,7 +236,7 @@ void InputBoxDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 void InputBoxDlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 
 	//CString EditData;
@@ -251,21 +251,21 @@ void InputBoxDlg::OnBnClickedOk()
 
 void InputBoxDlg::OnBnClickedBtnFilenameClear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	m_xcCombo_InputFileName.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 }
 
 
 void InputBoxDlg::OnBnClickedBtnAlbumlist()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CString EditData = _T("");
 	InputBoxDlg::m_xcCombo_InputFileName.GetWindowText(EditData);
 
 	CString KeepData = EditData;
 
-	if(EditData == KeepFileNameStr) EditData = _T(""); //’Ç‰Á 2012.12.01
+	if(EditData == KeepFileNameStr) EditData = _T(""); //è¿½åŠ  2012.12.01
 
 	static int AlbumSwitch=1;
 
@@ -323,7 +323,7 @@ void InputBoxDlg::OnBnClickedBtnAlbumlist()
 			}
 			break;
 		default:
-			MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+			MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 			break;
 	}
 
@@ -338,13 +338,13 @@ void InputBoxDlg::OnBnClickedBtnAlbumlist()
 
 void InputBoxDlg::OnBnClickedBtnSinglelist()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CString EditData = _T("");
 	InputBoxDlg::m_xcCombo_InputFileName.GetWindowText(EditData);
 
 	CString KeepData = EditData;
 
-	if(EditData == KeepFileNameStr) EditData = _T(""); //’Ç‰Á 2012.12.01
+	if(EditData == KeepFileNameStr) EditData = _T(""); //è¿½åŠ  2012.12.01
 
 	static int SingleSwitch=1;
 
@@ -404,7 +404,7 @@ void InputBoxDlg::OnBnClickedBtnSinglelist()
 			}
 			break;
 		default:
-			MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+			MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 			break;
 	}
 
@@ -419,13 +419,13 @@ void InputBoxDlg::OnBnClickedBtnSinglelist()
 
 void InputBoxDlg::OnBnClickedBtntoday()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CString EditData;
 	InputBoxDlg::m_xcCombo_InputFileName.GetWindowText(EditData);
 
 	CString KeepData = EditData;
 
-	if(EditData == KeepFileNameStr) EditData = _T(""); //’Ç‰Á 2012.12.01
+	if(EditData == KeepFileNameStr) EditData = _T(""); //è¿½åŠ  2012.12.01
 
 	static int KeepTimeSwitch=1;
 
@@ -471,7 +471,7 @@ void InputBoxDlg::OnBnClickedBtntoday()
 			}
 			break;
 		default:
-			MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+			MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 			break;
 	}
 
@@ -486,7 +486,7 @@ void InputBoxDlg::OnBnClickedBtntoday()
 
 void InputBoxDlg::OnBnClickedBtnLastimportname()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -497,9 +497,9 @@ void InputBoxDlg::OnBnClickedBtnLastimportname()
 	m_Dlg->LastImportFileName = m_Dlg->FullPathToFileName(m_Dlg->LastImportFileName);
 
 	if(m_Dlg->LastImportFileName == _T("")){
-		MessageBox(_T("‹N“®‚µ‚Ä‚©‚ç‚P‚Â‚àƒŠƒXƒgƒtƒ@ƒCƒ‹‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚Ü‚¹‚ñB\r\niÅŒã‚ÉƒCƒ“ƒ|[ƒg‚µ‚½ƒtƒ@ƒCƒ‹–¼‚ğ‘}“ü‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·j") ,_T("ƒCƒ“ƒ|[ƒg–¢Às"), MB_OK );
+		MessageBox(_T("èµ·å‹•ã—ã¦ã‹ã‚‰ï¼‘ã¤ã‚‚ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\r\nï¼ˆæœ€å¾Œã«ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸãƒ•ã‚¡ã‚¤ãƒ«åã‚’æŒ¿å…¥ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ï¼‰") ,_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆæœªå®Ÿè¡Œ"), MB_OK );
 	}else{
-		// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+		// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 		CString EditData = _T("");
 		InputBoxDlg::m_xcCombo_InputFileName.GetWindowText(EditData);
 
@@ -511,7 +511,7 @@ void InputBoxDlg::OnBnClickedBtnLastimportname()
 
 		if(EditData.Find(EditData2,0)>=0){
 			//EditData.Replace(EditData2,_T(""));
-			EditData = _T(""); //’Ç‰Á 2012.12.01
+			EditData = _T(""); //è¿½åŠ  2012.12.01
 		}else{
 			EditData = EditData2;
 		}
@@ -520,9 +520,9 @@ void InputBoxDlg::OnBnClickedBtnLastimportname()
 }
 
 
-void InputBoxDlg::OnCbnSelchangeComboForX() //’Ç‰Á 2012.12.01
+void InputBoxDlg::OnCbnSelchangeComboForX() //è¿½åŠ  2012.12.01
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CString	EditData;
 	InputBoxDlg::m_xcCombo_InputFileName.GetWindowText(EditData);
 
@@ -550,13 +550,13 @@ void InputBoxDlg::OnCbnSelchangeComboForX() //’Ç‰Á 2012.12.01
 	
 }
 
-int InputBoxDlg::StrMatchMBS( const TCHAR *Ptn, const TCHAR *Str ){ //’Ç‰Á 2012.12.01
+int InputBoxDlg::StrMatchMBS( const TCHAR *Ptn, const TCHAR *Str ){ //è¿½åŠ  2012.12.01
 
-	//const char *Ptn cƒƒCƒ‹ƒhƒJ[ƒh•t‚«•¶š—ñ
-	//const char *Str cŒŸõ‘ÎÛ
-	//–ß‚è’l@c‚P^‚OF^^‹U
+	//const char *Ptn â€¦ãƒ¯ã‚¤ãƒ«ãƒ‰ã‚«ãƒ¼ãƒ‰ä»˜ãæ–‡å­—åˆ—
+	//const char *Str â€¦æ¤œç´¢å¯¾è±¡
+	//æˆ»ã‚Šå€¤ã€€â€¦ï¼‘ï¼ï¼ï¼šçœŸï¼å½
 
-	//_mbsinc()‚ğ_tcsinc()‚É _mbsnextc()‚ğ_tcsnextc()‚ÉA•ÏX 2011.09.09
+	//_mbsinc()ã‚’_tcsinc()ã« _mbsnextc()ã‚’_tcsnextc()ã«ã€å¤‰æ›´ 2011.09.09
 
 	switch( *Ptn )
 	{

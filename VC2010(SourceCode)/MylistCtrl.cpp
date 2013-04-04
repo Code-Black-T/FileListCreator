@@ -1,17 +1,17 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 
 
-//í«â¡Å•
+//ËøΩÂä†‚ñº
 #include "FileListCreator.h"
 
 #include "FileListCreatorDlg.h"
 
-#include <ctype.h>//í«â¡
-#include "afxwin.h"//í«â¡
+#include <ctype.h>//ËøΩÂä†
+#include "afxwin.h"//ËøΩÂä†
 
 #include "FileSpecsDlg.h"
 #include "afxdialogex.h"
-//í«â¡Å£
+//ËøΩÂä†‚ñ≤
 
 #include "MylistCtrl.h"
 
@@ -26,28 +26,28 @@ CMylistCtrl::~CMylistCtrl(void)
 }
 
 
-//static HFONT CreateMyFont(int nBold)//í«â¡ 2011.05.13
+//static HFONT CreateMyFont(int nBold)//ËøΩÂä† 2011.05.13
 // {
-//	//ÉfÉBÉtÉHÉãÉgÉtÉHÉìÉgÇÉQÉbÉgÇ∑ÇÈ
+//	//„Éá„Ç£„Éï„Ç©„É´„Éà„Éï„Ç©„É≥„Éà„Çí„Ç≤„ÉÉ„Éà„Åô„Çã
 // HFONT hFontDef = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 //
-//	//ÉtÉHÉìÉgÇÃè⁄ç◊ÇéÛÇØéÊÇÈç\ë¢ëÃÉoÉbÉtÉ@
+//	//„Éï„Ç©„É≥„Éà„ÅÆË©≥Á¥∞„ÇíÂèó„ÅëÂèñ„ÇãÊßãÈÄ†‰Ωì„Éê„ÉÉ„Éï„Ç°
 // LOGFONT lf;
 //
-//	//ÉtÉHÉìÉgÉnÉìÉhÉãÇ©ÇÁè⁄ç◊ÇéÛÇØéÊÇÈ
+//	//„Éï„Ç©„É≥„Éà„Éè„É≥„Éâ„É´„Åã„ÇâË©≥Á¥∞„ÇíÂèó„ÅëÂèñ„Çã
 // GetObject(hFontDef, sizeof(lf), &lf);
 //
-// //Ç±ÇÃÉÅÉìÉoÇ…ÉtÉHÉìÉgÇÃëæÇ≥Çê›íËÇ∑ÇÈ
+// //„Åì„ÅÆ„É°„É≥„Éê„Å´„Éï„Ç©„É≥„Éà„ÅÆÂ§™„Åï„ÇíË®≠ÂÆö„Åô„Çã
 // lf.lfWeight = nBold;
 //
-// //ÉtÉHÉìÉgÇÃçÏê¨
+// //„Éï„Ç©„É≥„Éà„ÅÆ‰ΩúÊàê
 // return CreateFontIndirect(&lf);
 // }
 
 void CMylistCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct){
 
-	// TODO:  éwíËÇ≥ÇÍÇΩçÄñ⁄Çï`âÊÇ∑ÇÈÇΩÇﬂÇÃÉRÅ[ÉhÇí«â¡ÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
-	//í«â¡ 2011.05.13
+	// TODO:  ÊåáÂÆö„Åï„Çå„ÅüÈ†ÖÁõÆ„ÇíÊèèÁîª„Åô„Çã„Åü„ÇÅ„ÅÆ„Ç≥„Éº„Éâ„ÇíËøΩÂä†„Åó„Å¶„Åè„Å†„Åï„ÅÑ„ÄÇ
+	//ËøΩÂä† 2011.05.13
 
 
 	//http://rararahp.cool.ne.jp/cgi-bin/lng/vc/vclng.cgi?print+201103/11030005.txt
@@ -62,7 +62,7 @@ void CMylistCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct){
 		return;
 	}
 
-	//Åöhttp://dejibouzu.com/page/2/Å@Å•
+	//‚òÖhttp://dejibouzu.com/page/2/„ÄÄ‚ñº
 
 
 	CDC*		pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
@@ -78,42 +78,42 @@ void CMylistCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct){
 	CHeaderCtrl *Head = GetHeaderCtrl();
 	int			nMax = Head->GetItemCount();
 
-	//èëéÆèÓïÒ
+	//Êõ∏ÂºèÊÉÖÂ†±
 	CString FormatDataStr;
 
 	while( nMax > nCnt )
 	{
 		nIndentPix = 0;
 
-		//ÉAÉCÉeÉÄéÊìæÇÃÇΩÇﬂÇÃê›íË
+		//„Ç¢„Ç§„ÉÜ„É†ÂèñÂæó„ÅÆ„Åü„ÇÅ„ÅÆË®≠ÂÆö
 		LVITEM lvItem;
-		lvItem.mask			= LVIF_TEXT | LVIF_IMAGE | LVIF_STATE | LVIF_INDENT; //í«â¡ 2012.05.16 LVCF_SUBITEMí«â¡ ;//í«â¡ÇµÇƒÇ‡à”ñ°Ç™Ç»Ç©Ç¡ÇΩ2011.05.14	| LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES;
+		lvItem.mask			= LVIF_TEXT | LVIF_IMAGE | LVIF_STATE | LVIF_INDENT; //ËøΩÂä† 2012.05.16 LVCF_SUBITEMËøΩÂä† ;//ËøΩÂä†„Åó„Å¶„ÇÇÊÑèÂë≥„Åå„Å™„Åã„Å£„Åü2011.05.14	| LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES;
 		lvItem.iItem		= nItem;
 		lvItem.iSubItem		= nCnt;
 		lvItem.pszText		= szBuff;
 		lvItem.cchTextMax	= sizeof(szBuff);
-		lvItem.stateMask	= LVIS_FOCUSED | LVIS_SELECTED;//-1Ç LVIS_SELECTEDÇ…ïœçX2011.05.14
+		lvItem.stateMask	= LVIS_FOCUSED | LVIS_SELECTED;//-1„Çí LVIS_SELECTED„Å´Â§âÊõ¥2011.05.14
 
 		//m_Dlg->m_xcList.SetExtendedStyle(LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
 		if( m_Dlg->m_xcList.GetItem(&lvItem) == TRUE ){
 			if( nCnt == 0){
-				//ÉAÉCÉeÉÄÇÃèÍçá
+				//„Ç¢„Ç§„ÉÜ„É†„ÅÆÂ†¥Âêà
 				m_Dlg->m_xcList.GetItemRect( nItem, &nRect, LVIR_BOUNDS);
 				//m_Dlg->m_xcList.SetItemData(nItem,11);
 			}else{
-				//ÉTÉuÉAÉCÉeÉÄÇÃèÍçá
+				//„Çµ„Éñ„Ç¢„Ç§„ÉÜ„É†„ÅÆÂ†¥Âêà
 				m_Dlg->m_xcList.GetSubItemRect( nItem, nCnt, LVIR_BOUNDS, nRect);
 			}
 
 			//if ( m_phbrBkColor ){
-				//ÉJÉâÅ[ÉeÅ[ÉuÉãÇ…ÉuÉâÉVÇ™çÏê¨Ç≥ÇÍÇƒÇ¢ÇÈÇ»ÇÁîwåiÇï`âÊ
+				//„Ç´„É©„Éº„ÉÜ„Éº„Éñ„É´„Å´„Éñ„É©„Ç∑„Åå‰ΩúÊàê„Åï„Çå„Å¶„ÅÑ„Çã„Å™„ÇâËÉåÊôØ„ÇíÊèèÁîª
 				//if ( m_phbrBkColor[ nCnt * GetItemCount()  + nItem] )
 				//{
-					//ÉAÉCÉeÉÄÇÃèÍçá ï`âÊâ”èäÇÉAÉCÉeÉÄïîï™ÇÃÇ›Ç…èCê≥
+					//„Ç¢„Ç§„ÉÜ„É†„ÅÆÂ†¥Âêà ÊèèÁîªÁÆáÊâÄ„Çí„Ç¢„Ç§„ÉÜ„É†ÈÉ®ÂàÜ„ÅÆ„Åø„Å´‰øÆÊ≠£
 					if( nCnt == 0 ){
 						nRect.right = m_Dlg->m_xcList.GetColumnWidth( 0 );
-					//}else if ( nCnt == 3 || nCnt == 8) { //í«â¡ 2011.10.09
+					//}else if ( nCnt == 3 || nCnt == 8) { //ËøΩÂä† 2011.10.09
 					//	nRect.right = m_Dlg->m_xcList.GetColumnWidth( nCnt );
 					}
 					//FillRect( pDC->m_hDC, &nRect, m_phbrBkColor[ nCnt * GetItemCount()  + nItem ] );
@@ -124,13 +124,13 @@ void CMylistCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct){
 //http://oshiete.goo.ne.jp/qa/6645218.html
 //http://www.tcn.zaq.ne.jp/zxcvbnm/projectc/vcpp/colortextcombo.htm
 
-//===============ã≥Ç¶Çƒí∏Ç¢ÇΩïîï™=======================
+//===============Êïô„Åà„Å¶È†Ç„ÅÑ„ÅüÈÉ®ÂàÜ=======================
 
 CFont fontBold, *pfontOld;
  LOGFONT lf;
   pDC->GetCurrentFont()->GetLogFont(&lf);
-    // ï`âÊìÆçÏÇ™ëSëÃÇÃçƒï`âÊÇ‡ÇµÇ≠ÇÕÅA
-    // ëIëèÛë‘Ç™ïœâªÇµÇΩèÍçá
+    // ÊèèÁîªÂãï‰Ωú„ÅåÂÖ®‰Ωì„ÅÆÂÜçÊèèÁîª„ÇÇ„Åó„Åè„ÅØ„ÄÅ
+    // ÈÅ∏ÊäûÁä∂ÊÖã„ÅåÂ§âÂåñ„Åó„ÅüÂ†¥Âêà
   
   //http://lhsp.s206.xrea.com/misc/ownerdraw.html
   //http://msdn.microsoft.com/ja-jp/library/92fhtw0f(v=VS.100).aspx
@@ -138,10 +138,10 @@ CFont fontBold, *pfontOld;
 
 
 		if( lpDrawItemStruct->itemAction & ( ODA_DRAWENTIRE | ODA_SELECT )) {
-				// ÉRÉìÉgÉçÅ[ÉãÇÃèÛë‘Ç™ëIëÇ≥ÇÍÇΩèÛë‘ÇÃèÍçá
+				// „Ç≥„É≥„Éà„É≠„Éº„É´„ÅÆÁä∂ÊÖã„ÅåÈÅ∏Êäû„Åï„Çå„ÅüÁä∂ÊÖã„ÅÆÂ†¥Âêà
 
 			if( lpDrawItemStruct->itemState & ODS_SELECTED ){
-					 // ëIëÇ≥ÇÍÇƒÇ¢ÇÈèÍçáÇÃï`âÊ
+					 // ÈÅ∏Êäû„Åï„Çå„Å¶„ÅÑ„ÇãÂ†¥Âêà„ÅÆÊèèÁîª
 
 				int FormatDataNum;
 
@@ -164,13 +164,13 @@ CFont fontBold, *pfontOld;
 					if(FormatDataNum == 21){
 						//FormatDataStr = _T("NORMAL,RED,");
 						lf.lfWeight = FW_NORMAL;
-						pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+						pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 					}
 
 					if(FormatDataNum == 22){
 						//FormatDataStr = _T("BOLD,RED,");
 						lf.lfWeight = FW_BOLD;
-						pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+						pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 					}
 
 					UpdateData(FALSE);
@@ -181,7 +181,7 @@ CFont fontBold, *pfontOld;
 						if(lf.lfWeight == FW_BOLD){
 							if(m_Dlg->m_xcList.GetSelectedCount()==1){
 								if (m_Dlg->SelectALLFLG  == FALSE ){
-								//if(m_Dlg->NotInversion == FALSE){ //ÉtÉ@ÉCÉãñºÅEîıçlóìÇï“èWÇ∑ÇÈéûÇÕÅAîΩì]ÇµÇ»Ç¢
+								//if(m_Dlg->NotInversion == FALSE){ //„Éï„Ç°„Ç§„É´Âêç„ÉªÂÇôËÄÉÊ¨Ñ„ÇíÁ∑®ÈõÜ„Åô„ÇãÊôÇ„ÅØ„ÄÅÂèçËª¢„Åó„Å™„ÅÑ
 									lf.lfWeight = FW_NORMAL;
 								//}
 								}
@@ -190,43 +190,43 @@ CFont fontBold, *pfontOld;
 							lf.lfWeight = FW_BOLD;
 						}
 
-						m_Dlg->m_xcList.SetItemState(nItem,     // ÉtÉHÅ[ÉJÉXÅïëIëèÛë‘Ç…ÇµÇΩÇ¢ÉAÉCÉeÉÄÇÃÉCÉìÉfÉbÉNÉX
-						!LVIS_FOCUSED | !LVIS_SELECTED,    // èÛë‘
-						LVIS_FOCUSED | LVIS_SELECTED);    // É}ÉXÉN
+						m_Dlg->m_xcList.SetItemState(nItem,     // „Éï„Ç©„Éº„Ç´„ÇπÔºÜÈÅ∏ÊäûÁä∂ÊÖã„Å´„Åó„Åü„ÅÑ„Ç¢„Ç§„ÉÜ„É†„ÅÆ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ
+						!LVIS_FOCUSED | !LVIS_SELECTED,    // Áä∂ÊÖã
+						LVIS_FOCUSED | LVIS_SELECTED);    // „Éû„Çπ„ÇØ
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//í«â¡ 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//ËøΩÂä† 2012.05.13
 
-						if (m_Dlg->ListDataNoChange_FLG == FALSE){  //í«â¡ 2012.05.13
+						if (m_Dlg->ListDataNoChange_FLG == FALSE){  //ËøΩÂä† 2012.05.13
 							m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 						}
 					}
 				}
 
-				//pDC->FillSolidRect(&lpDrawItemStruct->rcItem,RGB(0,0,255));/*ï∂éöÇÃå„ÇÎÇÃêFÅiîwåiÇ∆àÍèèÇ…ÇµÇ∆Ç≠Ç◊Ç´Åj*/
+				//pDC->FillSolidRect(&lpDrawItemStruct->rcItem,RGB(0,0,255));/*ÊñáÂ≠ó„ÅÆÂæå„Çç„ÅÆËâ≤ÔºàËÉåÊôØ„Å®‰∏ÄÁ∑í„Å´„Åó„Å®„Åè„Åπ„ÅçÔºâ*/
 				pDC->SetBkMode(OPAQUE);
-				pDC->SetBkColor(RGB(200,200,200));//ëIëÇ≥ÇÍÇΩéûÇÃîwåiêF
-				//pDC->SetTextColor(RGB(255,255,255));/*ï∂éöÇÃêF*/
+				pDC->SetBkColor(RGB(200,200,200));//ÈÅ∏Êäû„Åï„Çå„ÅüÊôÇ„ÅÆËÉåÊôØËâ≤
+				//pDC->SetTextColor(RGB(255,255,255));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 
-				if( nCnt == 0){   //ïœçX 2012.04.17
+				if( nCnt == 0){   //Â§âÊõ¥ 2012.04.17
 					if(m_Dlg->m_xvChkRedOnMode == TRUE){
 						if(pDC->GetTextColor() == RGB(255,0,0)){
 							if(m_Dlg->m_xcList.GetSelectedCount()==1){
 								if (m_Dlg->SelectALLFLG  == FALSE ){
-								//if(m_Dlg->NotInversion == FALSE){ //ÉtÉ@ÉCÉãñºÅEîıçlóìÇï“èWÇ∑ÇÈéûÇÕÅAîΩì]ÇµÇ»Ç¢
-									pDC->SetTextColor(RGB(0,0,0));/*ï∂éöÇÃêF*/
+								//if(m_Dlg->NotInversion == FALSE){ //„Éï„Ç°„Ç§„É´Âêç„ÉªÂÇôËÄÉÊ¨Ñ„ÇíÁ∑®ÈõÜ„Åô„ÇãÊôÇ„ÅØ„ÄÅÂèçËª¢„Åó„Å™„ÅÑ
+									pDC->SetTextColor(RGB(0,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 								//}
 								}
 							}
 						}else{
-							pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+							pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 						}
-						m_Dlg->m_xcList.SetItemState(nItem,     // ÉtÉHÅ[ÉJÉXÅïëIëèÛë‘Ç…ÇµÇΩÇ¢ÉAÉCÉeÉÄÇÃÉCÉìÉfÉbÉNÉX
-						!LVIS_FOCUSED | !LVIS_SELECTED,    // èÛë‘
-						LVIS_FOCUSED | LVIS_SELECTED);    // É}ÉXÉN
+						m_Dlg->m_xcList.SetItemState(nItem,     // „Éï„Ç©„Éº„Ç´„ÇπÔºÜÈÅ∏ÊäûÁä∂ÊÖã„Å´„Åó„Åü„ÅÑ„Ç¢„Ç§„ÉÜ„É†„ÅÆ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ
+						!LVIS_FOCUSED | !LVIS_SELECTED,    // Áä∂ÊÖã
+						LVIS_FOCUSED | LVIS_SELECTED);    // „Éû„Çπ„ÇØ
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//í«â¡ 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//ËøΩÂä† 2012.05.13
 
-						if (m_Dlg->ListDataNoChange_FLG == FALSE){  //í«â¡ 2012.05.13
+						if (m_Dlg->ListDataNoChange_FLG == FALSE){  //ËøΩÂä† 2012.05.13
 							m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 						}
 					}
@@ -258,20 +258,20 @@ CFont fontBold, *pfontOld;
 						m_Dlg->Total_Bytes_Func();
 						m_Dlg->ItemCount_Func(FALSE);
 					}
-					m_Dlg->LastSelectedRow  = nItem; //í«â¡ 2012.06.01
-					//m_Dlg->LastSelectedColumn = nCnt; //écÇ≥Ç»Ç¢
+					m_Dlg->LastSelectedRow  = nItem; //ËøΩÂä† 2012.06.01
+					//m_Dlg->LastSelectedColumn = nCnt; //ÊÆã„Åï„Å™„ÅÑ
 
 				//===================================================
 				}
 
-					//0:ÉtÉ@ÉCÉãèdï°éØï ÉiÉìÉoÅ[ 1:í Çµî‘çÜ 2:ÉtÉãÉpÉX 3:ÉtÉ@ÉCÉãñº 4:Ç®Ç®ÇÊÇªÇÃÉfÅ[É^ÉTÉCÉY 5:ÉfÅ[É^ÉTÉCÉY 6:èCê≥ì˙ 7:èCê≥éûä‘ 8:îıçlóì 9:èëéÆèÓïÒ
+					//0:„Éï„Ç°„Ç§„É´ÈáçË§áË≠òÂà•„Éä„É≥„Éê„Éº 1:ÈÄö„ÅóÁï™Âè∑ 2:„Éï„É´„Éë„Çπ 3:„Éï„Ç°„Ç§„É´Âêç 4:„Åä„Åä„Çà„Åù„ÅÆ„Éá„Éº„Çø„Çµ„Ç§„Ç∫ 5:„Éá„Éº„Çø„Çµ„Ç§„Ç∫ 6:‰øÆÊ≠£Êó• 7:‰øÆÊ≠£ÊôÇÈñì 8:ÂÇôËÄÉÊ¨Ñ 9:Êõ∏ÂºèÊÉÖÂ†±
 				//m_Dlg->LastSelectedRow  = nItem;
 				//if(nCnt==3 || nCnt==8){
 
 
-			}else{ // ëIëÇ≥ÇÍÇƒÇ¢Ç»Ç¢(ÅH)èÍçáÇÃï`âÊ
+			}else{ // ÈÅ∏Êäû„Åï„Çå„Å¶„ÅÑ„Å™„ÅÑ(Ôºü)Â†¥Âêà„ÅÆÊèèÁîª
 				//if( lpDrawItemStruct->itemState & ODS_FOCUS ){
-				//	m_Dlg->LastSelectedColumn = nItem; //écÇ∑
+				//	m_Dlg->LastSelectedColumn = nItem; //ÊÆã„Åô
 				//}
 
 				int FormatDataNum = m_Dlg->m_xcList.GetItemData(nItem);
@@ -292,20 +292,20 @@ CFont fontBold, *pfontOld;
 				if(FormatDataNum == 21){
 					//FormatDataStr = _T("NORMAL,RED,");
 					lf.lfWeight = FW_NORMAL;
-					pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+					pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 				}
 
 				if(FormatDataNum == 22){
 					//FormatDataStr = _T("BOLD,RED,");
 					lf.lfWeight = FW_BOLD;
-					pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+					pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 				}
 
 				UpdateData(FALSE);
 
 			}
 
-		}else{// ëIëÇ≥ÇÍÇƒÇ¢Ç»Ç¢èÍçáÇÃï`âÊ
+		}else{// ÈÅ∏Êäû„Åï„Çå„Å¶„ÅÑ„Å™„ÅÑÂ†¥Âêà„ÅÆÊèèÁîª
 
 				int FormatDataNum = m_Dlg->m_xcList.GetItemData(nItem);
 				pDC->SetBkMode(OPAQUE);
@@ -325,13 +325,13 @@ CFont fontBold, *pfontOld;
 				if(FormatDataNum == 21){
 					//FormatDataStr = _T("NORMAL,RED,");
 					lf.lfWeight = FW_NORMAL;
-					pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+					pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 				}
 
 				if(FormatDataNum == 22){
 					//FormatDataStr = _T("BOLD,RED,");
 					lf.lfWeight = FW_BOLD;
-					pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+					pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 				}
 
 
@@ -368,7 +368,7 @@ CFont fontBold, *pfontOld;
 
 
 //==================================================================
-			//ÉeÉLÉXÉgï`âÊ
+			//„ÉÜ„Ç≠„Çπ„ÉàÊèèÁîª
 
 			int FormatDataNum = m_Dlg->m_xcList.GetItemData(nItem);
 
@@ -389,18 +389,18 @@ CFont fontBold, *pfontOld;
 			if(FormatDataNum == 21){
 				//FormatDataStr = _T("NORMAL,RED,");
 				lf.lfWeight = FW_NORMAL;
-				pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+				pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 			}
 
 			if(FormatDataNum == 22){
 				//FormatDataStr = _T("BOLD,RED,");
 				lf.lfWeight = FW_BOLD;
-				pDC->SetTextColor(RGB(255,0,0));/*ï∂éöÇÃêF*/
+				pDC->SetTextColor(RGB(255,0,0));/*ÊñáÂ≠ó„ÅÆËâ≤*/
 			}
 
 
 
-			if( nCnt == 9){  //ÉRÉÅÉìÉgâª 2012.05.15
+			if( nCnt == 9){  //„Ç≥„É°„É≥„ÉàÂåñ 2012.05.15
 				FormatDataStr = _T("NORMAL,BLACK,");
 
 				if(FormatDataNum == 11){
@@ -432,14 +432,14 @@ CFont fontBold, *pfontOld;
 				CString outText;
 				outText = lvItem.pszText;
 
-				nRect.left += 10;//ïœçX2011.05.14
-				nRect.top +=2;//ïœçX2011.05.14
+				nRect.left += 10;//Â§âÊõ¥2011.05.14
+				nRect.top +=2;//Â§âÊõ¥2011.05.14
 
 				//pDC->DrawText(outText, &nRect, DT_VCENTER | DT_LEFT  );
 				pDC->DrawText(outText, &nRect, DT_VCENTER | DT_LEFT  );
 
 
-			////if (m_Dlg->m_xvChkEditCellMode == TRUE) ::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//í«â¡2011.10.08
+			////if (m_Dlg->m_xvChkEditCellMode == TRUE) ::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//ËøΩÂä†2011.10.08
 
 				////http://www.page.sannet.ne.jp/mtoga/lang/cv/bih-m_40.htm
 
@@ -452,7 +452,7 @@ CFont fontBold, *pfontOld;
 	}
 
 	//m_Dlg->GetStrFormat_Func();
-	//Åöhttp://dejibouzu.com/page/2/ Å£
+	//‚òÖhttp://dejibouzu.com/page/2/ ‚ñ≤
 
 
 	//http://www9.plala.or.jp/sayox/vc/vc14.html
@@ -467,15 +467,15 @@ CFont fontBold, *pfontOld;
 
  //http://oshiete.goo.ne.jp/qa/5948646.html
  //http://oshiete.goo.ne.jp/qa/1382911.html
- //Åö http://oshiete.goo.ne.jp/qa/4165655.html
-//Åö http://bingobingobingo.blog49.fc2.com/category4-1.html
+ //‚òÖ http://oshiete.goo.ne.jp/qa/4165655.html
+//‚òÖ http://bingobingobingo.blog49.fc2.com/category4-1.html
 
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetBold  //http://www.opengle.com/codeview/XHotJWgzMRw/trunk/XListCtrl/XListCtrl/XListCtrl.cpp.html
-//BOOL CMylistCtrl::GetBold(int nItem, int nSubItem) //2011.05.22í«â¡
+//BOOL CMylistCtrl::GetBold(int nItem, int nSubItem) //2011.05.22ËøΩÂä†
 //{
 
 //}

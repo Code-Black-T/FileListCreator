@@ -1,19 +1,19 @@
-// ReplaceDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿// ReplaceDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
 #include "FileListCreator.h"
 
-//’Ç‰Á¥
+//è¿½åŠ â–¼
 #include "FileListCreatorDlg.h"
-//’Ç‰Á£
+//è¿½åŠ â–²
 
 #include "ReplaceDlg.h"
 #include "afxdialogex.h"
 
 
 
-// ReplaceDlg ƒ_ƒCƒAƒƒO
+// ReplaceDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(ReplaceDlg, CDialogEx)
 
@@ -51,7 +51,7 @@ BEGIN_MESSAGE_MAP(ReplaceDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHK_ReplaceFullPath, &ReplaceDlg::OnBnClickedChkReplacefullpath)
 END_MESSAGE_MAP()
 
-// ReplaceDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// ReplaceDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 BOOL ReplaceDlg::OnInitDialog()
 {
@@ -68,7 +68,7 @@ BOOL ReplaceDlg::OnInitDialog()
 	if (m_Dlg->CellSizeFixMode == _T("FilePath")){
 		if (m_Dlg->m_xcList.GetItemCount()>=1){
 			int myResult;
-			myResult = MessageBox(_T("‘ü¡ƒtƒ@ƒCƒ‹ƒpƒXEƒ‚[ƒh‚Å‰{——‚µ‚Ä‚¢‚Ü‚·Bƒtƒ@ƒCƒ‹ƒpƒXî•ñ‚ğ’uŠ·‚Å‚«‚é‚æ‚¤‚É‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+			myResult = MessageBox(_T("åªä»Šãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãƒ»ãƒ¢ãƒ¼ãƒ‰ã§é–²è¦§ã—ã¦ã„ã¾ã™ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹æƒ…å ±ã‚’ç½®æ›ã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 			if (IDYES == myResult){
 				CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_ReplaceFullPath);
@@ -120,7 +120,7 @@ void ReplaceDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= ReplaceDlg::m_xcCombo_SearchBOX.GetCount() -1){
 				CString ComboText;
-				ReplaceDlg::m_xcCombo_SearchBOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				ReplaceDlg::m_xcCombo_SearchBOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					ReplaceDlg::m_xcCombo_SearchBOX.SetCurSel(k);
@@ -155,7 +155,7 @@ void ReplaceDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= ReplaceDlg::m_xcCombo_ReplaceBOX.GetCount() -1){
 				CString ComboText;
-				ReplaceDlg::m_xcCombo_ReplaceBOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				ReplaceDlg::m_xcCombo_ReplaceBOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					ReplaceDlg::m_xcCombo_ReplaceBOX.SetCurSel(k);
@@ -200,7 +200,7 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= ReplaceDlg::m_xcCombo_SearchBOX.GetCount() -1){
 			CString ComboText;
-			ReplaceDlg::m_xcCombo_SearchBOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			ReplaceDlg::m_xcCombo_SearchBOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData1 = WriteData1 + ComboText + _T("\n");
 			}
@@ -212,7 +212,7 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= ReplaceDlg::m_xcCombo_ReplaceBOX.GetCount() -1){
 			CString ComboText;
-			ReplaceDlg::m_xcCombo_ReplaceBOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			ReplaceDlg::m_xcCombo_ReplaceBOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData2 = WriteData2 + ComboText + _T("\n");
 			}
@@ -223,10 +223,10 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	CString       wstr, rstr;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -234,7 +234,7 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -274,12 +274,12 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 				}
 				ReplaceDlg::m_xcCombo_SearchBOX.SetCurSel(0);
 
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				stdFile1.Close();
 				fclose(fp);
 			}
 
-			if ( PathFileExists( CurDir + _T("\\ReplaceBOX.dat") ) ){ //’Ç‰Á 2012.06.15
+			if ( PathFileExists( CurDir + _T("\\ReplaceBOX.dat") ) ){ //è¿½åŠ  2012.06.15
 				FILE *fp;
 				_tfopen_s(&fp,CurDir + _T("\\ReplaceBOX.dat"), _T("r, ccs=UNICODE"));
 				CStdioFile stdFile2(fp);
@@ -297,7 +297,7 @@ void ReplaceDlg::ReadOrWriteComboData_Func(CString mySwitch)
 				}
 				ReplaceDlg::m_xcCombo_ReplaceBOX.SetCurSel(0);
 
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				stdFile2.Close();
 				fclose(fp);
 			}
@@ -352,7 +352,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 	m_Dlg->lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
 
-	// ƒtƒ@ƒCƒ‹–¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å
 	if (!err)
 	{
 		myFileName = m_Dlg->m_xcList.GetItemText(index, 3);			
@@ -375,7 +375,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 
 	myFileName.Replace(SearchStr,ReplaceStr);
 
-	// ƒtƒ@ƒCƒ‹–¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å
 	if (!err)
 	{
 		m_Dlg->lvi.iItem = index;
@@ -387,7 +387,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 	}
 
 	if ( m_xvChkReplaceFullPath == TRUE ) {
-		// ƒtƒ‹ƒpƒX
+		// ãƒ•ãƒ«ãƒ‘ã‚¹
 		if (!err)
 		{
 			FullPathString = m_Dlg->m_xcList.GetItemText(index, 2);			
@@ -408,7 +408,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 
 		FullPathString.Replace(SearchStr,ReplaceStr);
 
-		// ƒtƒ‹ƒpƒX
+		// ãƒ•ãƒ«ãƒ‘ã‚¹
 		if (!err)
 		{
 			m_Dlg->lvi.iItem = index;
@@ -423,7 +423,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 
 	CString RemarksColumn=_T("");
 
-	// ”õl—“
+	// å‚™è€ƒæ¬„
 	if (!err)
 	{
 		RemarksColumn = m_Dlg->m_xcList.GetItemText(index, 8);			
@@ -444,7 +444,7 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 
 	RemarksColumn.Replace(SearchStr,ReplaceStr);
 
-	// ”õl—“
+	// å‚™è€ƒæ¬„
 	if (!err)
 	{
 		m_Dlg->lvi.iItem = index;
@@ -458,9 +458,9 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 	m_Dlg->m_xcList.EnsureVisible(index, FALSE);
 
 	if (MatchCNT>=1){
-		m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 		////http://q.hatena.ne.jp/1180853478
-		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator(*)")); //’Ç‰Á 2012.05.13
+		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator(*)")); //è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -469,15 +469,15 @@ void ReplaceDlg::ReplaceFunc(int index,CString SearchStr,CString ReplaceStr){
 		}
 
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		m_Dlg->SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		m_Dlg->SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 
-	RedrawWindow(); //’Ç‰Á 2012.05.24 //XP‘Îô
+	RedrawWindow(); //è¿½åŠ  2012.05.24 //XPå¯¾ç­–
 }
 
 void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 
 	CString SearchStr;
@@ -487,7 +487,7 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 	((CComboBox*)GetDlgItem(IDC_COMBO_ReplaceBOX))->GetWindowText(ReplaceStr);
 
 	if (SearchStr==_T("") && ReplaceStr==_T("")){
-		MessageBox(_T("ŒŸõ‘ÎÛ‚Æ‚È‚é•¶š‚ÆA’uŠ·Œã‚Ì•¶š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢"),_T("Replace"),MB_OK);
+		MessageBox(_T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹æ–‡å­—ã¨ã€ç½®æ›å¾Œã®æ–‡å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„"),_T("Replace"),MB_OK);
 		return;
 	}
 
@@ -501,26 +501,26 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 
 
 	//m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	//m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("Replace Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("Replace å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
-		m_Dlg->m_xvChkRedOnMode = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		m_Dlg->m_xvChkRedOnMode = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 
-		m_Dlg->m_xvChkEasySelect = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		m_Dlg->m_xvChkEasySelect = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);
 
 		int myResult;
 		if(m_Dlg->m_xcList.GetSelectedCount()==0){
-			myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgã‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹–¼‚ğ’uŠ·‚µ‚Ü‚·‚©H"),_T("Replace"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç½®æ›ã—ã¾ã™ã‹ï¼Ÿ"),_T("Replace"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
-				m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount(); //’Ç‰Á 2012.07.01
+				m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount(); //è¿½åŠ  2012.07.01
 				m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData"));
 
 				if (m_Dlg->FindIDX==-1){
@@ -534,22 +534,22 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 					index++;
 				}
 			}else{
-				m_Dlg->StatusStringSet(_T("Replace ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				m_Dlg->StatusStringSet(_T("Replace ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}else if(m_Dlg->m_xcList.GetSelectedCount()>=1){
 
-			m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount(); //’Ç‰Á 2012.07.01
+			m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount(); //è¿½åŠ  2012.07.01
 			m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData"));
 
-			myResult = MessageBox(_T("‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚Ìƒtƒ@ƒCƒ‹–¼‚ğ’uŠ·‚µ‚Ü‚·‚©Hu‚¢‚¢‚¦v‚ğ‘I‘ğ‚·‚é‚ÆƒŠƒXƒgã‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹–¼‚ğ’uŠ·‚µ‚Ü‚·B"),_T("Replace"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç½®æ›ã—ã¾ã™ã‹ï¼Ÿã€Œã„ã„ãˆã€ã‚’é¸æŠã™ã‚‹ã¨ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç½®æ›ã—ã¾ã™ã€‚"),_T("Replace"),MB_YESNOCANCEL);
 
-			m_Dlg->m_xvChkRedOnMode = FALSE; //’Ç‰Á 2012.07.01
-			m_Dlg->m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+			m_Dlg->m_xvChkRedOnMode = FALSE; //è¿½åŠ  2012.07.01
+			m_Dlg->m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);	
 
-			m_Dlg->m_xvChkEasySelect = FALSE; //’Ç‰Á 2012.07.01
-			m_Dlg->m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+			m_Dlg->m_xvChkEasySelect = FALSE; //è¿½åŠ  2012.07.01
+			m_Dlg->m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);
 
 			if (myResult==IDYES){
@@ -567,7 +567,7 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 					index++;
 				}
 			}else{
-				m_Dlg->StatusStringSet(_T("Replace ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				m_Dlg->StatusStringSet(_T("Replace ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
@@ -580,11 +580,11 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 	CString tempCnt;
 	tempCnt = _T("");
 
-	if(MatchCNT>=1){ //’Ç‰Á 2012.06.14
+	if(MatchCNT>=1){ //è¿½åŠ  2012.06.14
 		tempCnt.Format(_T("%d"),MatchCNT);
-		tempCnt=_T("Replace I—¹F") + tempCnt + _T(" ‰ÓŠ ’uŠ·‚µ‚Ü‚µ‚½");
+		tempCnt=_T("Replace çµ‚äº†ï¼š") + tempCnt + _T(" ç®‡æ‰€ ç½®æ›ã—ã¾ã—ãŸ");
 	}else{
-		tempCnt=_T("Replace I—¹Fw’è‚µ‚½ƒAƒCƒeƒ€–¼‚ª–³‚¢‚½‚ß’uŠ·‚Ís‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½");
+		tempCnt=_T("Replace çµ‚äº†ï¼šæŒ‡å®šã—ãŸã‚¢ã‚¤ãƒ†ãƒ åãŒç„¡ã„ãŸã‚ç½®æ›ã¯è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ");
 	}
 	m_Dlg->StatusStringSet(tempCnt,0,TRUE);
 	UpdateData(FALSE);
@@ -600,7 +600,7 @@ void ReplaceDlg::OnBnClickedOk()  //ALL Replace
 
 void ReplaceDlg::OnBnClickedBtnReplaceClear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	m_xcCombo_SearchBOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 	m_xcCombo_ReplaceBOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
@@ -609,14 +609,14 @@ void ReplaceDlg::OnBnClickedBtnReplaceClear()
 
 void ReplaceDlg::OnBnClickedCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnCancel();
 }
 
 
 void ReplaceDlg::OnBnClickedBtnReplaceGetfilename()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -631,22 +631,22 @@ void ReplaceDlg::OnBnClickedBtnReplaceGetfilename()
 			CString SearchStr;
 
 			if ( m_xvChkReplaceFullPath == TRUE ) {
-				SearchStr = m_Dlg->m_xcList.GetItemText(index, 2);//ƒtƒ‹ƒpƒX
+				SearchStr = m_Dlg->m_xcList.GetItemText(index, 2);//ãƒ•ãƒ«ãƒ‘ã‚¹
 			}else{
-				SearchStr = m_Dlg->m_xcList.GetItemText(index, 3);//ƒtƒ@ƒCƒ‹–¼
+				SearchStr = m_Dlg->m_xcList.GetItemText(index, 3);//ãƒ•ã‚¡ã‚¤ãƒ«å
 			}
 			m_xcCombo_SearchBOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(SearchStr)));
 			break;
 		}
 	}else{
-		MessageBox(_T("‘I‘ğó‘Ô‚É‚ ‚éƒtƒ@ƒCƒ‹–¼‚ğSearch Str‚ÉƒZƒbƒg‚µ‚Ü‚·BƒAƒCƒeƒ€‚ğ‚P‚Â‘I‘ğ‚µ‚ÄÄ“xƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‰º‚³‚¢B") ,_T("GetFileName"), MB_OK );
+		MessageBox(_T("é¸æŠçŠ¶æ…‹ã«ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«åã‚’Search Strã«ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚ã‚¢ã‚¤ãƒ†ãƒ ã‚’ï¼‘ã¤é¸æŠã—ã¦å†åº¦ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ä¸‹ã•ã„ã€‚") ,_T("GetFileName"), MB_OK );
 	}
 	ReplaceDlg::OnBnClickedBtnSearch();
 }
 
 void ReplaceDlg::OnBnClickedBtnReplaceGetfilename2()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -661,15 +661,15 @@ void ReplaceDlg::OnBnClickedBtnReplaceGetfilename2()
 			CString ReplaceStr;
 
 			if ( m_xvChkReplaceFullPath == TRUE ) {
-				ReplaceStr = m_Dlg->m_xcList.GetItemText(index, 2);//ƒtƒ‹ƒpƒX
+				ReplaceStr = m_Dlg->m_xcList.GetItemText(index, 2);//ãƒ•ãƒ«ãƒ‘ã‚¹
 			}else{
-				ReplaceStr = m_Dlg->m_xcList.GetItemText(index, 3);//ƒtƒ@ƒCƒ‹–¼
+				ReplaceStr = m_Dlg->m_xcList.GetItemText(index, 3);//ãƒ•ã‚¡ã‚¤ãƒ«å
 			}
 			m_xcCombo_ReplaceBOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(ReplaceStr)));
 			break;
 		}
 	}else{
-		MessageBox(_T("‘I‘ğó‘Ô‚É‚ ‚éƒtƒ@ƒCƒ‹–¼‚ğReplace Str‚ÉƒZƒbƒg‚µ‚Ü‚·BƒAƒCƒeƒ€‚ğ‚P‚Â‘I‘ğ‚µ‚ÄÄ“xƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‰º‚³‚¢B") ,_T("GetFileName"), MB_OK );
+		MessageBox(_T("é¸æŠçŠ¶æ…‹ã«ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«åã‚’Replace Strã«ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚ã‚¢ã‚¤ãƒ†ãƒ ã‚’ï¼‘ã¤é¸æŠã—ã¦å†åº¦ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ä¸‹ã•ã„ã€‚") ,_T("GetFileName"), MB_OK );
 	}
 	ReplaceDlg::OnBnClickedBtnSearch();
 }
@@ -677,7 +677,7 @@ void ReplaceDlg::OnBnClickedBtnReplaceGetfilename2()
 
 void ReplaceDlg::OnBnClickedBtnExchange()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CString SearchStr;
 	CString ReplaceStr;
 
@@ -685,7 +685,7 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 	((CComboBox*)GetDlgItem(IDC_COMBO_ReplaceBOX))->GetWindowText(ReplaceStr);
 
 	if (SearchStr==_T("") && ReplaceStr==_T("")){
-		MessageBox(_T("ŒŸõ‘ÎÛ‚Æ‚È‚é•¶š‚©A’uŠ·Œã‚Ì•¶š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B"),_T("Replace"),MB_OK);
+		MessageBox(_T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹æ–‡å­—ã‹ã€ç½®æ›å¾Œã®æ–‡å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚"),_T("Replace"),MB_OK);
 		return;
 	}
 
@@ -699,25 +699,25 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("Replace Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("Replace å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
-		m_Dlg->m_xvChkRedOnMode = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		m_Dlg->m_xvChkRedOnMode = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 
-		m_Dlg->m_xvChkEasySelect = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		m_Dlg->m_xvChkEasySelect = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);
 
 
 		int myResult;
 		if(m_Dlg->m_xcList.GetSelectedCount()==0){
-			myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgã‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹–¼‚ğ“ü‚ê‘Ö‚¦‚µ‚Ü‚·‚©H"),_T("Replace"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å…¥ã‚Œæ›¿ãˆã—ã¾ã™ã‹ï¼Ÿ"),_T("Replace"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = 0;
 
@@ -728,13 +728,13 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 					index++;
 				}
 			}else{
-				m_Dlg->StatusStringSet(_T("Replace ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				m_Dlg->StatusStringSet(_T("Replace ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
 		if(m_Dlg->m_xcList.GetSelectedCount()>=1){
 
-			myResult = MessageBox(_T("‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚Ìƒtƒ@ƒCƒ‹–¼‚ğ“ü‚ê‘Ö‚¦‚µ‚Ü‚·‚©H"),_T("Replace"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å…¥ã‚Œæ›¿ãˆã—ã¾ã™ã‹ï¼Ÿ"),_T("Replace"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = -1;
 
@@ -745,7 +745,7 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 					ReplaceFunc(index,_T("<<<<<<DummyString>>>>>>"),ReplaceStr);
 				}
 			}else{
-				m_Dlg->StatusStringSet(_T("Replace ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				m_Dlg->StatusStringSet(_T("Replace ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
@@ -754,19 +754,19 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 
 	CString tempCnt;
 	tempCnt = _T("");
-	if (MatchCNT/3>=1) { //’Ç‰Á 2012.06.12
+	if (MatchCNT/3>=1) { //è¿½åŠ  2012.06.12
 		tempCnt.Format(_T("%d"),MatchCNT/3);
-		tempCnt=_T("Exchange I—¹F ƒAƒCƒeƒ€‚ğ“ü‚ê‘Ö‚¦‚µ‚Ü‚µ‚½");
+		tempCnt=_T("Exchange çµ‚äº†ï¼š ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œæ›¿ãˆã—ã¾ã—ãŸ");
 	}else{
-		tempCnt=_T("Exchange I—¹Fw’è‚µ‚½ƒAƒCƒeƒ€–¼‚ª–³‚¢‚½‚ß Exchange ‚Ís‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½");
+		tempCnt=_T("Exchange çµ‚äº†ï¼šæŒ‡å®šã—ãŸã‚¢ã‚¤ãƒ†ãƒ åãŒç„¡ã„ãŸã‚ Exchange ã¯è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ");
 	}
 
 	m_Dlg->StatusStringSet(tempCnt,300,TRUE);
 
 	if (MatchCNT/3>=1){
-		m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 		////http://q.hatena.ne.jp/1180853478
-		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator(*)")); //’Ç‰Á 2012.05.13
+		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator(*)")); //è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -789,7 +789,7 @@ void ReplaceDlg::OnBnClickedBtnExchange()
 
 void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CString SearchStr;
 	CString ReplaceStr;
@@ -798,7 +798,7 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 	((CComboBox*)GetDlgItem(IDC_COMBO_ReplaceBOX))->GetWindowText(ReplaceStr);
 
 	if (SearchStr==_T("")){
-		MessageBox(_T("ŒŸõ‘ÎÛ‚Æ‚È‚é•¶š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢"),_T("Find"),MB_OK);
+		MessageBox(_T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹æ–‡å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„"),_T("Find"),MB_OK);
 		return;
 	}
 
@@ -835,24 +835,24 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 		return;
 	}
 
-			m_Dlg->m_xvChkRedOnMode = FALSE; //’Ç‰Á 2012.07.01
-			m_Dlg->m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+			m_Dlg->m_xvChkRedOnMode = FALSE; //è¿½åŠ  2012.07.01
+			m_Dlg->m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);	
 
-			m_Dlg->m_xvChkEasySelect = FALSE; //’Ç‰Á 2012.07.01
-			m_Dlg->m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+			m_Dlg->m_xvChkEasySelect = FALSE; //è¿½åŠ  2012.07.01
+			m_Dlg->m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);
 
 	m_Dlg->lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
 
 	if ( m_Dlg->FindIDX == -1 ){
-		m_Dlg->StatusStringSet(_T("ŒŸõ‚ğŠJn‚µ‚Ü‚µ‚½"),0,FALSE);
+		m_Dlg->StatusStringSet(_T("æ¤œç´¢ã‚’é–‹å§‹ã—ã¾ã—ãŸ"),0,FALSE);
 	}
 
-	m_Dlg->m_xcList.SetItemState(m_Dlg->FindIDX,     // ƒtƒH[ƒJƒX•”ñ‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-	!LVIS_FOCUSED | !LVIS_SELECTED,    // ó‘Ô
-	LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+	m_Dlg->m_xcList.SetItemState(m_Dlg->FindIDX,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†éé¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	!LVIS_FOCUSED | !LVIS_SELECTED,    // çŠ¶æ…‹
+	LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 	if(m_Dlg->FindIDX < m_Dlg->m_xcList.GetItemCount()){
 		m_Dlg->FindIDX++;
@@ -888,13 +888,13 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 			MatchCNT++;
 			//myIDX=hitIDX1 + SearchStr.GetLength()-1;
 
-			m_Dlg->m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-			LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-			LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+			m_Dlg->m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+			LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 			m_Dlg->m_xcList.EnsureVisible(index, FALSE);
 
-			//m_Dlg->m_xcList.SetItemState(index).SetEditSel(-1,-1);  //‘I‘ğ‚È‚µ‚ÅAÅŒã‚Ì•¶šˆÊ’u‚ÉƒJ[ƒ\ƒ‹‚ğ’u‚­
+			//m_Dlg->m_xcList.SetItemState(index).SetEditSel(-1,-1);  //é¸æŠãªã—ã§ã€æœ€å¾Œã®æ–‡å­—ä½ç½®ã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç½®ã
 			//m_Dlg->m_xcList.SetColumn(index).Selection
 			
 			break;
@@ -904,7 +904,7 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 	}
 
 	if (index >= m_Dlg->m_xcList.GetItemCount()-1) {
-		m_Dlg->StatusStringSet(_T("––”ö‚Ü‚ÅŒŸõ‚ªI—¹‚µ‚Ü‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("æœ«å°¾ã¾ã§æ¤œç´¢ãŒçµ‚äº†ã—ã¾ã—ãŸ"),300,TRUE);
 		m_Dlg->FindIDX = -1;
 	}
 
@@ -915,7 +915,7 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 	//tempCnt = _T("");
 
 	//tempCnt.Format(_T("%d"),MatchCNT);
-	//tempCnt=_T("Replace I—¹F") + tempCnt + _T(" ‰ÓŠ ’uŠ·‚µ‚Ü‚µ‚½");
+	//tempCnt=_T("Replace çµ‚äº†ï¼š") + tempCnt + _T(" ç®‡æ‰€ ç½®æ›ã—ã¾ã—ãŸ");
 
 	//m_Dlg->StatusStringSet(tempCnt,300,TRUE);
 
@@ -935,7 +935,7 @@ void ReplaceDlg::OnBnClickedBtnSearch()  // Find Next
 
 void ReplaceDlg::OnBnClickedBtnReplace()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CString SearchStr;
 	CString ReplaceStr;
 
@@ -948,18 +948,18 @@ void ReplaceDlg::OnBnClickedBtnReplace()
 		return;
 	}
 
-		m_Dlg->m_xvChkRedOnMode = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		m_Dlg->m_xvChkRedOnMode = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 
-		m_Dlg->m_xvChkEasySelect = FALSE; //’Ç‰Á 2012.07.01
-		m_Dlg->m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		m_Dlg->m_xvChkEasySelect = FALSE; //è¿½åŠ  2012.07.01
+		m_Dlg->m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);
 
 	//m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	//m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-	//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //’Ç‰Á 2012.05.03
+	//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //è¿½åŠ  2012.05.03
 
 	if(m_Dlg->m_xcList.GetSelectedCount()>=1){
 		int index = -1;
@@ -981,7 +981,7 @@ void ReplaceDlg::OnBnClickedBtnReplace()
 	//tempCnt = _T("");
 
 	//tempCnt.Format(_T("%d"),MatchCNT);
-	//tempCnt=_T("Replace I—¹F") + tempCnt + _T(" ‰ÓŠ ’uŠ·‚µ‚Ü‚µ‚½");
+	//tempCnt=_T("Replace çµ‚äº†ï¼š") + tempCnt + _T(" ç®‡æ‰€ ç½®æ›ã—ã¾ã—ãŸ");
 	//
 	//m_Dlg->StatusStringSet(tempCnt,300,TRUE);
 	//
@@ -1000,7 +1000,7 @@ void ReplaceDlg::OnBnClickedBtnReplace()
 
 void ReplaceDlg::OnCbnEditchangeComboSearchbox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -1036,51 +1036,51 @@ BOOL ReplaceDlg::PreTranslateMessage(MSG* pMsg)
 			//case _T('F'):
 
 			case _T('G'):
-				/* Ÿ‚ğŒŸõ */
+				/* æ¬¡ã‚’æ¤œç´¢ */
 
 				//if(pMsg->hwnd == GetDlgItem(IDD_DIALOG_Replace)->m_hWnd ){
 					ReplaceDlg::OnBnClickedBtnSearch();
-					//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //’Ç‰Á 2012.05.03
+					//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //è¿½åŠ  2012.05.03
 				//}
 				break;
 			case _T('R'):
-				/* ’uŠ· */
+				/* ç½®æ› */
 				m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-				m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+				m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 				ReplaceDlg::OnBnClickedBtnReplace();
-				//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //’Ç‰Á 2012.05.03
+				//::SetFocus(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace)); //è¿½åŠ  2012.05.03
 				//ReplaceDlg::OnBnClickedBtnSearch();
 				break;
 
-			//case _T('Z'):  //UNDO‚ª“ñ“xŒÄ‚Î‚ê‚é‚Ì‚ÅƒRƒƒ“ƒg‰»
-				///* ƒAƒ“ƒhƒD */
+			//case _T('Z'):  //UNDOãŒäºŒåº¦å‘¼ã°ã‚Œã‚‹ã®ã§ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
+				///* ã‚¢ãƒ³ãƒ‰ã‚¥ */
 				//m_Dlg->OnEditlistUndo();
 				//break;
 
 			case _T('S'):
-				/* •Û‘¶ */
+				/* ä¿å­˜ */
 				m_Dlg->OnMenuFileSave();
 			
-				m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,FALSE);
+				m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,FALSE);
 				break;
 			//case _T('X'):
-			//	/* ƒJƒbƒg */
+			//	/* ã‚«ãƒƒãƒˆ */
 			//	break;
 			//case _T('C'):
-			//	/* ƒRƒs[ */
+			//	/* ã‚³ãƒ”ãƒ¼ */
 			//	break;
 			//case _T('V'):
-			//	/* ƒy[ƒXƒg */
+			//	/* ãƒšãƒ¼ã‚¹ãƒˆ */
 			//	break;
 
-			//case _T('L'): //ƒRƒƒ“ƒg‰» 2012.04.17
+			//case _T('L'): //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.04.17
 			//	m_Dlg->ChangeLanguage();
 			//	break;
 
 			default:
 				//ReplaceDlg ReplaceDlg_CLASS;
-				/* ‚»‚Ì‘¼ */
+				/* ãã®ä»– */
 				break;
 			}
 			return 0;
@@ -1092,7 +1092,7 @@ BOOL ReplaceDlg::PreTranslateMessage(MSG* pMsg)
 
 void ReplaceDlg::OnCbnSelchangeComboSearchbox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -1105,7 +1105,7 @@ void ReplaceDlg::OnCbnSelchangeComboSearchbox()
 
 void ReplaceDlg::OnBnClickedChkReplacefullpath()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_ReplaceFullPath);
 	
 	if (m_xvChkReplaceFullPath == FALSE){

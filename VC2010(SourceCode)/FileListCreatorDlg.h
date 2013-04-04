@@ -1,5 +1,5 @@
-
-// FileListCreatorDlg.h : ƒwƒbƒ_[ ƒtƒ@ƒCƒ‹
+ï»¿
+// FileListCreatorDlg.h : ãƒ˜ãƒƒãƒ€ãƒ¼ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #pragma once
@@ -7,7 +7,7 @@
 #include "afxwin.h"
 #include "MylistCtrl.h"
 
-//¥vector —p 2012.05.02¥
+//â–¼vector ç”¨ 2012.05.02â–¼
 //#include <stdio.h>
 #include <sys/types.h>
 
@@ -18,42 +18,42 @@
 #include <iterator>
 
 using namespace std;
-//£vector —p 2012.05.02£
+//â–²vector ç”¨ 2012.05.02â–²
 
-//#include <stdio.h> //’Ç‰Á 2012.04.30
-//#include <stdlib.h> //’Ç‰Á 2012.04.30
+//#include <stdio.h> //è¿½åŠ  2012.04.30
+//#include <stdlib.h> //è¿½åŠ  2012.04.30
 
-//#include "windows.h" //’Ç‰Á
+//#include "windows.h" //è¿½åŠ 
 
-// CFileListCreatorDlg ƒ_ƒCƒAƒƒO
+// CFileListCreatorDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 class CFileListCreatorDlg : public CDialogEx
 {
-// ƒRƒ“ƒXƒgƒ‰ƒNƒVƒ‡ƒ“
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚·ãƒ§ãƒ³
 public:
-	CFileListCreatorDlg(CWnd* pParent = NULL);	// •W€ƒRƒ“ƒXƒgƒ‰ƒNƒ^[
+	CFileListCreatorDlg(CWnd* pParent = NULL);	// æ¨™æº–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
 
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	enum { IDD = IDD_FILELISTCREATOR_DIALOG };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV ƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV ã‚µãƒãƒ¼ãƒˆ
 
-// À‘•
+// å®Ÿè£…
 protected:
 	HICON m_hIcon;
 
-	// ¶¬‚³‚ê‚½AƒƒbƒZ[ƒWŠ„‚è“–‚ÄŠÖ”
+	// ç”Ÿæˆã•ã‚ŒãŸã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‰²ã‚Šå½“ã¦é–¢æ•°
 	virtual BOOL OnInitDialog();
 
-	//virtual void OnCancel(); //T’Ç‰Á //http://msdn.microsoft.com/ja-jp/library/kw3wtttf.aspx
+	//virtual void OnCancel(); //Tè¿½åŠ  //http://msdn.microsoft.com/ja-jp/library/kw3wtttf.aspx
 	
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
-	virtual BOOL PreTranslateMessage(MSG* pMsg); //’Ç‰Á2011.09.16
+	virtual BOOL PreTranslateMessage(MSG* pMsg); //è¿½åŠ 2011.09.16
 
-//T’Ç‰Á
+//Tè¿½åŠ 
 private:
 	CString FLC_CurrentVersion;
 
@@ -79,15 +79,15 @@ public:
 	afx_msg void OnBnClickedBtnRestore();
 	afx_msg void OnBnClickedBtnPackagesearch();
 
-	//LVCOLUMN    lvc;//’Ç‰Á2011.05.13
-	//LVITEM		lvi;//’Ç‰Á2011.05.13
+	//LVCOLUMN    lvc;//è¿½åŠ 2011.05.13
+	//LVITEM		lvi;//è¿½åŠ 2011.05.13
 	CString StatusStringSet(CString,int,BOOL);
 
 	long CStringToLong(CString);
-	BOOL g_NoDrawFLG; //TRUE‚ÌAƒŠƒXƒg‚ğ•`‰æ‚µ‚È‚¢
-	BOOL SelectALLFLG; //‚·‚×‚Ä‚ğ‘I‘ğ‚·‚é‚Æ‚«‚ÍÅ’áŒÀ‚Ìˆ—‚Ì‚İs‚¤
+	BOOL g_NoDrawFLG; //TRUEã®æ™‚ã€ãƒªã‚¹ãƒˆã‚’æç”»ã—ãªã„
+	BOOL SelectALLFLG; //ã™ã¹ã¦ã‚’é¸æŠã™ã‚‹ã¨ãã¯æœ€ä½é™ã®å‡¦ç†ã®ã¿è¡Œã†
 
-	CString CFileListCreatorDlg::CreateDateTime(int mySwitch);//mySwitch//1:ƒtƒ@ƒCƒ‹–¼‚É•t—^‚·‚é“ú//2:Œ»İ‚ÌŠÔ‚ğ•\¦
+	CString CFileListCreatorDlg::CreateDateTime(int mySwitch);//mySwitch//1:ãƒ•ã‚¡ã‚¤ãƒ«åã«ä»˜ä¸ã™ã‚‹æ—¥æ™‚//2:ç¾åœ¨ã®æ™‚é–“ã‚’è¡¨ç¤º
 
 	CMylistCtrl m_xcList;
 	//CMylistCtrl m_xcList2;
@@ -95,15 +95,15 @@ public:
 	
 	typedef struct ListItemStruct {
 		//int *i;
-		CString	RepetitionNum;	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
-		CString	Num;		//’Ê‚µ”Ô†
-		CString	FullPath;	//ƒtƒ@ƒCƒ‹ƒpƒX
-		CString	FileName;	//ƒtƒ@ƒCƒ‹–¼
-		CString	ApproximateByte;	//‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY//ƒoƒCƒg
-		CString	AccurateByte;		//ÀÛ‚Ìƒf[ƒ^ƒTƒCƒY//ÀƒoƒCƒg
-		CString	ModifyDate;		//C³“ú
-		CString	ModifyTime;		//C³ŠÔ
-		CString	RemarksColumn;		//”õl—“
+		CString	RepetitionNum;	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
+		CString	Num;		//é€šã—ç•ªå·
+		CString	FullPath;	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+		CString	FileName;	//ãƒ•ã‚¡ã‚¤ãƒ«å
+		CString	ApproximateByte;	//ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//ãƒã‚¤ãƒˆ
+		CString	AccurateByte;		//å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//å®Ÿãƒã‚¤ãƒˆ
+		CString	ModifyDate;		//ä¿®æ­£æ—¥
+		CString	ModifyTime;		//ä¿®æ­£æ™‚é–“
+		CString	RemarksColumn;		//å‚™è€ƒæ¬„
 		CString FormatDataStr;
 		//item():
 		//~item();
@@ -124,12 +124,12 @@ public:
 	void push_back_Func(int ItemCount,CString targetName);
 	void pop_Func(int ItemCount,CString targetName);
 
-	void malloc_Func(int ItemCount,CString targetName); //ƒRƒƒ“ƒg‰» 2012.05.02
+	void malloc_Func(int ItemCount,CString targetName); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.02
 	//void SwapListData(CMylistCtrl &outList, CMylistCtrl &inList);
-	//void DuplicateList(CMylistCtrl *outList, CMylistCtrl *inList); //’Ç‰Á 2012.04.27
+	//void DuplicateList(CMylistCtrl *outList, CMylistCtrl *inList); //è¿½åŠ  2012.04.27
 	
-	void DuplicateList(); //’Ç‰Á 2012.04.29 //ƒRƒƒ“ƒg‰» 2012.05.02
-	void CreateWorkArray(); //ƒRƒƒ“ƒg‰» 2012.05.02
+	void DuplicateList(); //è¿½åŠ  2012.04.29 //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.02
+	void CreateWorkArray(); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.02
 
 	int LastPrevItemCount;
 	int LastNowItemCount;
@@ -199,8 +199,8 @@ public:
 	CString outGeneratorVer;
 	void GetStrFormat_Func();
 	void SetStrFormat_Func();
-	void ExportFileList(BOOL AutoSaveFLG); //íœ BOOL ReExportFLG
-	void ExportFileList_Func(CString saveDir, CString FileName); //’Ç‰Á 2012.04.22
+	void ExportFileList(BOOL AutoSaveFLG); //å‰Šé™¤ BOOL ReExportFLG
+	void ExportFileList_Func(CString saveDir, CString FileName); //è¿½åŠ  2012.04.22
 
 	void ExcludeNonEmphasizedItems();
 	BOOL myIsDigit_Func(CString);
@@ -224,16 +224,16 @@ public:
 	afx_msg void OnNMRClickList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnMenuMymessage();
 
-	afx_msg void DeleteSelectedRows_Func();//•ÏX 2012.05.31
+	afx_msg void DeleteSelectedRows_Func();//å¤‰æ›´ 2012.05.31
 	afx_msg void OnBnClickedBtnClear();
-	afx_msg void OnMenuDeleteSelectedRows();//•ÏX 2012.05.31
+	afx_msg void OnMenuDeleteSelectedRows();//å¤‰æ›´ 2012.05.31
 	afx_msg void OnFileImport();
 	afx_msg void OnFileExport();
 	afx_msg void OnSearchPackagesearch();
 	afx_msg void OnSearchStepsearch();
 	afx_msg void OnEditRestore();
 	afx_msg void OnEditlistSort();
-	afx_msg void OnMenuDeleterow();//•ÏX 2012.05.31
+	afx_msg void OnMenuDeleterow();//å¤‰æ›´ 2012.05.31
 	afx_msg void OnOptionMymessage();
 	afx_msg void OnFileQuit();
 	afx_msg void MenuOpenBy_Func(int);
@@ -280,7 +280,7 @@ public:
 	int g_RadioModifyDate;
 	int g_RadioRemarksColumn;
 
-	int g_RadioENCODING_SELECT; //’Ç‰Á 2012.04.21
+	int g_RadioENCODING_SELECT; //è¿½åŠ  2012.04.21
 
 	BOOL g_ChkCopyOn;
 	BOOL g_ChkRedOn;
@@ -351,7 +351,7 @@ public:
 	int	LastSelectedRow;
 	int LastSelectedColumn;
 
-	//BOOL NotInversion; //TRUE‚Ìƒtƒ@ƒCƒ‹–¼E”õl—“‚Ì•ÒW’†‚ÍAi‘¾•¶š•Ô•¶š‚Íj”½“]‚µ‚È‚¢
+	//BOOL NotInversion; //TRUEã®æ™‚ãƒ•ã‚¡ã‚¤ãƒ«åãƒ»å‚™è€ƒæ¬„ã®ç·¨é›†ä¸­ã¯ã€ï¼ˆå¤ªæ–‡å­—ï¼†èµ¤æ–‡å­—ã¯ï¼‰åè»¢ã—ãªã„
 
 
 	//BOOL ListDBLCLK_FLG;
@@ -399,8 +399,8 @@ public:
 	afx_msg void OnRepeateditemcheckByallinfo();
 
 	CString LastImportFileName;
-	//CString LastExportSaveDir; //íœ 2012.04.22
-	//CString LastExportFileName; //íœ 2012.04.22
+	//CString LastExportSaveDir; //å‰Šé™¤ 2012.04.22
+	//CString LastExportFileName; //å‰Šé™¤ 2012.04.22
 
 	CString FullPathToFileName(CString FullPathStr);
 	afx_msg void OnBnClickedBtnCurrentdirectoryopen();
@@ -416,9 +416,9 @@ public:
 	afx_msg void OnOptionFilepathlimitcheck();
 	afx_msg void OnEditlistUndo();
 
-	LVITEM       lvi; //’Ç‰Á 2012.04.25
-	//LVITEM       lvi2; //’Ç‰Á 2012.04.25
-	LVITEM       temp_lvi; //’Ç‰Á 2012.04.25
+	LVITEM       lvi; //è¿½åŠ  2012.04.25
+	//LVITEM       lvi2; //è¿½åŠ  2012.04.25
+	LVITEM       temp_lvi; //è¿½åŠ  2012.04.25
 
 	//http://sa.eei.eng.osaka-u.ac.jp/tatsumi/tani_prog/malloc.html
 
@@ -430,9 +430,9 @@ public:
 
 	BOOL UNDO_FLG;
 
-	BOOL ListDataNoChange_FLG; //’Ç‰Á 2012.05.13
+	BOOL ListDataNoChange_FLG; //è¿½åŠ  2012.05.13
 
-	//BOOL FOCUSED_and_SELECTED; //’Ç‰Á 2012.05.16
+	//BOOL FOCUSED_and_SELECTED; //è¿½åŠ  2012.05.16
 
 	//ListItemStruct prevData[1000];
 	//ListItemStruct nowData;
@@ -444,8 +444,8 @@ public:
 	afx_msg void OnLvnItemchangingList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult);
 
-	void SortColumnDrawCaption(int workColumn, BOOL SortFLG); //’Ç‰Á 2012.05.24
-	//CString LastEditStr;//’Ç‰Á 2012.05.20
+	void SortColumnDrawCaption(int workColumn, BOOL SortFLG); //è¿½åŠ  2012.05.24
+	//CString LastEditStr;//è¿½åŠ  2012.05.20
 	afx_msg void OnLvnInsertitemList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnDeleteallitemsList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedBtnCellsizefix();
@@ -496,7 +496,7 @@ public:
 
 	RECT rectSTATIC_DRAG_ON_ME;
 
-	RECT CurRect; //public‚É•ÏX 2012.07.02
+	RECT CurRect; //publicã«å¤‰æ›´ 2012.07.02
 
 
 	RECT rectBTN_MiniWindow;
@@ -514,7 +514,7 @@ public:
 	BOOL ShellExecuteOpenFLG;
 //	afx_msg void OnLvnEndScrollList(NMHDR *pNMHDR, LRESULT *pResult);
 
-	BOOL ListInsertItemFLG; //TRUE‚Ì‚ÍƒXƒNƒ[ƒ‹ARedrawWindow();‚µ‚È‚¢ //XP‘Îô
+	BOOL ListInsertItemFLG; //TRUEã®æ™‚ã¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã€RedrawWindow();ã—ãªã„ //XPå¯¾ç­–
 
 	BOOL AnyfileImport;
 

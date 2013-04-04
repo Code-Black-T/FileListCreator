@@ -1,22 +1,22 @@
-#pragma once
+Ôªø#pragma once
 #include "afxwin.h"
 
 //static CString TargetFileSpecs;
 
-// CFileSpecsDlg É_ÉCÉAÉçÉO
+// CFileSpecsDlg „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class CFileSpecsDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CFileSpecsDlg)
 public:
-	CFileSpecsDlg(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	CFileSpecsDlg(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~CFileSpecsDlg();
-	virtual BOOL OnInitDialog();//Tí«â¡
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+	virtual BOOL OnInitDialog();//TËøΩÂä†
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_FileSpecs };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 
 	DECLARE_MESSAGE_MAP()
 public:

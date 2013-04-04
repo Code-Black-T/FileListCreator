@@ -1,4 +1,4 @@
-// FileSpecsDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿// FileSpecsDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -6,17 +6,17 @@
 
 #include "FileListCreatorDlg.h"
 
-#include <ctype.h>//’Ç‰Á
-#include "afxwin.h"//’Ç‰Á
+#include <ctype.h>//è¿½åŠ 
+#include "afxwin.h"//è¿½åŠ 
 
 #include "FileSpecsDlg.h"
 #include "afxdialogex.h"
 
-#include <locale.h> //’Ç‰Á//_wsetlocale(LC_ALL, _T("jpn"));‚ğg‚¤‚½‚ß 
+#include <locale.h> //è¿½åŠ //_wsetlocale(LC_ALL, _T("jpn"));ã‚’ä½¿ã†ãŸã‚ 
 
 //using namespace ?????
 
-// CFileSpecsDlg ƒ_ƒCƒAƒƒO
+// CFileSpecsDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(CFileSpecsDlg, CDialogEx)
 
@@ -65,7 +65,7 @@ BOOL CFileSpecsDlg::OnInitDialog()
 
 	CFileSpecsDlg::m_xcCombo_FileSpec.GetWindowText(tempSpecs);
 
-	if (tempSpecs==_T("")){ //’Ç‰Á 2012.06.14
+	if (tempSpecs==_T("")){ //è¿½åŠ  2012.06.14
 		UpdateData(TRUE);
 		EditFileSpecs = _T("*.mp3;*.wav;*.m4a;*.mpg;*.mpeg;*.asf;*.avi;*.wmv;*.wma;*.zip;*.html;");
 
@@ -110,7 +110,7 @@ void CFileSpecsDlg::ExistCheckFunc()
 
 		while (k <= CFileSpecsDlg::m_xcCombo_FileSpec.GetCount() -1){
 			CString ComboText;
-			CFileSpecsDlg::m_xcCombo_FileSpec.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			CFileSpecsDlg::m_xcCombo_FileSpec.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 			if(ComboText == EditFileSpecs2){
 				CFileSpecsDlg::m_xcCombo_FileSpec.SetCurSel(k);
@@ -122,7 +122,7 @@ void CFileSpecsDlg::ExistCheckFunc()
 
 
 		//if(CFileSpecsDlg::m_xcCombo_FileSpec.GetCount()<=ComboBox_MAX){
-			//•¶š—ñ‚ğ‘}“ü‚·‚é
+			//æ–‡å­—åˆ—ã‚’æŒ¿å…¥ã™ã‚‹
 
 			if(tempFLG == TRUE){
 				CFileSpecsDlg::m_xcCombo_FileSpec.InsertString(0,EditFileSpecs2);
@@ -136,7 +136,7 @@ void CFileSpecsDlg::ExistCheckFunc()
 		//}
 		//MessageBox(EditFileSpecs);
 
-		//ComboBox_MAXŒˆÈã‚Í“o˜^‚µ‚È‚¢
+		//ComboBox_MAXä»¶ä»¥ä¸Šã¯ç™»éŒ²ã—ãªã„
 		//if(CFileSpecsDlg::m_xcCombo_FileSpec.GetCount()>=1){
 			for(k = CFileSpecsDlg::m_xcCombo_FileSpec.GetCount();k>=ComboBox_MAX;k--){
 				CFileSpecsDlg::m_xcCombo_FileSpec.DeleteString(k);
@@ -146,11 +146,11 @@ void CFileSpecsDlg::ExistCheckFunc()
 	}
 	//return tempFLG;
 }
-// CFileSpecsDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// CFileSpecsDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 void CFileSpecsDlg::OnBnClickedButtonDefault()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	UpdateData(TRUE);
 	EditFileSpecs = _T("*.mp3;*.wav;*.m4a;*.mpg;*.mpeg;*.asf;*.avi;*.wmv;*.wma;*.zip;*.html;");
 
@@ -178,13 +178,13 @@ void CFileSpecsDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= CFileSpecsDlg::m_xcCombo_FileSpec.GetCount() -1){
 			CString ComboText;
-			CFileSpecsDlg::m_xcCombo_FileSpec.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			CFileSpecsDlg::m_xcCombo_FileSpec.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				FileSpec = FileSpec + ComboText + _T("\n");
 
-//Windows‚ÌƒeƒLƒXƒgƒ‚[ƒh‚Å‚ÍAƒtƒ@ƒCƒ‹‚Éo—Í‚·‚é‚Æ‚«‚ÉAu\nv‚ªu\r\nv‚É©“®“I‚É•ÏŠ·‚³‚ê‚Ü‚·B
-//‚Ü‚½Aƒtƒ@ƒCƒ‹‚©‚ç“ü—Í‚·‚é‚Æ‚«‚ÍAu\r\nv‚ªu\nv‚É©“®“I‚É•ÏŠ·‚³‚ê‚Ü‚·B‚Å‚·‚Ì‚ÅA
-//ƒeƒLƒXƒgƒ‚[ƒh‚Ìƒtƒ@ƒCƒ‹“üo—Í‚ğg‚¤‚Æ‚«‚ÍAƒvƒƒOƒ‰ƒ€ã‚Å‚Í‰üsƒR[ƒh‚Íu\nv‚Åˆµ‚í‚È‚¯‚ê‚Î‚¢‚¯‚Ü‚¹‚ñB
+//Windowsã®ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ãƒ•ã‚¡ã‚¤ãƒ«ã«å‡ºåŠ›ã™ã‚‹ã¨ãã«ã€ã€Œ\nã€ãŒã€Œ\r\nã€ã«è‡ªå‹•çš„ã«å¤‰æ›ã•ã‚Œã¾ã™ã€‚
+//ã¾ãŸã€ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å…¥åŠ›ã™ã‚‹ã¨ãã¯ã€ã€Œ\r\nã€ãŒã€Œ\nã€ã«è‡ªå‹•çš„ã«å¤‰æ›ã•ã‚Œã¾ã™ã€‚ã§ã™ã®ã§ã€
+//ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã®ãƒ•ã‚¡ã‚¤ãƒ«å…¥å‡ºåŠ›ã‚’ä½¿ã†ã¨ãã¯ã€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ä¸Šã§ã¯æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã¯ã€Œ\nã€ã§æ‰±ã‚ãªã‘ã‚Œã°ã„ã‘ã¾ã›ã‚“ã€‚
 			}
 			k++;
 		}
@@ -195,10 +195,10 @@ void CFileSpecsDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -206,18 +206,18 @@ void CFileSpecsDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
-		//// ƒtƒ‹ƒpƒX‚ğ•ª‰ğ
+		//// ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’åˆ†è§£
 		//TCHAR szDir[_MAX_DIR];
 		//TCHAR szDrive[_MAX_DRIVE];
 		//TCHAR szFName[_MAX_FNAME];
 		//TCHAR szExt[_MAX_EXT];
 		//_splitpath(szPath,szDrive,szDir,szFName,szExt);
 		//
-		//// ƒtƒHƒ‹ƒ_Aƒtƒ@ƒCƒ‹–¼æ“¾
+		//// ãƒ•ã‚©ãƒ«ãƒ€ã€ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 		//TCHAR szFilePath[_MAX_PATH];
 		//TCHAR szFileName[_MAX_PATH];
 		//sprintf(szFilePath,"%s%s",szDrive,szDir);
@@ -253,7 +253,7 @@ void CFileSpecsDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	}
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = FileSpec;
@@ -277,14 +277,14 @@ void CFileSpecsDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		CFileSpecsDlg::m_xcCombo_FileSpec.SetCurSel(0);
 	}
 
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile.Close();
 
 }
 
 void CFileSpecsDlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 
 	TargetFileSpecs = _T("");
@@ -295,7 +295,7 @@ void CFileSpecsDlg::OnBnClickedOk()
     if((strFileSpecs) == _T("")){
 		int myResult;
 
-		myResult = MessageBox(_T("ŒŸõ‘ÎÛ‚Æ‚È‚éŠg’£q‚ğ1‚ÂˆÈã“ü‚ê‚Ä‚­‚¾‚³‚¢ \r\n (‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹‚ğ‘ÎÛ‚É‚µ‚Ü‚·‚©H)") ,_T(""), MB_YESNO );
+		myResult = MessageBox(_T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹æ‹¡å¼µå­ã‚’1ã¤ä»¥ä¸Šå…¥ã‚Œã¦ãã ã•ã„ \r\n (ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å¯¾è±¡ã«ã—ã¾ã™ã‹ï¼Ÿ)") ,_T(""), MB_YESNO );
 		if (myResult == IDYES){
 			UpdateData(TRUE);
 			m_xcCombo_FileSpec.AddString(_T("*.*;"));
@@ -314,7 +314,7 @@ void CFileSpecsDlg::OnBnClickedOk()
 
 	if (strFileSpecs.Find(_T("*.*")) >= 0 && strFileSpecs.GetLength() > 4 ){
 		int myResult;
-		myResult = MessageBox(_T("‘S‚Ä‚Ìƒtƒ@ƒCƒ‹‚ğˆÓ–¡‚·‚éu*.*;v‚ğw’è‚µ‚½ê‡Ad•¡‚ğ”ğ‚¯‚é‚½‚ßA‚»‚Ì‘¼‚ÌŠg’£q‚ğíœ‚µ‚Ü‚·‚©Hi„§F‚Í‚¢j") ,_T("Œx"), MB_YESNOCANCEL );
+		myResult = MessageBox(_T("å…¨ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ„å‘³ã™ã‚‹ã€Œ*.*;ã€ã‚’æŒ‡å®šã—ãŸå ´åˆã€é‡è¤‡ã‚’é¿ã‘ã‚‹ãŸã‚ã€ãã®ä»–ã®æ‹¡å¼µå­ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿï¼ˆæ¨å¥¨ï¼šã¯ã„ï¼‰") ,_T("è­¦å‘Š"), MB_YESNOCANCEL );
 
 		if (IDYES == myResult){
 			UpdateData(TRUE);
@@ -327,7 +327,7 @@ void CFileSpecsDlg::OnBnClickedOk()
     CString strBuff2;
     LONG k;
 
-    k = 0; //VBAF1 ¨ VCF0‚É“Y‚¦š•ÏX
+    k = 0; //VBAï¼š1 â†’ VCï¼š0ã«æ·»ãˆå­—å¤‰æ›´
     strBuff2 = _T("");
 
 
@@ -375,7 +375,7 @@ void CFileSpecsDlg::OnBnClickedOk()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecAudio()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Audio_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.mp3;"), Audio_AddFLG);
@@ -397,7 +397,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecAudio()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecMovie()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Movie_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.mpg;"), Movie_AddFLG);
@@ -416,7 +416,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecMovie()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecImage()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Image_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.jpg;"), Image_AddFLG);
@@ -434,7 +434,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecImage()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecDocument()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Document_AddFLG = TRUE;
 	//static CString Office2007_FileTypes = _T("Not_Selected");
 
@@ -442,7 +442,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecDocument()
 
     if (Office2007_FileTypes == _T("Not_Selected")){
 		int myResult;
-        myResult = MessageBox(_T("ƒIƒtƒBƒX‚Q‚O‚O‚V‚ÌŠg’£q(20ŒÂ)‚à‘ÎÛ‚É‚µ‚Ü‚·‚©H") ,_T("Do you add extension of office2007 ?"), MB_YESNOCANCEL );
+        myResult = MessageBox(_T("ã‚ªãƒ•ã‚£ã‚¹ï¼’ï¼ï¼ï¼—ã®æ‹¡å¼µå­(20å€‹)ã‚‚å¯¾è±¡ã«ã—ã¾ã™ã‹ï¼Ÿ") ,_T("Do you add extension of office2007 ?"), MB_YESNOCANCEL );
 
         if (IDYES == myResult){
             Office2007_FileTypes = "Office2007_ON";
@@ -492,7 +492,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecDocument()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecZip()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Zip_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.zip;"),Zip_AddFLG);
@@ -506,7 +506,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecZip()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecHtml()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL HTML_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.htm;"), HTML_AddFLG);
@@ -520,7 +520,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecHtml()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecTxt()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	static BOOL TXT_AddFLG = TRUE;
 
@@ -535,7 +535,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecTxt()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecPlaylist()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	static BOOL Play_LIST_AddFLG = TRUE;
 
     CFileSpecsDlg::setFileSpecsFunc(_T("*.m3u;"), Play_LIST_AddFLG);
@@ -549,7 +549,7 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecPlaylist()
 
 void CFileSpecsDlg::OnBnClickedButtonFilespecAll()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	UpdateData(TRUE);
 
 	CFileSpecsDlg::m_xcCombo_FileSpec.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("*.*;"))));
@@ -560,8 +560,8 @@ void CFileSpecsDlg::OnBnClickedButtonFilespecAll()
 
 void CFileSpecsDlg::OnBnClickedCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	CFileSpecsDlg::m_xcCombo_FileSpec.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("")))); //’Ç‰Á 2012.06.14
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	CFileSpecsDlg::m_xcCombo_FileSpec.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("")))); //è¿½åŠ  2012.06.14
 	TargetFileSpecs = _T("");
 
 	CDialogEx::OnCancel();
@@ -569,9 +569,9 @@ void CFileSpecsDlg::OnBnClickedCancel()
 
 void CFileSpecsDlg::OnBnClickedBtnSpecclear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//int myResult;
- //   myResult = MessageBox(_T("ƒeƒLƒXƒgƒ{ƒbƒNƒX“à‚Ì•¶š‚ğíœ‚µ‚Ü‚·‚©H") ,_T("DELETE CONFIRM"), MB_YESNOCANCEL );
+ //   myResult = MessageBox(_T("ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å†…ã®æ–‡å­—ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ") ,_T("DELETE CONFIRM"), MB_YESNOCANCEL );
 
  //   if (IDYES == myResult){
 		CFileSpecsDlg::m_xcCombo_FileSpec.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));

@@ -1,24 +1,24 @@
-// KeywordDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿// KeywordDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
-////¥’Ç‰Á
+////â–¼è¿½åŠ 
 //#include "afxwin.h"
-////£’Ç‰Á
+////â–²è¿½åŠ 
 
-////¥’Ç‰Á
+////â–¼è¿½åŠ 
 //#include <windows.h>
-////£’Ç‰Á
+////â–²è¿½åŠ 
 
 #include "stdafx.h"
 #include "FileListCreator.h"
-#include "FileListCreatorDlg.h"//’Ç‰Á
+#include "FileListCreatorDlg.h"//è¿½åŠ 
 
 #include "KeywordDlg.h"
 #include "afxdialogex.h"
 
 
 
-// KeywordDlg ƒ_ƒCƒAƒƒO
+// KeywordDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(KeywordDlg, CDialogEx)
 
@@ -77,7 +77,7 @@ BEGIN_MESSAGE_MAP(KeywordDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// KeywordDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// KeywordDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 //http://rararahp.cool.ne.jp/cgi-bin/lng/vc/vclng.cgi?print+200711/07110073.txt
 
@@ -88,7 +88,7 @@ END_MESSAGE_MAP()
 void KeywordDlg::InsertStrIntoKeywords(CString str){
 
 	//////http://www.geocities.jp/ky_webid/win32c/002.html
-	////// ƒƒbƒZ[ƒWƒ‹[ƒv
+	////// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—
 
 	CString ComboStr = _T("");
 
@@ -99,14 +99,14 @@ void KeywordDlg::InsertStrIntoKeywords(CString str){
 		dwSel = dwSel_OK;
 		if (dwSel != CB_ERR){
 			((CComboBox*)GetDlgItem(IDC_COMBO_OK_BOX))->SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(ComboStr.Left(LOWORD(dwSel)) + str + ComboStr.Right(ComboStr.GetLength()-LOWORD(dwSel)))));
-			dwSel_OK++; //˜A‘±‚µ‚Ä‘}“ü‚·‚éê‡‚ğl—¶
+			dwSel_OK++; //é€£ç¶šã—ã¦æŒ¿å…¥ã™ã‚‹å ´åˆã‚’è€ƒæ…®
 		}
 	}else if (LastFocus == _T("NG_BOX")){
 		((CComboBox*)GetDlgItem(IDC_COMBO_NG_BOX))->GetWindowText(ComboStr);
 		dwSel = dwSel_NG;
 		if (dwSel != CB_ERR){
 			((CComboBox*)GetDlgItem(IDC_COMBO_NG_BOX))->SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(ComboStr.Left(LOWORD(dwSel)) + str + ComboStr.Right(ComboStr.GetLength()-LOWORD(dwSel)))));
-			dwSel_NG++; //˜A‘±‚µ‚Ä‘}“ü‚·‚éê‡‚ğl—¶
+			dwSel_NG++; //é€£ç¶šã—ã¦æŒ¿å…¥ã™ã‚‹å ´åˆã‚’è€ƒæ…®
 		}
 	}else{
 		dwSel = CB_ERR;
@@ -118,7 +118,7 @@ void KeywordDlg::InsertStrIntoKeywords(CString str){
 
 void KeywordDlg::OnBnClickedBtnAsterisk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("*"));
 }
 
@@ -161,7 +161,7 @@ BOOL KeywordDlg::OnInitDialog(){
 	if (m_Dlg->CellSizeFixMode == _T("FilePath")){
 		if (m_Dlg->m_xcList.GetItemCount()>=1){
 			int myResult;
-			myResult = MessageBox(_T("‘ü¡ƒtƒ@ƒCƒ‹ƒpƒXEƒ‚[ƒh‚Å‰{——‚µ‚Ä‚¢‚Ü‚·Bƒtƒ@ƒCƒ‹ƒpƒXî•ñ‚ğˆ—‚Å‚«‚é‚æ‚¤‚É‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+			myResult = MessageBox(_T("åªä»Šãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãƒ»ãƒ¢ãƒ¼ãƒ‰ã§é–²è¦§ã—ã¦ã„ã¾ã™ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹æƒ…å ±ã‚’å‡¦ç†ã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 			if (IDYES == myResult){
 				CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_KeywordFullPath);
@@ -178,7 +178,7 @@ BOOL KeywordDlg::OnInitDialog(){
 
 void KeywordDlg::OnCbnEditchangeComboOkBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	LastFocus = _T("OK_BOX");
 
 	DWORD dwSel;
@@ -191,22 +191,22 @@ void KeywordDlg::OnCbnEditchangeComboOkBox()
 
 void KeywordDlg::OnCbnSetfocusComboOkBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	((CComboBox*)GetDlgItem(IDC_COMBO_OK_BOX))->SetEditSel(-1,-1);  //‘I‘ğ‚È‚µ‚ÅAÅŒã‚Ì•¶šˆÊ’u‚ÉƒJ[ƒ\ƒ‹‚ğ’u‚­
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	((CComboBox*)GetDlgItem(IDC_COMBO_OK_BOX))->SetEditSel(-1,-1);  //é¸æŠãªã—ã§ã€æœ€å¾Œã®æ–‡å­—ä½ç½®ã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç½®ã
 }
 
 
 
 void KeywordDlg::OnCbnKillfocusComboOkBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	LastFocus = _T("OK_BOX");
 }
 
 
 void KeywordDlg::OnCbnSelchangeComboOkBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 }
 
 
@@ -214,13 +214,13 @@ void KeywordDlg::OnCbnSelchangeComboOkBox()
 
 void KeywordDlg::OnCbnEditupdateComboOkBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 }
 
 
 void KeywordDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: ‚±‚±‚ÉƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚·‚é‚©AŠù’è‚Ìˆ—‚ğŒÄ‚Ño‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹ã‹ã€æ—¢å®šã®å‡¦ç†ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
 }
 
 // PreTranslateMessage
@@ -240,12 +240,12 @@ BOOL KeywordDlg::PreTranslateMessage (MSG* pMsg)
 				switch ( (int)pMsg->wParam ) {
 
 				case _T('D'):
-					//ƒ‚[ƒ_ƒŒƒX‚P
+					//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 					m_Dlg->OnFilterDatefilter();
 					break;
 
 				case _T('K'):
-					//ƒ‚[ƒ_ƒŒƒX‚P
+					//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 					m_Dlg->OnFilterKeywords();
 					break;
 
@@ -254,33 +254,33 @@ BOOL KeywordDlg::PreTranslateMessage (MSG* pMsg)
 					break;
 
 				case _T('Z'):
-					/* ƒAƒ“ƒhƒD */
+					/* ã‚¢ãƒ³ãƒ‰ã‚¥ */
 					if (m_Dlg->ESCAPE_FLG == FALSE) {
 						m_Dlg->ESCAPE_FLG = TRUE;
-						m_Dlg->StatusStringSet(_T("Às’†‚Ìˆ—‚ğ’â~‚µ‚Ü‚µ‚½"),300,TRUE);
+						m_Dlg->StatusStringSet(_T("å®Ÿè¡Œä¸­ã®å‡¦ç†ã‚’åœæ­¢ã—ã¾ã—ãŸ"),300,TRUE);
 					}
 					m_Dlg->OnEditlistUndo();
 					m_Dlg->ESCAPE_FLG = FALSE;
 					break;
 
 				case _T('S'):
-					/* •Û‘¶ */
+					/* ä¿å­˜ */
 					m_Dlg->OnMenuFileSave();
 			
-					m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,FALSE);
+					m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,FALSE);
 					break;
 
-				//case _T('V'): //’Ç‰Á 2012.05.25
-				//	/* ƒy[ƒXƒg */
+				//case _T('V'): //è¿½åŠ  2012.05.25
+				//	/* ãƒšãƒ¼ã‚¹ãƒˆ */
 				//	break;
 				}
 			}
 		//}
 	case WM_LBUTTONDOWN:
 		//break;
-	case WM_LBUTTONUP://ƒRƒ“ƒ{ƒ{ƒbƒNƒX‚Ì¥‚ª‰Ÿ‚³‚ê‚½‚É‚ÍE‚Á‚Ä‚­‚ê‚é
+	case WM_LBUTTONUP://ã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹ã®â–¼ãŒæŠ¼ã•ã‚ŒãŸæ™‚ã«ã¯æ‹¾ã£ã¦ãã‚Œã‚‹
 
-	case WM_MOUSEMOVE://ƒJ[ƒ\ƒ‹‚ÌˆÚ“®‚»‚Ì‚à‚Ì‚ğE‚¤
+	case WM_MOUSEMOVE://ã‚«ãƒ¼ã‚½ãƒ«ã®ç§»å‹•ãã®ã‚‚ã®ã‚’æ‹¾ã†
 		if(pMsg->hwnd == GetDlgItem(IDC_COMBO_OK_BOX)->m_hWnd ){
 
 			LastFocus = _T("OK_BOX");
@@ -291,7 +291,7 @@ BOOL KeywordDlg::PreTranslateMessage (MSG* pMsg)
 				dwSel_OK = dwSel;
 			}
 
-			//MessageBox(_T("ƒJ[ƒ\ƒ‹‚ªˆÚ“®‚µ‚Ü‚µ‚½"));
+			//MessageBox(_T("ã‚«ãƒ¼ã‚½ãƒ«ãŒç§»å‹•ã—ã¾ã—ãŸ"));
 			break;
 		}
 		if(pMsg->hwnd == GetDlgItem(IDC_COMBO_NG_BOX)->m_hWnd ){
@@ -304,7 +304,7 @@ BOOL KeywordDlg::PreTranslateMessage (MSG* pMsg)
 				dwSel_NG = dwSel;
 			}
 
-			//MessageBox(_T("ƒJ[ƒ\ƒ‹‚ªˆÚ“®‚µ‚Ü‚µ‚½"));
+			//MessageBox(_T("ã‚«ãƒ¼ã‚½ãƒ«ãŒç§»å‹•ã—ã¾ã—ãŸ"));
 			break;
 		}
 	default:
@@ -317,7 +317,7 @@ BOOL KeywordDlg::PreTranslateMessage (MSG* pMsg)
 
 void KeywordDlg::OnCbnEditchangeComboNgBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	LastFocus = _T("NG_BOX");
 
 	DWORD dwSel;
@@ -331,28 +331,28 @@ void KeywordDlg::OnCbnEditchangeComboNgBox()
 
 void KeywordDlg::OnCbnSetfocusComboNgBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	((CComboBox*)GetDlgItem(IDC_COMBO_NG_BOX))->SetEditSel(-1,-1);  //‘I‘ğ‚È‚µ‚ÅAÅŒã‚Ì•¶šˆÊ’u‚ÉƒJ[ƒ\ƒ‹‚ğ’u‚­
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	((CComboBox*)GetDlgItem(IDC_COMBO_NG_BOX))->SetEditSel(-1,-1);  //é¸æŠãªã—ã§ã€æœ€å¾Œã®æ–‡å­—ä½ç½®ã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç½®ã
 }
 
 
 void KeywordDlg::OnCbnKillfocusComboNgBox()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	LastFocus = _T("NG_BOX");
 }
 
 
 void KeywordDlg::OnBnClickedBtnSpace()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	
-	//if ( keywords_OK(_T("*‚¤e‚¦??"),_T("a‚ i‚¢u‚¤e‚¦o‚¨")) == TRUE) {
-	//	MessageBox(_T("•¶š‚Í•”•ªˆê’v‚µ‚Ü‚µ‚½B"),_T("ƒeƒXƒg"),MB_OK);
+	//if ( keywords_OK(_T("*ã†eãˆ??"),_T("aã‚iã„uã†eãˆoãŠ")) == TRUE) {
+	//	MessageBox(_T("æ–‡å­—ã¯éƒ¨åˆ†ä¸€è‡´ã—ã¾ã—ãŸã€‚"),_T("ãƒ†ã‚¹ãƒˆ"),MB_OK);
 	//}
 
 	//if ( keywords_OK(_T("*??"),_T("*??")) == TRUE) {
-	//	MessageBox(_T("•¶š‚Í•”•ªˆê’v‚µ‚Ü‚µ‚½B"),_T("ƒeƒXƒg"),MB_OK);
+	//	MessageBox(_T("æ–‡å­—ã¯éƒ¨åˆ†ä¸€è‡´ã—ã¾ã—ãŸã€‚"),_T("ãƒ†ã‚¹ãƒˆ"),MB_OK);
 	//}
 	InsertStrIntoKeywords(_T(" "));
 }
@@ -360,21 +360,21 @@ void KeywordDlg::OnBnClickedBtnSpace()
 
 void KeywordDlg::OnBnClickedBtnQuestionmark()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("?"));
 }
 
 
 void KeywordDlg::OnBnClickedBtnPathseparator()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("\\"));
 }
 
 
 void KeywordDlg::OnBnClickedBtnDoublequotationmark()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("\""));
 }
 
@@ -415,7 +415,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 	if(myCnt % 2 != 0){
 		int myResult;
 		
-		myResult = MessageBox(_T("OK Word‚ÍAu\"v(ƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“)‚ğA‚QŒÂƒZƒbƒg‚Å(‹ô”ŒÂ‚Å)‹Lq‚µ‚Ä‰º‚³‚¢\r\nƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“‚ğíœ‚µ‚Äˆ—‚ğ‘±s‚µ‚Ü‚·‚©H") ,_T("ƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“"), MB_YESNOCANCEL);
+		myResult = MessageBox(_T("OK Wordã¯ã€ã€Œ\"ã€(ãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³)ã‚’ã€ï¼’å€‹ã‚»ãƒƒãƒˆã§(å¶æ•°å€‹ã§)è¨˜è¿°ã—ã¦ä¸‹ã•ã„\r\nãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å‰Šé™¤ã—ã¦å‡¦ç†ã‚’ç¶šè¡Œã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³"), MB_YESNOCANCEL);
 		
 		if (IDYES == myResult){
 			keywords_OK_Str.Replace(_T("\""),_T(""));
@@ -439,7 +439,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 	if(myCnt % 2 != 0){
 		int myResult;
 		
-		myResult = MessageBox(_T("NG Word‚ÍAu\"v(ƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“)‚ğA‚QŒÂƒZƒbƒg‚Å(‹ô”ŒÂ‚Å)‹Lq‚µ‚Ä‰º‚³‚¢\r\nƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“‚ğíœ‚µ‚Äˆ—‚ğ‘±s‚µ‚Ü‚·‚©H") ,_T("ƒ_ƒuƒ‹ƒR[ƒe[ƒVƒ‡ƒ“"), MB_YESNOCANCEL);
+		myResult = MessageBox(_T("NG Wordã¯ã€ã€Œ\"ã€(ãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³)ã‚’ã€ï¼’å€‹ã‚»ãƒƒãƒˆã§(å¶æ•°å€‹ã§)è¨˜è¿°ã—ã¦ä¸‹ã•ã„\r\nãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å‰Šé™¤ã—ã¦å‡¦ç†ã‚’ç¶šè¡Œã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ€ãƒ–ãƒ«ã‚³ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³"), MB_YESNOCANCEL);
 		
 		if (IDYES == myResult){
 			keywords_NG_Str.Replace(_T("\""),_T(""));
@@ -470,7 +470,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 	TempStr = TempStr.TrimLeft(_T(" "));
 	TempStr = TempStr.TrimRight(_T(" "));
 
-	//if ( keywords_OK_Str.GetLength() == 1 ){ //’Ç‰Á 2012.04.04
+	//if ( keywords_OK_Str.GetLength() == 1 ){ //è¿½åŠ  2012.04.04
 	//	if (m_xvChkFuzzySearch == TRUE) {
 	//		Keywords_OK_Array[OK_index] = _T("*") + keywords_OK_Str + _T("*");
 	//	}
@@ -502,12 +502,12 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 
 
 			if(QuotStartFLG == FALSE){
-				if(SpaceStartFLG == FALSE && TempStr.Mid(i,1) != _T(" ") && TempStr.Mid(i,1) != _T("@")){
+				if(SpaceStartFLG == FALSE && TempStr.Mid(i,1) != _T(" ") && TempStr.Mid(i,1) != _T("ã€€")){
 					SpaceStartFLG  = TRUE;
 					StartIDX = i;
 				}
 				
-				if ((TempStr.Find(_T(" "),0) == NULL && TempStr.Find(_T("@"),0) == NULL  || i ==TempStr.GetLength()-1 )){
+				if ((TempStr.Find(_T(" "),0) == NULL && TempStr.Find(_T("ã€€"),0) == NULL  || i ==TempStr.GetLength()-1 )){
 					EndIDX = i;
 
 					if(OK_index<=100){
@@ -521,7 +521,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 					}
 
 					//break;
-				}else if ((TempStr.Mid(i,1) == _T(" ") || TempStr.Mid(i,1) == _T("@") || i ==TempStr.GetLength()-1 ) && ( SpaceStartFLG == TRUE )){
+				}else if ((TempStr.Mid(i,1) == _T(" ") || TempStr.Mid(i,1) == _T("ã€€") || i ==TempStr.GetLength()-1 ) && ( SpaceStartFLG == TRUE )){
 					SpaceStartFLG = FALSE;
 					EndIDX = i;
 				
@@ -565,7 +565,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 	TempStr = TempStr.TrimLeft(_T(" "));
 	TempStr = TempStr.TrimRight(_T(" "));
 
-	//if ( keywords_NG_Str.GetLength() == 1 ){ //’Ç‰Á 2012.04.04
+	//if ( keywords_NG_Str.GetLength() == 1 ){ //è¿½åŠ  2012.04.04
 	//	if (m_xvChkFuzzySearch == TRUE) {
 	//		Keywords_NG_Array[NG_index] = _T("*") + keywords_NG_Str + _T("*");
 	//	}
@@ -596,12 +596,12 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 			}
 
 			if(QuotStartFLG == FALSE){
-				if(SpaceStartFLG == FALSE && TempStr.Mid(i,1) != _T(" ") && TempStr.Mid(i,1) != _T("@")){
+				if(SpaceStartFLG == FALSE && TempStr.Mid(i,1) != _T(" ") && TempStr.Mid(i,1) != _T("ã€€")){
 					SpaceStartFLG  = TRUE;
 					StartIDX = i;
 				}
 				
-				if ((TempStr.Find(_T(" "),0) == NULL && TempStr.Find(_T("@"),0) == NULL || i ==TempStr.GetLength()-1 )){
+				if ((TempStr.Find(_T(" "),0) == NULL && TempStr.Find(_T("ã€€"),0) == NULL || i ==TempStr.GetLength()-1 )){
 					EndIDX = i;
 
 					if(NG_index<=100){
@@ -614,7 +614,7 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 					}
 
 					//break;
-				}else if ((TempStr.Mid(i,1) == _T(" ") || TempStr.Mid(i,1) == _T("@") || i ==TempStr.GetLength()-1 ) && ( SpaceStartFLG == TRUE )){
+				}else if ((TempStr.Mid(i,1) == _T(" ") || TempStr.Mid(i,1) == _T("ã€€") || i ==TempStr.GetLength()-1 ) && ( SpaceStartFLG == TRUE )){
 					SpaceStartFLG = FALSE;
 					EndIDX = i;
 				
@@ -645,24 +645,24 @@ BOOL KeywordDlg::Split_And_SetArray_Func(){ //CString targetStr,CString keywords
 	UpdateData(FALSE);
 
 	if(OK_index>100 || NG_index>100){
-		MessageBox(_T("OK Word‚ÆNG Word‚ÍA‚»‚ê‚¼‚ê‚P‚O‚OŒÂ‚Ü‚Åw’è‰Â”\‚Å‚·B‚P‚O‚OŒÂ–ÚˆÈ‘O‚ÌƒL[ƒ[ƒhˆ—‚ğ‘±s‚µ‚Ü‚·B") ,_T("ƒL[ƒ[ƒh”’´‰ß"), MB_OK);
+		MessageBox(_T("OK Wordã¨NG Wordã¯ã€ãã‚Œãã‚Œï¼‘ï¼ï¼å€‹ã¾ã§æŒ‡å®šå¯èƒ½ã§ã™ã€‚ï¼‘ï¼ï¼å€‹ç›®ä»¥å‰ã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰å‡¦ç†ã‚’ç¶šè¡Œã—ã¾ã™ã€‚") ,_T("ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰æ•°è¶…é"), MB_OK);
 	}
 
 	return TRUE;
 }
 
 //BOOL KeywordDlg::Like_Func(CString targetStr){
-//šhttp://oshiete.goo.ne.jp/qa/287644.html
+//â˜…http://oshiete.goo.ne.jp/qa/287644.html
 //http://oshiete.goo.ne.jp/qa/6966243.html
 //http://oshiete.goo.ne.jp/qa/6998958.html
 
 int KeywordDlg::StrMatchMBS( const TCHAR *Ptn, const TCHAR *Str ){
 
-	//const char *Ptn cƒƒCƒ‹ƒhƒJ[ƒh•t‚«•¶š—ñ
-	//const char *Str cŒŸõ‘ÎÛ
-	//–ß‚è’l@c‚P^‚OF^^‹U
+	//const char *Ptn â€¦ãƒ¯ã‚¤ãƒ«ãƒ‰ã‚«ãƒ¼ãƒ‰ä»˜ãæ–‡å­—åˆ—
+	//const char *Str â€¦æ¤œç´¢å¯¾è±¡
+	//æˆ»ã‚Šå€¤ã€€â€¦ï¼‘ï¼ï¼ï¼šçœŸï¼å½
 
-	//_mbsinc()‚ğ_tcsinc()‚É _mbsnextc()‚ğ_tcsnextc()‚ÉA•ÏX 2011.09.09
+	//_mbsinc()ã‚’_tcsinc()ã« _mbsnextc()ã‚’_tcsnextc()ã«ã€å¤‰æ›´ 2011.09.09
 
 	switch( *Ptn )
 	{
@@ -700,7 +700,7 @@ BOOL KeywordDlg::keywords_OK(CString targetStr,CString in_Str){
 	str_1.MakeLower();
 	str_2.MakeLower();
 
-	//¡TCHAR[]‚É•ÏŠ·‚µ‚Ä‚µ‚Ü‚¤‚Æu—’v‚È‚Ç‚Ì‘Ê–Ú•¶š‚É‘Î‰‚Å‚«‚È‚¢BCString ‚Ì‚Ü‚Üg‚¤ 20011.09.15
+	//â– TCHAR[]ã«å¤‰æ›ã—ã¦ã—ã¾ã†ã¨ã€Œåµã€ãªã©ã®é§„ç›®æ–‡å­—ã«å¯¾å¿œã§ããªã„ã€‚CString ã®ã¾ã¾ä½¿ã† 20011.09.15
 
 
 	tempFLG = StrMatchMBS(str_1,str_2);
@@ -731,7 +731,7 @@ BOOL KeywordDlg::keywords_NG(CString targetStr,CString in_Str){
 	str_1.MakeLower();
 	str_2.MakeLower();
 
-	//¡TCHAR[]‚É•ÏŠ·‚µ‚Ä‚µ‚Ü‚¤‚Æu—’v‚È‚Ç‚Ì‘Ê–Ú•¶š‚É‘Î‰‚Å‚«‚È‚¢BCString ‚Ì‚Ü‚Üg‚¤ 20011.09.15
+	//â– TCHAR[]ã«å¤‰æ›ã—ã¦ã—ã¾ã†ã¨ã€Œåµã€ãªã©ã®é§„ç›®æ–‡å­—ã«å¯¾å¿œã§ããªã„ã€‚CString ã®ã¾ã¾ä½¿ã† 20011.09.15
 
 	tempFLG = StrMatchMBS(str_1,str_2);
 
@@ -745,7 +745,7 @@ BOOL KeywordDlg::keywords_NG(CString targetStr,CString in_Str){
 
 void KeywordDlg::OnBnClickedBtnTargetred()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -753,7 +753,7 @@ void KeywordDlg::OnBnClickedBtnTargetred()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	Split_And_SetArray_Func();
 	SameKeyword();
@@ -789,16 +789,16 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 	m_Dlg->lvi.mask = LVIF_TEXT;
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	m_Dlg->StatusStringSet(_T("KeywordsFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+	m_Dlg->StatusStringSet(_T("KeywordsFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 	if( m_xvChkFuzzySearch == FALSE ) {
 		int myResult;
 
-		myResult = MessageBox(_T("‚ ‚¢‚Ü‚¢ŒŸõ‚ª‚n‚e‚e‚É‚È‚Á‚Ä‚¢‚Ü‚·B‚n‚m‚É‚µ‚Ü‚·‚©H"),_T("‚ ‚¢‚Ü‚¢ŒŸõ"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ã‚ã„ã¾ã„æ¤œç´¢ãŒï¼¯ï¼¦ï¼¦ã«ãªã£ã¦ã„ã¾ã™ã€‚ï¼¯ï¼®ã«ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚ã„ã¾ã„æ¤œç´¢"),MB_YESNOCANCEL);
 
 		if (IDYES == myResult){
 			CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_FuzzySearch_ON);
@@ -808,7 +808,7 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 			return;
 		}
 	}
-	//m_Dlg->SelectALL_CancellationFunc(); //ƒRƒƒ“ƒg‰» 2012.06.01
+	//m_Dlg->SelectALL_CancellationFunc(); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.01
 	m_Dlg->GetStrFormat_Func();
 
 	int workRow = 0;
@@ -824,10 +824,10 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 		while (workRow<m_Dlg->m_xcList.GetItemCount()){
 			FormatDataNum = m_Dlg->m_xcList.GetItemData(workRow);
 			
-			FullPathString = m_Dlg->m_xcList.GetItemText(workRow,2); //ƒtƒ@ƒCƒ‹ƒpƒX
-			myFileName = m_Dlg->m_xcList.GetItemText(workRow,3); //ƒtƒ@ƒCƒ‹–¼
+			FullPathString = m_Dlg->m_xcList.GetItemText(workRow,2); //ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+			myFileName = m_Dlg->m_xcList.GetItemText(workRow,3); //ãƒ•ã‚¡ã‚¤ãƒ«å
 
-			RemarksColumnStr = m_Dlg->m_xcList.GetItemText(workRow,8);//8:”õl—“
+			RemarksColumnStr = m_Dlg->m_xcList.GetItemText(workRow,8);//8:å‚™è€ƒæ¬„
 
 			//if (FullPathString !=_T("")){
 			//	FullPathString.Replace(_T("%"),_T("%%"));
@@ -839,7 +839,7 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 
 			while ( i <= OK_index -1 ){
 				if ( (m_xvChkKeywordFullPath == TRUE && keywords_OK(Keywords_OK_Array[i],FullPathString)==TRUE )  || keywords_OK(Keywords_OK_Array[i],myFileName)==TRUE || keywords_OK(Keywords_OK_Array[i],RemarksColumnStr)==TRUE) {
-					//”õl—“‚à’Ç‰ÁHNG‚ÌğŒ’Ç‰Á
+					//å‚™è€ƒæ¬„ã‚‚è¿½åŠ ï¼ŸNGã®æ¡ä»¶è¿½åŠ 
 					OK_IS_TRUE = TRUE;
 				}
 				i++;
@@ -850,14 +850,14 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 
 			while ( i <= NG_index -1 ){
 				if ( (m_xvChkKeywordFullPath == TRUE && keywords_NG(Keywords_NG_Array[i],FullPathString)==TRUE )  || keywords_NG(Keywords_NG_Array[i],myFileName)==TRUE || keywords_NG(Keywords_NG_Array[i],RemarksColumnStr)==TRUE) {
-					//”õl—“‚à’Ç‰ÁHNG‚ÌğŒ’Ç‰Á
+					//å‚™è€ƒæ¬„ã‚‚è¿½åŠ ï¼ŸNGã®æ¡ä»¶è¿½åŠ 
 					NG_IS_TRUE = TRUE;
 				}
 				i++;
 			}
    
 			if ( OK_IS_TRUE==TRUE && NG_IS_TRUE==FALSE ) {
-//				//”õl—“‚à’Ç‰ÁHNG‚ÌğŒ’Ç‰Á
+//				//å‚™è€ƒæ¬„ã‚‚è¿½åŠ ï¼ŸNGã®æ¡ä»¶è¿½åŠ 
 				if (mySwitch == _T("Red")){
 					FormatDataNum = m_Dlg->SetToRed(FormatDataNum);
 				}
@@ -890,8 +890,8 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 				m_Dlg->m_xcList.SetItem(&m_Dlg->lvi);
 				UpdateData(FALSE);
 
-				//ListView_Update(m_Dlg->m_xcList, workRow);//’Ç‰Á 2012.06.01
-				m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+				//ListView_Update(m_Dlg->m_xcList, workRow);//è¿½åŠ  2012.06.01
+				m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 			}
 			workRow++;
 		}
@@ -907,10 +907,10 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 		while (workRow<m_Dlg->m_xcList.GetItemCount()){
 			FormatDataNum = m_Dlg->m_xcList.GetItemData(workRow);
 
-			FullPathString = m_Dlg->m_xcList.GetItemText(workRow,2); //ƒtƒ@ƒCƒ‹ƒpƒX
-			myFileName = m_Dlg->m_xcList.GetItemText(workRow,3); //ƒtƒ@ƒCƒ‹–¼
+			FullPathString = m_Dlg->m_xcList.GetItemText(workRow,2); //ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+			myFileName = m_Dlg->m_xcList.GetItemText(workRow,3); //ãƒ•ã‚¡ã‚¤ãƒ«å
 			
-			RemarksColumnStr = m_Dlg->m_xcList.GetItemText(workRow,8);//8:”õl—“
+			RemarksColumnStr = m_Dlg->m_xcList.GetItemText(workRow,8);//8:å‚™è€ƒæ¬„
 
 			//if (FullPathString !=_T("")){
 			//	FullPathString.Replace(_T("%"),_T("%%"));
@@ -922,7 +922,7 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 
 			while ( i <= OK_index -1 ){
 				if ( (m_xvChkKeywordFullPath == TRUE && keywords_OK(Keywords_OK_Array[i],FullPathString)==TRUE )  || keywords_OK(Keywords_OK_Array[i],myFileName)==TRUE || keywords_OK(Keywords_OK_Array[i],RemarksColumnStr)==TRUE) {
-					//”õl—“‚à’Ç‰ÁHNG‚ÌğŒ’Ç‰Á
+					//å‚™è€ƒæ¬„ã‚‚è¿½åŠ ï¼ŸNGã®æ¡ä»¶è¿½åŠ 
 					OK_IS_TRUE = TRUE;
 				}
 				i++;
@@ -933,19 +933,19 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 
 			while ( i <= NG_index -1 ){
 				if ((m_xvChkKeywordFullPath == TRUE && keywords_NG(Keywords_NG_Array[i],FullPathString)==TRUE )  || keywords_NG(Keywords_NG_Array[i],myFileName)==TRUE || keywords_NG(Keywords_NG_Array[i],RemarksColumnStr)==TRUE) {
-					//”õl—“‚à’Ç‰ÁHNG‚ÌğŒ’Ç‰Á
+					//å‚™è€ƒæ¬„ã‚‚è¿½åŠ ï¼ŸNGã®æ¡ä»¶è¿½åŠ 
 					NG_IS_TRUE = TRUE;
 				}
 				i++;
 			}
    
 			if ( OK_IS_TRUE==FALSE || NG_IS_TRUE==TRUE) {
-				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //’Ç‰Á 2012.04.04  //ƒRƒƒ“ƒg‰» 2012.06.10
-				m_Dlg->ItemCount_Func(TRUE); //’Ç‰Á2012.04.04
+				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //è¿½åŠ  2012.04.04  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.10
+				m_Dlg->ItemCount_Func(TRUE); //è¿½åŠ 2012.04.04
 
 				m_Dlg->m_xcList.DeleteItem(workRow);
 
-				m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+				m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 			}else{
 				workRow++;
 			}
@@ -960,12 +960,12 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 			FormatDataNum = m_Dlg->m_xcList.GetItemData(workRow);
 
 			if ( FormatDataNum == 11) {
-				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //’Ç‰Á 2012.04.04  //ƒRƒƒ“ƒg‰» 2012.06.10
-				m_Dlg->ItemCount_Func(TRUE); //’Ç‰Á2012.04.04
+				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //è¿½åŠ  2012.04.04  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.10
+				m_Dlg->ItemCount_Func(TRUE); //è¿½åŠ 2012.04.04
 
 				m_Dlg->m_xcList.DeleteItem(workRow);
 
-				m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+				m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 			}else{
 				workRow++;
 			}
@@ -986,16 +986,16 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 			m_Dlg->lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(FormatDataStr));
 
 			m_Dlg->m_xcList.SetItem(&m_Dlg->lvi);
-			//ListView_Update(m_Dlg->m_xcList, workRow);  //ƒRƒƒ“ƒg‰»H 2012,06.01 //ÄƒRƒƒ“ƒg‰» 2012.06.15
+			//ListView_Update(m_Dlg->m_xcList, workRow);  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ–ï¼Ÿ 2012,06.01 //å†ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.15
 			UpdateData(FALSE);
 			workRow++;
 		}
 		m_Dlg->SetSEQ_NUM_Func(TRUE);
 
-		m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -1010,7 +1010,7 @@ void KeywordDlg::EmphasisByKeywords(CString mySwitch){
 	ExistCheckFunc(_T("NG_BOX"));
 	ReadOrWriteComboData_Func(_T("write"));
 
-	m_Dlg->StatusStringSet(_T("KeywordsFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("KeywordsFilter çµ‚äº†"),300,TRUE);
 
 }
 
@@ -1051,7 +1051,7 @@ BOOL KeywordDlg::SameKeyword(){
 	int Result;
 
     if ( sameFLG == TRUE ){
-        Result = MessageBox(_T("ŒŸõƒ[ƒh‚ÌOKƒ[ƒh‚ÆNGƒ[ƒh‚É“¯‚¶‚à‚Ì‚ªŠÜ‚Ü‚êA‚»‚ê‚ç‚ÌğŒ‚Å‚ÍAŒŸõŒ‹‰Ê‚É‚Íƒqƒbƒg‚µ‚Ü‚¹‚ñB“¯ˆê•¶š‚ğˆêŠ‡íœ‚µ‚Ü‚·‚©H\r\n(u‚¢‚¢‚¦v‚ğ‘I‘ğ‚·‚é‚ÆAŒŸõ‚ğ‘±s‚µ‚Ü‚·B)"), _T("ƒL[ƒ[ƒhd•¡Šm”F"), MB_YESNOCANCEL );
+        Result = MessageBox(_T("æ¤œç´¢ãƒ¯ãƒ¼ãƒ‰ã®OKãƒ¯ãƒ¼ãƒ‰ã¨NGãƒ¯ãƒ¼ãƒ‰ã«åŒã˜ã‚‚ã®ãŒå«ã¾ã‚Œã€ãã‚Œã‚‰ã®æ¡ä»¶ã§ã¯ã€æ¤œç´¢çµæœã«ã¯ãƒ’ãƒƒãƒˆã—ã¾ã›ã‚“ã€‚åŒä¸€æ–‡å­—ã‚’ä¸€æ‹¬å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ\r\n(ã€Œã„ã„ãˆã€ã‚’é¸æŠã™ã‚‹ã¨ã€æ¤œç´¢ã‚’ç¶šè¡Œã—ã¾ã™ã€‚)"), _T("ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰é‡è¤‡ç¢ºèª"), MB_YESNOCANCEL );
         
         if ( Result == IDYES ){
 			for ( OK_WordIDX = 0; OK_WordIDX <= OK_index; OK_WordIDX++){ 
@@ -1070,7 +1070,7 @@ BOOL KeywordDlg::SameKeyword(){
 
 								}
 								keywords_OK_Str.Replace(tempOKStr,_T(""));
-								keywords_OK_Str.Replace(_T("\"\""),_T("")); //’Ç‰Á 2012.04.22
+								keywords_OK_Str.Replace(_T("\"\""),_T("")); //è¿½åŠ  2012.04.22
 								//keywords_OK_Str.Replace(_T("  "),_T(" "));
 
 								if (keywords_OK_Str.Left(1)==_T(" ")){
@@ -1087,7 +1087,7 @@ BOOL KeywordDlg::SameKeyword(){
 									tempNGStr = tempNGStr.TrimRight(_T("*"));
 								}
 								keywords_NG_Str.Replace(tempNGStr,_T(""));
-								keywords_NG_Str.Replace(_T("\"\""),_T("")); //’Ç‰Á 2012.04.22
+								keywords_NG_Str.Replace(_T("\"\""),_T("")); //è¿½åŠ  2012.04.22
 								//keywords_NG_Str.Replace(_T("  "),_T(" "));
 
 								if (keywords_NG_Str.Left(1)==_T(" ")){
@@ -1114,7 +1114,7 @@ BOOL KeywordDlg::SameKeyword(){
 
 void KeywordDlg::OnBnClickedCheckFuzzysearchOn()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
 
@@ -1144,7 +1144,7 @@ void KeywordDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= KeywordDlg::m_xcCombo_OK_BOX.GetCount() -1){
 				CString ComboText;
-				KeywordDlg::m_xcCombo_OK_BOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				KeywordDlg::m_xcCombo_OK_BOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					KeywordDlg::m_xcCombo_OK_BOX.SetCurSel(k);
@@ -1179,7 +1179,7 @@ void KeywordDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= KeywordDlg::m_xcCombo_NG_BOX.GetCount() -1){
 				CString ComboText;
-				KeywordDlg::m_xcCombo_NG_BOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				KeywordDlg::m_xcCombo_NG_BOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					KeywordDlg::m_xcCombo_NG_BOX.SetCurSel(k);
@@ -1224,7 +1224,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= KeywordDlg::m_xcCombo_OK_BOX.GetCount() -1){
 			CString ComboText;
-			KeywordDlg::m_xcCombo_OK_BOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			KeywordDlg::m_xcCombo_OK_BOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData1 = WriteData1 + ComboText + _T("\n");
 			}
@@ -1236,7 +1236,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= KeywordDlg::m_xcCombo_NG_BOX.GetCount() -1){
 			CString ComboText;
-			KeywordDlg::m_xcCombo_NG_BOX.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			KeywordDlg::m_xcCombo_NG_BOX.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData2 = WriteData2 + ComboText + _T("\n");
 			}
@@ -1247,10 +1247,10 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	CString       wstr, rstr;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -1258,7 +1258,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -1279,7 +1279,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		}
 		//http://www.g-ishihara.com/mfc_fi_01.htm
 		if (mySwitch == _T("read")){
-			if ( PathFileExists( CurDir + _T("\\KeywordOK_BOX.dat") ) ){ //’Ç‰Á 2012.06.15
+			if ( PathFileExists( CurDir + _T("\\KeywordOK_BOX.dat") ) ){ //è¿½åŠ  2012.06.15
 				FILE *fp;
 				_tfopen_s(&fp,CurDir + _T("\\KeywordOK_BOX.dat"), _T("r, ccs=UNICODE"));
 				CStdioFile stdFile1(fp);
@@ -1298,13 +1298,13 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 				KeywordDlg::m_xcCombo_OK_BOX.SetCurSel(0);
 
 
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				stdFile1.Close();
 				fclose(fp);
 			}
 			err = 0;
 
-			if ( PathFileExists( CurDir + _T("\\KeywordNG_BOX.dat") ) ){ //’Ç‰Á 2012.06.15
+			if ( PathFileExists( CurDir + _T("\\KeywordNG_BOX.dat") ) ){ //è¿½åŠ  2012.06.15
 				FILE *fp;
 				_tfopen_s(&fp,CurDir + _T("\\KeywordNG_BOX.dat"), _T("r, ccs=UNICODE"));
 				CStdioFile stdFile2(fp);
@@ -1322,7 +1322,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 				}
 				KeywordDlg::m_xcCombo_NG_BOX.SetCurSel(0);
 
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				stdFile2.Close();
 				fclose(fp);
 			}
@@ -1344,7 +1344,7 @@ void KeywordDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 void KeywordDlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 
 	//ReadOrWriteComboData_Func(_T("write"));
@@ -1353,7 +1353,7 @@ void KeywordDlg::OnBnClickedOk()
 
 void KeywordDlg::OnBnClickedBtnTargetbold()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -1361,7 +1361,7 @@ void KeywordDlg::OnBnClickedBtnTargetbold()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	Split_And_SetArray_Func();
 	SameKeyword();
@@ -1372,7 +1372,7 @@ void KeywordDlg::OnBnClickedBtnTargetbold()
 
 void KeywordDlg::OnBnClickedBtnExcludelist1()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -1381,7 +1381,7 @@ void KeywordDlg::OnBnClickedBtnExcludelist1()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	Split_And_SetArray_Func();
 	SameKeyword();
@@ -1392,7 +1392,7 @@ void KeywordDlg::OnBnClickedBtnExcludelist1()
 
 void KeywordDlg::OnBnClickedBtnExcludelist2()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -1400,7 +1400,7 @@ void KeywordDlg::OnBnClickedBtnExcludelist2()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	Split_And_SetArray_Func();
 	SameKeyword();
@@ -1411,7 +1411,7 @@ void KeywordDlg::OnBnClickedBtnExcludelist2()
 
 void KeywordDlg::OnBnClickedBtnFormatcancellation()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -1420,7 +1420,7 @@ void KeywordDlg::OnBnClickedBtnFormatcancellation()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	Split_And_SetArray_Func();
 	SameKeyword();
@@ -1431,7 +1431,7 @@ void KeywordDlg::OnBnClickedBtnFormatcancellation()
 
 void KeywordDlg::OnBnClickedBtnKeywordsClear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	m_xcCombo_OK_BOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 	m_xcCombo_NG_BOX.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 }
@@ -1439,35 +1439,35 @@ void KeywordDlg::OnBnClickedBtnKeywordsClear()
 
 void KeywordDlg::OnBnClickedBtnHyphen()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("-"));
 }
 
 
 void KeywordDlg::OnBnClickedBtnSlash()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("/"));
 }
 
 
 void KeywordDlg::OnBnClickedBtnUnderscore()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("_"));
 }
 
 
 void KeywordDlg::OnBnClickedBtnPeriod()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	InsertStrIntoKeywords(_T("."));
 }
 
 
 void KeywordDlg::OnBnClickedChkKeywordfullpath()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_KeywordFullPath);
 	
 	if (m_xvChkKeywordFullPath == FALSE){
@@ -1484,7 +1484,7 @@ void KeywordDlg::OnBnClickedChkKeywordfullpath()
 
 void KeywordDlg::OnBnClickedKeywordsUndo()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	//if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){

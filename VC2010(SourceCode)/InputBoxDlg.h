@@ -1,31 +1,31 @@
-#pragma once
+Ôªø#pragma once
 #include "afxwin.h"
 
 
-// InputBoxDlg É_ÉCÉAÉçÉO
+// InputBoxDlg „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class InputBoxDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(InputBoxDlg)
 
 public:
-	InputBoxDlg(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	InputBoxDlg(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~InputBoxDlg();
 
-	virtual BOOL OnInitDialog();//Tí«â¡
+	virtual BOOL OnInitDialog();//TËøΩÂä†
 
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_InputBox };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 
 	DECLARE_MESSAGE_MAP()
 public:
 	CComboBox m_xcCombo_InputFileName;
 	CString KeepTime;
 	
-	CString KeepFileNameStr; //í«â¡ 2012.12.01
+	CString KeepFileNameStr; //ËøΩÂä† 2012.12.01
 	
 	CString ExportFileName;
 
@@ -39,5 +39,5 @@ public:
 	afx_msg void OnBnClickedBtnLastimportname();
 	CComboBox m_xcCombo_For_X;
 	afx_msg void OnCbnSelchangeComboForX();
-	int InputBoxDlg::StrMatchMBS( const TCHAR *Ptn, const TCHAR *Str ); //í«â¡ 2012.12.01
+	int InputBoxDlg::StrMatchMBS( const TCHAR *Ptn, const TCHAR *Str ); //ËøΩÂä† 2012.12.01
 };

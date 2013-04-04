@@ -1,4 +1,4 @@
-// TipsInfo.cpp : ŽÀ‘•ƒtƒ@ƒCƒ‹
+ï»¿// TipsInfo.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 
 
-// TipsInfo ƒ_ƒCƒAƒƒO
+// TipsInfo ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(TipsInfo, CDialogEx)
 
@@ -31,4 +31,4 @@ BEGIN_MESSAGE_MAP(TipsInfo, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// TipsInfo ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// TipsInfo ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼

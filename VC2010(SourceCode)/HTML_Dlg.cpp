@@ -1,16 +1,16 @@
-// HTML_Dlg.cpp : ŽÀ‘•ƒtƒ@ƒCƒ‹
+ï»¿// HTML_Dlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
 #include "FileListCreator.h"
-#include "FileListCreatorDlg.h"//’Ç‰Á
+#include "FileListCreatorDlg.h"//è¿½åŠ 
 
 #include "HTML_Dlg.h"
 #include "afxdialogex.h"
 
 
 
-// HTML_Dlg ƒ_ƒCƒAƒƒO
+// HTML_Dlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(HTML_Dlg, CDialogEx)
 
@@ -51,12 +51,12 @@ BEGIN_MESSAGE_MAP(HTML_Dlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// HTML_Dlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// HTML_Dlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 
 void HTML_Dlg::OnBnClickedButtonDefault2()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	m_xvRadioModifyDate=1;
 	m_xvRadioRemarksColumn=2;
@@ -69,7 +69,7 @@ void HTML_Dlg::OnBnClickedButtonDefault2()
 
 void HTML_Dlg::OnBnClickedCheckCopyFuncOn()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if (m_xvChkCopyOn == FALSE){
 		m_xvChkCopyOn = TRUE;
 	}else{
@@ -80,7 +80,7 @@ void HTML_Dlg::OnBnClickedCheckCopyFuncOn()
 
 void HTML_Dlg::OnBnClickedCheckStrredOn()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if (m_xvChkRedOn == FALSE){
 		m_xvChkRedOn = TRUE;
 	}else{
@@ -91,7 +91,7 @@ void HTML_Dlg::OnBnClickedCheckStrredOn()
 
 void HTML_Dlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 
 
@@ -105,7 +105,7 @@ void HTML_Dlg::OnBnClickedOk()
 	m_Dlg->g_RadioRemarksColumn=m_xvRadioRemarksColumn;
 	m_Dlg->g_ChkCopyOn=m_xvChkCopyOn;
 	m_Dlg->g_ChkRedOn=m_xvChkRedOn;
-	m_Dlg->g_RadioENCODING_SELECT=m_xvRadioENCODING_SELECT; //’Ç‰Á 2012.04.21
+	m_Dlg->g_RadioENCODING_SELECT=m_xvRadioENCODING_SELECT; //è¿½åŠ  2012.04.21
 	
 	//m_Dlg->ExportFileList();
 
@@ -116,7 +116,7 @@ void HTML_Dlg::OnBnClickedOk()
 
 void HTML_Dlg::OnBnClickedRadioRemarkscolumnvisible()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -124,7 +124,7 @@ void HTML_Dlg::OnBnClickedRadioRemarkscolumnvisible()
 	}
 
 	if ( m_Dlg->CheckRemarksColumn() == FALSE ) {
-		m_Dlg->StatusStringSet(_T("”õl—“‚É‚Íƒf[ƒ^‚Í‘¶Ý‚µ‚Ü‚¹‚ñ"),500,TRUE);
+		m_Dlg->StatusStringSet(_T("å‚™è€ƒæ¬„ã«ã¯ãƒ‡ãƒ¼ã‚¿ã¯å­˜åœ¨ã—ã¾ã›ã‚“"),500,TRUE);
 		m_xvRadioRemarksColumn=2;
 		UpdateData(FALSE);
 	}
@@ -133,7 +133,7 @@ void HTML_Dlg::OnBnClickedRadioRemarkscolumnvisible()
 
 void HTML_Dlg::OnBnClickedRadioRemarkscolumninvisible()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 	
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -141,7 +141,7 @@ void HTML_Dlg::OnBnClickedRadioRemarkscolumninvisible()
 	}
 
 	if ( m_Dlg->CheckRemarksColumn() == FALSE ) {
-		m_Dlg->StatusStringSet(_T("”õl—“‚É‚Íƒf[ƒ^‚Í‘¶Ý‚µ‚Ü‚¹‚ñ"),500,TRUE);
+		m_Dlg->StatusStringSet(_T("å‚™è€ƒæ¬„ã«ã¯ãƒ‡ãƒ¼ã‚¿ã¯å­˜åœ¨ã—ã¾ã›ã‚“"),500,TRUE);
 		m_xvRadioRemarksColumn=2;
 		UpdateData(FALSE);
 	}
@@ -150,7 +150,7 @@ void HTML_Dlg::OnBnClickedRadioRemarkscolumninvisible()
 
 void HTML_Dlg::OnBnClickedCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ð’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 	//
@@ -158,7 +158,7 @@ void HTML_Dlg::OnBnClickedCancel()
 	//	return;
 	//}
 
-	//m_Dlg->StatusStringSet(_T("Export ƒLƒƒƒ“ƒZƒ‹"),0,TRUE);
+	//m_Dlg->StatusStringSet(_T("Export ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),0,TRUE);
 
 	CDialogEx::OnCancel();
 }

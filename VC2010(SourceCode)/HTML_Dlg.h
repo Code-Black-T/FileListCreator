@@ -1,28 +1,28 @@
-#pragma once
+Ôªø#pragma once
 
 
-// HTML_Dlg É_ÉCÉAÉçÉO
+// HTML_Dlg „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class HTML_Dlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(HTML_Dlg)
 
 public:
-	HTML_Dlg(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	HTML_Dlg(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~HTML_Dlg();
 
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_HTML_Export };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 
 	DECLARE_MESSAGE_MAP()
 public:
 	int m_xvRadioModifyDate;
 	int m_xvRadioRemarksColumn;
 	afx_msg void OnBnClickedButtonDefault2();
-	int m_xvRadioENCODING_SELECT; //í«â¡ 2012.04.21
+	int m_xvRadioENCODING_SELECT; //ËøΩÂä† 2012.04.21
 
 	BOOL m_xvChkCopyOn;
 	BOOL m_xvChkRedOn;

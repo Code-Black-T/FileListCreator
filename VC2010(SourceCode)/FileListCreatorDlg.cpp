@@ -1,15 +1,15 @@
-
-// FileListCreatorDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿
+// FileListCreatorDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
-//QlŒ³Fhttp://www.g-ishihara.com/
+//å‚è€ƒå…ƒï¼šhttp://www.g-ishihara.com/
 
 #include "stdafx.h"
-#include "afxcmn.h" //è“®‚Å’Ç‰Á ƒŠƒXƒgƒRƒ“ƒgƒ[ƒ‹
+#include "afxcmn.h" //æ‰‹å‹•ã§è¿½åŠ  ãƒªã‚¹ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
 
 #include <string.h>
 
-//¥isdigitŠÖ” —p 2011.05.30¥
+//â–¼isdigité–¢æ•° ç”¨ 2011.05.30â–¼
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -17,10 +17,10 @@
 #include <conio.h> // don't forget !
 #include <iostream>
 
-//£isdigitŠÖ” —p 2011.05.30£
+//â–²isdigité–¢æ•° ç”¨ 2011.05.30â–²
 
 //SFXTextEncoding
-//•¶šƒGƒ“ƒR[ƒh‚ğ•ÏŠ·‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX‚Å‚·B
+//æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’å¤‰æ›ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
 
 #include "FileListCreator.h"
 #include "FileListCreatorDlg.h"
@@ -33,30 +33,30 @@
 
 #include "afxdialogex.h"
 
-#include "MylistCtrl.h"//’Ç‰Á
+#include "MylistCtrl.h"//è¿½åŠ 
 
-#include "HTML_Dlg.h"//’Ç‰Á
+#include "HTML_Dlg.h"//è¿½åŠ 
 
-#include "TipsInfo.h"//’Ç‰Á 2012.04.17
+#include "TipsInfo.h"//è¿½åŠ  2012.04.17
 
 
-//#include <tchar.h> //’Ç‰Á 2012.04.20
-//#include <clocale> //’Ç‰Á 2012.04.20
-//#include <cstdio> //’Ç‰Á 2012.04.20
+//#include <tchar.h> //è¿½åŠ  2012.04.20
+//#include <clocale> //è¿½åŠ  2012.04.20
+//#include <cstdio> //è¿½åŠ  2012.04.20
 
-#include <locale.h>  //’Ç‰Á 2012.04.20
+#include <locale.h>  //è¿½åŠ  2012.04.20
 
 
 //cstringt.h
 
 #include "windows.h"//http://oshiete.goo.ne.jp/qa/2065303.html
-#include <shlobj.h> // use shell32.lib//’Ç‰Á//ƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚ÌƒpƒX‚Ìæ“¾
+#include <shlobj.h> // use shell32.lib//è¿½åŠ //ãƒã‚¤ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ãƒ‘ã‚¹ã®å–å¾—
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-//’Ç‰Á«
+//è¿½åŠ â†“
 #include <string>
 #include <iostream>
 using namespace std;
@@ -70,25 +70,25 @@ using namespace std;
 //#include "cstringt.h"
 
 /////////////////////////////////////////////////////////////////////////////
-//  ƒtƒHƒ‹ƒ_‘I‘ğƒ_ƒCƒAƒƒO‚Ì‹N“®
+//  ãƒ•ã‚©ãƒ«ãƒ€é¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èµ·å‹•
 #include "winnetwk.h"
 #include "shlobj.h"
 
 //http://soheeya.net/programming/vctips/dialog.html
 /////////////////////////////////////////////////////////////////////////////
-//  SHBrowseForFolder()—pƒR[ƒ‹ƒoƒbƒNŠÖ”
+//  SHBrowseForFolder()ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 int CALLBACK SHBrowseProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
 {
     if( uMsg == BFFM_INITIALIZED && lpData )
     {
-        //  ƒfƒtƒHƒ‹ƒg‚Å‘I‘ğ‚³‚¹‚éƒpƒX‚Ìw’è
+        //  ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§é¸æŠã•ã›ã‚‹ãƒ‘ã‚¹ã®æŒ‡å®š
         SendMessage( hWnd, BFFM_SETSELECTION, TRUE, lpData);
     }
     return 0;
 }
 
 //http://soheeya.net/programming/vctips/dialog.html
-//  ƒVƒXƒeƒ€‚ªŠm•Û‚µ‚½ITEMIDLIST‚ğŠJ•ú‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+//  ã‚·ã‚¹ãƒ†ãƒ ãŒç¢ºä¿ã—ãŸITEMIDLISTã‚’é–‹æ”¾ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 void _SHFree(ITEMIDLIST* pidl)
 {
     IMalloc*  pMalloc;
@@ -102,40 +102,40 @@ void _SHFree(ITEMIDLIST* pidl)
 
 //http://soheeya.net/programming/vctips/dialog.html
 /////////////////////////////////////////////////////////////////////////////
-//  ƒtƒHƒ‹ƒ_‘I‘ğƒ_ƒCƒAƒƒO‚Ì‹N“®
+//  ãƒ•ã‚©ãƒ«ãƒ€é¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èµ·å‹•
 UINT GetOpenFolderName( HWND hWnd, LPCTSTR lpszDefaultFolder, LPTSTR lpszBuffer, DWORD dwBufferSize )
 {
     BROWSEINFO  bi;
     ITEMIDLIST*  pidl;
-    //char  szSelectedFolder[MAX_PATH];//QlURL‚©‚ç•ÏX@¨TCHAR
+    //char  szSelectedFolder[MAX_PATH];//å‚è€ƒURLã‹ã‚‰å¤‰æ›´ã€€â†’TCHAR
 	TCHAR  szSelectedFolder[MAX_PATH];
 
     ZeroMemory( &bi, sizeof( BROWSEINFO ));
     bi.hwndOwner = hWnd;
-    //  ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğw’è
+    //  ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’æŒ‡å®š
     bi.lpfn   = SHBrowseProc;
-    //  ƒfƒtƒHƒ‹ƒg‚Å‘I‘ğ‚³‚¹‚Ä‚¨‚­ƒtƒHƒ‹ƒ_‚ğw’è
+    //  ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§é¸æŠã•ã›ã¦ãŠããƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡å®š
     bi.lParam = (LPARAM)lpszDefaultFolder;
-    //  ƒ^ƒCƒgƒ‹‚Ìw’è
-    bi.lpszTitle = _T("ŒŸõ‘ÎÛ‚Æ‚È‚éƒtƒHƒ‹ƒ_‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢");
+    //  ã‚¿ã‚¤ãƒˆãƒ«ã®æŒ‡å®š
+    bi.lpszTitle = _T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠã—ã¦ãã ã•ã„");
 
-	// “ÁêƒtƒHƒ‹ƒ_‚ğ‘I‘ğ‚³‚¹‚È‚¢//QlURL‚É’Ç‰Á
+	// ç‰¹æ®Šãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠã•ã›ãªã„//å‚è€ƒURLã«è¿½åŠ 
 	//bi.ulFlags = BIF_BROWSEFORCOMPUTER | BIF_RETURNONLYFSDIRS;
 	bi.ulFlags = BIF_RETURNONLYFSDIRS;
     
-	//  ƒtƒHƒ‹ƒ_ƒ_ƒCƒAƒƒO‚Ì‹N“®
+	//  ãƒ•ã‚©ãƒ«ãƒ€ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èµ·å‹•
     pidl = SHBrowseForFolder( &bi );
     if( pidl )
     {
-        //  ‘I‘ğ‚³‚ê‚½ƒtƒHƒ‹ƒ_–¼‚ğæ“¾
+        //  é¸æŠã•ã‚ŒãŸãƒ•ã‚©ãƒ«ãƒ€åã‚’å–å¾—
         SHGetPathFromIDList( pidl, szSelectedFolder );
         _SHFree(pidl);
         if( (DWORD)lstrlen(szSelectedFolder) < dwBufferSize )
             lstrcpy( lpszBuffer, szSelectedFolder );
-        //  ƒtƒHƒ‹ƒ_‚ª‘I‘ğ‚³‚ê‚½
+        //  ãƒ•ã‚©ãƒ«ãƒ€ãŒé¸æŠã•ã‚ŒãŸ
         return IDOK;
     }
-    //  ƒtƒHƒ‹ƒ_‚Í‘I‘ğ‚³‚ê‚È‚©‚Á‚½
+    //  ãƒ•ã‚©ãƒ«ãƒ€ã¯é¸æŠã•ã‚Œãªã‹ã£ãŸ
     return IDCANCEL;
 }
 
@@ -146,20 +146,20 @@ UINT GetOpenFolderName( HWND hWnd, LPCTSTR lpszDefaultFolder, LPTSTR lpszBuffer,
 
 //}
 
-// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìƒo[ƒWƒ‡ƒ“î•ñ‚Ég‚í‚ê‚é CAboutDlg ƒ_ƒCƒAƒƒO
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã«ä½¿ã‚ã‚Œã‚‹ CAboutDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	enum { IDD = IDD_ABOUTBOX };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã‚µãƒãƒ¼ãƒˆ
 
-// À‘•
+// å®Ÿè£…
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -198,20 +198,20 @@ long CFileListCreatorDlg::CStringToLong(CString strValue)
 	//http://rararahp.cool.ne.jp/cgi-bin/lng/vc/vclng.cgi?print+200011/00110021.txt
 
     USES_CONVERSION;
-    int    intLength;    // CString•¶š”
-    LPWSTR    strWPoint;    // UNICODE•¶š 
-    LPSTR    strAPoint;    // JIS•¶š
+    int    intLength;    // CStringæ–‡å­—æ•°
+    LPWSTR    strWPoint;    // UNICODEæ–‡å­— 
+    LPSTR    strAPoint;    // JISæ–‡å­—
 
-    // •¶š”‚Ìæ“¾
+    // æ–‡å­—æ•°ã®å–å¾—
     intLength = strValue.GetLength();
     
-    // •¶šƒ|ƒCƒ“ƒ^æ“¾
+    // æ–‡å­—ãƒã‚¤ãƒ³ã‚¿å–å¾—
     strWPoint = strValue.GetBuffer(intLength);
 
-    // UNICODE‚©‚çJIS‚Ö•ÏŠ·
+    // UNICODEã‹ã‚‰JISã¸å¤‰æ›
     strAPoint = W2A(strWPoint);
 
-    // ƒoƒbƒtƒ@ŠJ•ú
+    // ãƒãƒƒãƒ•ã‚¡é–‹æ”¾
     strValue.ReleaseBuffer();
 
     return atol(strAPoint);
@@ -239,7 +239,7 @@ CString CharToStringFunc(TCHAR inStr)
 //	delete [] p;
 //}
 
-//TCHAR StringToCharFunc(CString theString) //Œë“®ìAŒã‚Åíœ
+//TCHAR StringToCharFunc(CString theString) //èª¤å‹•ä½œã€å¾Œã§å‰Šé™¤
 //{
 //	int     sizeOfString = (theString.GetLength() + 1);
 //	LPTSTR  lpsz = new TCHAR[ sizeOfString ];
@@ -249,7 +249,7 @@ CString CharToStringFunc(TCHAR inStr)
 //	delete[] lpsz;
 //}
 
-// CFileListCreatorDlg ƒ_ƒCƒAƒƒO
+// CFileListCreatorDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 CString ripString(CString str, int index)
 {
@@ -257,9 +257,9 @@ CString ripString(CString str, int index)
 
 	LPCTSTR pStart = str;
 	for (int i = 0; i < index; ++i) {
-		pStart = _tcsinc(pStart); // CharNext‚Å‚à“¯—l
+		pStart = _tcsinc(pStart); // CharNextã§ã‚‚åŒæ§˜
 	}
-	LPCTSTR pEnd = _tcsinc(pStart); // CharNext‚Å‚à“¯—l
+	LPCTSTR pEnd = _tcsinc(pStart); // CharNextã§ã‚‚åŒæ§˜
 
 	TCHAR result[3];
 	const int len = pEnd - pStart;
@@ -309,14 +309,14 @@ CString ByteCalculation(ULONGLONG mySize,BOOL DetailMode)
 
 //http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1311155003
 
- //k ƒLƒ kilo 103 ƒMƒŠƒVƒƒŒê‚Ì1000(khikioi) 
- //M ƒƒK mega 106 ƒMƒŠƒVƒƒŒê‚Ìu‘å‚«‚¢v(megas) 
- //G ƒMƒK giga 109 ƒMƒŠƒVƒƒŒê‚Ìu‹lv(gigas) 
- //T ƒeƒ‰ tera 1012 ƒMƒŠƒVƒƒŒê‚Ìu‹bv(tegas) 
- //P ƒyƒ^ peta 1015 u‚T”Ô–Úv‚Ì"penta"‚©‚çn‚ğ‚Æ‚Á‚½ 
- //E ƒGƒNƒT exa 1018 u‚U”Ô–Úv‚Ì"hexa"‚©‚çh‚ğ‚Æ‚Á‚½ 
- //Z ƒ[[ƒb]ƒ^ zetta 1021 
- //Y ƒˆ[ƒb]ƒ^ yotta 1024 ƒ‰ƒeƒ“ƒAƒ‹ƒtƒ@ƒxƒbƒg‚ÌÅŒã”ö‚©‚ç‚Q”Ô–Ú 
+ //k ã‚­ãƒ­ kilo 103 ã‚®ãƒªã‚·ãƒ£èªã®1000(khikioi) 
+ //M ãƒ¡ã‚¬ mega 106 ã‚®ãƒªã‚·ãƒ£èªã®ã€Œå¤§ãã„ã€(megas) 
+ //G ã‚®ã‚¬ giga 109 ã‚®ãƒªã‚·ãƒ£èªã®ã€Œå·¨äººã€(gigas) 
+ //T ãƒ†ãƒ© tera 1012 ã‚®ãƒªã‚·ãƒ£èªã®ã€Œå·¨ç£ã€(tegas) 
+ //P ãƒšã‚¿ peta 1015 ã€Œï¼•ç•ªç›®ã€ã®"penta"ã‹ã‚‰nã‚’ã¨ã£ãŸ 
+ //E ã‚¨ã‚¯ã‚µ exa 1018 ã€Œï¼–ç•ªç›®ã€ã®"hexa"ã‹ã‚‰hã‚’ã¨ã£ãŸ 
+ //Z ã‚¼[ãƒƒ]ã‚¿ zetta 1021 
+ //Y ãƒ¨[ãƒƒ]ã‚¿ yotta 1024 ãƒ©ãƒ†ãƒ³ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã®æœ€å¾Œå°¾ã‹ã‚‰ï¼’ç•ªç›® 
 
 	int j;
 
@@ -427,12 +427,12 @@ CString CFileListCreatorDlg::Total_Bytes_Func(){
 
 	while(index < CFileListCreatorDlg::m_xcList.GetItemCount()){
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
@@ -447,7 +447,7 @@ CString CFileListCreatorDlg::Total_Bytes_Func(){
 
 		//lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
-		// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 			myLongFileSize = CStringToLong(CFileListCreatorDlg::m_xcList.GetItemText(index, 5));
 			myByteSum = myByteSum + myLongFileSize;		
 
@@ -515,7 +515,7 @@ CString CFileListCreatorDlg::ItemCount_Func(BOOL EnsureVisibleFLG){
 
 void CFileListCreatorDlg::SelectALL_Func(){
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
@@ -526,12 +526,12 @@ void CFileListCreatorDlg::SelectALL_Func(){
 
 	while(i<=m_xcList.GetItemCount() -1){
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
@@ -539,16 +539,16 @@ void CFileListCreatorDlg::SelectALL_Func(){
 			//continue;
 		}
 
-		m_xcList.SetItemState(i,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-		!LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-		LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+		m_xcList.SetItemState(i,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		!LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+		LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 		CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
 		//UpdateData(FALSE);
 		UpdateWindow();
 		i++;
 
-		//ListView_Update(m_xcList, i);//’Ç‰Á‚µ‚Ä‚àˆÓ–¡‚ª‚È‚©‚Á‚½2011.05.14
+		//ListView_Update(m_xcList, i);//è¿½åŠ ã—ã¦ã‚‚æ„å‘³ãŒãªã‹ã£ãŸ2011.05.14
 	}
 
 	if (ESCAPE_FLG == TRUE) return;
@@ -561,12 +561,12 @@ void CFileListCreatorDlg::SelectALL_Func(){
 
 	SelectALLFLG  = FALSE;
 
-	CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚ğ‘I‘ğó‘Ô‚É‚µ‚Ü‚µ‚½"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸æŠçŠ¶æ…‹ã«ã—ã¾ã—ãŸ"),300,TRUE);
 }
 
 void CFileListCreatorDlg::SelectALL_CancellationFunc(){
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
@@ -577,12 +577,12 @@ void CFileListCreatorDlg::SelectALL_CancellationFunc(){
 
 	while(i<=m_xcList.GetItemCount() -1){
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
@@ -590,9 +590,9 @@ void CFileListCreatorDlg::SelectALL_CancellationFunc(){
 			//continue;
 		}
 
-		m_xcList.SetItemState(i,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-		!LVIS_FOCUSED | !LVIS_SELECTED,    // ó‘Ô
-		LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+		m_xcList.SetItemState(i,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		!LVIS_FOCUSED | !LVIS_SELECTED,    // çŠ¶æ…‹
+		LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 		//if( m_xvChkEasySelect == TRUE){
 			CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
 			//UpdateData(FALSE);
@@ -600,7 +600,7 @@ void CFileListCreatorDlg::SelectALL_CancellationFunc(){
 		//}
 		i++;
 
-		//ListView_Update(m_xcList, i);//’Ç‰Á‚µ‚Ä‚àˆÓ–¡‚ª‚È‚©‚Á‚½2011.05.14
+		//ListView_Update(m_xcList, i);//è¿½åŠ ã—ã¦ã‚‚æ„å‘³ãŒãªã‹ã£ãŸ2011.05.14
 	}
 
 	if (ESCAPE_FLG == TRUE) return;
@@ -613,17 +613,17 @@ void CFileListCreatorDlg::SelectALL_CancellationFunc(){
 
 	SelectALLFLG  = FALSE;
 
-	CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Ä‚Ì‘I‘ğó‘Ô‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦ã®é¸æŠçŠ¶æ…‹ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"),300,TRUE);
 }
 void CFileListCreatorDlg::DEL_FileType_Func(){
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 		//LVITEM       lvi;
 		//int          index = -1;
@@ -640,9 +640,9 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 
 			int myResult;
 			if(m_xcList.GetSelectedCount()==0){
-				myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgî•ñ‚©‚ç‚·‚×‚Ä‚ÌŠg’£q‚ğæ‚èœ‚«‚Ü‚·‚©H"),_T("Trim FileType"),MB_YESNOCANCEL);
+				myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆæƒ…å ±ã‹ã‚‰ã™ã¹ã¦ã®æ‹¡å¼µå­ã‚’å–ã‚Šé™¤ãã¾ã™ã‹ï¼Ÿ"),_T("Trim FileType"),MB_YESNOCANCEL);
 				if (myResult==IDYES){
-					StatusStringSet(_T("DEL FileType Às’†"),0,FALSE); //•ÏX 2012.06.14
+					StatusStringSet(_T("DEL FileType å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 					//LVITEM       lvi;
 					//int          index = 0;
@@ -664,7 +664,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 						lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
 
-						// ƒtƒ‹ƒpƒX
+						// ãƒ•ãƒ«ãƒ‘ã‚¹
 						if (!err)
 						{
 
@@ -677,7 +677,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 						if(FullPathString.Right(1)!=_T("\\")){
 							CString keepFileName= _T("");
 
-							// ƒtƒ@ƒCƒ‹–¼æ“¾
+							// ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 							if (!err)
 							{
 
@@ -696,7 +696,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 
 							//TRACE(FullPathString);
 
-							// ƒtƒ@ƒCƒ‹–¼
+							// ãƒ•ã‚¡ã‚¤ãƒ«å
 							if (!err)
 							{
 								int DotIDX = FullPathString.ReverseFind(_T('.'));
@@ -724,13 +724,13 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 						index++;
 					}
 
-					CFileListCreatorDlg::StatusStringSet(_T("DEL FileType I—¹"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("DEL FileType çµ‚äº†"),300,TRUE);
 				}
 			}
 			if(m_xcList.GetSelectedCount()>=1){
-				myResult = MessageBox(_T("‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚ÌŠg’£qî•ñ‚ğæ‚èœ‚«‚Ü‚·‚©H"),_T("Trim FileType"),MB_YESNOCANCEL);
+				myResult = MessageBox(_T("é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®æ‹¡å¼µå­æƒ…å ±ã‚’å–ã‚Šé™¤ãã¾ã™ã‹ï¼Ÿ"),_T("Trim FileType"),MB_YESNOCANCEL);
 				if (myResult==IDYES){
-					StatusStringSet(_T("DEL FileType Às’†"),0,FALSE); //•ÏX 2012.06.14
+					StatusStringSet(_T("DEL FileType å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 					//LVITEM       lvi;
 					int          index = -1;
@@ -753,7 +753,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 						lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
 
-						// ƒtƒ‹ƒpƒX
+						// ãƒ•ãƒ«ãƒ‘ã‚¹
 						//if (!err)
 						//{
 
@@ -765,7 +765,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 						if(FullPathString.Right(1)!=_T("\\")){
 							CString keepFileName= _T("");
 
-							// ƒtƒ@ƒCƒ‹–¼æ“¾
+							// ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 							//if (!err)
 							//{
 
@@ -784,7 +784,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 
 							//TRACE(FullPathString);
 
-							//// ƒtƒ@ƒCƒ‹–¼
+							//// ãƒ•ã‚¡ã‚¤ãƒ«å
 							//if (!err)
 							//{
 								int DotIDX = FullPathString.ReverseFind(_T('.'));
@@ -809,14 +809,14 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 							}
 						}
 
-						CFileListCreatorDlg::StatusStringSet(_T("DEL FileType I—¹"),300,TRUE);
+						CFileListCreatorDlg::StatusStringSet(_T("DEL FileType çµ‚äº†"),300,TRUE);
 					}
 				}
 			}
 		//}
 
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -824,7 +824,7 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -834,17 +834,17 @@ void CFileListCreatorDlg::DEL_FileType_Func(){
 
 void CFileListCreatorDlg::AddDirectorySTR_Func(){
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("AddDirectorySTR Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("AddDirectorySTR å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		int myResult;
 		if(m_xcList.GetSelectedCount()==0){
-			myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgã‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚Ìî•ñ‚ÉƒtƒHƒ‹ƒ_–¼‚ğ•t‰Á‚µ‚Ü‚·‚©H"),_T("AddDirectorySTR"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±ã«ãƒ•ã‚©ãƒ«ãƒ€åã‚’ä»˜åŠ ã—ã¾ã™ã‹ï¼Ÿ"),_T("AddDirectorySTR"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = 0;
 
@@ -853,12 +853,12 @@ void CFileListCreatorDlg::AddDirectorySTR_Func(){
 					index++;
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
 		if(m_xcList.GetSelectedCount()>=1){
-			myResult = MessageBox(_T("‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚Ìî•ñ‚ÉƒtƒHƒ‹ƒ_–¼‚ğ•t‰Á‚µ‚Ü‚·‚©H"),_T("AddDirectorySTR"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±ã«ãƒ•ã‚©ãƒ«ãƒ€åã‚’ä»˜åŠ ã—ã¾ã™ã‹ï¼Ÿ"),_T("AddDirectorySTR"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = -1;
 
@@ -867,13 +867,13 @@ void CFileListCreatorDlg::AddDirectorySTR_Func(){
 					AddDirectorySTR_Items(index);
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
 	}
 	
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -881,11 +881,11 @@ void CFileListCreatorDlg::AddDirectorySTR_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR I—¹"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("AddDirectorySTR çµ‚äº†"),300,TRUE);
 
 }
 
@@ -895,7 +895,7 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 	CString      str;	
 	CString      FullPathString;
 	
-	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 	//UpdateData();
 
@@ -905,7 +905,7 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 	myFileName=_T("");
 
 
-	// ƒtƒ‹ƒpƒX
+	// ãƒ•ãƒ«ãƒ‘ã‚¹
 	if (!err)
 	{
 		FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
@@ -913,7 +913,7 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 	}
 
 	CString keepFileName;
-	// ƒtƒ@ƒCƒ‹–¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å
 	if (!err)
 	{
 		myFileName = CFileListCreatorDlg::m_xcList.GetItemText(index,3);
@@ -925,7 +925,7 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 
 	int SearchIDX;
 
-	// ƒtƒ@ƒCƒ‹–¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å
 	if (!err)
 	{
 		int PathSeparatorCNT=0;
@@ -987,7 +987,7 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 		}
 	}
 
-	// ƒtƒ@ƒCƒ‹–¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å
 	if (!err)
 	{
 		lvi.iItem = index;
@@ -1003,10 +1003,10 @@ void CFileListCreatorDlg::AddDirectorySTR_Items(int index){
 
 void CFileListCreatorDlg::SetSEQ_NUM_Func(BOOL NotConfirm){
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
-		StatusStringSet(_T("SetSEQ_NUM Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("SetSEQ_NUM å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 		if (NotConfirm==TRUE){
 			int index = 0;
 
@@ -1017,7 +1017,7 @@ void CFileListCreatorDlg::SetSEQ_NUM_Func(BOOL NotConfirm){
 		}else{
 			int myResult;
 			if(m_xcList.GetItemCount()>=0){
-				myResult = MessageBox(_T("ƒŠƒXƒg‚Ì”Ô†‚ğÄ“x‚P‚©‚ç‡‚É˜A”Ô‚ÅƒZƒbƒg‚µ‚Ü‚·‚©H"),_T("RSetSEQ_NUM"),MB_YESNOCANCEL);
+				myResult = MessageBox(_T("ãƒªã‚¹ãƒˆã®ç•ªå·ã‚’å†åº¦ï¼‘ã‹ã‚‰é †ã«é€£ç•ªã§ã‚»ãƒƒãƒˆã—ã¾ã™ã‹ï¼Ÿ"),_T("RSetSEQ_NUM"),MB_YESNOCANCEL);
 				if (myResult==IDYES){
 					int index = 0;
 
@@ -1026,13 +1026,13 @@ void CFileListCreatorDlg::SetSEQ_NUM_Func(BOOL NotConfirm){
 						index++;
 					}
 				}else{
-					CFileListCreatorDlg::StatusStringSet(_T("SetSEQ_NUM ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+					CFileListCreatorDlg::StatusStringSet(_T("SetSEQ_NUM ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 					return;
 				}
 			}
 		}
 	}
-	CFileListCreatorDlg::StatusStringSet(_T("SetSEQ_NUM I—¹"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("SetSEQ_NUM çµ‚äº†"),300,TRUE);
 
 }
 
@@ -1042,7 +1042,7 @@ void CFileListCreatorDlg::SetSEQ_NUM_Items(int index){
 	int          err = 0;
 	CString		str;
 
-	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 	//UpdateData();
 
@@ -1053,7 +1053,7 @@ void CFileListCreatorDlg::SetSEQ_NUM_Items(int index){
 		lvi.iItem = index;
 		lvi.iSubItem = 1; //NO.
 		//lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(myFileName));
-		str.Format(_T("%d"), index + 1);	//’Ê‚µ”Ô†
+		str.Format(_T("%d"), index + 1);	//é€šã—ç•ªå·
 		lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));
 		if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;			
 	}
@@ -1066,7 +1066,7 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 	//LVITEM       lvi;
 	CString      str;	
 	
-	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 	CString tempStr;
 
@@ -1074,7 +1074,7 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 		//FullPathString.Replace(_T("%"),_T("%%"));
 
 	if (tempStr !=_T("")){
-		tempStr.Replace(_T("&"), _T("&amp;"));//Å‰‚É•ÏŠ·
+		tempStr.Replace(_T("&"), _T("&amp;"));//æœ€åˆã«å¤‰æ›
 
 		tempStr.Replace(_T("<"), _T("&lt;"));
 		tempStr.Replace(_T(">"), _T("&gt;"));
@@ -1090,9 +1090,9 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 
     if(workColumn == 6 || workColumn == 7) {
         if (tempStr == _T("")){
-            //tempStr = _T("-"); //ƒRƒƒ“ƒg‰» 2011.10.10
+            //tempStr = _T("-"); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2011.10.10
 		}else{
-            if(g_RadioModifyDate == 2){//ModifyDateNoExport‚Ì
+            if(g_RadioModifyDate == 2){//ModifyDateNoExportã®æ™‚
 				tempStr = _T("");
                 //return tempStr;
 			}
@@ -1100,11 +1100,11 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 	}
 
     if(workColumn == 8) {
-		if(g_RadioRemarksColumn == 2){//RadioRemarksColumnNoExport‚Ì
+		if(g_RadioRemarksColumn == 2){//RadioRemarksColumnNoExportã®æ™‚
 			tempStr = _T("");
             //return tempStr;
 		}
-		if(g_RadioRemarksColumn == 0){//RemarksColumnVisible‚Ì
+		if(g_RadioRemarksColumn == 0){//RemarksColumnVisibleã®æ™‚
 			if(tempStr == _T("")){
 				tempStr = _T("&nbsp;&nbsp;&nbsp;");
 			}
@@ -1112,7 +1112,7 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 		}
 	}
 
-//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 	if(workColumn == 1 || workColumn == 3 || workColumn == 4){
 
 		if(g_ChkCopyOn == TRUE || g_ChkRedOn == TRUE){
@@ -1149,7 +1149,7 @@ CString CFileListCreatorDlg::AddTagFunc(int workRow,int workColumn ){
 			}
 		}
 	}else{
-		if(workColumn == 2 || workColumn == 5 || workColumn == 7){ //ƒtƒ‹ƒpƒX ƒf[ƒ^ƒTƒCƒY C³ŠÔ
+		if(workColumn == 2 || workColumn == 5 || workColumn == 7){ //ãƒ•ãƒ«ãƒ‘ã‚¹ ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º ä¿®æ­£æ™‚é–“
 			tempStr = _T("<!---") + tempStr + _T("--->");
 		}else if(workColumn == 6 && g_RadioModifyDate == 1){//ModifyDateInvisible
 			tempStr = _T("<!---") + tempStr + _T("--->");
@@ -1171,25 +1171,25 @@ CString CreateDate(){
 	CTime    cTime;
 	CString  str;
 
-	cTime = CTime::GetCurrentTime();           // Œ»İ
-	str = cTime.Format("%Y/%m/%d");   // "YYYY/mm/dd HH:MM:SS"Œ`®‚Ì•¶š—ñ‚ğæ“¾
+	cTime = CTime::GetCurrentTime();           // ç¾åœ¨æ™‚åˆ»
+	str = cTime.Format("%Y/%m/%d");   // "YYYY/mm/dd HH:MM:SS"å½¢å¼ã®æ™‚åˆ»æ–‡å­—åˆ—ã‚’å–å¾—
 
     return  str;
 }
 
-CString CFileListCreatorDlg::CreateDateTime(int mySwitch){//mySwitch//1:ƒtƒ@ƒCƒ‹–¼‚É•t—^‚·‚é“ú//2:Œ»İ‚ÌŠÔ‚ğ•\¦
+CString CFileListCreatorDlg::CreateDateTime(int mySwitch){//mySwitch//1:ãƒ•ã‚¡ã‚¤ãƒ«åã«ä»˜ä¸ã™ã‚‹æ—¥æ™‚//2:ç¾åœ¨ã®æ™‚é–“ã‚’è¡¨ç¤º
 	CTime    cTime;
 	CString  str;
 	//2010.07.09_16-42-30
 
 	switch(mySwitch){
 		case 1:
-			cTime = CTime::GetCurrentTime();           // Œ»İ
-			str = cTime.Format("%Y.%m.%d_%H-%M-%S");   // "YYYY/mm/dd HH:MM:SS"Œ`®‚Ì•¶š—ñ‚ğæ“¾
+			cTime = CTime::GetCurrentTime();           // ç¾åœ¨æ™‚åˆ»
+			str = cTime.Format("%Y.%m.%d_%H-%M-%S");   // "YYYY/mm/dd HH:MM:SS"å½¢å¼ã®æ™‚åˆ»æ–‡å­—åˆ—ã‚’å–å¾—
 			break;
 		case 2:
-			cTime = CTime::GetCurrentTime();           // Œ»İ
-			str = cTime.Format("%Y/%m/%d %H:%M:%S");   // "YYYY/mm/dd HH:MM:SS"Œ`®‚Ì•¶š—ñ‚ğæ“¾
+			cTime = CTime::GetCurrentTime();           // ç¾åœ¨æ™‚åˆ»
+			str = cTime.Format("%Y/%m/%d %H:%M:%S");   // "YYYY/mm/dd HH:MM:SS"å½¢å¼ã®æ™‚åˆ»æ–‡å­—åˆ—ã‚’å–å¾—
 			break;
 		default:
 			break;					
@@ -1199,7 +1199,7 @@ CString CFileListCreatorDlg::CreateDateTime(int mySwitch){//mySwitch//1:ƒtƒ@ƒCƒ‹
 
 
 CString CFileListCreatorDlg::ProhibitFileName(CString tempFileName , BOOL AutoSkipMode){
-//''¡‹Ö~•¶š  \ / : * ? " < > |
+//''â– ç¦æ­¢æ–‡å­—  \ / : * ? " < > |
 
 	if(tempFileName == _T("")){
 		return _T("");
@@ -1266,7 +1266,7 @@ CString CFileListCreatorDlg::ProhibitFileName(CString tempFileName , BOOL AutoSk
 
 	int myResult;
 
-    myResult = MessageBox(_T("ƒtƒ@ƒCƒ‹–¼‚ÉˆÈ‰º‚Ì•¶š‚Íg—p‚Å‚«‚Ü‚¹‚ñB\r\n‹Ö~•¶š‚ğ _ ‚É’u‚«Š·‚¦‚Ü‚·‚©H (u‚¢‚¢‚¦v‚ğ‘I‘ğ‚µ‚½ê‡‚ÍAíœ‚µ‚Ü‚·B)\r\n \\ / : * \? \" < > |"), _T("‹Ö~•¶š"), MB_YESNOCANCEL);
+    myResult = MessageBox(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã«ä»¥ä¸‹ã®æ–‡å­—ã¯ä½¿ç”¨ã§ãã¾ã›ã‚“ã€‚\r\nç¦æ­¢æ–‡å­—ã‚’ _ ã«ç½®ãæ›ãˆã¾ã™ã‹ï¼Ÿ (ã€Œã„ã„ãˆã€ã‚’é¸æŠã—ãŸå ´åˆã¯ã€å‰Šé™¤ã—ã¾ã™ã€‚)\r\n \\ / : * \? \" < > |"), _T("ç¦æ­¢æ–‡å­—"), MB_YESNOCANCEL);
 
     if(myResult == IDYES){
 		if (tempFileName !=_T("")){
@@ -1303,16 +1303,16 @@ CString CFileListCreatorDlg::ProhibitFileName(CString tempFileName , BOOL AutoSk
 
 CString WindowsFolder_Func(){
 //http://www.sabamiso.net/yoggy/hiki/?Windows%A4%CE%C6%C3%CA%CC%A4%CA%A5%D5%A5%A9%A5%EB%A5%C0%A4%CE%A5%D1%A5%B9%A4%F2%BC%E8%C6%C0%A4%B9%A4%EB%CA%FD%CB%A1(My+Documents%A4%C8%A4%AB)
-	//g‚¦‚é’è”‚Í‰º‹L‚Ì‚æ‚¤‚ÈŠ´‚¶
-	//	SIDL_DESKTOP         ƒfƒXƒNƒgƒbƒv(ƒl[ƒ€ƒXƒy[ƒX‚Ìƒ‹[ƒg‚É‚ ‚é‰¼‘zƒtƒHƒ‹ƒ_)
-	//	CSIDL_DESKTOPDIRECTOY ƒfƒXƒNƒgƒbƒv‚Ìƒtƒ@ƒCƒ‹‚ğ•¨—“I‚ÉŠi”[‚·‚éƒtƒHƒ‹ƒ_
-	//	CSIDL_STARTMENU       ƒXƒ^[ƒgƒƒjƒ…[
-	//	CSIDL_PROGRAMS        ƒvƒƒOƒ‰ƒ€ƒƒjƒ…[
-	//	CSIDL_PERSONAL        ƒ}ƒC ƒhƒLƒ…ƒƒ“ƒg
+	//ä½¿ãˆã‚‹å®šæ•°ã¯ä¸‹è¨˜ã®ã‚ˆã†ãªæ„Ÿã˜
+	//	SIDL_DESKTOP         ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—(ãƒãƒ¼ãƒ ã‚¹ãƒšãƒ¼ã‚¹ã®ãƒ«ãƒ¼ãƒˆã«ã‚ã‚‹ä»®æƒ³ãƒ•ã‚©ãƒ«ãƒ€)
+	//	CSIDL_DESKTOPDIRECTOY ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç‰©ç†çš„ã«æ ¼ç´ã™ã‚‹ãƒ•ã‚©ãƒ«ãƒ€
+	//	CSIDL_STARTMENU       ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼
+	//	CSIDL_PROGRAMS        ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ¡ãƒ‹ãƒ¥ãƒ¼
+	//	CSIDL_PERSONAL        ãƒã‚¤ ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ
 	//	CSIDL_PROGRAM_FILES   Program Files
-	//	CSIDL_FAVORITES       ‚¨‹C‚É“ü‚è
-	//	CSIDL_APPDATA         ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒf[ƒ^
-	//	CSIDL_COMMON_xxx      ‹¤’Ê(All Users)‚ÌƒtƒHƒ‹ƒ_
+	//	CSIDL_FAVORITES       ãŠæ°—ã«å…¥ã‚Š
+	//	CSIDL_APPDATA         ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿
+	//	CSIDL_COMMON_xxx      å…±é€š(All Users)ã®ãƒ•ã‚©ãƒ«ãƒ€
 
 	TCHAR szPath[_MAX_PATH];
 	LPITEMIDLIST pidl;
@@ -1322,8 +1322,8 @@ CString WindowsFolder_Func(){
 	SHGetMalloc( &pMalloc );
 
 	if( SUCCEEDED(SHGetSpecialFolderLocation(hWnd,CSIDL_PERSONAL,&pidl)) ){
-		SHGetPathFromIDList(pidl,szPath); // ƒpƒX‚É•ÏŠ·‚·‚é
-		pMalloc->Free(pidl);              // æ“¾‚µ‚½IDL‚ğ‰ğ•ú‚·‚é (CoTaskMemFree‚Å‚à‰Â)
+		SHGetPathFromIDList(pidl,szPath); // ãƒ‘ã‚¹ã«å¤‰æ›ã™ã‚‹
+		pMalloc->Free(pidl);              // å–å¾—ã—ãŸIDLã‚’è§£æ”¾ã™ã‚‹ (CoTaskMemFreeã§ã‚‚å¯)
 	}
 
 	pMalloc->Release();
@@ -1340,12 +1340,12 @@ CString WindowsFolder_Func(){
 
 void CFileListCreatorDlg::StrToTagSign(){
 	//_wsetlocale(LC_ALL, _T("jpn"));
-	StatusStringSet(_T(" < ‚â > ‚È‚Ç‚Ì‹L†‚ğ•ÏŠ·’†"),0,FALSE);
+	StatusStringSet(_T(" < ã‚„ > ãªã©ã®è¨˜å·ã‚’å¤‰æ›ä¸­"),0,FALSE);
 
 	//LVITEM       lvi;
 	CString      str;	
 	
-	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
     ULONGLONG LastRow;
     
@@ -1372,7 +1372,7 @@ void CFileListCreatorDlg::StrToTagSign(){
 			tempStr.Replace(_T("&nbsp;"), _T(" "));
 			tempStr.Replace(_T("&copy;"), _T("(c)"));
 			tempStr.Replace(_T("&reg;"), _T("(r)")); 
-			tempStr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+			tempStr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 			lvi.iItem = workRow;
 			lvi.iSubItem = columnIDX; //NO.
@@ -1382,25 +1382,25 @@ void CFileListCreatorDlg::StrToTagSign(){
 		workRow = workRow + 1;
 	}
     
-	StatusStringSet(_T(" < ‚â > ‚È‚Ç‚Ì‹L†‚ğ³‚µ‚­•ÏŠ·‚µ‚Ü‚µ‚½"),0,FALSE);
+	StatusStringSet(_T(" < ã‚„ > ãªã©ã®è¨˜å·ã‚’æ­£ã—ãå¤‰æ›ã—ã¾ã—ãŸ"),0,FALSE);
 	//_wsetlocale(LC_ALL, _T(""));
 }
 
 
 
 
-void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExportFLG
+void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //å‰Šé™¤ BOOL ReExportFLG
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1 && AutoSaveFLG == FALSE) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	if (ListDataNoChange_FLG == TRUE && AutoSaveFLG == TRUE) return; //’Ç‰Á 2012.05.13
+	if (ListDataNoChange_FLG == TRUE && AutoSaveFLG == TRUE) return; //è¿½åŠ  2012.05.13
 
 	FLC_CurrentVersion= _T("FileListCreator 2.8.6 (VC++)");
 
 
-    CFileListCreatorDlg::StatusStringSet(_T("HTML o—Í’†"),0,FALSE);
+    CFileListCreatorDlg::StatusStringSet(_T("HTML å‡ºåŠ›ä¸­"),0,FALSE);
 
     BOOL CurrentDirectory_FLG;
     CurrentDirectory_FLG = FALSE;
@@ -1413,11 +1413,11 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 	if (AutoSaveFLG == FALSE) {
 		int myResult;
 
-		myResult = MessageBox(_T("“–ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ‚ÉƒŠƒXƒg‚ğo—Í‚µ‚Ü‚·‚©H \r\n\r\nu‚Í‚¢v ƒJƒŒƒ“ƒgƒtƒHƒ‹ƒ_[‚É•Û‘¶ \r\nu‚¢‚¢‚¦v ƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚É•Û‘¶"),_T("o—Íæ"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("å½“ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ãƒªã‚¹ãƒˆã‚’å‡ºåŠ›ã—ã¾ã™ã‹ï¼Ÿ \r\n\r\nã€Œã¯ã„ã€ ã‚«ãƒ¬ãƒ³ãƒˆãƒ•ã‚©ãƒ«ãƒ€ãƒ¼ã«ä¿å­˜ \r\nã€Œã„ã„ãˆã€ ãƒã‚¤ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã«ä¿å­˜"),_T("å‡ºåŠ›å…ˆ"),MB_YESNOCANCEL);
 		if(myResult==IDYES){
 			CurrentDirectory_FLG = TRUE;
 		}else if(myResult==IDCANCEL){
-			CFileListCreatorDlg::StatusStringSet(_T("Export o—Íæw’è ƒLƒƒƒ“ƒZƒ‹"),0,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Export å‡ºåŠ›å…ˆæŒ‡å®š ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),0,TRUE);
 			return;
 		}
 	}
@@ -1425,11 +1425,11 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
     CString FileName;
 
 	if (AutoSaveFLG == FALSE) {
-		//ƒ‚[ƒ_ƒ‹
+		//ãƒ¢ãƒ¼ãƒ€ãƒ«
 		InputBoxDlg m_dlg;
 		//m_dlg.DoModal();
 
-		//FileName = InputBox("ƒtƒ@ƒCƒ‹‚É–¼‘O‚ğ‚Â‚¯‚Ä‰º‚³‚¢B", "–¼‘O‚ğ‚Â‚¯‚Ä•Û‘¶", CreateDateTime)
+		//FileName = InputBox("ãƒ•ã‚¡ã‚¤ãƒ«ã«åå‰ã‚’ã¤ã‘ã¦ä¸‹ã•ã„ã€‚", "åå‰ã‚’ã¤ã‘ã¦ä¿å­˜", CreateDateTime)
 
 		if (m_dlg.DoModal()==IDOK){
 			FileName = _T("");
@@ -1438,7 +1438,7 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 			FileName = _T("");
 		}
 	}
-	//FileName = CreateDateTime(1);//Œã‚ÅÁ‚·
+	//FileName = CreateDateTime(1);//å¾Œã§æ¶ˆã™
 
 	if (AutoSaveFLG == TRUE) {
 		//CurrentDirectory_FLG = TRUE;
@@ -1447,8 +1447,8 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 		FileName = ProhibitFileName(FileName, FALSE);
     
 		if(FileName == _T("")){
-			//MessageBox(_T("o—Í‚ªƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½BƒfƒtƒHƒ‹ƒg‚Ì“ú•t‚ğƒtƒ@ƒCƒ‹–¼‚É‚·‚éÛ‚ÍA‚»‚Ì‚Ü‚ÜuOKƒ{ƒ^ƒ“v‚ğƒNƒŠƒbƒN‚µ‚Ä‰º‚³‚¢B"), _T("o—ÍƒLƒƒƒ“ƒZƒ‹"),MB_YESNOCANCEL);
-			CFileListCreatorDlg::StatusStringSet(_T("Export o—Íƒtƒ@ƒCƒ‹–¼ –¢“ü—Í"),0,TRUE);
+			//MessageBox(_T("å‡ºåŠ›ãŒã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ—¥ä»˜ã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã«ã™ã‚‹éš›ã¯ã€ãã®ã¾ã¾ã€ŒOKãƒœã‚¿ãƒ³ã€ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ä¸‹ã•ã„ã€‚"), _T("å‡ºåŠ›ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),MB_YESNOCANCEL);
+			CFileListCreatorDlg::StatusStringSet(_T("Export å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å æœªå…¥åŠ›"),0,TRUE);
 			return;
 		}
 	}
@@ -1457,7 +1457,7 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 
 	CString saveDir = _T("");
 
-	//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -1465,18 +1465,18 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 	//CurDir = szCurrentDir;
 
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
-	//// ƒtƒ‹ƒpƒX‚ğ•ª‰ğ
+	//// ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’åˆ†è§£
 	//TCHAR szDir[_MAX_DIR];
 	//TCHAR szDrive[_MAX_DRIVE];
 	//TCHAR szFName[_MAX_FNAME];
 	//TCHAR szExt[_MAX_EXT];
 	//_splitpath(szPath,szDrive,szDir,szFName,szExt);
 	//
-	//// ƒtƒHƒ‹ƒ_Aƒtƒ@ƒCƒ‹–¼æ“¾
+	//// ãƒ•ã‚©ãƒ«ãƒ€ã€ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 	//TCHAR szFilePath[_MAX_PATH];
 	//TCHAR szFileName[_MAX_PATH];
 	//sprintf(szFilePath,"%s%s",szDrive,szDir);
@@ -1518,21 +1518,21 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 	if ( AutoSaveFLG == FALSE ) {
 		if ( PathFileExists(saveDir + htmlFileName) ){
 			FileExistFLG = TRUE;
-			OverwriteConfirm = MessageBox(_T("“¯–¼‚Ìƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ü‚·Bã‘‚«‚µ‚Ü‚·‚©H") ,_T("ã‘‚«Šm”F"), MB_YESNOCANCEL );
+			OverwriteConfirm = MessageBox(_T("åŒåã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã™ã€‚ä¸Šæ›¸ãã—ã¾ã™ã‹ï¼Ÿ") ,_T("ä¸Šæ›¸ãç¢ºèª"), MB_YESNOCANCEL );
 		}
 	}
 
 	if (IDYES == OverwriteConfirm ){
 		if ( AutoSaveFLG == FALSE ) {
 			if ( FileExistFLG == TRUE ){
-				CFileListCreatorDlg::StatusStringSet(_T("ã‘‚«•Û‘¶‚µ‚Ü‚µ‚½"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ä¸Šæ›¸ãä¿å­˜ã—ã¾ã—ãŸ"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("V‹K•Û‘¶‚µ‚Ü‚µ‚½"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("æ–°è¦ä¿å­˜ã—ã¾ã—ãŸ"),0,TRUE);
 			}
 		}
-		CFileListCreatorDlg::ExportFileList_Func(saveDir,FileName); //AutoSave‚Ì‚ào—Í //•ÏX 2012.06.14
+		CFileListCreatorDlg::ExportFileList_Func(saveDir,FileName); //AutoSaveã®æ™‚ã‚‚å‡ºåŠ› //å¤‰æ›´ 2012.06.14
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("ã‘‚« ƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ä¸Šæ›¸ã ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 		return;
 	}
 
@@ -1557,21 +1557,21 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 
 	if ( LastLine.Find(_T("</body></html>"),0 ) != 0 ){
 		int myResult;
-		myResult = MessageBox(_T("o—Í‚Å‚«‚È‚¢•¶š‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒŠƒXƒgƒtƒ@ƒCƒ‹‚Í•sŠ®‘S‚Èó‘Ô‚Å‚·Bƒ†ƒjƒR[ƒh‚ÅÄo—Í‚µ‚Ü‚·‚©H\r\n\r\nu‚Í‚¢vÄo—Í\r\nu‚¢‚¢‚¦v‘±s\r\nuƒLƒƒƒ“ƒZƒ‹vI—¹") ,_T("Äo—ÍŠm”F"), MB_YESNOCANCEL );
+		myResult = MessageBox(_T("å‡ºåŠ›ã§ããªã„æ–‡å­—ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã¯ä¸å®Œå…¨ãªçŠ¶æ…‹ã§ã™ã€‚ãƒ¦ãƒ‹ã‚³ãƒ¼ãƒ‰ã§å†å‡ºåŠ›ã—ã¾ã™ã‹ï¼Ÿ\r\n\r\nã€Œã¯ã„ã€å†å‡ºåŠ›\r\nã€Œã„ã„ãˆã€ç¶šè¡Œ\r\nã€Œã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€çµ‚äº†") ,_T("å†å‡ºåŠ›ç¢ºèª"), MB_YESNOCANCEL );
 
 		if (IDYES == myResult){
-			//ƒtƒ@ƒCƒ‹Äo—Íˆ—
+			//ãƒ•ã‚¡ã‚¤ãƒ«å†å‡ºåŠ›å‡¦ç†
 
-			CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒg‚ğÄo—Í’†"),0,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆã‚’å†å‡ºåŠ›ä¸­"),0,FALSE);
 
 			g_RadioENCODING_SELECT = 1;
 
 			CFileListCreatorDlg::ExportFileList_Func(saveDir,FileName);
-			CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒg‚ğÄo—Í‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆã‚’å†å‡ºåŠ›ã—ã¾ã—ãŸ"),300,TRUE);
 		}else if (IDNO == myResult){
-			StatusStringSet(_T("ƒVƒtƒg‚i‚h‚r‚Åo—Í‚ğ‘±s‚µ‚Ü‚·"),300,TRUE);
+			StatusStringSet(_T("ã‚·ãƒ•ãƒˆï¼ªï¼©ï¼³ã§å‡ºåŠ›ã‚’ç¶šè¡Œã—ã¾ã™"),300,TRUE);
 		}else if (IDCANCEL == myResult){
-			StatusStringSet(_T("ˆêƒtƒ@ƒCƒ‹‚ğíœ‚µ‚Ü‚µ‚½"),300,TRUE);
+			StatusStringSet(_T("ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤ã—ã¾ã—ãŸ"),300,TRUE);
 			DeleteFile(saveDir + htmlFileName); //http://www.ujasiri.com/prglib/vc/filectrl/vc_delfile.html
 			DeleteFile(saveDir + FileName + _T(".txt")); //http://www.ujasiri.com/prglib/vc/filectrl/vc_delfile.html
 			g_NoDrawFLG = FALSE;
@@ -1582,9 +1582,9 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 
 	if (AutoSaveFLG == FALSE) {
 		if (CurrentDirectory_FLG == FALSE){
-			MessageBox(_T("u") + FileName + _T("v‚Æ‚¢‚¤–¼‘O‚ÅƒŠƒXƒgƒtƒ@ƒCƒ‹(html,text)‚ğƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚Éo—Í‚µ‚Ü‚µ‚½"),_T("ƒŠƒXƒgƒGƒNƒXƒ|[ƒgI—¹"),MB_OK);
+			MessageBox(_T("ã€Œ") + FileName + _T("ã€ã¨ã„ã†åå‰ã§ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«(html,text)ã‚’ãƒã‚¤ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã«å‡ºåŠ›ã—ã¾ã—ãŸ"),_T("ãƒªã‚¹ãƒˆã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆçµ‚äº†"),MB_OK);
 		}else{
-			MessageBox(_T("u") + FileName + _T("v‚Æ‚¢‚¤–¼‘O‚ÅƒŠƒXƒgƒtƒ@ƒCƒ‹(html,text)‚ğo—Í‚µ‚Ü‚µ‚½"),_T("ƒŠƒXƒgƒGƒNƒXƒ|[ƒgI—¹"),MB_OK);
+			MessageBox(_T("ã€Œ") + FileName + _T("ã€ã¨ã„ã†åå‰ã§ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«(html,text)ã‚’å‡ºåŠ›ã—ã¾ã—ãŸ"),_T("ãƒªã‚¹ãƒˆã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆçµ‚äº†"),MB_OK);
 		}
 	}
 
@@ -1598,21 +1598,21 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 
 		///saveDir.Replace(_T("\\\\"),_T("\\"));
 
-		TRACE(_T("ŸFileName¨%s \r\n" ),FileName);
-		TRACE(_T("ŸsaveDir¨%s \r\n" ),saveDir);
+		TRACE(_T("â—†FileNameâ†’%s \r\n" ),FileName);
+		TRACE(_T("â—†saveDirâ†’%s \r\n" ),saveDir);
 
 		//http://oshiete.goo.ne.jp/qa/2193377.html
-		SetCurrentDirectory(saveDir); //•K—v
+		SetCurrentDirectory(saveDir); //å¿…è¦
 
 		//ShellExecute(handle, "find", path_to_folder, NULL, NULL, 0);
 
-		////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­iŒ³‚Ìƒ\[ƒXj
+		////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ãï¼ˆå…ƒã®ã‚½ãƒ¼ã‚¹ï¼‰
 		//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,") + FileName , saveDir, SW_SHOWNORMAL );
 
-		////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­i‰ñ“šÒ—l‚Ìƒ\[ƒXj//http://oshiete.goo.ne.jp/qa/7388913.html
+		////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ãï¼ˆå›ç­”è€…æ§˜ã®ã‚½ãƒ¼ã‚¹ï¼‰//http://oshiete.goo.ne.jp/qa/7388913.html
 		//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,") + saveDir + FileName, NULL, SW_SHOWNORMAL );
 
-		////////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+		////////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 		//CString strArgs; 
 		//strArgs = _T("/select, \"");
 		//strArgs +=saveDir + FileName; 
@@ -1620,23 +1620,23 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 
 		//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), strArgs, NULL, SW_SHOWNORMAL );
 
-		//////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­  //http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
+		//////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã  //http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
 		ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,.\\" + htmlFileName) , saveDir, SW_SHOWNORMAL );
 
 		////http://msdn.microsoft.com/en-us/library/windows/desktop/bb762153(v=vs.85).aspx
 		//ShellExecute( NULL, _T("find"), saveDir, NULL , NULL, SW_SHOWNORMAL );
 
-			ShellExecuteOpenFLG = TRUE; //Ÿ‘P‚Ìô //Œã‚Å’¼‚· //’Ç‰Á 2012.06.14
+			ShellExecuteOpenFLG = TRUE; //æ¬¡å–„ã®ç­– //å¾Œã§ç›´ã™ //è¿½åŠ  2012.06.14
 
 				LastPrevItemCount = m_xcList.GetItemCount();
-				CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02 //d—v 2012.06.01
+				CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02 //é‡è¦ 2012.06.01
 
-			ShellExecuteOpenFLG = FALSE; //Ÿ‘P‚Ìô //Œã‚Å’¼‚· //’Ç‰Á 2012.06.14
+			ShellExecuteOpenFLG = FALSE; //æ¬¡å–„ã®ç­– //å¾Œã§ç›´ã™ //è¿½åŠ  2012.06.14
 
 		//int i=0;
 
 		//for (i=0;i<100;i++){
-		//	CFileListCreatorDlg::StatusStringSet(_T("Export I—¹€”õ"),0,FALSE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("Export çµ‚äº†æº–å‚™"),0,FALSE);
 		//}
 
 		////http://oshiete.goo.ne.jp/qa/7388913.html
@@ -1651,32 +1651,32 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //íœ BOOL ReExport
 	
 	//http://stackoverflow.com/questions/3010305/programmatically-selecting-file-in-explorer
 
-	CFileListCreatorDlg::StatusStringSet(_T("Export I—¹"),300,TRUE);
-	UpdateData(FALSE); //•ÏX RedrawWindow(); //’Ç‰Á 2012.05.04
+	CFileListCreatorDlg::StatusStringSet(_T("Export çµ‚äº†"),300,TRUE);
+	UpdateData(FALSE); //å¤‰æ›´ RedrawWindow(); //è¿½åŠ  2012.05.04
 
 }
 
 
-void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName){ //’Ç‰Á 2012.04.22
+void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName){ //è¿½åŠ  2012.04.22
 
 
 
 	ESCAPE_FLG = FALSE;
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	
-	//CFileListCreatorDlg::SelectALL_CancellationFunc(); //ƒRƒƒ“ƒg‰» 2012.06.01
+	//CFileListCreatorDlg::SelectALL_CancellationFunc(); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.01
 
-	g_NoDrawFLG = TRUE; //ƒRƒƒ“ƒg‰» 2012.06.14
+	g_NoDrawFLG = TRUE; //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.14
 
 	//http://truthandhope.dousetsu.com/link/learn/learn_class/page1_class/page3_class/page28.html
 
-    //wchar_t *locale = NULL;         //ƒVƒXƒeƒ€‚Ì•¶šƒZƒbƒgŠi”[—p
+    //wchar_t *locale = NULL;         //ã‚·ã‚¹ãƒ†ãƒ ã®æ–‡å­—ã‚»ãƒƒãƒˆæ ¼ç´ç”¨
 
-    //locale = _wsetlocale(LC_CTYPE, L"");    //ƒVƒXƒeƒ€•¶šƒZƒbƒgæ“¾
-    //_wsetlocale(LC_ALL, locale);            //‘Î‰ŒêƒZƒbƒg
+    //locale = _wsetlocale(LC_CTYPE, L"");    //ã‚·ã‚¹ãƒ†ãƒ æ–‡å­—ã‚»ãƒƒãƒˆå–å¾—
+    //_wsetlocale(LC_ALL, locale);            //å¯¾å¿œèªã‚»ãƒƒãƒˆ
 
 	 //http://gurizuri0505.halfmoon.jp/develop/cplusplus/cstdiofile
 	 //_wsetlocale(LC_ALL, _T("jpn"));
@@ -1685,7 +1685,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 	_wsetlocale(LC_ALL, L"Japanese");
 	//_tsetlocale(LC_ALL, _T("Japanese_Japan.932")); //http://cx5software.com/article_vcpp_unicode/
 
-//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
     CString writeData;
     CString Temp;
@@ -1710,15 +1710,15 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
         Temp = Temp + _T("\n") + _T("<caption>");
         Temp = Temp + FLC_CurrentVersion+ _T("&nbsp;");
         Temp = Temp + CreateDateTime(2) + _T("</caption>") + _T("\n");
-				//CString CreateDateTime(int mySwitch){//mySwitch//1:ƒtƒ@ƒCƒ‹–¼‚É•t—^‚·‚é“ú//2:Œ»İ‚ÌŠÔ‚ğ•\¦
+				//CString CreateDateTime(int mySwitch){//mySwitch//1:ãƒ•ã‚¡ã‚¤ãƒ«åã«ä»˜ä¸ã™ã‚‹æ—¥æ™‚//2:ç¾åœ¨ã®æ™‚é–“ã‚’è¡¨ç¤º
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1726,7 +1726,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
    //         CFileListCreatorDlg::StatusStringSet(StatusString,100,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1737,14 +1737,14 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 
             Temp = Temp + _T("\n");
 
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 0 && g_RadioRemarksColumn == 2 ){ // '' "<!---FLC Generator Version 1.4.1--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.4.1--->");  //''¡XV“ú •\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.4.1--->");  //''â– æ›´æ–°æ—¥ è¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1753,12 +1753,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1766,7 +1766,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
    //         CFileListCreatorDlg::StatusStringSet(StatusString,100,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1778,14 +1778,14 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 
             Temp = Temp + _T("\n");
 
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 1 && g_RadioRemarksColumn == 2 ){//  '' "<!---FLC Generator Version 1.4.2--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.4.2--->");// ''¡XV“ú ”ñ•\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.4.2--->");// ''â– æ›´æ–°æ—¥ éè¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1794,12 +1794,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1807,7 +1807,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
 			//CFileListCreatorDlg::StatusStringSet(StatusString,0,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1819,14 +1819,14 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 
             Temp = Temp + _T("\n");
 			
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 0 && g_RadioRemarksColumn == 0 ){ // '' "<!---FLC Generator Version 1.5.1--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.1--->");  //''¡XV“ú •\¦ //¡”õl—“ •\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.1--->");  //''â– æ›´æ–°æ—¥ è¡¨ç¤º //â– å‚™è€ƒæ¬„ è¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1835,12 +1835,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1848,7 +1848,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
    //         CFileListCreatorDlg::StatusStringSet(StatusString,100,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1856,19 +1856,19 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) +  AddTagFunc(i, 5) + _T("</td>") +
                     _T("<td>") + AddTagFunc(i, 6) + AddTagFunc(i, 7) + _T("</td>") +
-					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//¡”õl—“ •\¦
+					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//â– å‚™è€ƒæ¬„ è¡¨ç¤º
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 0 && g_RadioRemarksColumn == 1 ){ // '' "<!---FLC Generator Version 1.5.2--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.2--->");  //''¡XV“ú •\¦ //¡”õl—“ ”ñ•\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.2--->");  //''â– æ›´æ–°æ—¥ è¡¨ç¤º //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1877,12 +1877,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1890,7 +1890,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
    //         CFileListCreatorDlg::StatusStringSet(StatusString,100,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1898,19 +1898,19 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) +  AddTagFunc(i, 5) + _T("</td>") +
                     _T("<td>") + AddTagFunc(i, 6) + AddTagFunc(i, 7) + _T("</td>") +
-					AddTagFunc(i, 8);//¡”õl—“ ”ñ•\¦
+					AddTagFunc(i, 8);//â– å‚™è€ƒæ¬„ éè¡¨ç¤º
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 1 && g_RadioRemarksColumn == 0 ){//  '' "<!---FLC Generator Version 1.5.3--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.3--->");//''¡XV“ú ”ñ•\¦ //¡”õl—“ •\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.3--->");//''â– æ›´æ–°æ—¥ éè¡¨ç¤º //â– å‚™è€ƒæ¬„ è¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1919,12 +1919,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1932,7 +1932,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
 			//CFileListCreatorDlg::StatusStringSet(StatusString,0,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1940,20 +1940,20 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) + AddTagFunc(i, 5) + _T("</td>") + 
 					AddTagFunc(i, 6) + AddTagFunc(i, 7) +
-					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//¡”õl—“ •\¦
+					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//â– å‚™è€ƒæ¬„ è¡¨ç¤º
 
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 			
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 1 && g_RadioRemarksColumn == 1 ){//  '' "<!---FLC Generator Version 1.5.4--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.4--->");//''¡XV“ú ”ñ•\¦ //¡”õl—“ ”ñ•\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.4--->");//''â– æ›´æ–°æ—¥ éè¡¨ç¤º //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -1962,12 +1962,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -1975,7 +1975,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
 			//CFileListCreatorDlg::StatusStringSet(StatusString,0,FALSE);
 
             Temp = Temp + _T("<tr>");
@@ -1983,19 +1983,19 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) +  AddTagFunc(i, 5) + _T("</td>") +
                     AddTagFunc(i, 6) + AddTagFunc(i, 7)+
-					AddTagFunc(i, 8); //¡”õl—“ ”ñ•\¦
+					AddTagFunc(i, 8); //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 			
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 2 && g_RadioRemarksColumn == 0 ){//  '' "<!---FLC Generator Version 1.5.5--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.5--->");//''¡XV“ú ƒGƒNƒXƒ|[ƒg‚µ‚È‚¢ //¡”õl—“ •\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.5--->");//''â– æ›´æ–°æ—¥ ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã—ãªã„ //â– å‚™è€ƒæ¬„ è¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -2004,12 +2004,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -2017,26 +2017,26 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
 			//CFileListCreatorDlg::StatusStringSet(StatusString,0,FALSE);
 
             Temp = Temp + _T("<tr>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 1) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) +  AddTagFunc(i, 5) + _T("</td>") +
-					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//¡”õl—“ •\¦
+					_T("<td>") + AddTagFunc(i, 8) + _T("</td>");//â– å‚™è€ƒæ¬„ è¡¨ç¤º
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 			
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
             i = i + 1;
 		}
 	}else if( g_RadioModifyDate == 2 && g_RadioRemarksColumn == 1 ){//  '' "<!---FLC Generator Version 1.5.6--->"
-        outGeneratorVer = _T("<!---FLC Generator Version 1.5.6--->");//''¡XV“ú ƒGƒNƒXƒ|[ƒg‚µ‚È‚¢ //¡”õl—“ ”ñ•\¦
+        outGeneratorVer = _T("<!---FLC Generator Version 1.5.6--->");//''â– æ›´æ–°æ—¥ ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã—ãªã„ //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
         i = 0;
         Temp = _T("");
         Temp = Temp + _T("\n") + _T("<caption>");
@@ -2045,12 +2045,12 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     
 		while (i <= MaxCnt){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -2058,19 +2058,19 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 				//continue;
 			}
 
-			//StatusString.Format(_T("HTML o—Í Às’† ( %d / %d )"),i+1,MaxCnt+1);
+			//StatusString.Format(_T("HTML å‡ºåŠ› å®Ÿè¡Œä¸­ ( %d / %d )"),i+1,MaxCnt+1);
 			//CFileListCreatorDlg::StatusStringSet(StatusString,0,FALSE);
 
             Temp = Temp + _T("<tr>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 1) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 3) + AddTagFunc(i, 2) + _T("</td>");
             Temp = Temp + _T("<td>") + AddTagFunc(i, 4) +  AddTagFunc(i, 5) + _T("</td>") +
-					AddTagFunc(i, 8);//¡”õl—“ ”ñ•\¦
+					AddTagFunc(i, 8);//â– å‚™è€ƒæ¬„ éè¡¨ç¤º
             Temp = Temp + _T("</tr>"); //'+ vbNewLine
 
             Temp = Temp + _T("\n");
 			
-			str1.Format(_T("HTML ƒGƒNƒXƒ|[ƒg Às’† ( %d / %d ) "),i+1,MaxCnt+1);
+			str1.Format(_T("HTML ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %d / %d ) "),i+1,MaxCnt+1);
 			CFileListCreatorDlg::StatusStringSet(str1,0,FALSE);
 
 			//CFileListCreatorDlg::m_xcList.EnsureVisible(i, FALSE);
@@ -2083,7 +2083,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 
 
 	//'    outGeneratorVer = "<!---" & "FLC Generator Version 1.3" & "--->"
-	//MessageBox(_T("ƒXƒgƒbƒv"));
+	//MessageBox(_T("ã‚¹ãƒˆãƒƒãƒ—"));
 	CFileListCreatorDlg::Total_Bytes_Bold();
     CFileListCreatorDlg::Total_Bytes_Func();
     //Call Total_Bytes_Bold(False)
@@ -2105,9 +2105,9 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
     CString w_TotalItems;
     w_TotalItems = _T("");
 
-    w_TotalItems.Format(_T("<!---itemCount:%d--->"),MaxCnt + 1);  //MaxCnt‚Í“Y‚¦š‚Å‚ ‚é‚½‚ßA{‚P‚·‚é
+    w_TotalItems.Format(_T("<!---itemCount:%d--->"),MaxCnt + 1);  //MaxCntã¯æ·»ãˆå­—ã§ã‚ã‚‹ãŸã‚ã€ï¼‹ï¼‘ã™ã‚‹
     
-	TotalItems.Format(_T("%d"),MaxCnt+1);  //MaxCnt‚Í“Y‚¦š‚Å‚ ‚é‚½‚ßA{‚P‚·‚é
+	TotalItems.Format(_T("%d"),MaxCnt+1);  //MaxCntã¯æ·»ãˆå­—ã§ã‚ã‚‹ãŸã‚ã€ï¼‹ï¼‘ã™ã‚‹
 	writeData = _T("");
 
 	CString META_ENCODING;
@@ -2154,14 +2154,14 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 
 //================================================================================
 
-		//''txtƒtƒ@ƒCƒ‹o—Í
+		//''txtãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 
 	//LVITEM       lvi;
 	
 	int err = 0;
 	//CString      str;	
 	
-	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 	CString txtFileName;
 
@@ -2207,7 +2207,7 @@ void CFileListCreatorDlg::ExportFileList_Func(CString saveDir, CString FileName)
 		fclose(fp);
 	}
 
-	g_NoDrawFLG = FALSE; //ƒRƒƒ“ƒg‰» 2012.06.14
+	g_NoDrawFLG = FALSE; //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.14
 
 	//http://gurizuri0505.halfmoon.jp/develop/cplusplus/cstdiofile
 	_wsetlocale(LC_ALL, _T(""));
@@ -2233,16 +2233,16 @@ BOOL CFileListCreatorDlg::myIsDigit_Func(CString targetStr){
 	//do{
 		error=0;
 		//fgets(str, sizeof(str), stdin);
-		for(p=lpsz_1;*p!='\n' && *p;p++){ /* ˆê•¶š‚¸‚Â’²‚×‚é */
-			if(!isdigit(*p)){ /* ”š•¶šˆÈŠO‚ªŠÜ‚Ü‚ê‚Ä‚¢‚½ */
-				error=1; /* ƒGƒ‰[”­Œ© */
-				//printf("”šˆÈŠO‚Ì•¶š‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·\n");
+		for(p=lpsz_1;*p!='\n' && *p;p++){ /* ä¸€æ–‡å­—ãšã¤èª¿ã¹ã‚‹ */
+			if(!isdigit(*p)){ /* æ•°å­—æ–‡å­—ä»¥å¤–ãŒå«ã¾ã‚Œã¦ã„ãŸ */
+				error=1; /* ã‚¨ãƒ©ãƒ¼ç™ºè¦‹ */
+				//printf("æ•°å­—ä»¥å¤–ã®æ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã¾ã™\n");
 				break;
 			}
 		}
-		//if(error) continue; /* ƒGƒ‰[‚ª‹N‚±‚Á‚Ä‚¢‚éˆÈ‰º‚ÍƒXƒLƒbƒv‚·‚é */
+		//if(error) continue; /* ã‚¨ãƒ©ãƒ¼ãŒèµ·ã“ã£ã¦ã„ã‚‹æ™‚ä»¥ä¸‹ã¯ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ */
 
-	//}while(!error); /* ƒGƒ‰[‚Å‚È‚¯‚ê‚ÎŒJ‚è•Ô‚· */
+	//}while(!error); /* ã‚¨ãƒ©ãƒ¼ã§ãªã‘ã‚Œã°ç¹°ã‚Šè¿”ã™ */
 
 	delete[] lpsz_1;
 	return (!error);
@@ -2270,7 +2270,7 @@ ULONGLONG CFileListCreatorDlg::FileListItemsCount(CString importFilePath){
 				int RowCnt = 1;
 
 				while (!err) {
-					if (RowCnt >= 5) break; //<!---itemCount:???--->ˆÈ~‚ÍƒXƒLƒbƒv //itemCount‚Í5s–Ú
+					if (RowCnt >= 5) break; //<!---itemCount:???--->ä»¥é™ã¯ã‚¹ã‚­ãƒƒãƒ— //itemCountã¯5è¡Œç›®
 
 					if (stdFile.ReadString(rstr) == FALSE) break;
 
@@ -2303,7 +2303,7 @@ ULONGLONG CFileListCreatorDlg::FileListItemsCount(CString importFilePath){
 						//stdFile.Close();
 					
 						if (itemCnt == _T("")) {
-							//stdFile.Close();//’Ç‰Á 2012.06.14
+							//stdFile.Close();//è¿½åŠ  2012.06.14
 							//return 0;
 						}else{
 							LONG myidx;
@@ -2332,10 +2332,10 @@ ULONGLONG CFileListCreatorDlg::FileListItemsCount(CString importFilePath){
 
 							//MessageBox(tempCntStr);
 							if (myIsDigit_Func(tempCntStr) == TRUE){
-								stdFile.Close();//’Ç‰Á 2012.06.02
+								stdFile.Close();//è¿½åŠ  2012.06.02
 								return CStringToLong(tempCntStr);
 							}else{
-								stdFile.Close();//’Ç‰Á 2012.06.02
+								stdFile.Close();//è¿½åŠ  2012.06.02
 								return 0;
 			//'                    //FileListItemsCount = FileListItemsCount
 							}
@@ -2343,7 +2343,7 @@ ULONGLONG CFileListCreatorDlg::FileListItemsCount(CString importFilePath){
 					}
 					RowCnt++;
 				}
-				// (6)ƒNƒ[ƒY(–¾¦“I)
+				// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 				//fclose(fp);
 				stdFile.Close();
 			//}
@@ -2354,12 +2354,12 @@ ULONGLONG CFileListCreatorDlg::FileListItemsCount(CString importFilePath){
 
 int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL importCheckFLG){
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	//_wsetlocale(LC_ALL, L"Japanese");
 
 	////http://oshiete.goo.ne.jp/qa/934586.html
-	//int ch = _getch(); // © ƒRƒŒ
+	//int ch = _getch(); // â† ã‚³ãƒ¬
 	//std::cout << std::hex << ch << std::endl;
 	//return 0;
 
@@ -2369,11 +2369,11 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
     
     if(importFilePath.Right(GetStrLen_Func(_T(".htm")))!= _T(".htm") && importFilePath.Right(GetStrLen_Func(_T(".html")))!= _T(".html")) return 0;
 
-	if ( PathFileExists(importFilePath) == FALSE ) return 0; //’Ç‰Á 2012.07.26
+	if ( PathFileExists(importFilePath) == FALSE ) return 0; //è¿½åŠ  2012.07.26
 
 	_wsetlocale(LC_ALL, L"Japanese");
 
-	//if (ESCAPE_FLG == TRUE) return 0;//’Ç‰Á 2011.10.12
+	//if (ESCAPE_FLG == TRUE) return 0;//è¿½åŠ  2011.10.12
 
 	//LVITEM       lvi;
 	int          index = 0;
@@ -2384,8 +2384,8 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	lvi.mask = LVIF_TEXT;
 
 
-	//////////¡UNICODE ‚Åo—Í
-	//////////http://oshiete.goo.ne.jp/qa/5126054.html ‚ğQl‚É‚µ‚Ü‚µ‚½B
+	//////////â– UNICODE ã§å‡ºåŠ›
+	//////////http://oshiete.goo.ne.jp/qa/5126054.html ã‚’å‚è€ƒã«ã—ã¾ã—ãŸã€‚
 
 
 	//http://typea.info/tips/wiki.cgi?page=MFC+%A5%D5%A5%A1%A5%A4%A5%EB%A4%F2%C6%C9%A4%E0
@@ -2394,13 +2394,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	//LPTSTR        rstrBuf = NULL;
 	//CStdioFile stdFile(_tfopen(importFilePath, _T("r, ccs=UNICODE")));
 
-	FILE *fp; //•ÏX rw‚É•ÏX 2012.06.02
+	FILE *fp; //å¤‰æ›´ rwã«å¤‰æ›´ 2012.06.02
 	_tfopen_s(&fp,importFilePath, _T("r, ccs=UNICODE")); //http://msdn.microsoft.com/ja-jp/library/yeby3zcb(v=vs.100).aspx
 	CStdioFile stdFile(fp); //http://oshiete.goo.ne.jp/qa/7431848.html
 	
 	int RowCnt=1;
 
-	// (4)“Ç‚İ‚İ(CString)
+	// (4)èª­ã¿è¾¼ã¿(CString)
 	inGeneratorVer = _T("<!---FLC Generator Version is Unknown--->");
 
 
@@ -2410,7 +2410,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	//BOOL META_ENCODING_FLG = FALSE;
 
 	while (!err){
-		if (RowCnt >= 4 ) break;//<!---FLC Generator Version x.x--->ˆÈ~‚ÍƒXƒLƒbƒv
+		if (RowCnt >= 4 ) break;//<!---FLC Generator Version x.x--->ä»¥é™ã¯ã‚¹ã‚­ãƒƒãƒ—
 
 		if (stdFile.ReadString(rstr) == FALSE) break;
 		
@@ -2482,18 +2482,18 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			stdFile.Close();
 			return 0;
 		}else{
-			StatusStringSet(_T("‚P‚ÂˆÈã‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ÌŒ`®‚ª”F¯‚Å‚«‚Ü‚¹‚ñ"),0,FALSE);
+			StatusStringSet(_T("ï¼‘ã¤ä»¥ä¸Šã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®å½¢å¼ãŒèªè­˜ã§ãã¾ã›ã‚“"),0,FALSE);
 			stdFile.Close();
 			return 0;
 		}
 	}else{
 		if(importCheckFLG == TRUE){
-			stdFile.Close();//’Ç‰Á 2012.06.02
+			stdFile.Close();//è¿½åŠ  2012.06.02
 			return 1;
 		}
 	}        
    
-   if (inGeneratorVer == _T("<!---FLC Generator Version 1.3--->")){  //¡XV“ú–„‚ß‚Ü‚¸
+   if (inGeneratorVer == _T("<!---FLC Generator Version 1.3--->")){  //â– æ›´æ–°æ—¥åŸ‹ã‚è¾¼ã¾ãš
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
 
@@ -2512,10 +2512,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -2524,7 +2524,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				rstr.Replace(_T("&nbsp;"), _T(" "));
 				//rstr.Replace(_T("&copy;"), _T("(c)"));
 				//rstr.Replace(_T("&reg;"), _T("(r)")); 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -2552,13 +2552,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -2573,24 +2573,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -2711,7 +2711,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -2724,7 +2724,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -2736,7 +2736,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -2747,7 +2747,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -2760,7 +2760,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -2803,7 +2803,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -2816,7 +2816,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -2827,7 +2827,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -2887,7 +2887,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -2896,7 +2896,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	}
 	
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.4.1--->")){  //¡XV“ú •\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.4.1--->")){  //â– æ›´æ–°æ—¥ è¡¨ç¤º
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
 
@@ -2915,10 +2915,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -2927,7 +2927,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				rstr.Replace(_T("&nbsp;"), _T(" "));
 				//rstr.Replace(_T("&copy;"), _T("(c)"));
 				//rstr.Replace(_T("&reg;"), _T("(r)")); 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -2955,13 +2955,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -2976,24 +2976,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -3112,7 +3112,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								BoldFLG = FALSE;
 							}
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -3125,7 +3125,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -3137,7 +3137,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3148,7 +3148,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3161,7 +3161,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3206,7 +3206,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3219,7 +3219,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3230,7 +3230,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3274,7 +3274,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			                    if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 
 									tempStr = tempDate.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-									//C³ŠÔ
+									//ä¿®æ­£æ™‚é–“
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3284,7 +3284,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									}			                                   
 
 									tempStr = tempDate.Mid(0,DateIDX1);
-									//C³“ú
+									//ä¿®æ­£æ—¥
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3294,7 +3294,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									}
 			                    }else{
 									tempStr = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-									//C³“ú
+									//ä¿®æ­£æ—¥
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3348,7 +3348,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					m_xcStaticString.ShowWindow(SW_SHOW);
 				}
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -3357,7 +3357,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			
 	}
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.4.2--->")){  //¡XV“ú ”ñ•\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.4.2--->")){  //â– æ›´æ–°æ—¥ éè¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -3377,10 +3377,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -3391,7 +3391,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				//rstr.Replace(_T("&reg;"), _T("(r)"));
 
 				////&apos; 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -3419,13 +3419,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -3440,24 +3440,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -3576,7 +3576,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								BoldFLG = FALSE;
 							}
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -3589,7 +3589,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -3601,7 +3601,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3612,7 +3612,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3625,7 +3625,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -3670,7 +3670,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3683,7 +3683,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3694,7 +3694,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3740,7 +3740,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³“ú
+								//ä¿®æ­£æ—¥
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3759,7 +3759,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³ŠÔ
+								//ä¿®æ­£æ™‚é–“
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -3816,7 +3816,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 				
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -3825,7 +3825,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			
 	}
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.1--->")){  //¡XV“ú •\¦ //¡”õl—“ •\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.1--->")){  //â– æ›´æ–°æ—¥ è¡¨ç¤º //â– å‚™è€ƒæ¬„ è¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -3845,10 +3845,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -3857,7 +3857,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				rstr.Replace(_T("&nbsp;"), _T(" "));
 				//rstr.Replace(_T("&copy;"), _T("(c)"));
 				//rstr.Replace(_T("&reg;"), _T("(r)")); 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -3885,13 +3885,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -3906,24 +3906,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -4043,7 +4043,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -4056,7 +4056,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -4068,7 +4068,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4079,7 +4079,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4092,7 +4092,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4137,7 +4137,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4150,7 +4150,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4161,7 +4161,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4205,7 +4205,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 
 								tempStr = tempDate.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³ŠÔ
+								//ä¿®æ­£æ™‚é–“
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4215,7 +4215,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}			                                   
 
 								tempStr = tempDate.Mid(0,DateIDX1);
-								//C³“ú
+								//ä¿®æ­£æ—¥
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4225,7 +4225,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 			                }else{
 								tempStr = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								//C³“ú
+								//ä¿®æ­£æ—¥
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4254,7 +4254,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 			                if ( myidx >= 0 && myidx2 >= 0 ){
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -4269,7 +4269,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -4318,7 +4318,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -4329,7 +4329,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.2--->")){  //¡XV“ú •\¦ //¡”õl—“ ”ñ•\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.2--->")){  //â– æ›´æ–°æ—¥ è¡¨ç¤º //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -4349,10 +4349,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -4361,7 +4361,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				rstr.Replace(_T("&nbsp;"), _T(" "));
 				//rstr.Replace(_T("&copy;"), _T("(c)"));
 				//rstr.Replace(_T("&reg;"), _T("(r)")); 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -4389,13 +4389,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -4410,24 +4410,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -4547,7 +4547,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -4560,7 +4560,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -4572,7 +4572,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4583,7 +4583,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4596,7 +4596,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4641,7 +4641,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4654,7 +4654,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4665,7 +4665,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -4709,7 +4709,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			                    if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 
 									tempStr = tempDate.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-									//C³ŠÔ
+									//ä¿®æ­£æ™‚é–“
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4719,7 +4719,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									}			                                   
 
 									tempStr = tempDate.Mid(0,DateIDX1);
-									//C³“ú
+									//ä¿®æ­£æ—¥
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4729,7 +4729,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									}
 			                    }else{
 									tempStr = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-									//C³“ú
+									//ä¿®æ­£æ—¥
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -4760,7 +4760,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString tempStr;
 
 								tempStr = rstr.Mid(RemarksIDX1 + GetStrLen_Func(_T("<!---")),RemarksIDX2 - RemarksIDX1 - GetStrLen_Func(_T("<!---")));
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -4775,7 +4775,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-			                X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+			                X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -4822,7 +4822,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -4832,7 +4832,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	}
 
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.3--->")){  //¡XV“ú ”ñ•\¦  //¡”õl—“ •\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.3--->")){  //â– æ›´æ–°æ—¥ éè¡¨ç¤º  //â– å‚™è€ƒæ¬„ è¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -4852,10 +4852,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -4866,7 +4866,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				//rstr.Replace(_T("&reg;"), _T("(r)"));
 
 				////&apos; 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -4894,13 +4894,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -4915,24 +4915,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -5052,7 +5052,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -5065,7 +5065,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -5077,7 +5077,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5088,7 +5088,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -5101,7 +5101,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -5146,7 +5146,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5159,7 +5159,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5170,7 +5170,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5215,7 +5215,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³“ú
+								//ä¿®æ­£æ—¥
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5234,7 +5234,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³ŠÔ
+								//ä¿®æ­£æ™‚é–“
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5264,7 +5264,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 			                if ( myidx >= 0 && myidx2 >= 0 ){
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -5279,7 +5279,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -5326,7 +5326,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -5336,7 +5336,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	}
 
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.4--->")){  //¡XV“ú ”ñ•\¦  //¡”õl—“ ”ñ•\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.4--->")){  //â– æ›´æ–°æ—¥ éè¡¨ç¤º  //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -5356,10 +5356,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -5370,7 +5370,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				//rstr.Replace(_T("&reg;"), _T("(r)"));
 
 				////&apos; 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -5398,13 +5398,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -5419,24 +5419,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -5555,7 +5555,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								BoldFLG = FALSE;
 							}
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -5568,7 +5568,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -5580,7 +5580,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5591,7 +5591,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -5604,7 +5604,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -5649,7 +5649,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5662,7 +5662,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5673,7 +5673,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5719,7 +5719,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³“ú
+								//ä¿®æ­£æ—¥
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5738,7 +5738,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 			                if(DateIDX1 >= 0 && DateIDX2 >= 0 ){
 								tempStr = rstr.Mid(DateIDX1 + GetStrLen_Func(_T("<!---")),DateIDX2 - DateIDX1 - GetStrLen_Func(_T("<!---")));
-								//C³ŠÔ
+								//ä¿®æ­£æ™‚é–“
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -5769,7 +5769,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString tempStr;
 
 								tempStr = rstr.Mid(RemarksIDX1 + GetStrLen_Func(_T("<!---")),RemarksIDX2 - RemarksIDX1 - GetStrLen_Func(_T("<!---")));
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -5784,7 +5784,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-							X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+							X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -5831,7 +5831,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -5841,7 +5841,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	}
 
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.5--->")){  //¡XV“ú ƒGƒNƒXƒ|[ƒg‚µ‚È‚¢  //¡”õl—“ •\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.5--->")){  //â– æ›´æ–°æ—¥ ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã—ãªã„  //â– å‚™è€ƒæ¬„ è¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -5861,10 +5861,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -5875,7 +5875,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				//rstr.Replace(_T("&reg;"), _T("(r)"));
 
 				////&apos; 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -5903,13 +5903,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -5924,24 +5924,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -6060,7 +6060,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								BoldFLG = FALSE;
 							}
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -6073,7 +6073,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -6085,7 +6085,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6096,7 +6096,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -6109,7 +6109,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -6154,7 +6154,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6167,7 +6167,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6178,7 +6178,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6216,7 +6216,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 			                if ( myidx >= 0 && myidx2 >= 0 ){
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -6231,7 +6231,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+			                X = myidx2 + GetStrLen_Func(_T("</td>"));  // X = myidx + myidx2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -6278,7 +6278,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -6288,7 +6288,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 	}
 
 
-	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.6--->")){  //¡XV“ú ƒGƒNƒXƒ|[ƒg‚µ‚È‚¢  //¡”õl—“ ”ñ•\¦
+	if (inGeneratorVer == _T("<!---FLC Generator Version 1.5.6--->")){  //â– æ›´æ–°æ—¥ ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã—ãªã„  //â– å‚™è€ƒæ¬„ éè¡¨ç¤º
 
 		while (!err) {
 			if (ESCAPE_FLG == TRUE) break;
@@ -6308,10 +6308,10 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
         
 	            
 				//rstr = _
-				//Replace(rstr, "<", "ƒ")
+				//Replace(rstr, "<", "ï¼œ")
 	                
 				//rstr = _
-				//Replace(rstr, ">", "„")
+				//Replace(rstr, ">", "ï¼")
 	    
 				//rstr.Replace(_T("&lt;"), _T("<"));
 				//rstr.Replace(_T("&gt;"), _T(">"));
@@ -6322,7 +6322,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				//rstr.Replace(_T("&reg;"), _T("(r)"));
 
 				////&apos; 
-				//rstr.Replace(_T("&amp;"), _T("&"));//ÅŒã‚É’uŠ·
+				//rstr.Replace(_T("&amp;"), _T("&"));//æœ€å¾Œã«ç½®æ›
 
 				CString FullPath;
 
@@ -6350,13 +6350,13 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 					X = 0;
 	
 					while (X <= rstr.GetLength()-1){
-						MSG msg; //’Ç‰Á 2011.10.12
+						MSG msg; //è¿½åŠ  2011.10.12
 
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
@@ -6371,24 +6371,24 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							myidx2 = rstr.Find(GetStrLen_Func(_T("</td>")),X);
 
 							//Call myActivateFunc(6 + MaxCnt)
-							//d•¡ƒiƒ“ƒo[
+							//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+								str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 								lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 0;
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 								index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi); //err = 1;
 							}
 
-							//’Ê‚µ”Ô†
+							//é€šã—ç•ªå·
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-								str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+								str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 								lvi.iItem = index;
 								//lvi.lParam = m_id++;        // ID
 								lvi.iSubItem = 1;
@@ -6508,7 +6508,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}
 
 
-							// ƒtƒ‹ƒpƒX
+							// ãƒ•ãƒ«ãƒ‘ã‚¹
 							if (!err)
 							{
 								//lvi.mask = LVIF_TEXT;
@@ -6521,7 +6521,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 							}	                                            
 	                                            
 							if(BoldFLG == TRUE ||  RedFLG == TRUE){
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{									
 									lvi.iItem = index;
@@ -6533,7 +6533,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString temp;
 								temp = rstr2.Left(rstr2.Find(_T("<!---"),0));
 								//MessageBox (temp);
-								// ƒtƒ@ƒCƒ‹–¼
+								// ãƒ•ã‚¡ã‚¤ãƒ«å
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6544,7 +6544,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}
 	                                        
 								if( BoldFLG == TRUE ||  RedFLG == TRUE ){
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -6557,7 +6557,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 									CString temp;
 									temp =rstr2.Left(rstr2.Find(_T("<!---"),0));
 
-									// ƒtƒ@ƒCƒ‹–¼
+									// ãƒ•ã‚¡ã‚¤ãƒ«å
 									if (!err)
 									{
 										lvi.iItem = index;
@@ -6602,7 +6602,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								myFileSize = tempSize.Mid(SizeNumIDX1 +GetStrLen_Func(_T("<!---")), SizeNumIDX2 - SizeNumIDX1 - GetStrLen_Func(_T("<!---")));
 
 								
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6615,7 +6615,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 
 								myFileSize = tempSize.Mid( 0, SizeNumIDX1);
 
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6626,7 +6626,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								}	
 							}else{
 								myFileSize = rstr.Mid(myidx + GetStrLen_Func(_T("<td>")), myidx2 - myidx - GetStrLen_Func(_T("<td>")));
-								// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+								// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 								if (!err)
 								{
 									lvi.iItem = index;
@@ -6666,7 +6666,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 								CString tempStr;
 
 								tempStr = rstr.Mid(RemarksIDX1 + GetStrLen_Func(_T("<!---")),RemarksIDX2 - RemarksIDX1 - GetStrLen_Func(_T("<!---")));
-								//”õl—“
+								//å‚™è€ƒæ¬„
 								if (!err)
 								{	
 									if(tempStr == _T("   ")){
@@ -6681,7 +6681,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 		
 			                }
 
-							X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //•ÏX 2012.07.11
+							X = RemarksIDX2 + GetStrLen_Func(_T("--->")); //X = myidx + RemarksIDX2 + GetStrLen_Func(_T("--->")); //å¤‰æ›´ 2012.07.11
 
 							CurrentStep = 6;
 							//break; 
@@ -6728,7 +6728,7 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 				}
 
 				CString tempStatus;
-				tempStatus.Format(_T("HTML ƒCƒ“ƒ|[ƒg Às’† ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
+				tempStatus.Format(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ å®Ÿè¡Œä¸­ ( %I64u / %I64u ) ") , DoWithCnt,TotalItemsCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 
@@ -6737,21 +6737,21 @@ int CFileListCreatorDlg::importFileList_Func(CString importFilePath, BOOL import
 			
 	}
 
-	CFileListCreatorDlg::SetStrFormat_Func(); //’Ç‰Á 2012.06.01 //d—v
+	CFileListCreatorDlg::SetStrFormat_Func(); //è¿½åŠ  2012.06.01 //é‡è¦
 
-	//CFileListCreatorDlg::Total_Bytes_Bold(); //’Ç‰Á 2012.07.11
-	//CFileListCreatorDlg::Total_Bytes_Func(); //’Ç‰Á 2012.07.11
-	//CFileListCreatorDlg::ItemCount_Func(FALSE); //’Ç‰Á 2012.07.11
+	//CFileListCreatorDlg::Total_Bytes_Bold(); //è¿½åŠ  2012.07.11
+	//CFileListCreatorDlg::Total_Bytes_Func(); //è¿½åŠ  2012.07.11
+	//CFileListCreatorDlg::ItemCount_Func(FALSE); //è¿½åŠ  2012.07.11
 
 	CFileListCreatorDlg::StrToTagSign();
 
 	UpdateData(FALSE);
 
-	 //(6)ƒNƒ[ƒY(–¾¦“I)
+	 //(6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	//fclose(fp);
 	stdFile.Close();
 
-	//stdFile.ReleaseBuffer(); //’Ç‰Á 2012.06.02 //”O‚Ì‚½‚ß
+	//stdFile.ReleaseBuffer(); //è¿½åŠ  2012.06.02 //å¿µã®ãŸã‚
 
 	_wsetlocale(LC_ALL, _T(""));
 	return 1;
@@ -6762,10 +6762,10 @@ void CFileListCreatorDlg::importFileList(){
 	ESCAPE_FLG = FALSE;
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 
-	StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg’†"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 	CFileListCreatorDlg::GetStrFormat_Func();
 
 	//if (AutoSaveFLG == FALSE ) 
@@ -6775,13 +6775,13 @@ void CFileListCreatorDlg::importFileList(){
 
 	POSITION		w_pos = NULL;
 
-	StatusStringSet(_T("ƒCƒ“ƒ|[ƒg‚·‚éƒtƒ@ƒCƒ‹‚ğ‘I‚ñ‚Å‰º‚³‚¢ (•¡”‘I‘ğ‰Â) "),0,TRUE);
+	StatusStringSet(_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸ã‚“ã§ä¸‹ã•ã„ (è¤‡æ•°é¸æŠå¯) "),0,TRUE);
 
-	CFileDialog     selDlg(TRUE, NULL, NULL,	//http://q.hatena.ne.jp/1173014326 ƒVƒ‡[ƒgƒJƒbƒgƒtƒ@ƒCƒ‹‚ÌƒŠƒ“ƒN‚ğ’H‚ç‚È‚¢@OFN_NODEREFERENCELINKS
-						OFN_HIDEREADONLY | OFN_ALLOWMULTISELECT | OFN_NODEREFERENCELINKS , filter);//OFN_NODEREFERENCELINKS ’Ç‰Á
+	CFileDialog     selDlg(TRUE, NULL, NULL,	//http://q.hatena.ne.jp/1173014326 ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒªãƒ³ã‚¯ã‚’è¾¿ã‚‰ãªã„ã€€OFN_NODEREFERENCELINKS
+						OFN_HIDEREADONLY | OFN_ALLOWMULTISELECT | OFN_NODEREFERENCELINKS , filter);//OFN_NODEREFERENCELINKS è¿½åŠ 
 	int             err = 0, lbErr = 0;
     
-	// ƒtƒ@ƒCƒ‹–¼ƒŠƒXƒg—pƒƒ‚ƒŠŠm•Û
+	// ãƒ•ã‚¡ã‚¤ãƒ«åãƒªã‚¹ãƒˆç”¨ãƒ¡ãƒ¢ãƒªç¢ºä¿
 	if (!err)
 	{
 		try
@@ -6825,11 +6825,11 @@ void CFileListCreatorDlg::importFileList(){
 		UpdateData(FALSE);
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg‘ÎÛƒAƒCƒeƒ€ ƒJƒEƒ“ƒgI—¹"),0,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆå¯¾è±¡ã‚¢ã‚¤ãƒ†ãƒ  ã‚«ã‚¦ãƒ³ãƒˆçµ‚äº†"),0,FALSE);
 //--------------------------------------------------------------------------------------------
 
 	CString str;
-	str.Format(_T("%I64u ŒÂ‚Ìƒtƒ@ƒCƒ‹‚ª‚ ‚è‚Ü‚µ‚½"),TotalItemsCount);
+	str.Format(_T("%I64u å€‹ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚Šã¾ã—ãŸ"),TotalItemsCount);
 
 	//MessageBox (str);
 
@@ -6860,7 +6860,7 @@ void CFileListCreatorDlg::importFileList(){
 		}
 		UpdateData(FALSE);
 	}    
-	//strBuf.ReleaseBuffer();//ƒRƒƒ“ƒgƒAƒEƒg//2011.05.31
+	//strBuf.ReleaseBuffer();//ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ//2011.05.31
     
     //If frmWizard1.cbAutoSort.Value = True Then
     //    Call Sort_Click
@@ -6873,30 +6873,30 @@ void CFileListCreatorDlg::importFileList(){
 	CFileListCreatorDlg::Total_Bytes_Func();
 	CFileListCreatorDlg::ItemCount_Func(FALSE);
 
-	//CFileListCreatorDlg::SetStrFormat_Func(); //Func‚Ì’†‚Å
+	//CFileListCreatorDlg::SetStrFormat_Func(); //Funcã®ä¸­ã§
 
 	if( ReadErrorFLG == TRUE || TotalItemsCount == 0){
 		if(AnyfileImport == FALSE){
-			StatusStringSet(_T("ˆê•”‚Ìƒtƒ@ƒCƒ‹‚ªƒŠƒXƒgƒtƒ@ƒCƒ‹‚Å‚È‚¢ˆ×A“Ç‚İ‚ß‚È‚©‚Á‚½ƒtƒ@ƒCƒ‹‚ª‚ ‚è‚Ü‚·"),300,TRUE);
+			StatusStringSet(_T("ä¸€éƒ¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã§ãªã„ç‚ºã€èª­ã¿è¾¼ã‚ãªã‹ã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚Šã¾ã™"),300,TRUE);
 		}
 	}else{
-		StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg ‚ªŠ®—¹‚µ‚Ü‚µ‚½"),300,TRUE);
+		StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆ ãŒå®Œäº†ã—ã¾ã—ãŸ"),300,TRUE);
 	}
 
 	if (TotalItemsCount>=1){
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 		if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
-			strBuf.ReleaseBuffer(); //’Ç‰Á 2012.06.01 //”O‚Ì‚½‚ß
+			strBuf.ReleaseBuffer(); //è¿½åŠ  2012.06.01 //å¿µã®ãŸã‚
 			DrawMenuBar();
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 		
 	}
@@ -6908,12 +6908,12 @@ void CFileListCreatorDlg::importFileList(){
     return;
 }
 
-////’uŠ·‚µ‚Ä‚µ‚Ü‚Á‚½H
+////ç½®æ›ã—ã¦ã—ã¾ã£ãŸï¼Ÿ
 CFileListCreatorDlg::CFileListCreatorDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CFileListCreatorDlg::IDD, pParent)
 	, m_xvChkViewMode(FALSE)
 	, m_xvStCount(_T(""))
-	, m_xvChkSubFolder(TRUE)//‘‚«Š·‚¦
+	, m_xvChkSubFolder(TRUE)//æ›¸ãæ›ãˆ
 	, m_xvStatusString(_T(""))
 	, m_xvTotal_Bytes(_T(""))
 	, m_xvChkEasySelect(FALSE)
@@ -6941,8 +6941,8 @@ void CFileListCreatorDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_DRAG_ON_ME, m_xcStaticString);
 	DDX_Check(pDX, IDC_CHK_EasySelect, m_xvChkEasySelect);
 	DDX_Text(pDX, IDC_STATIC_EasySelectMode, m_xvStrEasySelectMode);
-	DDX_Check(pDX, IDC_CHK_RedOnMode, m_xvChkRedOnMode);//’Ç‰Áq
-	DDX_Text(pDX, IDC_STATIC_RedOnMode, m_xvStrRedOnMode);//’Ç‰Á
+	DDX_Check(pDX, IDC_CHK_RedOnMode, m_xvChkRedOnMode);//è¿½åŠ q
+	DDX_Text(pDX, IDC_STATIC_RedOnMode, m_xvStrRedOnMode);//è¿½åŠ 
 	DDX_Check(pDX, IDC_CHK_AutoSave, m_xvChkAutoSave);
 	DDX_Text(pDX, IDC_EDIT_Item, m_xvEditItem);
 	DDX_Check(pDX, IDC_CHK_EditCellMode, m_xvChkEditCellMode);
@@ -7077,9 +7077,9 @@ BOOL CFileListCreatorDlg::OnInitDialog()
     
 	//CDialogEx::OnInitDialog();
 
-	// "ƒo[ƒWƒ‡ƒ“î•ñ..." ƒƒjƒ…[‚ğƒVƒXƒeƒ€ ƒƒjƒ…[‚É’Ç‰Á‚µ‚Ü‚·B
+	// "ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±..." ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ã‚·ã‚¹ãƒ†ãƒ  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«è¿½åŠ ã—ã¾ã™ã€‚
 
-	// IDM_ABOUTBOX ‚ÍAƒVƒXƒeƒ€ ƒRƒ}ƒ“ƒh‚Ì”ÍˆÍ“à‚É‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
+	// IDM_ABOUTBOX ã¯ã€ã‚·ã‚¹ãƒ†ãƒ  ã‚³ãƒãƒ³ãƒ‰ã®ç¯„å›²å†…ã«ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -7097,16 +7097,16 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 		}
 	}
 
-	// ‚±‚Ìƒ_ƒCƒAƒƒO‚ÌƒAƒCƒRƒ“‚ğİ’è‚µ‚Ü‚·BƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒƒCƒ“ ƒEƒBƒ“ƒhƒE‚ªƒ_ƒCƒAƒƒO‚Å‚È‚¢ê‡A
-	//  Framework ‚ÍA‚±‚Ìİ’è‚ğ©“®“I‚És‚¢‚Ü‚·B
-	SetIcon(m_hIcon, TRUE);			// ‘å‚«‚¢ƒAƒCƒRƒ“‚Ìİ’è
-	SetIcon(m_hIcon, FALSE);		// ¬‚³‚¢ƒAƒCƒRƒ“‚Ìİ’è
+	// ã“ã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¨­å®šã—ã¾ã™ã€‚ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã§ãªã„å ´åˆã€
+	//  Framework ã¯ã€ã“ã®è¨­å®šã‚’è‡ªå‹•çš„ã«è¡Œã„ã¾ã™ã€‚
+	SetIcon(m_hIcon, TRUE);			// å¤§ãã„ã‚¢ã‚¤ã‚³ãƒ³ã®è¨­å®š
+	SetIcon(m_hIcon, FALSE);		// å°ã•ã„ã‚¢ã‚¤ã‚³ãƒ³ã®è¨­å®š
 
-	ShowWindow(SWP_SHOWWINDOW);// SW_MINIMIZE ‚ğ SWP_SHOWWINDOW ‚É•Ï‚¦‚½
+	ShowWindow(SWP_SHOWWINDOW);// SW_MINIMIZE ã‚’ SWP_SHOWWINDOW ã«å¤‰ãˆãŸ
 
 	CDialogEx::OnInitDialog();
 
-    // TODO: ‰Šú‰»‚ğ‚±‚±‚É’Ç‰Á‚µ‚Ü‚·
+    // TODO: åˆæœŸåŒ–ã‚’ã“ã“ã«è¿½åŠ ã—ã¾ã™
 
 
 
@@ -7114,7 +7114,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 
 	ShellExecuteOpenFLG = FALSE;
 
-	ListInsertItemFLG = FALSE; //TRUE‚Ì‚ÍƒXƒNƒ[ƒ‹ARedrawWindow();‚µ‚È‚¢
+	ListInsertItemFLG = FALSE; //TRUEã®æ™‚ã¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã€RedrawWindow();ã—ãªã„
 
 	//UseUNDO_FLG = TRUE;
 	//m_xvChkUseUNDO = TRUE;
@@ -7123,21 +7123,21 @@ BOOL CFileListCreatorDlg::OnInitDialog()
     {
         int        err = 0;
 
-        if (!err) err = ListInit();        // ƒŠƒXƒgƒRƒ“ƒgƒ[ƒ‹‰Šú‰»
+        if (!err) err = ListInit();        // ãƒªã‚¹ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«åˆæœŸåŒ–
 
 		CellSizeFixMode = _T("Init");
 		CFileListCreatorDlg::OnBnClickedBtnCellsizefix();
 
-		//if (!err) err = CFileListCreatorDlg::ListInsertItem(myStr);  // ƒŠƒXƒgƒAƒCƒeƒ€‘}“ü
+		//if (!err) err = CFileListCreatorDlg::ListInsertItem(myStr);  // ãƒªã‚¹ãƒˆã‚¢ã‚¤ãƒ†ãƒ æŒ¿å…¥
     }
 	
 	::GetWindowRect( m_hWnd, &initWindowSize );
 	this->ScreenToClient( &initWindowSize );
 
 	::GetWindowRect( m_hWnd, &initWindowSize2 );
-	//this->ScreenToClient( &initWindowSize2 ); //•ÏŠ·‚µ‚È‚¢
+	//this->ScreenToClient( &initWindowSize2 ); //å¤‰æ›ã—ãªã„
 
-	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_STATIC_DRAG_ON_ME ), &rectSTATIC_DRAG_ON_ME ); //’Ç‰Á 2012.07.02
+	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_STATIC_DRAG_ON_ME ), &rectSTATIC_DRAG_ON_ME ); //è¿½åŠ  2012.07.02
 	this->ScreenToClient( &rectSTATIC_DRAG_ON_ME );
 
 	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_LIST ), &initListSize );
@@ -7231,8 +7231,8 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_CHK_UseUNDO ), &rectCHK_UseUNDO );
 	this->ScreenToClient( &rectCHK_UseUNDO );
 
-	ListDataNoChange_FLG = TRUE; //’Ç‰Á 2012.05.13 //AutoImportFileList()‚Å‰Šú‰»
-	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = TRUE; //è¿½åŠ  2012.05.13 //AutoImportFileList()ã§åˆæœŸåŒ–
+	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //è¿½åŠ  2012.05.13
 
 	//http://atashi.net/inu/ja/notes/stl_vector_sort.html
 
@@ -7261,18 +7261,18 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	g_ChkCopyOn=TRUE;
 	g_ChkRedOn=TRUE;
 
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	//BoldAndRedInversion = FALSE;
 
 	LastSelectedRow = -1;
 	LastSelectedColumn = -1;
-	//NotInversion = FALSE; //TRUE‚Ìƒtƒ@ƒCƒ‹–¼E”õl—“‚Ì•ÒW’†‚ÍAi‘¾•¶š•Ô•¶š‚Íj”½“]‚µ‚È‚¢
+	//NotInversion = FALSE; //TRUEã®æ™‚ãƒ•ã‚¡ã‚¤ãƒ«åãƒ»å‚™è€ƒæ¬„ã®ç·¨é›†ä¸­ã¯ã€ï¼ˆå¤ªæ–‡å­—ï¼†èµ¤æ–‡å­—ã¯ï¼‰åè»¢ã—ãªã„
 
 	//ListDBLCLK_FLG = FALSE;
-	SelectALLFLG  = FALSE;  //‚·‚×‚Ä‚ğ‘I‘ğ‚·‚é‚Æ‚«‚ÍÅ’áŒÀ‚Ìˆ—‚Ì‚İs‚¤
+	SelectALLFLG  = FALSE;  //ã™ã¹ã¦ã‚’é¸æŠã™ã‚‹ã¨ãã¯æœ€ä½é™ã®å‡¦ç†ã®ã¿è¡Œã†
 
-	g_NoDrawFLG = FALSE; //TRUE‚ÌAƒŠƒXƒg‚ğ•`‰æ‚µ‚È‚¢
+	g_NoDrawFLG = FALSE; //TRUEã®æ™‚ã€ãƒªã‚¹ãƒˆã‚’æç”»ã—ãªã„
 
 	BoldByteSum = 0;
 	BolditemCount = 0;
@@ -7331,21 +7331,21 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	
 	if(TempStr!=_T("")){
 		myResult = IDNO;
-		myResult = MessageBox(_T("ƒAƒCƒeƒ€ (ƒtƒHƒ‹ƒ_‚âƒtƒ@ƒCƒ‹) ‚ªƒhƒƒbƒv‚³‚ê‚Ü‚µ‚½BƒtƒHƒ‹ƒ_‚É‘Î‚µ‚Ä‚Ì“®ì‚ğ‘I‘ğ‚µ‚Ä‰º‚³‚¢B\r\n\r\nu‚Í‚¢vƒtƒ@ƒCƒ‹‚Ìí—Ş‚È‚Ç‚Åi‚è‚İ‚Ü‚·B\r\nu‚¢‚¢‚¦vƒhƒƒbƒv‚³‚ê‚½ƒtƒHƒ‹ƒ_‚Ì’†g‚ğ‚·‚×‚ÄƒŠƒXƒg‚Éæ‚è‚İ‚Ü‚·B") ,_T("æ‚è‚İŠm”F"), MB_YESNOCANCEL );
+		myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ  (ãƒ•ã‚©ãƒ«ãƒ€ã‚„ãƒ•ã‚¡ã‚¤ãƒ«) ãŒãƒ‰ãƒ­ãƒƒãƒ—ã•ã‚Œã¾ã—ãŸã€‚ãƒ•ã‚©ãƒ«ãƒ€ã«å¯¾ã—ã¦ã®å‹•ä½œã‚’é¸æŠã—ã¦ä¸‹ã•ã„ã€‚\r\n\r\nã€Œã¯ã„ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ç¨®é¡ãªã©ã§çµã‚Šè¾¼ã¿ã¾ã™ã€‚\r\nã€Œã„ã„ãˆã€ãƒ‰ãƒ­ãƒƒãƒ—ã•ã‚ŒãŸãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­èº«ã‚’ã™ã¹ã¦ãƒªã‚¹ãƒˆã«å–ã‚Šè¾¼ã¿ã¾ã™ã€‚") ,_T("å–ã‚Šè¾¼ã¿ç¢ºèª"), MB_YESNOCANCEL );
 
 		int importFileResult = IDNO;
 		SkipFLG = FALSE;
 
 		if(myResult	== IDYES){
-			//ƒ‚[ƒ_ƒ‹
+			//ãƒ¢ãƒ¼ãƒ€ãƒ«
 			m_dlg.DoModal();
 			if(m_dlg.TargetFileSpecs == _T("")){
-				CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ƒ†[ƒU[‚É‚æ‚éƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ã‚ˆã‚‹ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 				return FALSE;
 			}
 
 			if(m_dlg.TargetFileSpecs == _T("<<error>>")){
-				CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ³‚µ‚¢Œ`®‚ÅŒŸõ‘ÎÛ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : æ­£ã—ã„å½¢å¼ã§æ¤œç´¢å¯¾è±¡ã‚’æŒ‡å®šã—ã¦ãã ã•ã„"),300,TRUE);
 				return FALSE;
 			}
 		}
@@ -7353,12 +7353,12 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	while (i<=TempStr.GetLength()-1){
 		//TempStr = ((CFileListCreatorApp*)AfxGetApp())->m_lpCmdLine;
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
@@ -7379,9 +7379,9 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				i++;
 
 				if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE)== 1 && SkipFLG == FALSE){
-					importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+					importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 					//if ( importFileResult == IDYES ){
-					//	MessageBox(_T("‘ü¡‚©‚çƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·B\r\nuOKv‚ğ‰Ÿ‚µ‚ÄA‚µ‚Î‚ç‚­‚¨‘Ò‚¿‰º‚³‚¢B"),_T("æ‚è‚İŠJn"), MB_OK );
+					//	MessageBox(_T("åªä»Šã‹ã‚‰ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã€‚\r\nã€ŒOKã€ã‚’æŠ¼ã—ã¦ã€ã—ã°ã‚‰ããŠå¾…ã¡ä¸‹ã•ã„ã€‚"),_T("å–ã‚Šè¾¼ã¿é–‹å§‹"), MB_OK );
 					//}			
 					SkipFLG = TRUE;
 				}
@@ -7391,7 +7391,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				//}
 
 				//if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0 ||importFileResult !=IDYES ){
-				//	CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;")); //; ‚ğ–Y‚ê‚¸‚É
+				//	CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;")); //; ã‚’å¿˜ã‚Œãšã«
 				//}
 		
 
@@ -7400,7 +7400,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				}else if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0 && myResult == IDYES){
 					CFileListCreatorDlg::PackageSearch_Func(FileName,m_dlg.TargetFileSpecs);
 				}else if (importFileResult !=IDYES ){
-					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ‚ğ–Y‚ê‚¸‚É
+					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ã‚’å¿˜ã‚Œãšã«
 				}
 
 				CFileListCreatorDlg::ItemCount_Func(TRUE);
@@ -7416,9 +7416,9 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				FileName = TempStr.Mid(StartIDX,EndIDX-StartIDX + 1);
 
 				if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE)== 1 && SkipFLG == FALSE){
-					importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+					importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 /*					if ( importFileResult == IDYES ){
-						MessageBox(_T("‘ü¡‚©‚çƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·B\r\nuOKv‚ğ‰Ÿ‚µ‚ÄA‚µ‚Î‚ç‚­‚¨‘Ò‚¿‰º‚³‚¢B"),_T("æ‚è‚İŠJn"), MB_OK );
+						MessageBox(_T("åªä»Šã‹ã‚‰ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã€‚\r\nã€ŒOKã€ã‚’æŠ¼ã—ã¦ã€ã—ã°ã‚‰ããŠå¾…ã¡ä¸‹ã•ã„ã€‚"),_T("å–ã‚Šè¾¼ã¿é–‹å§‹"), MB_OK );
 					}	*/					
 					SkipFLG = TRUE;
 				}
@@ -7428,7 +7428,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				}else if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0 && myResult == IDYES){
 					CFileListCreatorDlg::PackageSearch_Func(FileName,m_dlg.TargetFileSpecs);
 				}else if (importFileResult !=IDYES ){
-					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ‚ğ–Y‚ê‚¸‚É
+					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ã‚’å¿˜ã‚Œãšã«
 				}
 
 				CFileListCreatorDlg::ItemCount_Func(TRUE);
@@ -7440,9 +7440,9 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				FileName = TempStr.Mid(StartIDX,EndIDX-StartIDX);
 
 				if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE)== 1 && SkipFLG == FALSE){
-					importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+					importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 /*					if ( importFileResult == IDYES ){
-						MessageBox(_T("‘ü¡‚©‚çƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·B\r\nuOKv‚ğ‰Ÿ‚µ‚ÄA‚µ‚Î‚ç‚­‚¨‘Ò‚¿‰º‚³‚¢B"),_T("æ‚è‚İŠJn"), MB_OK );
+						MessageBox(_T("åªä»Šã‹ã‚‰ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã€‚\r\nã€ŒOKã€ã‚’æŠ¼ã—ã¦ã€ã—ã°ã‚‰ããŠå¾…ã¡ä¸‹ã•ã„ã€‚"),_T("å–ã‚Šè¾¼ã¿é–‹å§‹"), MB_OK );
 					}		*/				
 					SkipFLG = TRUE;
 				}
@@ -7452,7 +7452,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 				}else if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0 && myResult == IDYES){
 					CFileListCreatorDlg::PackageSearch_Func(FileName,m_dlg.TargetFileSpecs);
 				}else if (importFileResult !=IDYES ){
-					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ‚ğ–Y‚ê‚¸‚É
+					CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ã‚’å¿˜ã‚Œãšã«
 				}
 				CFileListCreatorDlg::ItemCount_Func(TRUE);
 			}
@@ -7461,12 +7461,12 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	}
 
 	if (TempStr !=_T("")){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒAƒCƒeƒ€‚ğˆ—‚µ‚Ü‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚¢ã‚¤ãƒ†ãƒ ã‚’å‡¦ç†ã—ã¾ã—ãŸ"),300,TRUE);
 		CFileListCreatorDlg::SetStrFormat_Func();
 		//CFileListCreatorDlg::Total_Bytes_Func();
 
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
-		AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
+		AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //è¿½åŠ  2012.05.13
 
 	}
 
@@ -7482,7 +7482,7 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 
 	CFileListCreatorDlg::OnLanguageJapanese();
 
-	DragAcceptFiles();//Drag & Dropˆ—
+	DragAcceptFiles();//Drag & Dropå‡¦ç†
 	UpdateData(FALSE);
 
 	//CFileListCreatorDlg::m_color = RGB(220, 220, 220);
@@ -7510,19 +7510,19 @@ void CFileListCreatorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// ƒ_ƒCƒAƒƒO‚ÉÅ¬‰»ƒ{ƒ^ƒ“‚ğ’Ç‰Á‚·‚éê‡AƒAƒCƒRƒ“‚ğ•`‰æ‚·‚é‚½‚ß‚Ì
-//  ‰º‚ÌƒR[ƒh‚ª•K—v‚Å‚·BƒhƒLƒ…ƒƒ“ƒg/ƒrƒ…[ ƒ‚ƒfƒ‹‚ğg‚¤ MFC ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìê‡A
-//  ‚±‚ê‚ÍAFramework ‚É‚æ‚Á‚Ä©“®“I‚Éİ’è‚³‚ê‚Ü‚·B
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã«æœ€å°åŒ–ãƒœã‚¿ãƒ³ã‚’è¿½åŠ ã™ã‚‹å ´åˆã€ã‚¢ã‚¤ã‚³ãƒ³ã‚’æç”»ã™ã‚‹ãŸã‚ã®
+//  ä¸‹ã®ã‚³ãƒ¼ãƒ‰ãŒå¿…è¦ã§ã™ã€‚ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ/ãƒ“ãƒ¥ãƒ¼ ãƒ¢ãƒ‡ãƒ«ã‚’ä½¿ã† MFC ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®å ´åˆã€
+//  ã“ã‚Œã¯ã€Framework ã«ã‚ˆã£ã¦è‡ªå‹•çš„ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
 
 void CFileListCreatorDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // •`‰æ‚ÌƒfƒoƒCƒX ƒRƒ“ƒeƒLƒXƒg
+		CPaintDC dc(this); // æç”»ã®ãƒ‡ãƒã‚¤ã‚¹ ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// ƒNƒ‰ƒCƒAƒ“ƒg‚ÌlŠpŒ`—Ìˆæ“à‚Ì’†‰›
+		// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®å››è§’å½¢é ˜åŸŸå†…ã®ä¸­å¤®
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -7530,7 +7530,7 @@ void CFileListCreatorDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// ƒAƒCƒRƒ“‚Ì•`‰æ
+		// ã‚¢ã‚¤ã‚³ãƒ³ã®æç”»
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -7541,19 +7541,19 @@ void CFileListCreatorDlg::OnPaint()
 }
 
 
-// ƒ†[ƒU[‚ªÅ¬‰»‚µ‚½ƒEƒBƒ“ƒhƒE‚ğƒhƒ‰ƒbƒO‚µ‚Ä‚¢‚é‚Æ‚«‚É•\¦‚·‚éƒJ[ƒ\ƒ‹‚ğæ“¾‚·‚é‚½‚ß‚ÉA
-//  ƒVƒXƒeƒ€‚ª‚±‚ÌŠÖ”‚ğŒÄ‚Ño‚µ‚Ü‚·B
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒæœ€å°åŒ–ã—ãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒ‰ãƒ©ãƒƒã‚°ã—ã¦ã„ã‚‹ã¨ãã«è¡¨ç¤ºã™ã‚‹ã‚«ãƒ¼ã‚½ãƒ«ã‚’å–å¾—ã™ã‚‹ãŸã‚ã«ã€
+//  ã‚·ã‚¹ãƒ†ãƒ ãŒã“ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
 HCURSOR CFileListCreatorDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-// ƒŠƒXƒgƒRƒ“ƒgƒ[ƒ‹‰Šú‰»
+// ãƒªã‚¹ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«åˆæœŸåŒ–
 int CFileListCreatorDlg::ListInit(void)
 {
-    LVCOLUMN    lvc;//•ÏX2011.05.13
+    LVCOLUMN    lvc;//å¤‰æ›´2011.05.13
     int         i;
-    //TCHAR       caption[][32] = {_T("¤•i"), _T("’P‰¿"), _T("ŒÂ”")};
-	TCHAR		caption[][32] = {_T("d•¡No."), _T("No."), _T("ƒtƒ@ƒCƒ‹ƒpƒX"), _T("ƒtƒ@ƒCƒ‹–¼"),_T("ƒoƒCƒg"), _T("ÀƒoƒCƒg"),_T("C³“ú"),_T("C³ŠÔ"),_T("”õl—“"),_T("‘®î•ñ")};
+    //TCHAR       caption[][32] = {_T("å•†å“"), _T("å˜ä¾¡"), _T("å€‹æ•°")};
+	TCHAR		caption[][32] = {_T("é‡è¤‡No."), _T("No."), _T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹"), _T("ãƒ•ã‚¡ã‚¤ãƒ«å"),_T("ãƒã‚¤ãƒˆ"), _T("å®Ÿãƒã‚¤ãƒˆ"),_T("ä¿®æ­£æ—¥"),_T("ä¿®æ­£æ™‚é–“"),_T("å‚™è€ƒæ¬„"),_T("æ›¸å¼æƒ…å ±")};
     const int   clmNum = sizeof caption /sizeof caption[0];
     int         err = 0;
 
@@ -7567,46 +7567,46 @@ int CFileListCreatorDlg::ListInit(void)
     //LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP);
 
 	m_xcList.SetExtendedStyle( LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT |
-    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ƒRƒƒ“ƒg‰» 2012.05.19
+    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.19
 
-    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // —LŒøƒtƒ‰ƒO
+    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // æœ‰åŠ¹ãƒ•ãƒ©ã‚°
     for (i = 0; i < clmNum; i++)
     {
-        lvc.iSubItem    = i;            // ƒTƒuƒAƒCƒeƒ€”Ô†
-        lvc.pszText     = caption[i];   // Œ©o‚µƒeƒLƒXƒg
+        lvc.iSubItem    = i;            // ã‚µãƒ–ã‚¢ã‚¤ãƒ†ãƒ ç•ªå·
+        lvc.pszText     = caption[i];   // è¦‹å‡ºã—ãƒ†ã‚­ã‚¹ãƒˆ
 		switch(i){
 			case 0:
-				lvc.cx          = 80;          // ‰¡•
+				lvc.cx          = 80;          // æ¨ªå¹…
 				break;
 			case 1:
-				lvc.cx          = 80;          // ‰¡•
+				lvc.cx          = 80;          // æ¨ªå¹…
 				break;
 			case 2:
-				lvc.cx          = 0;          // ‰¡•
+				lvc.cx          = 0;          // æ¨ªå¹…
 				break;
 			case 3:
-				lvc.cx          = 470;          // ‰¡•
+				lvc.cx          = 470;          // æ¨ªå¹…
 				break;
 			case 4:
-				lvc.cx          = 80;          // ‰¡•
+				lvc.cx          = 80;          // æ¨ªå¹…
 				break;
 			case 5:
-				lvc.cx          = 0;          // ‰¡•
+				lvc.cx          = 0;          // æ¨ªå¹…
 				break;
 			case 6:
-				lvc.cx          = 110;          // ‰¡•
+				lvc.cx          = 110;          // æ¨ªå¹…
 				break;
 			case 7:
-				lvc.cx          = 0;          // ‰¡•
+				lvc.cx          = 0;          // æ¨ªå¹…
 				break;
 			case 8:
-				lvc.cx          = 110;          // ‰¡•
+				lvc.cx          = 110;          // æ¨ªå¹…
 				break;
 			case 9:
-				lvc.cx          = 0;          // ‰¡•
+				lvc.cx          = 0;          // æ¨ªå¹…
 				break;
 			default:
-				MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+				MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 				break;
 			
 		}
@@ -7623,10 +7623,10 @@ int CFileListCreatorDlg::ListInit(void)
 //InsertString
 
 
-// ƒŠƒXƒgƒAƒCƒeƒ€‘}“ü
+// ãƒªã‚¹ãƒˆã‚¢ã‚¤ãƒ†ãƒ æŒ¿å…¥
 int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 {	
-	ListInsertItemFLG = TRUE; //TRUE‚Ì‚ÍƒXƒNƒ[ƒ‹ARedrawWindow();‚µ‚È‚¢
+	ListInsertItemFLG = TRUE; //TRUEã®æ™‚ã¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã€RedrawWindow();ã—ãªã„
 
 	//LVITEM       lvi;
 	int          i, index = 0;
@@ -7638,21 +7638,21 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 
 		struct
 		{
-			TCHAR	RepetitionNum[30];	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
-			int		Num;		//’Ê‚µ”Ô†
-			TCHAR	FullPath[256];	//ƒtƒ@ƒCƒ‹ƒpƒX
-			TCHAR	FileName[256];	//ƒtƒ@ƒCƒ‹–¼
-			TCHAR	ApproximateByte[50];	//‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY//ƒoƒCƒg
-			long	AccurateByte;		//ÀÛ‚Ìƒf[ƒ^ƒTƒCƒY//ÀƒoƒCƒg
-			TCHAR	ModifyDate[20];		//C³“ú
-			//CTime	ModifyTime;		//C³ŠÔ
-			TCHAR	ModifyTime[20];		//C³ŠÔ
-			TCHAR	RemarksColumn[100];		//”õl—“
+			TCHAR	RepetitionNum[30];	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
+			int		Num;		//é€šã—ç•ªå·
+			TCHAR	FullPath[256];	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+			TCHAR	FileName[256];	//ãƒ•ã‚¡ã‚¤ãƒ«å
+			TCHAR	ApproximateByte[50];	//ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//ãƒã‚¤ãƒˆ
+			long	AccurateByte;		//å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//å®Ÿãƒã‚¤ãƒˆ
+			TCHAR	ModifyDate[20];		//ä¿®æ­£æ—¥
+			//CTime	ModifyTime;		//ä¿®æ­£æ™‚é–“
+			TCHAR	ModifyTime[20];		//ä¿®æ­£æ™‚é–“
+			TCHAR	RemarksColumn[100];		//å‚™è€ƒæ¬„
 		} item[] = 
 		{
-			{_T(""),1,_T("H:\\_iTunes Music_y•ÛŠÇŒÉz\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\20th Century - 01 ƒIƒŒ‚¶‚á‚È‚«‚áAƒLƒ~‚¶‚á‚È‚«‚á.mp3"),_T(""),_T("6MB"),6297985,_T("2009/4/1"),_T("2009/4/1  1:05:18")},
-			{_T(""),2,_T("D:\\_iTunes Music_y•ÛŠÇŒÉz\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\AAA - 01 Heart and Soul.mp3"),_T("AAA - 01 Heart and Soul.mp3"),_T(""),6351340,_T("2010/2/25"),_T("2010/2/25  15:08:13")},
-			{_T(""),3,_T("D:\\_iTunes Music_y•ÛŠÇŒÉz\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\AAA - 01 MIRAGE.mp3"),_T("AAA - 01 MIRAGE.mp3"),_T("4MB"), 4663519,_T(""),_T("2009/4/1  1:05:50")},
+			{_T(""),1,_T("H:\\_iTunes Music_ã€ä¿ç®¡åº«ã€‘\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\20th Century - 01 ã‚ªãƒ¬ã˜ã‚ƒãªãã‚ƒã€ã‚­ãƒŸã˜ã‚ƒãªãã‚ƒ.mp3"),_T(""),_T("6MB"),6297985,_T("2009/4/1"),_T("2009/4/1  1:05:18")},
+			{_T(""),2,_T("D:\\_iTunes Music_ã€ä¿ç®¡åº«ã€‘\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\AAA - 01 Heart and Soul.mp3"),_T("AAA - 01 Heart and Soul.mp3"),_T(""),6351340,_T("2010/2/25"),_T("2010/2/25  15:08:13")},
+			{_T(""),3,_T("D:\\_iTunes Music_ã€ä¿ç®¡åº«ã€‘\\_Tunes Music (192kbps)\\_SINGLE (192kbps MP3)\\AAA - 01 MIRAGE.mp3"),_T("AAA - 01 MIRAGE.mp3"),_T("4MB"), 4663519,_T(""),_T("2009/4/1  1:05:50")},
 		};
 		//int          err = 0;
 		
@@ -7662,21 +7662,21 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 
 		for (i = 0; i < itemNum; i++)
 		{
-			lvi.mask = LVIF_TEXT; //¡•K—v  // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
+			lvi.mask = LVIF_TEXT; //â– å¿…è¦  // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
 
 			if (!err)
 			{
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 				lvi.iItem = i;
 				lvi.iSubItem = 0;
-				lvi.pszText = item[i].RepetitionNum;	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+				lvi.pszText = item[i].RepetitionNum;	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 				//if ((index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi)) == -1) err = 1;
 			}
 	
 			if (!err)
 			{
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-				str.Format(_T("%d"), item[i].Num);	//’Ê‚µ”Ô†
+				str.Format(_T("%d"), item[i].Num);	//é€šã—ç•ªå·
 				lvi.iItem = index;
 				lvi.iSubItem = 1;
 				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));
@@ -7690,7 +7690,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem = 2;
-            	lvi.pszText = item[i].FullPath;	//ƒtƒ@ƒCƒ‹ƒpƒX
+            	lvi.pszText = item[i].FullPath;	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 
@@ -7699,7 +7699,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem = 3;
-            	lvi.pszText = item[i].FileName;	//ƒtƒ@ƒCƒ‹–¼
+            	lvi.pszText = item[i].FileName;	//ãƒ•ã‚¡ã‚¤ãƒ«å
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 
@@ -7708,7 +7708,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem = 4;
-            	lvi.pszText = item[i].ApproximateByte;	//‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY
+            	lvi.pszText = item[i].ApproximateByte;	//ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 
@@ -7717,7 +7717,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 				lvi.iSubItem = 5;
-				str.Format(_T("%d"), item[i].AccurateByte);	//ÀÛ‚Ìƒf[ƒ^ƒTƒCƒY
+				str.Format(_T("%d"), item[i].AccurateByte);	//å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));
 				if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
@@ -7727,7 +7727,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem = 6;
-            	lvi.pszText = item[i].ModifyDate;		//C³“ú
+            	lvi.pszText = item[i].ModifyDate;		//ä¿®æ­£æ—¥
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 
@@ -7736,7 +7736,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem =7;
-            	lvi.pszText = item[i].ModifyTime;		//C³ŠÔ
+            	lvi.pszText = item[i].ModifyTime;		//ä¿®æ­£æ™‚é–“
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 
@@ -7745,7 +7745,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
             	lvi.iItem = index;
 	 			lvi.iSubItem =8;
-            	lvi.pszText = item[i].RemarksColumn;		//”õl—“
+            	lvi.pszText = item[i].RemarksColumn;		//å‚™è€ƒæ¬„
             	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 			//MessageBox(_T("IN-LOOP"));
@@ -7757,26 +7757,26 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 		//int           err = 0;
 
 		UpdateData();
-		lvi.mask = LVIF_TEXT; // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
+		lvi.mask = LVIF_TEXT; // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
 
-		//d•¡ƒiƒ“ƒo[
+		//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 		if (!err)
 		{
 			//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-			str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+			str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 			lvi.iItem = CFileListCreatorDlg::m_xcList.GetItemCount();
 			//lvi.lParam = m_id++;        // ID
 			lvi.iSubItem = 0;
-			lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+			lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 			if ((index = CFileListCreatorDlg::m_xcList.InsertItem(&lvi)) == -1) err = 1;
 		}
 
-		//’Ê‚µ”Ô†
+		//é€šã—ç•ªå·
 		if (!err)
 		{
 			//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-			str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+			str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 			lvi.iItem = index;
 			//lvi.lParam = m_id++;        // ID
 			lvi.iSubItem = 1;
@@ -7787,7 +7787,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 
 		BOOL LengthOver = FALSE;
 
-		// ƒtƒ‹ƒpƒX
+		// ãƒ•ãƒ«ãƒ‘ã‚¹
 		if (!err)
 		{
 			//lvi.mask = LVIF_TEXT;
@@ -7796,7 +7796,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			lvi.iSubItem = 2;
 
 			if (FullPathString.GetLength() > 260){
-				FullPathString = FullPathString.Left(260); //’Ç‰Á 2013.02.08
+				FullPathString = FullPathString.Left(260); //è¿½åŠ  2013.02.08
 				LengthOver = TRUE;
 			}
 
@@ -7820,7 +7820,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 
 		CTime cTime;
 
-		if (LengthOver == FALSE){  //’Ç‰Á 2013.02.08
+		if (LengthOver == FALSE){  //è¿½åŠ  2013.02.08
 			CFile* pFile = NULL;
 			// Constructing a CFile object with this override may throw
 			// a CFile exception, and won't throw any other exceptions.
@@ -7846,10 +7846,10 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 
 				if(pFile.GetStatus(status))    // virtual member function
 				{
-				   //TRACE(_T("C³“ú = %s\n"), status.m_mtime);
+				   //TRACE(_T("ä¿®æ­£æ—¥ = %s\n"), status.m_mtime);
 				   //MessageBox(status.m_mtime);
 				
-					//http://msdn.microsoft.com/ja-jp/library/29btb3sw.aspx //”ÍˆÍŠO‚ÌAuƒpƒ‰ƒ[ƒ^‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·Bv‚Æ‚¢‚¤ƒGƒ‰[‚ğ“Š‚°‚é
+					//http://msdn.microsoft.com/ja-jp/library/29btb3sw.aspx //ç¯„å›²å¤–ã®æ™‚ã€ã€Œãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚ã€ã¨ã„ã†ã‚¨ãƒ©ãƒ¼ã‚’æŠ•ã’ã‚‹
 					cTime = status.m_mtime;
 					myDate = cTime.Format(_T("%Y/%m/%d %H:%M:%S")); //Format(tdate, "yyyy/mm/dd")
 														//Format(tdate, "yyyy/mm/dd hh:mm:ss")
@@ -7875,7 +7875,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			{
 				// if an error occurs, just make a message box
 
-				//pEx->ReportError();  //ƒAƒ‰[ƒg‚Ío‚³‚È‚¢
+				//pEx->ReportError();  //ã‚¢ãƒ©ãƒ¼ãƒˆã¯å‡ºã•ãªã„
 				pEx->Delete();
 				myFileName ="";
 				myFileSize = "";
@@ -7904,7 +7904,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 		//	myFileName.Mid(myFileName.ReverseFind(_T('\\'))+1);
 		//}
 
-		// ƒtƒ@ƒCƒ‹–¼
+		// ãƒ•ã‚¡ã‚¤ãƒ«å
 		if (!err)
 		{
 			lvi.iItem = index;
@@ -7915,12 +7915,12 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;			
 		}
 
-		// ‚¨‚¨‚æ‚»‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãŠãŠã‚ˆãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			lvi.iItem = index;
 			lvi.iSubItem = 4;
-			CString tempSize;//‚È‚º‚©•Ï”‚ğ‚Í‚³‚Ş‚Æãè‚­‚¢‚­
+			CString tempSize;//ãªãœã‹å¤‰æ•°ã‚’ã¯ã•ã‚€ã¨ä¸Šæ‰‹ãã„ã
 
 			//TRACE(_T("!!!!%I64u\n"),myLongFileSize);
 
@@ -7931,7 +7931,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;			
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			lvi.iItem = index;
@@ -7943,7 +7943,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 		}
 		//MessageBox(_T("IN-LOOP"));
 
-		//C³“ú
+		//ä¿®æ­£æ—¥
 		tempDate = cTime.Format(_T("%Y/%m/%d"));
 		if (!err)
 		{
@@ -7955,7 +7955,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;			
 		}
 
-		//C³ŠÔ
+		//ä¿®æ­£æ™‚é–“
 		tempDate = cTime.Format(_T("%Y/%m/%d %H:%M:%S"));
 		if (!err)
 		{
@@ -7992,13 +7992,13 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 			{
 				CString str;
 
-				str.Format(_T("%d ƒoƒCƒg"),nLen);
+				str.Format(_T("%d ãƒã‚¤ãƒˆ"),nLen);
 
 				//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 				lvi.iItem = index;
 	 			lvi.iSubItem =8;
-				//lvi.pszText = _T("[‚·‚¬‚éƒpƒX");		//”õl—“
-				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("[‚·‚¬‚éƒpƒX")));		//”õl—“
+				//lvi.pszText = _T("æ·±ã™ãã‚‹ãƒ‘ã‚¹");		//å‚™è€ƒæ¬„
+				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("æ·±ã™ãã‚‹ãƒ‘ã‚¹")));		//å‚™è€ƒæ¬„
 				if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 			}
 		}
@@ -8025,7 +8025,7 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 	CFileListCreatorDlg::ItemCount_Func(TRUE);
 
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -8033,42 +8033,42 @@ int CFileListCreatorDlg::ListInsertItem(CString FullPathString)
 		return 0;
 	}
 
-	if (ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 
-	ListInsertItemFLG = FALSE; //TRUE‚Ì‚ÍƒXƒNƒ[ƒ‹ARedrawWindow();‚µ‚È‚¢
+	ListInsertItemFLG = FALSE; //TRUEã®æ™‚ã¯ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã€RedrawWindow();ã—ãªã„
 
 	return err;
 }
 
 void CFileListCreatorDlg::OnBnClickedBtnImport()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	//MessageBox(_T("Import‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½B"));
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	//MessageBox(_T("ImportãŒæŠ¼ã•ã‚Œã¾ã—ãŸã€‚"));
 	CFileListCreatorDlg::importFileList();
 }
 
 void CFileListCreatorDlg::OnBnClickedBtnExport()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
-		StatusStringSet(_T("Export Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("Export å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		HTML_Dlg m_dlg;
 	
 		if(m_dlg.DoModal()==IDOK){
-			//CFileListCreatorDlg::SelectALL_CancellationFunc(); //ƒRƒƒ“ƒg‰» 2012.06.01
+			//CFileListCreatorDlg::SelectALL_CancellationFunc(); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.01
 
 			//g_NoDrawFLG = TRUE;
 			CFileListCreatorDlg::ExportFileList(FALSE);
 			//g_NoDrawFLG = FALSE;
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Export ƒLƒƒƒ“ƒZƒ‹"),0,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Export ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),0,TRUE);
 			//g_NoDrawFLG = FALSE;
 		}
 
@@ -8079,13 +8079,13 @@ void CFileListCreatorDlg::OnBnClickedBtnExport()
 
 void CFileListCreatorDlg::OnBnClickedBtnTest()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	//MessageBox(_T("Test‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½B"));
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	//MessageBox(_T("TestãŒæŠ¼ã•ã‚Œã¾ã—ãŸã€‚"));
 
 	if(CFileListCreatorDlg::myIsDigit_Func(_T("1"))==TRUE){
-		MessageBox( _T("”’l‚Å‚·"));
+		MessageBox( _T("æ•°å€¤ã§ã™"));
 	}else{
-		MessageBox( _T("•¶š‚ª“ü‚Á‚Ä‚¢‚Ü‚·"));
+		MessageBox( _T("æ–‡å­—ãŒå…¥ã£ã¦ã„ã¾ã™"));
 	}
 
 	CFileListCreatorDlg::Total_Bytes_Bold();
@@ -8108,13 +8108,13 @@ void CFileListCreatorDlg::OnBnClickedBtnTest()
 	//	MyList_CLASS.pFont->GetLogFont(&lf);
 	//	//TRACE(_T("Typeface name of font = %s\n"), lf.lfFaceName);
 	//	if(lf.lfWeight == FW_BOLD){
-	//		MessageBox(_T("‘¾•¶š‚Å‚·"));
+	//		MessageBox(_T("å¤ªæ–‡å­—ã§ã™"));
 	//	}	
 	//
 	//}
 
 	//if(m_xcList.GetItemData(1)== (FW_BOLD + RGB(0,0,0))){
-	//	MessageBox(_T("•‚¢‘¾•¶š‚Å‚·"));
+	//	MessageBox(_T("é»’ã„å¤ªæ–‡å­—ã§ã™"));
 	//}	
 
 	CFileListCreatorDlg::GetStrFormat_Func();
@@ -8123,8 +8123,8 @@ void CFileListCreatorDlg::OnBnClickedBtnTest()
 	//http://www.geocities.jp/ky_webid/win32c/021.html
 	//http://oshiete.goo.ne.jp/qa/4165655.html
 	// http://oshiete.goo.ne.jp/qa/5746038.html
-	// ƒŠƒXƒgƒRƒ“ƒgƒ[ƒ‹‚ÌFONTî•ñæ“¾ VC++ MFC@-VB -.Net "LogFont"
-	// ƒŠƒXƒgƒRƒ“ƒgƒ[ƒ‹‚Ì ƒtƒHƒ“ƒgî•ñæ“¾ VC++ MFC@-VB -.Net
+	// ãƒªã‚¹ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®FONTæƒ…å ±å–å¾— VC++ MFCã€€-VB -.Net "LogFont"
+	// ãƒªã‚¹ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã® ãƒ•ã‚©ãƒ³ãƒˆæƒ…å ±å–å¾— VC++ MFCã€€-VB -.Net
 
 
 	return;
@@ -8133,53 +8133,53 @@ void CFileListCreatorDlg::OnBnClickedBtnTest()
 void CFileListCreatorDlg::OnBnClickedChkViewmode()
 {
 	//UpdateData();
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if (m_xvChkViewMode){
 		LVCOLUMN    lvc;
 		int         i;
-		//TCHAR		caption[][32] = {_T("d•¡No."), _T("No."), _T("ƒtƒ@ƒCƒ‹ƒpƒX"), _T("ƒtƒ@ƒCƒ‹–¼"),_T("ƒoƒCƒg"), _T("ÀƒoƒCƒg"),_T("C³“ú"),_T("C³ŠÔ")};
+		//TCHAR		caption[][32] = {_T("é‡è¤‡No."), _T("No."), _T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹"), _T("ãƒ•ã‚¡ã‚¤ãƒ«å"),_T("ãƒã‚¤ãƒˆ"), _T("å®Ÿãƒã‚¤ãƒˆ"),_T("ä¿®æ­£æ—¥"),_T("ä¿®æ­£æ™‚é–“")};
 		//const int   clmNum = sizeof caption /sizeof caption[0];
 		int         err = 0;
 
 		//m_xcList.SetExtendedStyle(LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT |
 		//LVS_EX_GRIDLINES);
 
-		lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // —LŒøƒtƒ‰ƒO
+		lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 		for (i = 0; i < 9; i++)
 		{
-			lvc.iSubItem    = i;            // ƒTƒuƒAƒCƒeƒ€”Ô†
-			//lvc.pszText     = caption[i];   // Œ©o‚µƒeƒLƒXƒg
+			lvc.iSubItem    = i;            // ã‚µãƒ–ã‚¢ã‚¤ãƒ†ãƒ ç•ªå·
+			//lvc.pszText     = caption[i];   // è¦‹å‡ºã—ãƒ†ã‚­ã‚¹ãƒˆ
 			switch(i){
 				case 0:
 				case 1:
-					lvc.cx          = 80;          // ‰¡•
+					lvc.cx          = 80;          // æ¨ªå¹…
 					break;
 				case 2:
-					lvc.cx          = 500;          // ‰¡•
+					lvc.cx          = 500;          // æ¨ªå¹…
 					break;
 				case 3:
-					lvc.cx          = 0;          // ‰¡•
+					lvc.cx          = 0;          // æ¨ªå¹…
 					break;
 				case 4:
-					lvc.cx          = 80;          // ‰¡•
+					lvc.cx          = 80;          // æ¨ªå¹…
 					break;
 				case 5:
-					lvc.cx          = 0;          // ‰¡•
+					lvc.cx          = 0;          // æ¨ªå¹…
 					break;
 				case 6:
-					lvc.cx          = 70;          // ‰¡•
+					lvc.cx          = 70;          // æ¨ªå¹…
 					break;
 				case 7:
-					lvc.cx          = 0;          // ‰¡•
+					lvc.cx          = 0;          // æ¨ªå¹…
 					break;
 				case 8:
-					lvc.cx          = 80;          // ‰¡•
+					lvc.cx          = 80;          // æ¨ªå¹…
 					break;
 				case 9:
-					lvc.cx          = 0;          // ‰¡•
+					lvc.cx          = 0;          // æ¨ªå¹…
 					break;
 				default:
-					MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+					MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 					break;
 			
 			}
@@ -8193,32 +8193,32 @@ void CFileListCreatorDlg::OnBnClickedChkViewmode()
 
 void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//.Visible = FALSE;
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	ESCAPE_FLG = FALSE;
 
-	TotalItemsCount = 0; //’Ç‰Á 2012.04.07
-	DoWithCnt = 0; //’Ç‰Á 2012.04.07
-	SkipFLG = FALSE; //’Ç‰Á 2012.04.07
+	TotalItemsCount = 0; //è¿½åŠ  2012.04.07
+	DoWithCnt = 0; //è¿½åŠ  2012.04.07
+	SkipFLG = FALSE; //è¿½åŠ  2012.04.07
 
-	importFileResult = IDNO; //’Ç‰Á 2012.04.07
+	importFileResult = IDNO; //è¿½åŠ  2012.04.07
 
 
-	StatusStringSet(_T("StepSearch Às’†"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("StepSearch å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 	CString filter("ALL Files |*.*|Audio Files|*.mp3; *.wma; *.m4a|Document Files|*.xls; *.doc; *.ppt|Image Files|*.jpg; *.jpeg; *.gif; *.png; *.bmp|Movie Files|*.mpg; *.mpeg; *.asf; *.avi; *.mov; *.wmv; *.flv|Text Files|*.txt; *.text|HTML Files|*.html; *.htm|PlayLIST Files|*.m3u; *.wpl||");
 	CString         filePath, strBuf;
 	POSITION        pos = NULL;
-	CFileDialog     selDlg(TRUE, NULL, NULL,	//http://q.hatena.ne.jp/1173014326 ƒVƒ‡[ƒgƒJƒbƒgƒtƒ@ƒCƒ‹‚ÌƒŠƒ“ƒN‚ğ’H‚ç‚È‚¢@OFN_NODEREFERENCELINKS
-						OFN_HIDEREADONLY | OFN_ALLOWMULTISELECT | OFN_NODEREFERENCELINKS , filter);//OFN_NODEREFERENCELINKS ’Ç‰Á
+	CFileDialog     selDlg(TRUE, NULL, NULL,	//http://q.hatena.ne.jp/1173014326 ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒªãƒ³ã‚¯ã‚’è¾¿ã‚‰ãªã„ã€€OFN_NODEREFERENCELINKS
+						OFN_HIDEREADONLY | OFN_ALLOWMULTISELECT | OFN_NODEREFERENCELINKS , filter);//OFN_NODEREFERENCELINKS è¿½åŠ 
 	int             err = 0, lbErr = 0;
     
-	// ƒtƒ@ƒCƒ‹–¼ƒŠƒXƒg—pƒƒ‚ƒŠŠm•Û
+	// ãƒ•ã‚¡ã‚¤ãƒ«åãƒªã‚¹ãƒˆç”¨ãƒ¡ãƒ¢ãƒªç¢ºä¿
 	if (!err)
 	{
 		try
@@ -8229,7 +8229,7 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 		catch (...) {err = 1;}
 	}
 
-	//¥ ƒŠƒXƒgƒtƒ@ƒCƒ‹“WŠJ ƒAƒCƒeƒ€”ƒJƒEƒ“ƒg•” ¥
+	//â–¼ ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å±•é–‹æ™‚ ã‚¢ã‚¤ãƒ†ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆéƒ¨ â–¼
 
 	if (!err) if (selDlg.DoModal() != IDOK) err = 1;
 	if (!err) if ((pos = selDlg.GetStartPosition()) == NULL) err = 1;
@@ -8239,11 +8239,11 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 
 		while (pos)
 		{
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -8256,7 +8256,7 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 			if (!err)
 			{	
 				if (CFileListCreatorDlg::importFileList_Func(filePath,TRUE)== 1 && SkipFLG == FALSE){
-					importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+					importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 					SkipFLG = TRUE;
 				}
 
@@ -8279,27 +8279,27 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 		UpdateData(FALSE);
 	}
 
-	//£ƒŠƒXƒgƒtƒ@ƒCƒ‹“WŠJ ƒAƒCƒeƒ€”ƒJƒEƒ“ƒg•” £
+	//â–²ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å±•é–‹æ™‚ ã‚¢ã‚¤ãƒ†ãƒ æ•°ã‚«ã‚¦ãƒ³ãƒˆéƒ¨ â–²
 
 	
 	BOOL CntFLG = FALSE;
 
-	//¥ƒŠƒXƒgƒtƒ@ƒCƒ‹“WŠJ • ƒAƒCƒeƒ€’Ç‰Á •” ¥	//’Ç‰Á 2012.04.07
+	//â–¼ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å±•é–‹ ï¼† ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ  éƒ¨ â–¼	//è¿½åŠ  2012.04.07
 
-	pos = selDlg.GetStartPosition(); //Ä“x‰Šú‰»
+	pos = selDlg.GetStartPosition(); //å†åº¦åˆæœŸåŒ–
 	
-	//if (!err) if (selDlg.DoModal() != IDOK) err = 1; //’Ç‰Á 2012.12.01
+	//if (!err) if (selDlg.DoModal() != IDOK) err = 1; //è¿½åŠ  2012.12.01
 
 	if (!err) if ((pos = selDlg.GetStartPosition()) == NULL) err = 1;
 	if (!err)
 	{
 		while (pos)
 		{
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -8336,12 +8336,12 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 		UpdateData(FALSE);
 	}
 
-	//£ ƒŠƒXƒgƒtƒ@ƒCƒ‹“WŠJ • ƒAƒCƒeƒ€’Ç‰Á •” £	//’Ç‰Á 2012.04.07
+	//â–² ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å±•é–‹ ï¼† ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ  éƒ¨ â–²	//è¿½åŠ  2012.04.07
 
-	if (!err) if ((pos = selDlg.GetStartPosition()) == NULL) err = 1; //’Ç‰Á 2012.12.01
+	if (!err) if ((pos = selDlg.GetStartPosition()) == NULL) err = 1; //è¿½åŠ  2012.12.01
 
 	if (CntFLG == TRUE && err != 1){
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -8349,21 +8349,21 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 	}
 
 	strBuf.ReleaseBuffer();
 
-	CFileListCreatorDlg::StatusStringSet(_T("StepSearch I—¹"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("StepSearch çµ‚äº†"),300,TRUE);
 
-	//CFileListCreatorDlg::Total_Bytes_Func();//’Ç‰Á 2011.10.13
+	//CFileListCreatorDlg::Total_Bytes_Func();//è¿½åŠ  2011.10.13
 
-	CFileListCreatorDlg::Total_Bytes_Bold(); //’Ç‰Á 2012.07.11
-	CFileListCreatorDlg::Total_Bytes_Func(); //’Ç‰Á 2012.07.11
-	CFileListCreatorDlg::ItemCount_Func(FALSE); //’Ç‰Á 2012.07.11
+	CFileListCreatorDlg::Total_Bytes_Bold(); //è¿½åŠ  2012.07.11
+	CFileListCreatorDlg::Total_Bytes_Func(); //è¿½åŠ  2012.07.11
+	CFileListCreatorDlg::ItemCount_Func(FALSE); //è¿½åŠ  2012.07.11
 
 	DrawMenuBar();
     return;
@@ -8371,10 +8371,10 @@ void CFileListCreatorDlg::OnBnClickedBtnStepsearch()
 }
 
 void CFileListCreatorDlg::RestoreFunc(int index){
-	//yŒã‚Åzƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©H‚àŠm‚©‚ß‚éB
+	//ã€å¾Œã§ã€‘ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ï¼Ÿã‚‚ç¢ºã‹ã‚ã‚‹ã€‚
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	//LVITEM       lvi;
 	//int          index = 0;
@@ -8400,24 +8400,24 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 
 	lvi.mask = LVIF_TEXT;// | LVIF_PARAM;
 
-	//d•¡ƒiƒ“ƒo[
+	//é‡è¤‡ãƒŠãƒ³ãƒãƒ¼
 	if (!err)
 	{
 		//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-		str.Format(_T("%s"), _T(""));	//’Ê‚µ”Ô†
+		str.Format(_T("%s"), _T(""));	//é€šã—ç•ªå·
 		lvi.iItem = index;
 		//lvi.lParam = m_id++;        // ID
 		lvi.iSubItem = 0;
-		lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+		lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
 		if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 	}
 
-	//’Ê‚µ”Ô†
+	//é€šã—ç•ªå·
 	if (!err)
 	{
 		//lvi.mask = LVIF_TEXT | LVIF_PARAM;
-		str.Format(_T("%d"), index+1);	//’Ê‚µ”Ô†
+		str.Format(_T("%d"), index+1);	//é€šã—ç•ªå·
 		lvi.iItem = index;
 		//lvi.lParam = m_id++;        // ID
 		lvi.iSubItem = 1;
@@ -8425,7 +8425,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 
 		if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 	}
-	// ƒtƒ‹ƒpƒX
+	// ãƒ•ãƒ«ãƒ‘ã‚¹
 	if (!err)
 	{
 
@@ -8442,7 +8442,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 
 
 	if(FullPathString.Right(1)!=_T("\\")){
-	//// ƒtƒ@ƒCƒ‹–¼
+	//// ãƒ•ã‚¡ã‚¤ãƒ«å
 	//if (!err)
 	//{
 	//	lvi.iItem = index;
@@ -8451,7 +8451,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 	//	//if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;			
 	//}
 
-		// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			myLongFileSize = CStringToLong(CFileListCreatorDlg::m_xcList.GetItemText(index, 5));
@@ -8482,7 +8482,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 			}
 			else
 			{
-				TRACE("‰ğÍ•s”\\n");
+				TRACE("è§£æä¸èƒ½\n");
 			}
 		}
 		myFileSize.Format(_T("%I64u"), CFileListCreatorDlg::m_xcList.GetItemText(index, 5));
@@ -8511,10 +8511,10 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 
 			if(pFile.GetStatus(status))    // virtual member function
 			{
-				//TRACE(_T("C³“ú = %s\n"), status.m_mtime);
+				//TRACE(_T("ä¿®æ­£æ—¥ = %s\n"), status.m_mtime);
 				//MessageBox(status.m_mtime);
 
-				//C³ŠÔ
+				//ä¿®æ­£æ™‚é–“
 				if (!err)
 				{
 					workDate = CFileListCreatorDlg::m_xcList.GetItemText(index, 7);
@@ -8539,7 +8539,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 							}
 							else
 							{
-							TRACE("‰ğÍ•s”\\n");
+							TRACE("è§£æä¸èƒ½\n");
 							}
 
 						//cTime =  pd.Format(_T("%Y/%m/%d %H:%M:%S"));
@@ -8566,7 +8566,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 			//	myFileName = FullPathToFileName(FullPathString);
 			//	workDate = CFileListCreatorDlg::m_xcList.GetItemText(index, 7);
 			//	COleDateTime pd;
-			//	// HTTP ‚Ìƒwƒbƒ_‚©‚çæ‚Á‚½“ú•t•¶š—ñB
+			//	// HTTP ã®ãƒ˜ãƒƒãƒ€ã‹ã‚‰å–ã£ãŸæ—¥ä»˜æ–‡å­—åˆ—ã€‚
 			//	//char * p = tempDate;
 			//	if( pd.ParseDateTime( workDate ))
 			//		{
@@ -8579,7 +8579,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 			//		}
 			//		else
 			//		{
-			//			TRACE("‰ğÍ•s”\\n");
+			//			TRACE("è§£æä¸èƒ½\n");
 			//		}
 
 			//	//cTime =  pd.Format(_T("%Y/%m/%d %H:%M:%S"));
@@ -8597,7 +8597,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		
 		TRACE(FullPathString);
 
-		// ƒtƒ@ƒCƒ‹–¼
+		// ãƒ•ã‚¡ã‚¤ãƒ«å
 		if (!err)
 		{
 			lvi.iItem = index;
@@ -8614,7 +8614,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		CString wFullPathString = FullPathString;
 		wFullPathString.Replace(_T("\\"),_T("\\\\"));
 
-		// ‚¨‚¨‚æ‚»‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãŠãŠã‚ˆãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			if ( PathFileExists(wFullPathString) ){
@@ -8633,7 +8633,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 			}
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			if ( PathFileExists(wFullPathString) ){
@@ -8650,7 +8650,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		}
 		//MessageBox(_T("IN-LOOP"));
 
-		//C³ŠÔ
+		//ä¿®æ­£æ™‚é–“
 		//tempDate = cTime.Format(_T("%Y/%m/%d %H:%M:%S"));
 		if (!err)
 		{
@@ -8665,7 +8665,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 			}
 		}
 
-		//C³“ú
+		//ä¿®æ­£æ—¥
 		//tempDate = cTime.Format(_T("%Y/%m/%d"));
 		if (!err)
 		{
@@ -8724,7 +8724,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		tempStr2.Replace(_T("\\"),_T(" - "));
 		myFileName = tempStr2;
 
-		// ƒtƒ@ƒCƒ‹–¼
+		// ãƒ•ã‚¡ã‚¤ãƒ«å
 		if (!err)
 		{
 			lvi.iItem = index;
@@ -8745,7 +8745,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		CString wFullPathString = FullPathString;
 		wFullPathString.Replace(_T("\\"),_T("\\\\"));
 
-		// ‚¨‚¨‚æ‚»‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãŠãŠã‚ˆãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			if ( PathIsDirectory(wFullPathString) ){
@@ -8765,7 +8765,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		}
 
 
-		// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 		if (!err)
 		{
 			if ( PathIsDirectory(wFullPathString) ){
@@ -8788,7 +8788,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 
 
 		if (CFileListCreatorDlg::m_xcList.GetItemText(index,7)==_T("")){
-			//C³ŠÔ
+			//ä¿®æ­£æ™‚é–“
 			CString myTime;
 			myTime=_T("");
 
@@ -8808,7 +8808,7 @@ void CFileListCreatorDlg::RestoreFunc(int index){
 		}
 
 		if (CFileListCreatorDlg::m_xcList.GetItemText(index,6)==_T("")){
-			//C³“ú
+			//ä¿®æ­£æ—¥
 			CString myDate;
 			myDate=_T("");
 			myDate = tempTime.Format(_T("%Y/%m/%d"));
@@ -8845,30 +8845,30 @@ void CFileListCreatorDlg::OnBnClickedBtnRestore()
 {
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	ESCAPE_FLG = FALSE;
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
-		StatusStringSet(_T("Restore Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("Restore å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		int myResult;
 		if(m_xcList.GetSelectedCount()==0){
-			myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgã‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹–¼Aƒtƒ@ƒCƒ‹ƒTƒCƒYAC³“ú‚Ìî•ñ‚ğ•œ‹A‚µ‚Ü‚·‚©H"),_T("Restore"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«åã€ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã€ä¿®æ­£æ—¥ã®æƒ…å ±ã‚’å¾©å¸°ã—ã¾ã™ã‹ï¼Ÿ"),_T("Restore"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = 0;
 
 				while(index < CFileListCreatorDlg::m_xcList.GetItemCount()){
 
-					MSG msg; //’Ç‰Á 2011.10.12
-					if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+					MSG msg; //è¿½åŠ  2011.10.12
+					if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 						if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 							if (msg.wParam == VK_ESCAPE){
 								ESCAPE_FLG = TRUE;
-								break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+								break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 							}
 						}
 						TranslateMessage(&msg);
@@ -8880,24 +8880,24 @@ void CFileListCreatorDlg::OnBnClickedBtnRestore()
 					index++;
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Restore ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("Restore ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
 		if(m_xcList.GetSelectedCount()>=1){
-			myResult = MessageBox(_T("‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚Ìî•ñ‚ğ•œ‹A‚µ‚Ü‚·‚©H"),_T("Restore"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±ã‚’å¾©å¸°ã—ã¾ã™ã‹ï¼Ÿ"),_T("Restore"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = -1;
 
 				while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
 				        (index, LVNI_ALL | LVNI_SELECTED)) != -1){
 
-					MSG msg; //’Ç‰Á 2011.10.12
-					if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+					MSG msg; //è¿½åŠ  2011.10.12
+					if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 						if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 							if (msg.wParam == VK_ESCAPE){
 								ESCAPE_FLG = TRUE;
-								break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+								break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 							}
 						}
 						TranslateMessage(&msg);
@@ -8908,7 +8908,7 @@ void CFileListCreatorDlg::OnBnClickedBtnRestore()
 					RestoreFunc(index);
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Restore ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("Restore ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
@@ -8917,7 +8917,7 @@ void CFileListCreatorDlg::OnBnClickedBtnRestore()
 	Total_Bytes_Func();
 	ItemCount_Func(FALSE);
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -8925,12 +8925,12 @@ void CFileListCreatorDlg::OnBnClickedBtnRestore()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("Restore I—¹F•œ‹A"),0,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("Restore çµ‚äº†ï¼šå¾©å¸°"),0,TRUE);
 
 	///////////////////////////////////////////////////////////////
 }
@@ -8945,7 +8945,7 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
     BOOL         bWorking = finder.FindFile(tempPathName);
     CString      str;
 
-	StatusStringSet(_T("PackageSearch ŒŸõ‘ÎÛ ¨ " + strFileSpec),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("PackageSearch æ¤œç´¢å¯¾è±¡ â†’ " + strFileSpec),0,FALSE); //å¤‰æ›´ 2012.06.14
 
    // build a string with wildcards
 
@@ -8956,7 +8956,7 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 
    while (bWorking)
    {
-	  if (ESCAPE_FLG == FALSE){  //’Ç‰Á if•¶’Ç‰Á 2012.05.11
+	  if (ESCAPE_FLG == FALSE){  //è¿½åŠ  ifæ–‡è¿½åŠ  2012.05.11
 			bWorking = finder.FindNextFile();
 	  }else{
 		  break;
@@ -8966,12 +8966,12 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
       if (finder.IsDots()) continue;
 
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
@@ -8990,16 +8990,16 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 			if(strFileSpec2 != _T("")){
 				strFileSpec2.Replace(_T("*."),_T("")); 
 			}
-			//Like‰‰Zq‚ªg‚¦‚È‚¢‚Ì‚ÅAŠg’£q‚ğ’¼Ú”äŠr(«)‚µ‚½B
-			// *.htm; *.html; “¯‚¶ƒtƒ@ƒCƒ‹‚ª“ñd‚Éƒqƒbƒg‚µ‚Ä‚µ‚Ü‚¤‚Ì‚Å
-			// *.*; ‚Ìê‡‚àğŒ‚É’Ç‰Á
+			//Likeæ¼”ç®—å­ãŒä½¿ãˆãªã„ã®ã§ã€æ‹¡å¼µå­ã‚’ç›´æ¥æ¯”è¼ƒ(â†“)ã—ãŸã€‚
+			// *.htm; *.html; åŒã˜ãƒ•ã‚¡ã‚¤ãƒ«ãŒäºŒé‡ã«ãƒ’ãƒƒãƒˆã—ã¦ã—ã¾ã†ã®ã§
+			// *.*; ã®å ´åˆã‚‚æ¡ä»¶ã«è¿½åŠ 
 
 			if (CFileListCreatorDlg::importFileList_Func(str,TRUE)== 1 && SkipFLG == FALSE){
-				importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+				importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 				SkipFLG = TRUE;
 			}
 
-			if (GetItemsCntFLG == TRUE){  //«‚ÌğŒ‚ÍAƒtƒHƒ‹ƒ_‚©‚ç’H‚Á‚½ê‡‚ÆAƒtƒ@ƒCƒ‹–{‘Ì‚ªƒqƒbƒg‚µ‚½ê‡A‚ğ‹æ•Ê‚·‚éB“ñd‚ÉƒJƒEƒ“ƒg‚µ‚È‚¢I
+			if (GetItemsCntFLG == TRUE){  //â†“ã®æ¡ä»¶ã¯ã€ãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰è¾¿ã£ãŸå ´åˆã¨ã€ãƒ•ã‚¡ã‚¤ãƒ«æœ¬ä½“ãŒãƒ’ãƒƒãƒˆã—ãŸå ´åˆã€ã‚’åŒºåˆ¥ã™ã‚‹ã€‚äºŒé‡ã«ã‚«ã‚¦ãƒ³ãƒˆã—ãªã„ï¼
 				if(CFileListCreatorDlg::importFileList_Func(str,TRUE) == 1 && (str.Right(strFileSpec2.GetLength())==strFileSpec2 || strFileSpec == _T("*.*") )){ 
 					ULONGLONG tempCnt;
 
@@ -9036,7 +9036,7 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 
    err = 0;
 
-	if(m_xvChkSubFolder == TRUE){ //ƒTƒuƒtƒHƒ‹ƒ_‚àŒŸõ
+	if(m_xvChkSubFolder == TRUE){ //ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ã‚‚æ¤œç´¢
 
 		CString strWildcard = _T("\\*.*"); 
 
@@ -9045,15 +9045,15 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 		//CString      str;
 		bWorking = finder.FindFile(myPathname + strWildcard);
 
-		// ƒTƒuƒfƒBƒŒƒNƒgƒŠ‚ğŒŸõ‚µAÄ‹AŒÄ‚Ño‚µ
+		// ã‚µãƒ–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æ¤œç´¢ã—ã€å†å¸°å‘¼ã³å‡ºã—
 		while (bWorking)
 		{
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -9067,7 +9067,7 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 			//    finder.GetFileName(), finder.IsDirectory());
 
 			
-			if (ESCAPE_FLG == FALSE){  //’Ç‰Á if•¶’Ç‰Á 2012.05.11
+			if (ESCAPE_FLG == FALSE){  //è¿½åŠ  ifæ–‡è¿½åŠ  2012.05.11
 				bWorking = finder.FindNextFile();
 			}else{
 				break;
@@ -9094,18 +9094,18 @@ void CFileListCreatorDlg::PackageSearch_Items(CString myPathname ,CString strFil
 void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFileSpec)
 {   
 
-	ESCAPE_FLG = FALSE; //•K—v 2012.05.20
-	//SkipFLG = FALSE; //’Ç‰Á 2012.07.09 //ƒRƒƒ“ƒg‰» 2012.07.11
+	ESCAPE_FLG = FALSE; //å¿…è¦ 2012.05.20
+	//SkipFLG = FALSE; //è¿½åŠ  2012.07.09 //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.11
 	
 	BOOL ALL_FileSpecs;
 	ALL_FileSpecs = FALSE;
 
 	if (strFileSpec.Find(_T("*.*;"),0)>=0) ALL_FileSpecs = TRUE;
 
-    //TotalItemsCount = 0; //ƒRƒƒ“ƒg‰» 2012/07.26
+    //TotalItemsCount = 0; //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012/07.26
     if (strFileSpec == _T(""))
 	{
-		//if(MessageBox(_T("ŒŸõ‘ÎÛ‚Æ‚È‚éŠg’£q‚ğ1‚ÂˆÈã“ü‚ê‚Ä‚­‚¾‚³‚¢") ,_T("–¢“ü—Í"), MB_YESNO )== IDYES  ){
+		//if(MessageBox(_T("æ¤œç´¢å¯¾è±¡ã¨ãªã‚‹æ‹¡å¼µå­ã‚’1ã¤ä»¥ä¸Šå…¥ã‚Œã¦ãã ã•ã„") ,_T("æœªå…¥åŠ›"), MB_YESNO )== IDYES  ){
 		//	CFileListCreatorDlg::OnBnClickedBtnPackagesearch();
 		//}
 	}
@@ -9114,7 +9114,7 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 
 	LONG k;
 
-	k = 0; //VBAF1 ¨ VCF‚O‚É“Y‚¦š•ÏX
+	k = 0; //VBAï¼š1 â†’ VCï¼šï¼ã«æ·»ãˆå­—å¤‰æ›´
 
 	//myPathname.Replace(_T("\\"),_T("\\\\"));
 
@@ -9126,7 +9126,7 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 	//myPathname.Replace(_T("\\\\"),_T("\\"));
 
 	while (k <= strFileSpec.GetLength() -1 ){
-		if (ESCAPE_FLG == TRUE) break;  //’Ç‰Á 2011.10.12
+		if (ESCAPE_FLG == TRUE) break;  //è¿½åŠ  2011.10.12
 
 		if (strFileSpec.Mid(k,1) == _T(";")) {
 			if(ALL_FileSpecs == TRUE){
@@ -9135,7 +9135,7 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 				}
 			}else{
 				//CFileListCreatorDlg::PackageSearch_Func(myPathname,strBuff2);
-				if(isDirectoryFLG(myPathname)==TRUE ){ //’Ç‰Á 2012.06.14
+				if(isDirectoryFLG(myPathname)==TRUE ){ //è¿½åŠ  2012.06.14
 					CFileListCreatorDlg::PackageSearch_Items(myPathname, strBuff2,TRUE);
 				}
 			}
@@ -9149,7 +9149,7 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 	k = 0;
 
 	while (k <= strFileSpec.GetLength() -1 ){
-		if (ESCAPE_FLG == TRUE) break;  //’Ç‰Á 2011.10.12
+		if (ESCAPE_FLG == TRUE) break;  //è¿½åŠ  2011.10.12
 
 		if (strFileSpec.Mid(k,1) == _T(";")) {
 			//CFileListCreatorDlg::PackageSearch_Func(myPathname,strBuff2);
@@ -9173,7 +9173,7 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 	}
 
 	//if (TotalItemsCount>=1){
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -9181,9 +9181,9 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 	//}
 
@@ -9192,22 +9192,22 @@ void CFileListCreatorDlg::PackageSearch_Func(CString myPathname, CString strFile
 
 void CFileListCreatorDlg::OnBnClickedBtnPackagesearch()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-	DoWithCnt = 0; //’Ç‰Á 2012.07.11
-	TotalItemsCount = 0; //’Ç‰Á 2012.07.11
+	DoWithCnt = 0; //è¿½åŠ  2012.07.11
+	TotalItemsCount = 0; //è¿½åŠ  2012.07.11
 
 	//ESCAPE_FLG = FALSE;
 
-	StatusStringSet(_T("PackageSearch Às’†"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("PackageSearch å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 	int myResult;
     
 	if (m_xvChkSubFolder == FALSE){
-		myResult = MessageBox(_T("ƒTƒuƒtƒHƒ‹ƒ_‚ğŒŸõ‚µ‚È‚¢İ’è‚É‚È‚Á‚Ä‚¢‚Ü‚·BƒTƒuƒtƒHƒ‹ƒ_‚ğŒŸõ‚µ‚Ü‚·‚©H\r\n(ƒTƒuƒtƒHƒ‹ƒ_‚Æ‚ÍŒ»İ‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‚ ‚é”z‰º‚Ì‚·‚×‚Ä‚ÌƒtƒHƒ‹ƒ_‚ğw‚µ‚Ü‚·)") ,_T("ÄŠm”F"), MB_YESNO );
+		myResult = MessageBox(_T("ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ã‚’æ¤œç´¢ã—ãªã„è¨­å®šã«ãªã£ã¦ã„ã¾ã™ã€‚ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ã‚’æ¤œç´¢ã—ã¾ã™ã‹ï¼Ÿ\r\n(ã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ã¨ã¯ç¾åœ¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã‚ã‚‹é…ä¸‹ã®ã™ã¹ã¦ã®ãƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡ã—ã¾ã™)") ,_T("å†ç¢ºèª"), MB_YESNO );
 		if(myResult	== IDYES  ){
 			m_xvChkSubFolder = TRUE;
 			//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
@@ -9227,19 +9227,19 @@ void CFileListCreatorDlg::OnBnClickedBtnPackagesearch()
 		}
 	}
 
-	//ƒ‚[ƒ_ƒ‹
+	//ãƒ¢ãƒ¼ãƒ€ãƒ«
 	CFileSpecsDlg m_dlg;
 	m_dlg.DoModal();
 
 
 	if(m_dlg.TargetFileSpecs == _T("")){
-		CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ƒ†[ƒU[‚É‚æ‚éƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ã‚ˆã‚‹ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 		delete m_dlg;
 		return;
 	}
 
 	if(m_dlg.TargetFileSpecs == _T("<<error>>")){
-		CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ³‚µ‚¢Œ`®‚ÅŒŸõ‘ÎÛ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : æ­£ã—ã„å½¢å¼ã§æ¤œç´¢å¯¾è±¡ã‚’æŒ‡å®šã—ã¦ãã ã•ã„"),300,TRUE);
 		delete m_dlg;
 		return;
 	}
@@ -9248,24 +9248,24 @@ void CFileListCreatorDlg::OnBnClickedBtnPackagesearch()
 
 	if( GetOpenFolderName( AfxGetMainWnd()->m_hWnd, NULL, szFolder, MAX_PATH ) == IDOK )
 	{
-		SkipFLG = FALSE; //’Ç‰Á 2012.07.11
+		SkipFLG = FALSE; //è¿½åŠ  2012.07.11
 		CFileListCreatorDlg::PackageSearch_Func(CString(szFolder),m_dlg.TargetFileSpecs);
 	}
 	delete m_dlg;
 
-	//CFileListCreatorDlg::Total_Bytes_Func();//’Ç‰Á 2011.10.13
+	//CFileListCreatorDlg::Total_Bytes_Func();//è¿½åŠ  2011.10.13
 
-	CFileListCreatorDlg::Total_Bytes_Bold(); //’Ç‰Á 2012.07.11
-	CFileListCreatorDlg::Total_Bytes_Func(); //’Ç‰Á 2012.07.11
-	CFileListCreatorDlg::ItemCount_Func(FALSE); //’Ç‰Á 2012.07.11
+	CFileListCreatorDlg::Total_Bytes_Bold(); //è¿½åŠ  2012.07.11
+	CFileListCreatorDlg::Total_Bytes_Func(); //è¿½åŠ  2012.07.11
+	CFileListCreatorDlg::ItemCount_Func(FALSE); //è¿½åŠ  2012.07.11
 
-	CFileListCreatorDlg::StatusStringSet(_T("PackageSearch I—¹"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("PackageSearch çµ‚äº†"),300,TRUE);
 }
 
 
 void CFileListCreatorDlg::OnBnClickedChkSearchSubfolder()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if (m_xvChkSubFolder == FALSE){
 		m_xvChkSubFolder = TRUE;
 	}else{
@@ -9276,9 +9276,9 @@ void CFileListCreatorDlg::OnBnClickedChkSearchSubfolder()
 
 void CFileListCreatorDlg::OnStnClickedStaticStatusstring()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 }
 
@@ -9287,14 +9287,14 @@ void CFileListCreatorDlg::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	
 
 	//if (LastSelectedColumn == 2 || LastSelectedColumn == 3 || LastSelectedColumn == 8){
 	//	if (  ( pNMLV->uChanged == LVIF_PARAM && pNMLV->uNewState == 0 && pNMLV->uOldState == 0)
 	//		|| ( pNMLV->uChanged == LVIF_STATE && pNMLV->uNewState == 4096 && pNMLV->uOldState == 0 )
 	//		||  ( pNMLV->uChanged == LVIF_STATE && pNMLV->uNewState == 0 && pNMLV->uOldState == (LVIS_FOCUSED | LVIS_SELECTED) )){ 
-	//		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	//		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 	//http://isobe.exblog.jp/996027/
 
@@ -9343,7 +9343,7 @@ void CFileListCreatorDlg::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *pResult)
 	//		if (CurStr.GetLength() > 260){
 	//			CurStr = CurStr.Left(260);
 	//			//LengthOver = TRUE;
-	//			CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒgƒ{ƒbƒNƒX“à‚ÌŠi”[•¶š”§ŒÀ‚ğƒI[ƒo[‚µ‚Ü‚µ‚½\r\n(¶‚©‚ç260•¶š‚ğØ‚èæ‚è‚Ü‚·)"),0,TRUE);
+	//			CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å†…ã®æ ¼ç´æ–‡å­—æ•°åˆ¶é™ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ã¾ã—ãŸ\r\n(å·¦ã‹ã‚‰260æ–‡å­—ã‚’åˆ‡ã‚Šå–ã‚Šã¾ã™)"),0,TRUE);
 	//			lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(CurStr));
 	//			CFileListCreatorDlg::m_xcList.SetItem(&lvi);
 	//			UpdateData(FALSE);
@@ -9358,27 +9358,27 @@ void CFileListCreatorDlg::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *pResult)
 ////http://msdn.microsoft.com/ja-jp/library/b4ceh1za.aspx
 
 //http://www.alpha-net.ne.jp/users2/uk413/vc/VCT_LVitemsort.html
-//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 int CALLBACK CFileListCreatorDlg::CompareFunc(LPARAM param1, LPARAM param2, LPARAM param3)
 {
-	// staticƒƒ“ƒoŠÖ”‚È‚Ì‚ÅAGetParent()‚ÅeƒEƒBƒ“ƒhƒE‚ğæ“¾‚·‚é‚±‚Æ‚Í‚Å‚«‚È‚¢
+	// staticãƒ¡ãƒ³ãƒé–¢æ•°ãªã®ã§ã€GetParent()ã§è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å–å¾—ã™ã‚‹ã“ã¨ã¯ã§ããªã„
 	CFileListCreatorDlg* pDlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
-	// ”äŠr‚³‚ê‚é‚Q‚Â‚ÌƒAƒCƒeƒ€‚©‚çu”­”„“úv‚Ì•¶š—ñ‚ğæ“¾‚·‚é
-	// 2s–Ú‚Ìƒtƒ‹ƒpƒX‚ğŒ³‚Éƒ\[ƒg
-	CString str_1 = pDlg->m_xcList.GetItemText(param1, pDlg->keyColumn); //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+	// æ¯”è¼ƒã•ã‚Œã‚‹ï¼’ã¤ã®ã‚¢ã‚¤ãƒ†ãƒ ã‹ã‚‰ã€Œç™ºå£²æ—¥ã€ã®æ–‡å­—åˆ—ã‚’å–å¾—ã™ã‚‹
+	// 2è¡Œç›®ã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’å…ƒã«ã‚½ãƒ¼ãƒˆ
+	CString str_1 = pDlg->m_xcList.GetItemText(param1, pDlg->keyColumn); //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 	CString str_2 = pDlg->m_xcList.GetItemText(param2, pDlg->keyColumn);
 	
 	int iReturn;
 
-	if(pDlg->keyColumn == 5 || pDlg->keyColumn == 1){//ƒf[ƒ^ƒTƒCƒY‚Åƒ\[ƒg
+	if(pDlg->keyColumn == 5 || pDlg->keyColumn == 1){//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã§ã‚½ãƒ¼ãƒˆ
 		//ret.Format(_T("%.3f%s"), dblSize,_T("TB"));
 		//CFileListCreatorDlg::CStringToLong(
 
-		// strcmp‚ğg‚¤‚È‚çA~‡‚Ìê‡‚Ístr1‚Æstr2‚ğ‹t‚É‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		// strcmpã‚’ä½¿ã†ãªã‚‰ã€é™é †ã®å ´åˆã¯str1ã¨str2ã‚’é€†ã«ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		//int iReturn;
 		if( !param3 ){
 			if ( pDlg->CStringToLong(str_1) >= pDlg->CStringToLong(str_2)){
@@ -9386,16 +9386,16 @@ int CALLBACK CFileListCreatorDlg::CompareFunc(LPARAM param1, LPARAM param2, LPAR
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // ¸‡
+			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // æ˜‡é †
 		}else{
 			if ( pDlg->CStringToLong(str_1) <= pDlg->CStringToLong(str_2)){
 				iReturn = TRUE;
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // ~‡
+			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // é™é †
 		}
-		// strcmp‚ğg‚¤‚È‚çA~‡‚Ìê‡‚Ístr1‚Æstr2‚ğ‹t‚É‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		// strcmpã‚’ä½¿ã†ãªã‚‰ã€é™é †ã®å ´åˆã¯str1ã¨str2ã‚’é€†ã«ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		//int iReturn;
 		if( !param3 ){
 			if ( pDlg->CStringToLong(str_1) >= pDlg->CStringToLong(str_2)){
@@ -9403,17 +9403,17 @@ int CALLBACK CFileListCreatorDlg::CompareFunc(LPARAM param1, LPARAM param2, LPAR
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // ¸‡
+			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // æ˜‡é †
 		}else{
 			if ( pDlg->CStringToLong(str_1) <= pDlg->CStringToLong(str_2)){
 				iReturn = TRUE;
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // ~‡
+			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // é™é †
 		}
-	}else if(pDlg->keyColumn == 0){ //d•¡NO ‚Åƒ\[ƒg
-		// strcmp‚ğg‚¤‚È‚çA~‡‚Ìê‡‚Ístr1‚Æstr2‚ğ‹t‚É‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+	}else if(pDlg->keyColumn == 0){ //é‡è¤‡NO ã§ã‚½ãƒ¼ãƒˆ
+		// strcmpã‚’ä½¿ã†ãªã‚‰ã€é™é †ã®å ´åˆã¯str1ã¨str2ã‚’é€†ã«ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		//int iReturn;
 
 		if( !param3 ){
@@ -9428,14 +9428,14 @@ int CALLBACK CFileListCreatorDlg::CompareFunc(LPARAM param1, LPARAM param2, LPAR
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // ¸‡
+			//iReturn = _tcscmp( lpsz_1, lpsz_2 ); // æ˜‡é †
 		}else{
 			if ( pDlg->CStringToLong(str_1) <= pDlg->CStringToLong(str_2)){
 				iReturn = TRUE;
 			}else{
 				iReturn = FALSE;
 			}
-			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // ~‡
+			//iReturn = _tcscmp( lpsz_2, lpsz_1 ); // é™é †
 		}
 	}else{
 		int     sizeOfString_1 = (str_1.GetLength() + 1);
@@ -9446,12 +9446,12 @@ int CALLBACK CFileListCreatorDlg::CompareFunc(LPARAM param1, LPARAM param2, LPAR
 		LPTSTR  lpsz_2 = new TCHAR[ sizeOfString_2 ];
 		_tcscpy_s(lpsz_2, sizeOfString_2, str_2);
 
-		// strcmp‚ğg‚¤‚È‚çA~‡‚Ìê‡‚Ístr1‚Æstr2‚ğ‹t‚É‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		// strcmpã‚’ä½¿ã†ãªã‚‰ã€é™é †ã®å ´åˆã¯str1ã¨str2ã‚’é€†ã«ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		//int iReturn;
 		if( !param3 )
-			iReturn = _tcscmp( lpsz_1, lpsz_2 ); // ¸‡
+			iReturn = _tcscmp( lpsz_1, lpsz_2 ); // æ˜‡é †
 		else
-			iReturn = _tcscmp( lpsz_2, lpsz_1 ); // ~‡
+			iReturn = _tcscmp( lpsz_2, lpsz_1 ); // é™é †
 
 		delete[] lpsz_1;
 		delete[] lpsz_2;
@@ -9464,12 +9464,12 @@ void CFileListCreatorDlg::RenumberItem()
 	LV_ITEM lvi;
 	CString str;
 
-	// m_list1‚ÍCListCtrlŒ^‚ÌDDX•Ï”‚ÅAƒ\[ƒg‚ğs‚¤ƒŠƒXƒgƒrƒ…[ƒRƒ“ƒgƒ[ƒ‹‚ÌƒIƒuƒWƒFƒNƒg‚Å‚ ‚é‚à‚Ì‚Æ‚·‚é
+	// m_list1ã¯CListCtrlå‹ã®DDXå¤‰æ•°ã§ã€ã‚½ãƒ¼ãƒˆã‚’è¡Œã†ãƒªã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã‚‚ã®ã¨ã™ã‚‹
 	for( int i = 0; i < m_xcList.GetItemCount(); i++ ) {
 		lvi.iItem = i;
 		lvi.iSubItem = 0;
 		lvi.mask = LVIF_PARAM;
-		lvi.lParam = i;		// ‚±‚±‚Å”Ô†‚ğƒAƒCƒeƒ€‚Éw’è‚·‚é
+		lvi.lParam = i;		// ã“ã“ã§ç•ªå·ã‚’ã‚¢ã‚¤ãƒ†ãƒ ã«æŒ‡å®šã™ã‚‹
 		
 		m_xcList.SetItem(&lvi);
 	}
@@ -9477,32 +9477,32 @@ void CFileListCreatorDlg::RenumberItem()
 
 void CFileListCreatorDlg::OnBnClickedBtnSort()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 
-		//ƒRƒƒ“ƒg‰» 2012.07.12 Merge_Func()‚Å‚àƒ\[ƒg‚µ‚Ä‚¢‚é‚Ì‚Åd•¡
+		//ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.12 Merge_Func()ã§ã‚‚ã‚½ãƒ¼ãƒˆã—ã¦ã„ã‚‹ã®ã§é‡è¤‡
 
 		//CFileListCreatorDlg::GetStrFormat_Func();
 
-		//StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
+		//StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
-		//RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		//RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		//keyColumn = 2;//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-		//static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		//keyColumn = 2;//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+		//static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		//m_xcList.SortItems(CompareFunc, bSort);
 
 		//if (bSort == FALSE) { 
-		//	CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(¸‡)"),300,TRUE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ˜‡é †)"),300,TRUE);
 		//}else{
-		//	CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(~‡)"),300,TRUE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é™é †)"),300,TRUE);
 		//}
 		//SortColumnDrawCaption(keyColumn, bSort);
-		//bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		//bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		//CFileListCreatorDlg::m_xcList.EnsureVisible(0, FALSE);
 
@@ -9510,7 +9510,7 @@ void CFileListCreatorDlg::OnBnClickedBtnSort()
 		Merge_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -9518,51 +9518,51 @@ void CFileListCreatorDlg::OnBnClickedBtnSort()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 	
-	//SortItemsŠÖ”‚Ì‘æ‚Qˆø”‚Éw’è‚µ‚½bSort‚Ì’l‚ÍA
-	//”äŠrŠÖ”CompareFunc‚Ì‚R”Ô–Ú‚Ìˆø”param3‚É“n‚³‚ê‚éB
-	//‚Â‚Ü‚èA‚P‰ñ–Ú‚ÍbSort‚Ì’l‚ªFALSE‚È‚Ì‚Åparam3‚àFALSEi‚·‚È‚í‚¿0j
-	//‚Æ‚È‚èA¸‡ƒ\[ƒg‚ªs‚í‚ê‚éB 
+	//SortItemsé–¢æ•°ã®ç¬¬ï¼’å¼•æ•°ã«æŒ‡å®šã—ãŸbSortã®å€¤ã¯ã€
+	//æ¯”è¼ƒé–¢æ•°CompareFuncã®ï¼“ç•ªç›®ã®å¼•æ•°param3ã«æ¸¡ã•ã‚Œã‚‹ã€‚
+	//ã¤ã¾ã‚Šã€ï¼‘å›ç›®ã¯bSortã®å€¤ãŒFALSEãªã®ã§param3ã‚‚FALSEï¼ˆã™ãªã‚ã¡0ï¼‰
+	//ã¨ãªã‚Šã€æ˜‡é †ã‚½ãƒ¼ãƒˆãŒè¡Œã‚ã‚Œã‚‹ã€‚ 
 	
-	//‚Ü‚½‚Q‰ñ–Ú‚ÍbSort‚ªTRUE‚É‚È‚Á‚Ä‚¢‚é‚Ì‚Åparam3‚àTRUEi”ñ0j‚Æ‚È‚èA
-	///~‡‚Åƒ\[ƒg‚³‚ê‚é‚Æ‚¢‚¤‚í‚¯‚Å‚ ‚éB
+	//ã¾ãŸï¼’å›ç›®ã¯bSortãŒTRUEã«ãªã£ã¦ã„ã‚‹ã®ã§param3ã‚‚TRUEï¼ˆé0ï¼‰ã¨ãªã‚Šã€
+	///é™é †ã§ã‚½ãƒ¼ãƒˆã•ã‚Œã‚‹ã¨ã„ã†ã‚ã‘ã§ã‚ã‚‹ã€‚
 }
 
 void CFileListCreatorDlg::Merge_Func(){
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 2;//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-		//static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 2;//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+		//static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, FALSE);
 
 		//if (bSort == FALSE) { 
-		//	CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(¸‡)"),300,FALSE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ˜‡é †)"),300,FALSE);
 		//}else{
-		//	CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(~‡)"),300,FALSE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é™é †)"),300,FALSE);
 		//}
-		//bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		//bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		//CFileListCreatorDlg::m_xcList.EnsureVisible(0, FALSE);
 
-		CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(¸‡)"),300,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ˜‡é †)"),300,FALSE);
 
 
-		CFileListCreatorDlg::StatusStringSet(_T("Merge Às’†"),300,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("Merge å®Ÿè¡Œä¸­"),300,FALSE);
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 
@@ -9584,17 +9584,17 @@ void CFileListCreatorDlg::Merge_Func(){
 
 		while (index+1<=CFileListCreatorDlg::m_xcList.GetItemCount()-1 && j<CFileListCreatorDlg::m_xcList.GetItemCount()-1){
 			
-			MSG msg; //’Ç‰Á 2012.04.04
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2012.04.04
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
-				//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+				//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 			}
 			
 			CurValue = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
@@ -9610,7 +9610,7 @@ void CFileListCreatorDlg::Merge_Func(){
 			}
 
 			while(index<j && CurValue == NextValue){
-				if (ESCAPE_FLG == TRUE) break;//‘¼‚Ì•”•ª‚Å‚àƒ‹[ƒv‚ğ”²‚¯‚é‚æ‚¤Aƒtƒ‰ƒO‚Å§Œä‚·‚é//’Ç‰Á 2012.04.04
+				if (ESCAPE_FLG == TRUE) break;//ä»–ã®éƒ¨åˆ†ã§ã‚‚ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã‚ˆã†ã€ãƒ•ãƒ©ã‚°ã§åˆ¶å¾¡ã™ã‚‹//è¿½åŠ  2012.04.04
 
 				int FormatDataNum1;
 				FormatDataNum1 = CFileListCreatorDlg::m_xcList.GetItemData(index);	
@@ -9686,9 +9686,9 @@ void CFileListCreatorDlg::Merge_Func(){
 					}
 				}
 
-				//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+				//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 				
-				//”õl—““‡ 2012.04.18
+				//å‚™è€ƒæ¬„çµ±åˆ 2012.04.18
 
 				if (CFileListCreatorDlg::m_xcList.GetItemText(j,8)!=_T("")){
 					if (RemarksColumnStr == _T("")) {
@@ -9715,7 +9715,7 @@ void CFileListCreatorDlg::Merge_Func(){
 			if (index>= 0 && (index <= CFileListCreatorDlg::m_xcList.GetItemCount()-1)){
 				if (RemarksColumnStr!=_T("")) {
 					lvi.iItem =index;
-					lvi.iSubItem = 8;//”õl—“
+					lvi.iSubItem = 8;//å‚™è€ƒæ¬„
 
 					//MessageBox(RemarksColumnStr);
 
@@ -9738,8 +9738,8 @@ void CFileListCreatorDlg::Merge_Func(){
 				tempCnt.Format(_T("%d"),j+1);
 				tempCnt=tempCnt + _T(" items");
 
-				CFileListCreatorDlg::StatusStringSet(_T("Merge Às’†: ") + tempCnt,0,FALSE);
-				CFileListCreatorDlg::m_xcList.EnsureVisible(j, FALSE); //’Ç‰Á 2012.04.04  //ƒRƒƒ“ƒg‰» 2012.06.10
+				CFileListCreatorDlg::StatusStringSet(_T("Merge å®Ÿè¡Œä¸­: ") + tempCnt,0,FALSE);
+				CFileListCreatorDlg::m_xcList.EnsureVisible(j, FALSE); //è¿½åŠ  2012.04.04  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.10
 			}
 
 			index++;
@@ -9750,7 +9750,7 @@ void CFileListCreatorDlg::Merge_Func(){
 		CFileListCreatorDlg::Total_Bytes_Func();
 		CFileListCreatorDlg::ItemCount_Func(TRUE);
 
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -9758,15 +9758,15 @@ void CFileListCreatorDlg::Merge_Func(){
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 
-		CFileListCreatorDlg::StatusStringSet(_T("Merge I—¹"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("Merge çµ‚äº†"),300,TRUE);
 
 		if (LengthOver == TRUE){
-			CFileListCreatorDlg::StatusStringSet(_T("”õl—“‚ÌŠi”[•¶š”§ŒÀ‚ğƒI[ƒo[‚µ‚Ü‚µ‚½\r\n(¶‚©‚ç260•¶š•ª ƒeƒLƒXƒg‚ğØ‚èæ‚è‚Ü‚·)"),0,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("å‚™è€ƒæ¬„ã®æ ¼ç´æ–‡å­—æ•°åˆ¶é™ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ã¾ã—ãŸ\r\n(å·¦ã‹ã‚‰260æ–‡å­—åˆ† ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆ‡ã‚Šå–ã‚Šã¾ã™)"),0,TRUE);
 		}
 	}
 }
@@ -9774,7 +9774,7 @@ void CFileListCreatorDlg::Merge_Func(){
 void CFileListCreatorDlg::OnNMRClickList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	
 //http://social.msdn.microsoft.com/Forums/en/vcgeneral/thread/1791d4d5-a1c4-4eab-8e2b-d11b718e5a41
 
@@ -9795,36 +9795,36 @@ void CFileListCreatorDlg::OnNMRClickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 		::GetCursorPos(&point);
 
-		// "‰EƒNƒŠƒbƒN"
+		// "å³ã‚¯ãƒªãƒƒã‚¯"
 			CMenu    *popupMenuP = NULL;
 			CMenu    cMenu;
 			int      err = 0;
     
 			if (SelectedLanguage == _T("Japanese")) {
-				// ƒƒjƒ…[‚ğƒ[ƒh
+				// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰
 				if (!err) if (!cMenu.LoadMenu(IDR_MENU1)) err = 1;
 			}else if (SelectedLanguage == _T("English")){
-				// ƒƒjƒ…[‚ğƒ[ƒh
+				// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰
 				if (!err) if (!cMenu.LoadMenu(IDR_MENU3)) err = 1;
 			}
 
-			// ƒTƒuƒƒjƒ…[‚ğæ“¾
+			// ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’å–å¾—
 			if (!err) if ((popupMenuP = cMenu.GetSubMenu(0)) == NULL) err = 1;
-			// ƒƒjƒ…[‚ğƒ|ƒbƒvƒAƒbƒv
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—
 			if (!err)
 			{
 				ClientToScreen(&point);
 				if (!popupMenuP->TrackPopupMenu(
-					TPM_LEFTBUTTON, point.x-100, point.y-100, this)) err = 1; //-100‚É‚µ‚½
+					TPM_LEFTBUTTON, point.x-100, point.y-100, this)) err = 1; //-100ã«ã—ãŸ
 			}
-			// ƒƒjƒ…[‚ğ”jŠü
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ç ´æ£„
 			cMenu.DestroyMenu();
     
 			CDialog::OnRButtonUp(TPM_LEFTALIGN, point);
 	
 			*pResult = 0;
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("ƒZƒ‹ƒf[ƒ^‚Ì•ÒW’†‚Å‚·"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ç·¨é›†ä¸­ã§ã™"),300,TRUE);
 	}
 
 	return;
@@ -9832,35 +9832,35 @@ void CFileListCreatorDlg::OnNMRClickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CFileListCreatorDlg::OnMenuMymessage()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if (SelectedLanguage == _T("Japanese")) {
 		// http://code.msdn.microsoft.com/windowsdesktop/Windows-howto-203dcb68
 
-		// ƒo[ƒWƒ‡ƒ“î•ñ‚Ìæ“¾ 
+		// ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã®å–å¾— 
 		OSVERSIONINFO OSver; 
 		OSver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO); 
 		GetVersionEx(&OSver); 
  
-		// ‚à‚µ Windows 7 ˆÈ~‚Ìƒo[ƒWƒ‡ƒ“‚Å“®‚©‚µ‚½‚¢‚Æ‚« 
+		// ã‚‚ã— Windows 7 ä»¥é™ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§å‹•ã‹ã—ãŸã„ã¨ã 
 		if((OSver.dwMajorVersion == 6 && OSver.dwMinorVersion >= 1) || OSver.dwMajorVersion > 6) 
 		{ 
-			//MessageBox(NULL, _T("Windows 7 ˆÈ~"), _T("ƒo[ƒWƒ‡ƒ“î•ñ"), MB_OK);
-			SpeakFunc(_T("‚²—˜—p‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½I"));
+			//MessageBox(NULL, _T("Windows 7 ä»¥é™"), _T("ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±"), MB_OK);
+			SpeakFunc(_T("ã”åˆ©ç”¨ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã—ãŸï¼"));
 		}else{
 			SpeakFunc(_T("Thank you for using File List Creator!"));
 		}
 	}else if (SelectedLanguage == _T("English")){
 
-		// ƒo[ƒWƒ‡ƒ“î•ñ‚Ìæ“¾ 
+		// ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã®å–å¾— 
 		OSVERSIONINFO OSver; 
 		OSver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO); 
 		GetVersionEx(&OSver); 
  
-		// ‚à‚µ Windows 7 ˆÈ~‚Ìƒo[ƒWƒ‡ƒ“‚Å“®‚©‚µ‚½‚¢‚Æ‚« 
+		// ã‚‚ã— Windows 7 ä»¥é™ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§å‹•ã‹ã—ãŸã„ã¨ã 
 		if((OSver.dwMajorVersion == 6 && OSver.dwMinorVersion >= 1) || OSver.dwMajorVersion > 6) 
 		{ 
-			//MessageBox(NULL, _T("Windows 7 ˆÈ~"), _T("ƒo[ƒWƒ‡ƒ“î•ñ"), MB_OK);
+			//MessageBox(NULL, _T("Windows 7 ä»¥é™"), _T("ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±"), MB_OK);
 			SpeakFunc(_T("Thank you for use of FileListCreator!"));
 		}else{
 			SpeakFunc(_T("Thank you for using File List Creator!"));
@@ -9872,7 +9872,7 @@ void CFileListCreatorDlg::OnMenuMymessage()
 
     CString tmpString1;
     
-    tmpString1 = _T("Ÿ‰ñ‚Ì“–ƒAƒvƒŠ‚Ì‚²—˜—p‚ğ‚¨‘Ò‚¿‚µ‚Ä‚¢‚Ü‚·B");
+    tmpString1 = _T("æ¬¡å›ã®å½“ã‚¢ãƒ—ãƒªã®ã”åˆ©ç”¨ã‚’ãŠå¾…ã¡ã—ã¦ã„ã¾ã™ã€‚");
     
     CString tmpString2;
     
@@ -9893,10 +9893,10 @@ void CFileListCreatorDlg::OnMenuMymessage()
 
 void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
     int        index = -1;
     CString    str;
@@ -9913,14 +9913,14 @@ void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 	CString tempCnt;
 
 	if(myCnt==0){
-		myResult = MessageBox(_T("‚·‚×‚Ä‚ğíœ‚µ‚Ü‚·‚©H"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ã™ã¹ã¦ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 
 			// Delete all of the items from the list view control.
 			CFileListCreatorDlg::m_xcList.DeleteAllItems();
 			//ASSERT(m_myListCtrl.GetItemCount() == 0);
 
-			CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Äíœ‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦å‰Šé™¤ã—ã¾ã—ãŸ"),300,TRUE);
 
 			tempCnt = _T("");
 
@@ -9932,7 +9932,7 @@ void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 			UpdateData(FALSE);
 		}
 	}else if(myCnt>=1){
-		myResult = MessageBox(_T("Œ»İ‘I‘ğ‚³‚ê‚Ä‚¢‚és‚Ìƒf[ƒ^‚ğíœ‚µ‚Ü‚·‚©H"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹è¡Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 			index = -1;
 			while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
@@ -9947,7 +9947,7 @@ void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 			tempCnt = _T("");
 
 			tempCnt.Format(_T("%d"),myCnt);
-			tempCnt=tempCnt + _T(" s‚Ìƒf[ƒ^‚ğíœ‚µ‚Ü‚µ‚½");
+			tempCnt=tempCnt + _T(" è¡Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã—ã¾ã—ãŸ");
 
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 
@@ -9975,7 +9975,7 @@ void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 	CFileListCreatorDlg::Total_Bytes_Func();
 	CFileListCreatorDlg::ItemCount_Func(TRUE);
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -9983,18 +9983,18 @@ void CFileListCreatorDlg::DeleteSelectedRows_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
 	::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
-	//If vbYes = MsgBox("ƒL[ƒ[ƒh‚âƒŠƒvƒŒƒCƒX ƒ[ƒhA“ú•tƒtƒBƒ‹ƒ^î•ñ‚È‚Ç‚àíœ‚µ‚Ü‚·‚©H", vbYesNoCancel + vbInformation, "Warning...") Then
+	//If vbYes = MsgBox("ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚„ãƒªãƒ—ãƒ¬ã‚¤ã‚¹ ãƒ¯ãƒ¼ãƒ‰ã€æ—¥ä»˜ãƒ•ã‚£ãƒ«ã‚¿æƒ…å ±ãªã©ã‚‚å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ", vbYesNoCancel + vbInformation, "Warning...") Then
 }
 
 void CFileListCreatorDlg::OnBnClickedBtnClear()
 {
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::DeleteSelectedRows_Func();
@@ -10003,9 +10003,9 @@ void CFileListCreatorDlg::OnBnClickedBtnClear()
 
 void CFileListCreatorDlg::OnMenuDeleteSelectedRows()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::DeleteSelectedRows_Func();
@@ -10015,69 +10015,69 @@ void CFileListCreatorDlg::OnMenuDeleteSelectedRows()
 
 void CFileListCreatorDlg::OnFileImport()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnImport();
 }
 
 
 void CFileListCreatorDlg::OnFileExport()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnExport();
 }
 
 
 void CFileListCreatorDlg::OnSearchPackagesearch()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnPackagesearch();
 }
 
 
 void CFileListCreatorDlg::OnSearchStepsearch()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnStepsearch();
 }
 
 
 void CFileListCreatorDlg::OnEditRestore()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnRestore();
 }
 
 
 void CFileListCreatorDlg::OnEditlistSort()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnSort();
 }
 
 
 void CFileListCreatorDlg::OnMenuDeleterow()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnClear();
 }
 
 
 void CFileListCreatorDlg::OnOptionMymessage()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnMenuMymessage();
 }
 
 
 void CFileListCreatorDlg::OnFileQuit()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	AutoSaveMode_ReadOrWrite_Func(_T("write"));
 	UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
 	if(m_xvChkAutoSave == FALSE && m_xcList.GetItemCount() >= 1) {
-		int myResult = MessageBox(_T("ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚¹‚¸‚ÉI—¹‚µ‚Ü‚·‚©H"),_T("Quit confirmation"),MB_YESNOCANCEL);
+		int myResult = MessageBox(_T("ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã›ãšã«çµ‚äº†ã—ã¾ã™ã‹ï¼Ÿ"),_T("Quit confirmation"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 
 			//prevData = NULL;
@@ -10104,7 +10104,7 @@ void CFileListCreatorDlg::OnFileQuit()
 
 
 CString CFileListCreatorDlg::CurrentDirFunc(CString tempPath,BOOL LocalDirFLG){
-    //'CurDir‚Íg‚í‚È‚¢
+    //'CurDirã¯ä½¿ã‚ãªã„
     if(tempPath == _T("")){
 		return _T("");
 	}
@@ -10118,19 +10118,19 @@ CString CFileListCreatorDlg::CurrentDirFunc(CString tempPath,BOOL LocalDirFLG){
 
 	if(LocalDirFLG == TRUE){
 		if ( PathFileExists(tempPath) ){
-			// ƒtƒ@ƒCƒ‹‚Í‘¶İ‚·‚é
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã¯å­˜åœ¨ã™ã‚‹
 			ExistsFLG = TRUE;
 		}
 		else{
-			// ƒtƒ@ƒCƒ‹‚Í‘¶İ‚µ‚È‚¢
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã¯å­˜åœ¨ã—ãªã„
 		}
 
 		if ( PathIsDirectory(tempPath) ){
-			// ƒfƒBƒŒƒNƒgƒŠ‚Í‘¶İ‚·‚é
+			// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯å­˜åœ¨ã™ã‚‹
 			ExistsFLG = TRUE;
 		}
 		else{
-			// ƒfƒBƒŒƒNƒgƒŠ‚Í‘¶İ‚µ‚È‚¢
+			// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯å­˜åœ¨ã—ãªã„
 		}
 	}else{
 		ExistsFLG = TRUE;
@@ -10244,7 +10244,7 @@ BOOL CFileListCreatorDlg::isDirectoryFLG(CString pstr)
       // recur infinitely!
 
       if (finder.IsDots())
-         return TRUE; //ƒfƒBƒŒƒNƒgƒŠ‚Æ‚İ‚È‚·
+         return TRUE; //ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ã¿ãªã™
 
 		// if it's a directory, recursively search it
 
@@ -10259,18 +10259,18 @@ BOOL CFileListCreatorDlg::isDirectoryFLG(CString pstr)
    finder.Close();
 }
 
-//ƒfƒBƒŒƒNƒgƒŠ‚Å‚ ‚é‚©‚Ç‚¤‚©‚ÌŠm”F
+//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã‚ã‚‹ã‹ã©ã†ã‹ã®ç¢ºèª
  static BOOL IsDirectory(const WIN32_FIND_DATA& wfd)
  {
-	 //ˆá‚¤
+	 //é•ã†
 	 if(::_tcscmp(wfd.cFileName, TEXT(".")) == 0)
 	 return FALSE;
 
-	 //ˆá‚¤
+	 //é•ã†
 	 if(::_tcscmp(wfd.cFileName, TEXT("..")) == 0)
 	 return FALSE;
 
-	 //FILE_ATTRIBUTE_DIRECTORYƒtƒ‰ƒO‚ª‚ ‚ê‚ÎƒfƒBƒŒƒNƒgƒŠ
+	 //FILE_ATTRIBUTE_DIRECTORYãƒ•ãƒ©ã‚°ãŒã‚ã‚Œã°ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	 return (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY);
  }
 
@@ -10278,35 +10278,35 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 
 	ESCAPE_FLG = FALSE;
 
-	CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‘Oˆ—‚ğs‚Á‚Ä‚¢‚Ü‚·"),300,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³å‰å‡¦ç†ã‚’è¡Œã£ã¦ã„ã¾ã™"),300,FALSE);
 
 	CString FolderPath;
 	CString FileName;
 	int myCnt = 0;
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		if(CFileListCreatorDlg::m_xcList.GetSelectedCount() < 1 && mySwitch != 3 ){
-			CFileListCreatorDlg::StatusStringSet(_T("EasySelect ‚Æ Ô•¶š ƒ‚[ƒh‚ğOFF‚É‚µ‚Ü‚µ‚½"),300,FALSE); //’Ç‰Á 2012.07.12
+			CFileListCreatorDlg::StatusStringSet(_T("EasySelect ã¨ èµ¤æ–‡å­— ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã—ã¾ã—ãŸ"),300,FALSE); //è¿½åŠ  2012.07.12
 
 			m_xvChkEasySelect = FALSE;
-			m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+			m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);
 		
 			m_xvChkRedOnMode = FALSE;
-			m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+			m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 
 			UpdateData(FALSE);
 
 			if (LastSelectedRow ==  -1){
-				CFileListCreatorDlg::StatusStringSet(_T("‚P‚ÂˆÈã‚Ìƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ï¼‘ã¤ä»¥ä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã—ã¦ãã ã•ã„"),300,TRUE);
 				return;
 			}else{
-				m_xcList.SetItemState(LastSelectedRow,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-				LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-				LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+				m_xcList.SetItemState(LastSelectedRow,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+				LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 			}
 		}
 
@@ -10316,17 +10316,17 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 
 		while ((index = CFileListCreatorDlg::m_xcList.GetNextItem(index, LVNI_ALL | LVNI_SELECTED)) != -1)
 		{
-			//MSG msg; //’Ç‰Á 2011.10.12
-			//if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			//MSG msg; //è¿½åŠ  2011.10.12
+			//if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			//	if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 			//		if (msg.wParam == VK_ESCAPE){
 			//			ESCAPE_FLG = TRUE;
-			//			break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+			//			break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 			//		}
 			//	}
 			//	TranslateMessage(&msg);
 			//	DispatchMessage(&msg);
-			//	//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+			//	//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 			//}
 			//if (ESCAPE_FLG == TRUE) break;
 
@@ -10335,7 +10335,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 
 			CString FullPath;
 
-			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ƒtƒ‹ƒpƒX‚Í 2”Ô–Ú
+			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ãƒ•ãƒ«ãƒ‘ã‚¹ã¯ 2ç•ªç›®
 			
 			FileName = FullPathToFileName(FullPath);
 
@@ -10352,23 +10352,23 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 				CString tempFolderPath;
 
 				while ((w_index = CFileListCreatorDlg::m_xcList.GetNextItem(w_index, LVNI_ALL | LVNI_SELECTED)) != -1){
-					//MSG msg; //’Ç‰Á 2011.10.12
-					//if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+					//MSG msg; //è¿½åŠ  2011.10.12
+					//if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 					//	if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					//		if (msg.wParam == VK_ESCAPE){
 					//			ESCAPE_FLG = TRUE;
-					//			break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					//			break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					//		}
 					//	}
 					//	TranslateMessage(&msg);
 					//	DispatchMessage(&msg);
-					//	//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+					//	//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 					//}
 					///if (ESCAPE_FLG == TRUE) break;
 
 					tempFullPath = CFileListCreatorDlg::m_xcList.GetItemText(w_index, 2);
 					tempFileName = FullPathToFileName(tempFullPath);
-					tempFolderPath = CurrentDirFunc(tempFullPath,TRUE);//ƒtƒ‹ƒpƒX‚Í 2”Ô–Ú
+					tempFolderPath = CurrentDirFunc(tempFullPath,TRUE);//ãƒ•ãƒ«ãƒ‘ã‚¹ã¯ 2ç•ªç›®
 
 					if(w_index != index){
 						if((FolderPath == tempFolderPath) && mySwitch != 3){
@@ -10393,11 +10393,11 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 									}
 
 									if(FullPath.Right(1)!=_T("\\")){
-										//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+										//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 										//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,"+ FileName) , FolderPath , SW_SHOWNORMAL );
 
-										SetCurrentDirectory(FolderPath); //•K—v 2012.06,22
-										//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+										SetCurrentDirectory(FolderPath); //å¿…è¦ 2012.06,22
+										//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 										ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,.\\" + FileName) , FolderPath, SW_SHOWNORMAL );
 									}else{
 										ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), FullPath , NULL , SW_SHOWNORMAL );
@@ -10412,7 +10412,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 										//http://oshiete.goo.ne.jp/qa/976818.html
 									}
 									if(FullPath.Right(1)!=_T("\\")){
-										//šŠÖ˜A•t‚¯‚ç‚ê‚½ƒvƒƒOƒ‰ƒ€‚ÅŠJ‚­
+										//â˜…é–¢é€£ä»˜ã‘ã‚‰ã‚ŒãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§é–‹ã
 										ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), FileName , FolderPath , SW_SHOWNORMAL );
 									}else{									
 										ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), FullPath , NULL , SW_SHOWNORMAL );
@@ -10421,11 +10421,11 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 									//}
 								}
 								break;
-							case 3: //šƒƒfƒBƒAƒvƒŒƒCƒ„‚ÅŠJ‚­
+							case 3: //â˜…ãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ã§é–‹ã
 								if (matchPathCnt == 0){
 									if(FullPath.Right(1)!=_T("\\")){
 										if (myStrToLower_Func(FullPath.Right(4)) == _T(".m3u")){
-											AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,FullPathToFileName(FullPath)); //•ÏX 2012.07.12
+											AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,FullPathToFileName(FullPath)); //å¤‰æ›´ 2012.07.12
 										}else if (myStrToLower_Func(FullPath.Right(4)) == _T(".wpl")){
 											ReadOrWritePlayList_Func(_T("wpl_write"),FullPath,AudioItems,FullPathToFileName(FullPath));
 											AudioItems = ReadOrWritePlayList_Func(_T("wpl_read"),FullPath,AudioItems,FullPathToFileName(FullPath));
@@ -10434,7 +10434,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 											//AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,_T(""));
 										}
 									}else{
-										//Œã‚Åì¬
+										//å¾Œã§ä½œæˆ
 										AudioItems += inFolder_AllFile(FullPath,_T("*.mp3"),_T(""));
 										AudioItems += inFolder_AllFile(FullPath,_T("*.wma"),_T(""));
 										AudioItems += inFolder_AllFile(FullPath,_T("*.wav"),_T(""));
@@ -10459,7 +10459,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 									}
 
 									if(FileName.Right(4)==_T(".lnk")){
-										//šLinkƒtƒ@ƒCƒ‹‚ğŠJ‚­iŠÖ˜A•t‚¯‚ç‚ê‚½ƒvƒƒOƒ‰ƒ€‚ÅŠJ‚­j
+										//â˜…Linkãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãï¼ˆé–¢é€£ä»˜ã‘ã‚‰ã‚ŒãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§é–‹ãï¼‰
 										ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), FileName , FolderPath , SW_SHOWNORMAL );
 										//http://dobon.net/vb/dotnet/process/openexplore.html									
 									}else if(FullPath.Right(1)==_T("\\")){
@@ -10476,10 +10476,10 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 			}
 			if(mySwitch == 3){
 				//MessageBox(AudioItems);
-				//šƒƒfƒBƒAƒvƒŒƒCƒ„‚ÅŠJ‚­
+				//â˜…ãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ã§é–‹ã
 				//CString tempCurDir;
 
-				//tempCurDir = GetCurrentDirectory();  //•K—v
+				//tempCurDir = GetCurrentDirectory();  //å¿…è¦
 
 
 				ReadOrWritePlayList_Func(_T("m3u_write"),_T(""),AudioItems,_T("temp.flc"));
@@ -10493,7 +10493,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 				//	LPTSTR PathName,
 				//	LPTSTR *FilePart);
 
-				//SetCurrentDirectory(_T("C:\\"));  //’Ç‰Á 2012.06.21
+				//SetCurrentDirectory(_T("C:\\"));  //è¿½åŠ  2012.06.21
 
 				//ShellExecute( NULL, _T("open"), _T("C:/Program Files/Windows Media Player/wmplayer.exe"), _T("\"") + FolderPath + _T("\\") + FileName + _T("\"") , NULL , SW_SHOWNORMAL );
 				ShellExecute( NULL, _T("open"), _T("C:\\Program Files\\Windows Media Player\\wmplayer.exe"), m3uFile , NULL , SW_SHOWNORMAL );
@@ -10526,19 +10526,19 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 				//MessageBox(m3uFile);
 				//DeleteFile(m3uFile);
 
-				if (IDYES==MessageBox(_T("ƒvƒŒƒCƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·‚©H"),_T("ƒvƒŒƒCƒŠƒXƒg•Û‘¶"), MB_YESNOCANCEL )){			
-					////ƒ‚[ƒ_ƒŒƒX‚P
+				if (IDYES==MessageBox(_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã™ã‹ï¼Ÿ"),_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆä¿å­˜"), MB_YESNOCANCEL )){			
+					////ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 					//CDialog *m_pDlg;
 					//m_pDlg = new DateFilterDlg(this);
 					//m_pDlg->Create(IDD_DIALOG_InputBox);
 
 					//m_pDlg->ShowWindow(true);
 
-					//ƒ‚[ƒ_ƒ‹
+					//ãƒ¢ãƒ¼ãƒ€ãƒ«
 					InputBoxDlg m_dlg;
 					//m_dlg.DoModal();
 
-					//FileName = InputBox("ƒtƒ@ƒCƒ‹‚É–¼‘O‚ğ‚Â‚¯‚Ä‰º‚³‚¢B", "–¼‘O‚ğ‚Â‚¯‚Ä•Û‘¶", CreateDateTime)
+					//FileName = InputBox("ãƒ•ã‚¡ã‚¤ãƒ«ã«åå‰ã‚’ã¤ã‘ã¦ä¸‹ã•ã„ã€‚", "åå‰ã‚’ã¤ã‘ã¦ä¿å­˜", CreateDateTime)
 
 					if (m_dlg.DoModal()==IDOK){
 						FileName = _T("");
@@ -10550,7 +10550,7 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 						ReadOrWritePlayList_Func(_T("m3u_write"),_T(""),AudioItems,FileName);
 					}
 
-					CFileListCreatorDlg::StatusStringSet(_T("ƒvƒŒƒCƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,TRUE);
 					return;
 				}
 			}
@@ -10559,16 +10559,16 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 
 	switch(mySwitch){
 		case 1:
-			CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ğÀs‚µ‚Ü‚µ‚½ \r\n (‚µ‚Î‚ç‚­‚¨‘Ò‚¿‰º‚³‚¢)"),300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã—ãŸ \r\n (ã—ã°ã‚‰ããŠå¾…ã¡ä¸‹ã•ã„)"),300,FALSE);
 			break;
 		case 2:
-			CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ğÀs‚µ‚Ü‚µ‚½ \r\n (•¡”‚Ì‰¹Šyƒtƒ@ƒCƒ‹‚ğŠJ‚­ê‡‚ÍAuƒƒfƒBƒAƒvƒŒƒCƒ„[‚©‚çŠJ‚­v‚ğÀs‚µ‚Ä‰º‚³‚¢)"),300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã—ãŸ \r\n (è¤‡æ•°ã®éŸ³æ¥½ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãå ´åˆã¯ã€ã€Œãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰é–‹ãã€ã‚’å®Ÿè¡Œã—ã¦ä¸‹ã•ã„)"),300,FALSE);
 			break;
 		case 3:
-			CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ğÀs‚µ‚Ü‚µ‚½ \r\n (ƒƒfƒBƒAƒvƒŒƒCƒ„[‚ğ‹N“®‚µ‚Ü‚·)"),300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã—ãŸ \r\n (ãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’èµ·å‹•ã—ã¾ã™)"),300,FALSE);
 			break;
 		case 4:
-			CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ğÀs‚µ‚Ü‚µ‚½ \r\n (ƒŠƒ“ƒNƒtƒ@ƒCƒ‹‚Ì‚İŠJ‚«‚Ü‚·)"),300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã—ãŸ \r\n (ãƒªãƒ³ã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã®ã¿é–‹ãã¾ã™)"),300,FALSE);
 			break;
 		default:
 			break;					
@@ -10576,9 +10576,9 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 	
 	
 	if(myCnt == 0) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒAƒCƒeƒ€‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸æŠã—ã¦ãã ã•ã„"),300,TRUE);
 	}else{
-		//šŠÖ˜A•t‚¯‚ç‚ê‚½ƒvƒƒOƒ‰ƒ€‚ÅŠJ‚­
+		//â˜…é–¢é€£ä»˜ã‘ã‚‰ã‚ŒãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§é–‹ã
 		//CString FileName;	
 	}
 }
@@ -10586,54 +10586,54 @@ void CFileListCreatorDlg::MenuOpenBy_Func(int mySwitch){
 
 void CFileListCreatorDlg::OnMenuOpenbyexplorer()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(1);
 }
 
 
 void CFileListCreatorDlg::OnOpenbyConnectedapplication()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(2);
 }
 
 
 void CFileListCreatorDlg::OnOpenExplorer()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(1);
 }
 
 
 void CFileListCreatorDlg::OnMenuPlaySelectedMusic()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(3);
 }
 
 
 void CFileListCreatorDlg::OnOpenbyMediaplayer()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(3);
 }
 
 
 void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 {
-	// TODO: ‚±‚±‚ÉƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚·‚é‚©AŠù’è‚Ìˆ—‚ğŒÄ‚Ño‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹ã‹ã€æ—¢å®šã®å‡¦ç†ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
 	
 	ESCAPE_FLG = FALSE;
 
 	CFileListCreatorDlg::GetStrFormat_Func();
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	CDialogEx::OnDropFiles(hDropInfo);
 	//http://mailsrv.nara-edu.ac.jp/~asait/visual_cpp/dialog2/drop/drop.htm
 
-	CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒg‚Éƒhƒ‰ƒbƒO‚µ‚½ƒAƒCƒeƒ€‚ğˆ—’†‚Å‚·"),300,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆã«ãƒ‰ãƒ©ãƒƒã‚°ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’å‡¦ç†ä¸­ã§ã™"),300,FALSE);
 
     TCHAR FileName[_MAX_PATH];
     int NameSize = sizeof(FileName);
@@ -10642,7 +10642,7 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
     int i;
 
     FileNumber = ::DragQueryFile(hDropInfo, 0xffffffff, FileName, NameSize);
-    //str.Format(_T("ƒhƒƒbƒv‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Ì” =%d"), FileNumber);
+    //str.Format(_T("ãƒ‰ãƒ­ãƒƒãƒ—ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã®æ•° =%d"), FileNumber);
     //AfxMessageBox(str);
 		
 	TotalItemsCount = 0;
@@ -10666,8 +10666,8 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 	}
 
 	if (FileOnlyFLG == FALSE) {
-		str.Format(_T("%d ŒÂ‚ÌƒAƒCƒeƒ€ (ƒtƒHƒ‹ƒ_‚âƒtƒ@ƒCƒ‹) ‚ªƒhƒƒbƒv‚³‚ê‚Ü‚µ‚½BƒtƒHƒ‹ƒ_‚É‘Î‚µ‚Ä‚Ì“®ì‚ğ‘I‘ğ‚µ‚Ä‰º‚³‚¢B\r\n\r\nu‚Í‚¢vƒtƒ@ƒCƒ‹‚Ìí—Ş‚È‚Ç‚Åi‚è‚İ‚Ü‚·B\r\nu‚¢‚¢‚¦vƒhƒƒbƒv‚³‚ê‚½ƒtƒHƒ‹ƒ_‚Ì’†g‚ğ‚·‚×‚ÄƒŠƒXƒg‚Éæ‚è‚İ‚Ü‚·B"), FileNumber);
-		myResult = MessageBox(str ,_T("æ‚è‚İŠm”F"), MB_YESNOCANCEL );
+		str.Format(_T("%d å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ  (ãƒ•ã‚©ãƒ«ãƒ€ã‚„ãƒ•ã‚¡ã‚¤ãƒ«) ãŒãƒ‰ãƒ­ãƒƒãƒ—ã•ã‚Œã¾ã—ãŸã€‚ãƒ•ã‚©ãƒ«ãƒ€ã«å¯¾ã—ã¦ã®å‹•ä½œã‚’é¸æŠã—ã¦ä¸‹ã•ã„ã€‚\r\n\r\nã€Œã¯ã„ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ç¨®é¡ãªã©ã§çµã‚Šè¾¼ã¿ã¾ã™ã€‚\r\nã€Œã„ã„ãˆã€ãƒ‰ãƒ­ãƒƒãƒ—ã•ã‚ŒãŸãƒ•ã‚©ãƒ«ãƒ€ã®ä¸­èº«ã‚’ã™ã¹ã¦ãƒªã‚¹ãƒˆã«å–ã‚Šè¾¼ã¿ã¾ã™ã€‚"), FileNumber);
+		myResult = MessageBox(str ,_T("å–ã‚Šè¾¼ã¿ç¢ºèª"), MB_YESNOCANCEL );
 	}
 
 	CFileSpecsDlg m_dlg;
@@ -10676,19 +10676,19 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 	SkipFLG = FALSE;
 
 	if(myResult	== IDYES){
-		//ƒ‚[ƒ_ƒ‹
+		//ãƒ¢ãƒ¼ãƒ€ãƒ«
 		m_dlg.DoModal();
 		if(m_dlg.TargetFileSpecs == _T("")){
-			CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ƒ†[ƒU[‚É‚æ‚éƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ã‚ˆã‚‹ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 			return;
 		}
 
 		if(m_dlg.TargetFileSpecs == _T("<<error>>")){
-			CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : ³‚µ‚¢Œ`®‚ÅŒŸõ‘ÎÛ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("FileSpecsDlg : æ­£ã—ã„å½¢å¼ã§æ¤œç´¢å¯¾è±¡ã‚’æŒ‡å®šã—ã¦ãã ã•ã„"),300,TRUE);
 			return;
 		}
 	//--------------------------------------------------------------------------------------------
-		CFileListCreatorDlg::StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg‘ÎÛƒAƒCƒeƒ€ ƒJƒEƒ“ƒg’†"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆå¯¾è±¡ã‚¢ã‚¤ãƒ†ãƒ  ã‚«ã‚¦ãƒ³ãƒˆä¸­"),0,FALSE);
 		//ULONGLONG TotalItemsCount;
 		//TotalItemsCount = 0;
 
@@ -10705,12 +10705,12 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 			}
 		}
 		//TotalItemsCount = TotalItemsCount / 2;
-		//CFileListCreatorDlg::StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg‘ÎÛƒAƒCƒeƒ€ ƒJƒEƒ“ƒgI—¹"),0,FALSE);
+		//CFileListCreatorDlg::StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆå¯¾è±¡ã‚¢ã‚¤ãƒ†ãƒ  ã‚«ã‚¦ãƒ³ãƒˆçµ‚äº†"),0,FALSE);
 	//--------------------------------------------------------------------------------------------
 		for(i=0; i<FileNumber; i++){
 			DragQueryFile(hDropInfo, i, FileName, NameSize);
 			if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE)== 1 && SkipFLG == FALSE){
-				importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+				importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 				SkipFLG = TRUE;
 			}
 
@@ -10719,13 +10719,13 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 			}else if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0){
 				CFileListCreatorDlg::PackageSearch_Func(FileName,m_dlg.TargetFileSpecs);
 			}else if (importFileResult !=IDYES ){
-				CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ‚ğ–Y‚ê‚¸‚É
+				CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ã‚’å¿˜ã‚Œãšã«
 			}
 		}
 	}else if(myResult == IDNO){
 		//m_dlg.DoModal();
 		////--------------------------------------------------------------------------------------------
-			CFileListCreatorDlg::StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg‘ÎÛƒAƒCƒeƒ€ ƒJƒEƒ“ƒg’†"),0,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆå¯¾è±¡ã‚¢ã‚¤ãƒ†ãƒ  ã‚«ã‚¦ãƒ³ãƒˆä¸­"),0,FALSE);
 			//TotalItemsCount = 0;
 
 			for(i=0; i<FileNumber; i++){
@@ -10741,13 +10741,13 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 				}
 			}
 			//TotalItemsCount = TotalItemsCount / 2;
-		//	CFileListCreatorDlg::StatusStringSet(_T("HTML ƒCƒ“ƒ|[ƒg‘ÎÛƒAƒCƒeƒ€ ƒJƒEƒ“ƒgI—¹"),0,FALSE);
+		//	CFileListCreatorDlg::StatusStringSet(_T("HTML ã‚¤ãƒ³ãƒãƒ¼ãƒˆå¯¾è±¡ã‚¢ã‚¤ãƒ†ãƒ  ã‚«ã‚¦ãƒ³ãƒˆçµ‚äº†"),0,FALSE);
 		//--------------------------------------------------------------------------------------------
 		for(i=0; i<FileNumber; i++){
 			DragQueryFile(hDropInfo, i, FileName, NameSize);
 
 			if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE)== 1 && SkipFLG == FALSE){
-				importFileResult = MessageBox(_T("‚¢‚­‚Â‚©‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ªŒŸo‚³‚ê‚Ü‚µ‚½BƒCƒ“ƒ|[ƒg‚ğs‚¢AƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+				importFileResult = MessageBox(_T("ã„ãã¤ã‹ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¤œå‡ºã•ã‚Œã¾ã—ãŸã€‚ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚’è¡Œã„ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 				SkipFLG = TRUE;
 			}
 
@@ -10756,16 +10756,16 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 			}else if (CFileListCreatorDlg::importFileList_Func(FileName,TRUE) == 0){
 				CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));
 			}else if (importFileResult !=IDYES ){
-				CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ‚ğ–Y‚ê‚¸‚É
+				CFileListCreatorDlg::PackageSearch_Func(FileName,_T("*.*;"));  //; ã‚’å¿˜ã‚Œãšã«
 			}
 			//AfxMessageBox(FileName);
 		}
 	}else if(myResult == IDCANCEL){
-		CFileListCreatorDlg::StatusStringSet(_T("“®ì‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("å‹•ä½œã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	str.Format(_T("%d ŒÂ‚ÌƒAƒCƒeƒ€ (ƒtƒHƒ‹ƒ_‚âƒtƒ@ƒCƒ‹) ‚ğƒhƒƒbƒv"), FileNumber);
+	str.Format(_T("%d å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ  (ãƒ•ã‚©ãƒ«ãƒ€ã‚„ãƒ•ã‚¡ã‚¤ãƒ«) ã‚’ãƒ‰ãƒ­ãƒƒãƒ—"), FileNumber);
 	CFileListCreatorDlg::StatusStringSet(str,300,TRUE);
 
 	CFileListCreatorDlg::SetStrFormat_Func();
@@ -10775,7 +10775,7 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 	CFileListCreatorDlg::ItemCount_Func(FALSE);
 
 	if (FileNumber>=1){
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -10783,14 +10783,14 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 	}
 
 	delete m_dlg;
-	//CFileListCreatorDlg::StatusStringSet(_T("PackageSearch I—¹"),300,TRUE);
+	//CFileListCreatorDlg::StatusStringSet(_T("PackageSearch çµ‚äº†"),300,TRUE);
 
     ::DragFinish( hDropInfo );
     //CFrameWnd::OnDropFiles(hDropInfo);
@@ -10799,56 +10799,56 @@ void CFileListCreatorDlg::OnDropFiles(HDROP hDropInfo)
 
 void CFileListCreatorDlg::OnMenuSelectall()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SelectALL_Func();
 }
 
 
 void CFileListCreatorDlg::OnEditlistSelectall()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SelectALL_Func();
 }
 
 
 void CFileListCreatorDlg::OnEditDelfiletype()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	DEL_FileType_Func();
 }
 
 
 void CFileListCreatorDlg::OnMenuDelFiletype()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	DEL_FileType_Func();
 }
 
 
 void CFileListCreatorDlg::OnMenuRestoreListInformation()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	OnBnClickedBtnRestore();
 }
 
 
 void CFileListCreatorDlg::OnEditlistAdddirstr()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	AddDirectorySTR_Func();
 }
 
 
 void CFileListCreatorDlg::OnMenuAdddirectorystr()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	AddDirectorySTR_Func();
 }
 
 
 void CFileListCreatorDlg::OnOptionVersion()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CAboutDlg dlgAbout;
 	dlgAbout.DoModal();
 }
@@ -10858,16 +10858,16 @@ HBRUSH CFileListCreatorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
-	// TODO:  ‚±‚±‚Å DC ‚Ì‘®«‚ğ•ÏX‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO:  ã“ã“ã§ DC ã®å±æ€§ã‚’å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
 
 	//http://soheeya.net/programming/vctips/control_static.html
-    //•û–@‡@
+    //æ–¹æ³•â‘ 
     if(pWnd->m_hWnd == GetDlgItem(IDC_STATIC_DRAG_ON_ME)->m_hWnd){
         pDC->SetBkColor(RGB(255, 255, 255));
         pDC->SetTextColor(RGB(100, 100, 100));
     }
 
-	// TODO:  Šù’è’l‚ğg—p‚µ‚½‚­‚È‚¢ê‡‚Í•Ê‚Ìƒuƒ‰ƒV‚ğ•Ô‚µ‚Ü‚·B
+	// TODO:  æ—¢å®šå€¤ã‚’ä½¿ç”¨ã—ãŸããªã„å ´åˆã¯åˆ¥ã®ãƒ–ãƒ©ã‚·ã‚’è¿”ã—ã¾ã™ã€‚
 	return hbr;
 }
 
@@ -10875,39 +10875,39 @@ HBRUSH CFileListCreatorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CFileListCreatorDlg::OnSortSortitemsbyfilename()
 {
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 3; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-		static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 3; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+		static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å é™é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å æ˜‡é †)"),300,TRUE);
 		}
 		SortColumnDrawCaption(keyColumn, bSort);
-		bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		CFileListCreatorDlg::SortEnsureVisible_Func();
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -10915,7 +10915,7 @@ void CFileListCreatorDlg::OnSortSortitemsbyfilename()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -10924,39 +10924,39 @@ void CFileListCreatorDlg::OnSortSortitemsbyfilename()
 void CFileListCreatorDlg::OnSortSortitemsbydatasize()
 {
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 5; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-		static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 5; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+		static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º æ˜‡é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º é™é †)"),300,TRUE);
 		}
-		SortColumnDrawCaption(4, bSort); //•ÏX 2012.05.24
-		bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		SortColumnDrawCaption(4, bSort); //å¤‰æ›´ 2012.05.24
+		bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		CFileListCreatorDlg::SortEnsureVisible_Func();
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -10964,7 +10964,7 @@ void CFileListCreatorDlg::OnSortSortitemsbydatasize()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -10973,39 +10973,39 @@ void CFileListCreatorDlg::OnSortSortitemsbydatasize()
 void CFileListCreatorDlg::OnSortSortitemsbydate()
 {
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 7; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-		static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 7; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+		static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ æ˜‡é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ é™é †)"),300,TRUE);
 		}
-		SortColumnDrawCaption(6, bSort); //•ÏX 2012.05.24
-		bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		SortColumnDrawCaption(6, bSort); //å¤‰æ›´ 2012.05.24
+		bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		CFileListCreatorDlg::SortEnsureVisible_Func();
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11013,7 +11013,7 @@ void CFileListCreatorDlg::OnSortSortitemsbydate()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -11022,39 +11022,39 @@ void CFileListCreatorDlg::OnSortSortitemsbydate()
 void CFileListCreatorDlg::OnSortSortitemsbypathname()
 {
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 2; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-		static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 2; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+		static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ æ˜‡é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ é™é †)"),300,TRUE);
 		}
 		SortColumnDrawCaption(keyColumn, bSort);
-		bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		CFileListCreatorDlg::SortEnsureVisible_Func();
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11062,9 +11062,9 @@ void CFileListCreatorDlg::OnSortSortitemsbypathname()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24 //ƒRƒƒ“ƒg‰» 2012.05.25
+		//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24 //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.25
 	}
 }
 
@@ -11072,39 +11072,39 @@ void CFileListCreatorDlg::OnSortSortitemsbypathname()
 void CFileListCreatorDlg::OnSortSortitemsbyrepetitionnum()
 {
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 0; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-		static BOOL bSort = TRUE;			// static‚Å’è‹`‚·‚é‚±‚Æ //d•¡ƒiƒ“ƒo[‚ªŒ©‚ê‚é‚æ‚¤‚Éí‚É‚s‚q‚t‚d
+		keyColumn = 0; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+		static BOOL bSort = TRUE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨ //é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ãŒè¦‹ã‚Œã‚‹ã‚ˆã†ã«å¸¸ã«ï¼´ï¼²ï¼µï¼¥
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  æ˜‡é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  é™é †)"),300,TRUE);
 		}
 		SortColumnDrawCaption(keyColumn, bSort);
-		//bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		//bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		CFileListCreatorDlg::SortEnsureVisible_Func();
 
 		CFileListCreatorDlg::SetStrFormat_Func();
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11112,7 +11112,7 @@ void CFileListCreatorDlg::OnSortSortitemsbyrepetitionnum()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -11120,9 +11120,9 @@ void CFileListCreatorDlg::OnSortSortitemsbyrepetitionnum()
 
 void CFileListCreatorDlg::OnEditlistSetSequentialNum()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	SetSEQ_NUM_Func(TRUE);
 
@@ -11131,39 +11131,39 @@ void CFileListCreatorDlg::OnEditlistSetSequentialNum()
 
 void CFileListCreatorDlg::OnOpenbyLinkfileopen()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	MenuOpenBy_Func(4);
 }
 
 
 void CFileListCreatorDlg::OnBnClickedChkEasyselect()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	//LastPrevItemCount = m_xcList.GetItemCount();
-	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if (m_xvChkEasySelect == FALSE){
 		m_xvChkEasySelect = TRUE;
 
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-		CFileListCreatorDlg::StatusStringSet(_T("Œ»İ‚ÌƒŠƒXƒg‚Ì’†‚©‚ç‘¾•¶š‚É‚µ‚½ƒAƒCƒeƒ€‚ğˆê‚Â‚ÌƒtƒHƒ‹ƒ_‚ÉƒRƒs[‚µ‚Ü‚· \r\n (ƒAƒCƒeƒ€‚ğƒNƒŠƒbƒN‚µ‚Ä‘¾•¶š‚É‚µ‚Ä‰º‚³‚¢)"),300,TRUE);
-		m_xvStrEasySelectMode = _T("F@‘¾•¶š‘I‘ğƒ‚[ƒh");
+		CFileListCreatorDlg::StatusStringSet(_T("ç¾åœ¨ã®ãƒªã‚¹ãƒˆã®ä¸­ã‹ã‚‰å¤ªæ–‡å­—ã«ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸€ã¤ã®ãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã™ \r\n (ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦å¤ªæ–‡å­—ã«ã—ã¦ä¸‹ã•ã„)"),300,TRUE);
+		m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­—é¸æŠãƒ¢ãƒ¼ãƒ‰");
 		UpdateData(FALSE);
 
 
 		CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode);
-		//ƒ`ƒFƒbƒN‚ğŠO‚·
+		//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 		chkbox1->SetCheck(0);
 		m_xvChkEditCellMode = FALSE;
 
-		m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+		m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 		UpdateData(FALSE);	
 
 		if(m_xcList.GetSelectedCount() > 1){
@@ -11196,9 +11196,9 @@ void CFileListCreatorDlg::OnBnClickedChkEasyselect()
 				CFileListCreatorDlg::m_xcList.SetItemData(index,FormatDataNum);
 				//ListView_Update(m_xcList, index);
 
-				m_xcList.SetItemState(index,     // ”ñƒtƒH[ƒJƒX•”ñ‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-				!LVIS_FOCUSED | !LVIS_SELECTED,    // ó‘Ô
-				LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+				m_xcList.SetItemState(index,     // éãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†éé¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				!LVIS_FOCUSED | !LVIS_SELECTED,    // çŠ¶æ…‹
+				LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 				myCnt++;
 			}
@@ -11207,23 +11207,23 @@ void CFileListCreatorDlg::OnBnClickedChkEasyselect()
 
 			CString tempCnt;
 			tempCnt = _T("");
-			if(myCnt>=1){ //’Ç‰Á 2012.06.14
+			if(myCnt>=1){ //è¿½åŠ  2012.06.14
 				tempCnt.Format(_T("%d"),myCnt);
-				tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚É‘¾•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚µ‚Ü‚µ‚½");
+				tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã«å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ");
 			}else{
-				tempCnt=tempCnt + _T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßA‘¾•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚Å‚«‚Ü‚¹‚ñ");
+				tempCnt=tempCnt + _T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã§ãã¾ã›ã‚“");
 			}
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 
-			CFileListCreatorDlg::Total_Bytes_Bold(); //’Ç‰Á 2012.07.11 //d—v BoldItem‚ª2d‚ÉƒJƒEƒ“ƒg‚³‚ê‚éê‡‚à‚ ‚é‚ªAƒtƒH[ƒJƒX‚ğ‚Í‚¸‚µ‚Ä‚¢‚é‚Ì‚Å–â‘è‚È‚¢
-			CFileListCreatorDlg::Total_Bytes_Func(); //’Ç‰Á 2012.07.11
-			CFileListCreatorDlg::ItemCount_Func(FALSE); //’Ç‰Á 2012.07.11
+			CFileListCreatorDlg::Total_Bytes_Bold(); //è¿½åŠ  2012.07.11 //é‡è¦ BoldItemãŒ2é‡ã«ã‚«ã‚¦ãƒ³ãƒˆã•ã‚Œã‚‹å ´åˆã‚‚ã‚ã‚‹ãŒã€ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’ã¯ãšã—ã¦ã„ã‚‹ã®ã§å•é¡Œãªã„
+			CFileListCreatorDlg::Total_Bytes_Func(); //è¿½åŠ  2012.07.11
+			CFileListCreatorDlg::ItemCount_Func(FALSE); //è¿½åŠ  2012.07.11
 		}
 	}else{
 		m_xvChkEasySelect = FALSE;
 
-		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ƒ‚[ƒh‚ğOFF‚É‚µ‚Ü‚µ‚½ ¨ Copy‹@”\‚ğÀs‚µ‚Ä‚­‚¾‚³‚¢"),300,FALSE);
-		m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã—ã¾ã—ãŸ â†’ Copyæ©Ÿèƒ½ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„"),300,FALSE);
+		m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 	}
 
@@ -11235,45 +11235,45 @@ void CFileListCreatorDlg::OnBnClickedChkEasyselect()
 
 void CFileListCreatorDlg::OnCopyEasyselect()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 	m_xvChkEasySelect = TRUE;
 
-	CFileListCreatorDlg::StatusStringSet(_T("Œ»İ‚ÌƒŠƒXƒg‚Ì’†‚©‚ç‘¾•¶š‚É‚µ‚½ƒAƒCƒeƒ€‚ğˆê‚Â‚ÌƒtƒHƒ‹ƒ_‚ÉƒRƒs[‚µ‚Ü‚· \r\n (ƒAƒCƒeƒ€‚ğƒNƒŠƒbƒN‚µ‚Ä‘¾•¶š‚É‚µ‚Ä‰º‚³‚¢)"),300,TRUE);
-	m_xvStrEasySelectMode = _T("F@‘¾•¶š‘I‘ğƒ‚[ƒh");
+	CFileListCreatorDlg::StatusStringSet(_T("ç¾åœ¨ã®ãƒªã‚¹ãƒˆã®ä¸­ã‹ã‚‰å¤ªæ–‡å­—ã«ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸€ã¤ã®ãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã™ \r\n (ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦å¤ªæ–‡å­—ã«ã—ã¦ä¸‹ã•ã„)"),300,TRUE);
+	m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­—é¸æŠãƒ¢ãƒ¼ãƒ‰");
 	UpdateData(FALSE);
 }
 
 
 void CFileListCreatorDlg::OnCopyEasyselectoff()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 	m_xvChkEasySelect = FALSE;
 
-	CFileListCreatorDlg::StatusStringSet(_T("EasySelect ƒ‚[ƒh‚ğOFF‚É‚µ‚Ü‚µ‚½ ¨ Copy‹@”\‚ğÀs‚µ‚Ä‚­‚¾‚³‚¢"),300,FALSE);
-	m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+	CFileListCreatorDlg::StatusStringSet(_T("EasySelect ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã—ã¾ã—ãŸ â†’ Copyæ©Ÿèƒ½ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„"),300,FALSE);
+	m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 	UpdateData(FALSE);
 }
 
 
 void CFileListCreatorDlg::OnMenuEmphasisbybold()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
     int        index = -1;
     CString    str;
@@ -11291,7 +11291,7 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 	CString tempCnt;
 
 	if(myCnt==0){
-		myResult = MessageBox(_T("‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚É‘¾•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚µ‚Ü‚·‚©H"),_T("Selected Items To Bold"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã«å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã‹ï¼Ÿ"),_T("Selected Items To Bold"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 			UpdateData(FALSE);
 			index = 0;
@@ -11320,19 +11320,19 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 
 				CFileListCreatorDlg::m_xcList.SetItemData(index,FormatDataNum);
 
-				//ListView_Update(m_xcList, index); //ƒRƒƒ“ƒg‰» 2012.06.15
+				//ListView_Update(m_xcList, index); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.15
 				index++;
 			}
-			CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Ä‚ÉƒAƒCƒeƒ€‚Ì‘¾•¶š(‹­’²î•ñ)‚ÉƒZƒbƒg‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦ã«ã‚¢ã‚¤ãƒ†ãƒ ã®å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã«ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ"),300,TRUE);
 
 		}
 	}else if(myCnt>=1){
-		//myResult = MessageBox(_T("Œ»İ‘I‘ğ‚³‚ê‚Ä‚¢‚éƒAƒCƒeƒ€‚Ì‘¾•¶š(‹­’²î•ñ)‚ÉƒZƒbƒg‚µ‚Ü‚·‚©H"),_T(Selected Items To Bold"),MB_YESNOCANCEL);
+		//myResult = MessageBox(_T("ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã«ã‚»ãƒƒãƒˆã—ã¾ã™ã‹ï¼Ÿ"),_T(Selected Items To Bold"),MB_YESNOCANCEL);
 		//myResult == IDYES;
 		//if(myResult == IDYES){
 			//m_xvChkEasySelect = TRUE;
 			//g_ChkCopyOn = TRUE;
-			//m_xvStrEasySelectMode = _T("F@‘¾•¶š‘I‘ğƒ‚[ƒh");
+			//m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­—é¸æŠãƒ¢ãƒ¼ãƒ‰");
 			//UpdateData(FALSE);
 
 
@@ -11371,11 +11371,11 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 
 			//CString tempCnt;
 			tempCnt = _T("");
-			if(myCnt>=1){ //’Ç‰Á 2012.06.14
+			if(myCnt>=1){ //è¿½åŠ  2012.06.14
 				tempCnt.Format(_T("%d"),myCnt);
-				tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚É‘¾•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚µ‚Ü‚µ‚½");
+				tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã«å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ");
 			}else{
-				tempCnt=tempCnt + _T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßA‘¾•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚Å‚«‚Ü‚¹‚ñ");
+				tempCnt=tempCnt + _T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã§ãã¾ã›ã‚“");
 			}
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 			//CFileListCreatorDlg::SetStrFormat_Func();
@@ -11385,14 +11385,14 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 	}
 
 		m_xvChkRedOnMode = FALSE;
-		m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 
 		m_xvChkEasySelect = FALSE;
-		m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11400,16 +11400,16 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
-	//m_Dlg->Total_Bytes_Bold(); //d—v //ƒRƒƒ“ƒg‰» 2012.07.12
+	//m_Dlg->Total_Bytes_Bold(); //é‡è¦ //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.12
 	//m_Dlg->Total_Bytes_Func();
 	//m_Dlg->ItemCount_Func(FALSE);
 
 	//http://oshiete.goo.ne.jp/qa/112210.html
-	//::InvalidateRect(0,0,false); //‰æ–Ê‘S‘Ì‚ÉÄ•`‰æ‚ğ—v‹
+	//::InvalidateRect(0,0,false); //ç”»é¢å…¨ä½“ã«å†æç”»ã‚’è¦æ±‚
 	//http://oshiete.goo.ne.jp/qa/200500.html
 	//SendMessage(editBox, WM_KILLFOCUS, 0, 0L);
 
@@ -11418,14 +11418,14 @@ void CFileListCreatorDlg::OnMenuEmphasisbybold()
 
 void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
     int        index = -1;
     CString    str;
@@ -11443,33 +11443,33 @@ void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 	CString tempCnt;
 
 	if(myCnt==0){
-		myResult = MessageBox(_T("‚·‚×‚Ä‚ÌÔFE‘¾•¶š(‹­’²î•ñ)‚ğ‰ğœ‚µ‚Ü‚·‚©H"),_T("Emphasized Format Cancellation"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ã™ã¹ã¦ã®èµ¤è‰²ãƒ»å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’è§£é™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Emphasized Format Cancellation"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 			m_xvChkEasySelect = FALSE;
 			m_xvChkRedOnMode = FALSE;
 
-			m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
-			m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+			m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
+			m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 			UpdateData(FALSE);
 			index = 0;
 			while(index < CFileListCreatorDlg::m_xcList.GetItemCount())
 			{
 				CFileListCreatorDlg::m_xcList.SetItemData(index,11);
-				//ListView_Update(m_xcList, index); //ƒRƒƒ“ƒg‰» 2012.05.31 //XP‘Îô
+				//ListView_Update(m_xcList, index); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.31 //XPå¯¾ç­–
 				index++;
 			}
-			CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Ä‚ÌÔFE‘¾•¶š (‹­’²î•ñ) ‚ğ‰ğœ‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦ã®èµ¤è‰²ãƒ»å¤ªæ–‡å­— (å¼·èª¿æƒ…å ±) ã‚’è§£é™¤ã—ã¾ã—ãŸ"),300,TRUE);
 
 		}
 	}else if(myCnt>=1){
-		//myResult = MessageBox(_T("Œ»İ‘I‘ğ‚³‚ê‚Ä‚¢‚éƒAƒCƒeƒ€‚ÌÔFE‘¾•¶š(‹­’²î•ñ)‚ğ‰ğœ‚µ‚Ü‚·‚©H"),_T("Emphasized Format Cancellation"),MB_YESNOCANCEL);
+		//myResult = MessageBox(_T("ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®èµ¤è‰²ãƒ»å¤ªæ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’è§£é™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Emphasized Format Cancellation"),MB_YESNOCANCEL);
 		//myResult == IDYES;
 		//if(myResult == IDYES){
 			m_xvChkEasySelect = FALSE;
 			m_xvChkRedOnMode = FALSE;
 
-			m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
-			m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+			m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
+			m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 
 			int myCnt = 0;
 			index = -1;
@@ -11477,17 +11477,17 @@ void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 			    (index, LVNI_ALL | LVNI_SELECTED)) != -1)
 			{
 				CFileListCreatorDlg::m_xcList.SetItemData(index,11);
-				//ListView_Update(m_xcList, index); //ƒRƒƒ“ƒg‰» 2012.05.31 //XP‘Îô
+				//ListView_Update(m_xcList, index); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.31 //XPå¯¾ç­–
 				myCnt++;
 			}
 
 			//CString tempCnt;
 			tempCnt = _T("");
-			if(myCnt>=1){ //’Ç‰Á 2012.06.14
+			if(myCnt>=1){ //è¿½åŠ  2012.06.14
 				tempCnt.Format(_T("%d"),myCnt);
-				tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚ÌÔFE‘¾•¶š (‹­’²î•ñ) ‚ğ‰ğœ‚µ‚Ü‚µ‚½");
+				tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã®èµ¤è‰²ãƒ»å¤ªæ–‡å­— (å¼·èª¿æƒ…å ±) ã‚’è§£é™¤ã—ã¾ã—ãŸ");
 			}else{
-				tempCnt=_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßAÔFE‘¾•¶š (‹­’²î•ñ) ‚ğ‰ğœ‚Å‚«‚Ü‚¹‚ñ");
+				tempCnt=_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€èµ¤è‰²ãƒ»å¤ªæ–‡å­— (å¼·èª¿æƒ…å ±) ã‚’è§£é™¤ã§ãã¾ã›ã‚“");
 			}
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 
@@ -11500,12 +11500,12 @@ void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 	Total_Bytes_Func();
 	ItemCount_Func(FALSE);
 
-	RedrawWindow(); //’Ç‰Á 2012.05.31 //XP‘Îô
+	RedrawWindow(); //è¿½åŠ  2012.05.31 //XPå¯¾ç­–
 
 	CFileListCreatorDlg::Total_Bytes_Bold();
 
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11513,7 +11513,7 @@ void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 	//UpdateWindow();
@@ -11522,43 +11522,43 @@ void CFileListCreatorDlg::OnMenuEmphasizedFormatCancellation()
 
 void CFileListCreatorDlg::OnEditselecteditemBold()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg::OnMenuEmphasisbybold();
 }
 
 
 void CFileListCreatorDlg::OnBnClickedChkRedonmode()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	//LastPrevItemCount = m_xcList.GetItemCount();
-	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if (m_xvChkRedOnMode == FALSE){
 		m_xvChkRedOnMode = TRUE;
-		CFileListCreatorDlg::StatusStringSet(_T("ƒAƒCƒeƒ€‚ğƒNƒŠƒbƒN‚µ‚ÄÔ•¶š‚É‚µ‚Ä‰º‚³‚¢)"),300,TRUE);
-		m_xvStrRedOnMode = _T("F@Ô•¶šƒ‚[ƒh");
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦èµ¤æ–‡å­—ã«ã—ã¦ä¸‹ã•ã„)"),300,TRUE);
+		m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­—ãƒ¢ãƒ¼ãƒ‰");
 
 		CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode);
-		//ƒ`ƒFƒbƒN‚ğŠO‚·
+		//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 		chkbox1->SetCheck(0);
 		m_xvChkEditCellMode = FALSE;
 
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);
 
-		m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+		m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 		UpdateData(FALSE);	
 
 		UpdateData(FALSE);
 	}else{
 		m_xvChkRedOnMode = FALSE;
-		CFileListCreatorDlg::StatusStringSet(_T("Ô•¶šƒ‚[ƒh‚ğOFF‚É‚µ‚Ü‚µ‚½ ¨ Copy‹@”\‚ğÀs‚µ‚Ä‚­‚¾‚³‚¢"),300,FALSE);
-		m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		CFileListCreatorDlg::StatusStringSet(_T("èµ¤æ–‡å­—ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã—ã¾ã—ãŸ â†’ Copyæ©Ÿèƒ½ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„"),300,FALSE);
+		m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 
 		UpdateData(FALSE);	
 	}
@@ -11567,13 +11567,13 @@ void CFileListCreatorDlg::OnBnClickedChkRedonmode()
 
 void CFileListCreatorDlg::GetStrFormat_Func(){
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	//LVITEM       lvi;
 	int          index = 0;
 
 	UpdateData();
-	lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
+	lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
 	CString FormatDataStr;
 
 	while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -11615,14 +11615,14 @@ void CFileListCreatorDlg::GetStrFormat_Func(){
 void CFileListCreatorDlg::SetStrFormat_Func(){
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	//LVITEM       lvi;
 	int          index = 0;
 
 
 	UpdateData();
-	lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
+	lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
 	CString FormatDataStr;
 
 	while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -11743,9 +11743,9 @@ int CFileListCreatorDlg::GetStrLen_Func(CString tempStr){
 
 void CFileListCreatorDlg::OnOptionTips()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
-		//ƒ‚[ƒ_ƒŒƒX‚P
+		//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 		CDialog *m_pDlg;
 		m_pDlg = new TipsInfo(this);
 		m_pDlg->Create(IDD_DIALOG_Tips);
@@ -11756,15 +11756,15 @@ void CFileListCreatorDlg::OnOptionTips()
 
 void CFileListCreatorDlg::OnMenuEmphasisbyred()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
     int        index = -1;
     CString    str;
@@ -11782,7 +11782,7 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 	CString tempCnt;
 
 	if(myCnt==0){
-		myResult = MessageBox(_T("‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚ÉÔ•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚µ‚Ü‚·‚©H"),_T("Selected Items To Bold"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã«èµ¤æ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã‹ï¼Ÿ"),_T("Selected Items To Bold"),MB_YESNOCANCEL);
 		if(myResult == IDYES){
 
 			UpdateData(FALSE);
@@ -11812,16 +11812,16 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 
 				CFileListCreatorDlg::m_xcList.SetItemData(index,FormatDataNum);
 
-				//ListView_Update(m_xcList, index); //ƒRƒƒ“ƒg‰» 2012.06.15
+				//ListView_Update(m_xcList, index); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.15
 				index++;
 			}
-			CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Ä‚ÉƒAƒCƒeƒ€‚ÌÔ•¶š(‹­’²î•ñ)‚ÉƒZƒbƒg‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦ã«ã‚¢ã‚¤ãƒ†ãƒ ã®èµ¤æ–‡å­—(å¼·èª¿æƒ…å ±)ã«ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ"),300,TRUE);
 
 		}
 	}else if(myCnt>=1){
 			//m_xvChkRedOnMode = TRUE;
 			//g_ChkRedOn = TRUE;
-			//m_xvStrRedOnMode = _T("F@Ô•¶š‘I‘ğƒ‚[ƒh");
+			//m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­—é¸æŠãƒ¢ãƒ¼ãƒ‰");
 			//UpdateData(FALSE);
 
 
@@ -11861,11 +11861,11 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 			//CString tempCnt;
 
 			tempCnt = _T("");
-			if(myCnt>=1){ //’Ç‰Á 2012.06.14
+			if(myCnt>=1){ //è¿½åŠ  2012.06.14
 				tempCnt.Format(_T("%d"),myCnt);
-				tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚ÉÔ•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚µ‚Ü‚µ‚½");
+				tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã«èµ¤æ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ");
 			}else{
-				tempCnt=_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßAÔ•¶š(‹­’²î•ñ)‚ğƒZƒbƒg‚Å‚«‚Ü‚¹‚ñ");
+				tempCnt=_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€èµ¤æ–‡å­—(å¼·èª¿æƒ…å ±)ã‚’ã‚»ãƒƒãƒˆã§ãã¾ã›ã‚“");
 			}
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 			//CFileListCreatorDlg::SetStrFormat_Func();
@@ -11876,14 +11876,14 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 
 
 		m_xvChkRedOnMode = FALSE;
-		m_xvStrRedOnMode = _T("F@Ô•¶š –¢•ÒW");
+		m_xvStrRedOnMode = _T("ï¼šã€€èµ¤æ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);	
 
 		m_xvChkEasySelect = FALSE;
-		m_xvStrEasySelectMode = _T("F@‘¾•¶š –¢•ÒW");
+		m_xvStrEasySelectMode = _T("ï¼šã€€å¤ªæ–‡å­— æœªç·¨é›†");
 		UpdateData(FALSE);
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -11891,13 +11891,13 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
 
 	//http://oshiete.goo.ne.jp/qa/112210.html
-	//::InvalidateRect(0,0,false); //‰æ–Ê‘S‘Ì‚ÉÄ•`‰æ‚ğ—v‹
+	//::InvalidateRect(0,0,false); //ç”»é¢å…¨ä½“ã«å†æç”»ã‚’è¦æ±‚
 	//http://oshiete.goo.ne.jp/qa/200500.html
 	//SendMessage(editBox, WM_KILLFOCUS, 0, 0L);
 }
@@ -11905,20 +11905,20 @@ void CFileListCreatorDlg::OnMenuEmphasisbyred()
 
 void CFileListCreatorDlg::OnEditselecteditemRed()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg::OnMenuEmphasisbyred();
 }
 
 void CFileListCreatorDlg::OnMenuExpandListFile()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	ESCAPE_FLG = FALSE;
 
@@ -11956,7 +11956,7 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 
 	if(myCnt==0){
 
-		importFileResult = MessageBox(_T("‚·‚×‚Ä‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+		importFileResult = MessageBox(_T("ã™ã¹ã¦ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 		if ( importFileResult == IDYES ){
 			index = 0;
 
@@ -11968,9 +11968,9 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 				tempPath = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
 
 				if (CFileListCreatorDlg::importFileList_Func(tempPath,TRUE)== 1){
-					m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-					LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-					LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+					m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+					LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+					LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 					tempCnt = CFileListCreatorDlg::FileListItemsCount(tempPath);
 
@@ -11978,9 +11978,9 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 
 					myCnt++;
 				}else{
-					m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-					!LVIS_SELECTED,    // ó‘Ô //”ñ‘I‘ğó‘Ô
-					LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+					m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+					!LVIS_SELECTED,    // çŠ¶æ…‹ //éé¸æŠçŠ¶æ…‹
+					LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 				}
 				index ++;
 			}
@@ -11991,7 +11991,7 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 	CString tempCnt;
 
 	if(myCnt==0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ÍŒŸo‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã¯æ¤œå‡ºã•ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else if(myCnt>=1){
 
 		UpdateData(FALSE);
@@ -12010,9 +12010,9 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 				CFileListCreatorDlg::importFileList_Func(tempPath,FALSE);
 				myCnt++;
 			}else{
-				m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-				!LVIS_SELECTED,    // ó‘Ô //”ñ‘I‘ğó‘Ô
-				LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+				m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				!LVIS_SELECTED,    // çŠ¶æ…‹ //éé¸æŠçŠ¶æ…‹
+				LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 			}
 
 			//CFileListCreatorDlg::ItemCount_Func(TRUE);
@@ -12020,11 +12020,11 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 
 		tempCnt = _T("");
 
-		if(myCnt>=1) { //’Ç‰Á 2012.06.14
+		if(myCnt>=1) { //è¿½åŠ  2012.06.14
 			tempCnt.Format(_T("%d"),myCnt);
-			tempCnt=tempCnt + _T(" Œ‚ÌƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚µ‚½");
+			tempCnt=tempCnt + _T(" ä»¶ã®ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã—ãŸ");
 		}else{
-			tempCnt=tempCnt + _T("ƒŠƒXƒg‚ª–³‚¢‚½‚ß “WŠJ‚Å‚«‚Ü‚¹‚ñ");
+			tempCnt=tempCnt + _T("ãƒªã‚¹ãƒˆãŒç„¡ã„ãŸã‚ å±•é–‹ã§ãã¾ã›ã‚“");
 		}
 		CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 		CFileListCreatorDlg::SetStrFormat_Func();
@@ -12040,7 +12040,7 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 
 		
 		
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -12048,9 +12048,9 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 		
 	}
@@ -12058,11 +12058,11 @@ void CFileListCreatorDlg::OnMenuExpandListFile()
 
 void CFileListCreatorDlg::PlayEmphasizedMusic(){
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‘Oˆ—‚ğs‚Á‚Ä‚¢‚Ü‚·"),300,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³å‰å‡¦ç†ã‚’è¡Œã£ã¦ã„ã¾ã™"),300,FALSE);
 
 
 	CFileListCreatorDlg::GetStrFormat_Func();
@@ -12080,7 +12080,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 	int index;
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		
@@ -12113,7 +12113,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 		}
 		
 		if(myCnt < 1){
-			CFileListCreatorDlg::StatusStringSet(_T("‚P‚ÂˆÈã‚Ìƒtƒ@ƒCƒ‹‚ğ‘¾•¶š‚©Ô•¶š‚É‚µ‚Ä‰º‚³‚¢ \r\n (‰æ–Ê‰º•”’†‰›‚ÌuEasySelect for Copyv‚âuREDv‚ğg‚Á‚Ä‰º‚³‚¢) "),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ï¼‘ã¤ä»¥ä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å¤ªæ–‡å­—ã‹èµ¤æ–‡å­—ã«ã—ã¦ä¸‹ã•ã„ \r\n (ç”»é¢ä¸‹éƒ¨ä¸­å¤®ã®ã€ŒEasySelect for Copyã€ã‚„ã€ŒREDã€ã‚’ä½¿ã£ã¦ä¸‹ã•ã„) "),300,TRUE);
 			return;
 		}
 
@@ -12123,7 +12123,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 		myCnt = 0;
 
 		while (index <= CFileListCreatorDlg::m_xcList.GetItemCount()-1){
-			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ƒtƒ‹ƒpƒX‚Í 2”Ô–Ú
+			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ãƒ•ãƒ«ãƒ‘ã‚¹ã¯ 2ç•ªç›®
 			FileName = FullPathToFileName(FullPath);
 			FolderPath = CurrentDirFunc(FullPath,TRUE);
 
@@ -12132,7 +12132,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 			if (FormatDataNum == 12 || FormatDataNum == 21 || FormatDataNum == 22){
 				if(FullPath.Right(1)!=_T("\\")){
 					if (myStrToLower_Func(FullPath.Right(4)) == _T(".m3u")){
-						AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,FullPathToFileName(FullPath)); //•ÏX 2012.07.12
+						AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,FullPathToFileName(FullPath)); //å¤‰æ›´ 2012.07.12
 					}else if (myStrToLower_Func(FullPath.Right(4)) == _T(".wpl")){
 						ReadOrWritePlayList_Func(_T("wpl_write"),FullPath,AudioItems,FullPathToFileName(FullPath));
 						AudioItems = ReadOrWritePlayList_Func(_T("wpl_read"),FullPath,AudioItems,FullPathToFileName(FullPath));
@@ -12141,7 +12141,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 						//AudioItems = ReadOrWritePlayList_Func(_T("m3u_read"),FullPath,AudioItems,_T(""));
 					}
 				}else{
-					//Œã‚Åì¬
+					//å¾Œã§ä½œæˆ
 					AudioItems += inFolder_AllFile(FullPath,_T("*.mp3"),_T(""));
 					AudioItems += inFolder_AllFile(FullPath,_T("*.wma"),_T(""));
 					AudioItems += inFolder_AllFile(FullPath,_T("*.wav"),_T(""));
@@ -12160,9 +12160,9 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 	}
 
 
-	CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ÌƒI[ƒvƒ“‚ğÀs‚µ‚Ü‚µ‚½ \r\n (ƒƒfƒBƒAƒvƒŒƒCƒ„[‚ğ‹N“®‚µ‚Ü‚·)"),300,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã—ãŸ \r\n (ãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’èµ·å‹•ã—ã¾ã™)"),300,FALSE);
 	if(myCnt == 0) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒAƒCƒeƒ€‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚¢ã‚¤ãƒ†ãƒ ã‚’é¸æŠã—ã¦ãã ã•ã„"),300,TRUE);
 	}else{
 		ReadOrWritePlayList_Func(_T("m3u_write"),_T(""),AudioItems,_T("temp.flc"));
 		CString m3uFile = _T("");
@@ -12174,12 +12174,12 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 
 		//ShellExecute( NULL, _T("open"), _T("C:\\Program Files\\Windows Media Player\\wmplayer.exe"), AudioItems , NULL , SW_SHOWNORMAL );
 
-		if (IDYES==MessageBox(_T("ƒvƒŒƒCƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚·‚©H"),_T("ƒvƒŒƒCƒŠƒXƒg•Û‘¶"), MB_YESNOCANCEL )){			
-			//ƒ‚[ƒ_ƒ‹
+		if (IDYES==MessageBox(_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã™ã‹ï¼Ÿ"),_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆä¿å­˜"), MB_YESNOCANCEL )){			
+			//ãƒ¢ãƒ¼ãƒ€ãƒ«
 			InputBoxDlg m_dlg;
 			//m_dlg.DoModal();
 
-			//FileName = InputBox("ƒtƒ@ƒCƒ‹‚É–¼‘O‚ğ‚Â‚¯‚Ä‰º‚³‚¢B", "–¼‘O‚ğ‚Â‚¯‚Ä•Û‘¶", CreateDateTime)
+			//FileName = InputBox("ãƒ•ã‚¡ã‚¤ãƒ«ã«åå‰ã‚’ã¤ã‘ã¦ä¸‹ã•ã„ã€‚", "åå‰ã‚’ã¤ã‘ã¦ä¿å­˜", CreateDateTime)
 
 			if (m_dlg.DoModal()==IDOK){
 				FileName = _T("");
@@ -12193,7 +12193,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 
 
 				////http://rararahp.cool.ne.jp/vc/vctips/api.htm
-				//// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+				//// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 				//TCHAR szPath[_MAX_PATH];
 				//GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -12216,7 +12216,7 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 
 				//DeleteFile(CurDir + _T("\\temp.flc.m3u")); //http://www.ujasiri.com/prglib/vc/filectrl/vc_delfile.html
 
-			CFileListCreatorDlg::StatusStringSet(_T("ƒvƒŒƒCƒŠƒXƒg‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,TRUE);
 			return;
 		}
 				
@@ -12225,17 +12225,17 @@ void CFileListCreatorDlg::PlayEmphasizedMusic(){
 
 void CFileListCreatorDlg::OnMenuPlayEmphasizedMusic()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	PlayEmphasizedMusic();
 }
 
 
 
 void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
-	CFileListCreatorDlg::StatusStringSet(_T("‹­’²‚³‚ê‚½ƒAƒCƒeƒ€ˆÈŠO‚ğíœ‚µ‚Ü‚·"),300,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("å¼·èª¿ã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ä»¥å¤–ã‚’å‰Šé™¤ã—ã¾ã™"),300,FALSE);
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	CFileListCreatorDlg::GetStrFormat_Func();
 			
@@ -12251,12 +12251,12 @@ void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
 	int index;
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 		index = 0;
 		myCnt = 0;
@@ -12285,7 +12285,7 @@ void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
 		}
 		
 		if(myCnt < 1){
-			CFileListCreatorDlg::StatusStringSet(_T("‘¾•¶š‚©Ô•¶š‚Å‹­’²‚³‚ê‚½ƒAƒCƒeƒ€‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½ \r\n (‹­’²‚·‚é‚É‚ÍA‰æ–Ê‰º•”’†‰›‚ÌuEasySelect for Copyv‚âuREDv‚ğg‚Á‚Ä‰º‚³‚¢) "),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("å¤ªæ–‡å­—ã‹èµ¤æ–‡å­—ã§å¼·èª¿ã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸ \r\n (å¼·èª¿ã™ã‚‹ã«ã¯ã€ç”»é¢ä¸‹éƒ¨ä¸­å¤®ã®ã€ŒEasySelect for Copyã€ã‚„ã€ŒREDã€ã‚’ä½¿ã£ã¦ä¸‹ã•ã„) "),300,TRUE);
 			return;
 		}
 
@@ -12297,7 +12297,7 @@ void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
 		while (index <= CFileListCreatorDlg::m_xcList.GetItemCount()-1){
 
 
-			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ƒtƒ‹ƒpƒX‚Í 2”Ô–Ú
+			FullPath = CFileListCreatorDlg::m_xcList.GetItemText(index, 2);//ãƒ•ãƒ«ãƒ‘ã‚¹ã¯ 2ç•ªç›®
 			FileName = FullPathToFileName(FullPath);
 			FolderPath = CurrentDirFunc(FullPath,TRUE);
 
@@ -12322,11 +12322,11 @@ void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
 		CFileListCreatorDlg::ItemCount_Func(TRUE);
 		CString str;
 
-		str.Format(_T("%d ŒÂ‚ÌƒAƒCƒeƒ€‚ğíœ‚µ‚Ü‚µ‚½"),myCnt );
+		str.Format(_T("%d å€‹ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’å‰Šé™¤ã—ã¾ã—ãŸ"),myCnt );
 		CFileListCreatorDlg::StatusStringSet(str,300,TRUE);
 
 
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -12334,22 +12334,22 @@ void CFileListCreatorDlg::ExcludeNonEmphasizedItems(){
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 	}else{
 		CFileListCreatorDlg::Total_Bytes_Bold();
 		CFileListCreatorDlg::Total_Bytes_Func();
 		CFileListCreatorDlg::ItemCount_Func(TRUE);
 
-		CFileListCreatorDlg::StatusStringSet(_T("‹­’²‚³‚ê‚Ä‚¢‚È‚¢ƒAƒCƒeƒ€‚Í‚P‚Â‚à‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("å¼·èª¿ã•ã‚Œã¦ã„ãªã„ã‚¢ã‚¤ãƒ†ãƒ ã¯ï¼‘ã¤ã‚‚ãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}
 
 }
 void CFileListCreatorDlg::OnMenuExcludeNonemphasizedItems()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	ExcludeNonEmphasizedItems();
 }
 
@@ -12361,7 +12361,7 @@ void CFileListCreatorDlg::Total_Bytes_Bold(){
 	
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),0,FALSE);
 		BoldByteSum = 0;
 		BolditemCount = 0;
 	}else{
@@ -12375,12 +12375,12 @@ void CFileListCreatorDlg::Total_Bytes_Bold(){
 
 		while (index <= CFileListCreatorDlg::m_xcList.GetItemCount()-1){
 
-			MSG msg; //’Ç‰Á 2011.10.12
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			MSG msg; //è¿½åŠ  2011.10.12
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -12391,7 +12391,7 @@ void CFileListCreatorDlg::Total_Bytes_Bold(){
 			int FormatDataNum = CFileListCreatorDlg::m_xcList.GetItemData(index);
 
 			if (FormatDataNum == 12 ||  FormatDataNum == 22){
-				if(myIsDigit_Func(CFileListCreatorDlg::m_xcList.GetItemText(index, 5)) ==TRUE){//ƒtƒ@ƒCƒ‹ƒTƒCƒY ‚Í 5”Ô–Ú
+				if(myIsDigit_Func(CFileListCreatorDlg::m_xcList.GetItemText(index, 5)) ==TRUE){//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º ã¯ 5ç•ªç›®
 					BoldByteSum = BoldByteSum + CStringToLong(CFileListCreatorDlg::m_xcList.GetItemText(index, 5));
 					BolditemCount = BolditemCount + 1;
 				}
@@ -12406,34 +12406,34 @@ void CFileListCreatorDlg::OnSortSortitemsbystrformat()
 {
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::GetStrFormat_Func();
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
-		RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+		RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
-		keyColumn = 9;//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ 9:‘®î•ñ
-		static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+		keyColumn = 9;//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ 9:æ›¸å¼æƒ…å ±
+		static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 		m_xcList.SortItems(CompareFunc, bSort);
 
 		if (bSort == FALSE) { 
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(¸‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ˜‡é †)"),300,TRUE);
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(~‡)"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é™é †)"),300,TRUE);
 		}
 		SortColumnDrawCaption(keyColumn, bSort);
-		bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+		bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 
 		//CFileListCreatorDlg::m_xcList.EnsureVisible(0, FALSE);
 		CFileListCreatorDlg::SortEnsureVisible_Func();
@@ -12442,7 +12442,7 @@ void CFileListCreatorDlg::OnSortSortitemsbystrformat()
 
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -12450,16 +12450,16 @@ void CFileListCreatorDlg::OnSortSortitemsbystrformat()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24 //ƒRƒƒ“ƒg‰» 2012.05.25
+		//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24 //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.25
 	}
 }
 
 
 void CFileListCreatorDlg::OnSortMerge()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg::Merge_Func();
 }
 
@@ -12482,17 +12482,17 @@ void CFileListCreatorDlg::CopyFolder_Items(CString strTrgDir,CString strFileSpec
    while (bWorking)
    {
 
-	MSG msg; //’Ç‰Á 2011.10.12
-	if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+	MSG msg; //è¿½åŠ  2011.10.12
+	if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 		if(msg.hwnd != GetDlgItem(IDC_LIST)->m_hWnd ){
 			if (msg.wParam == VK_ESCAPE){
 				ESCAPE_FLG = TRUE;
-				break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+				break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 			}
 		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
-		//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+		//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 	}
 
       bWorking = finder.FindNextFile();
@@ -12566,11 +12566,11 @@ void CFileListCreatorDlg::CopyFolder_Items(CString strTrgDir,CString strFileSpec
 		//if (!err){
 			if(CopyMode==TRUE){
 				if ( PathFileExists(FullPathString1)){
-				//ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é(ã‘‚«ƒRƒs[‚ğ‹–‰Â)
+				//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(ä¸Šæ›¸ãã‚³ãƒ”ãƒ¼ã‚’è¨±å¯)
 					if (ESCAPE_FLG == FALSE){
 						CopyFile(static_cast<LPCTSTR>(FullPathString1),static_cast<LPCTSTR>(FullPathString2), FALSE);
 						CString str;
-						str.Format(_T("‘¾•¶š‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚½ƒtƒHƒ‹ƒ_‚ÉƒRƒs[’† (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
+						str.Format(_T("å¤ªæ–‡å­—ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
 						CFileListCreatorDlg::StatusStringSet(str,0,FALSE);						
 						Bold_CNT_IDX = Bold_CNT_IDX + 1;
 					}
@@ -12590,13 +12590,13 @@ void CFileListCreatorDlg::Copy_Func()
     //easySelectFLG = FALSE
     //iTunesAlbumCheckFLG = FALSE
 
-    CFileListCreatorDlg::StatusStringSet(_T("ƒRƒs[‹@”\Às’†"),300,FALSE);
+    CFileListCreatorDlg::StatusStringSet(_T("ã‚³ãƒ”ãƒ¼æ©Ÿèƒ½å®Ÿè¡Œä¸­"),300,FALSE);
     
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
@@ -12644,7 +12644,7 @@ void CFileListCreatorDlg::Copy_Func()
     }
 
     if(Bold_SUM_CNT==0){
-		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ‚ğg—p‚µ‚ÄAƒRƒs[‚µ‚½‚¢ƒAƒCƒeƒ€‚ğ‘¾•¶š‚É‚µ‚Ä‰º‚³‚¢"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ã‚’ä½¿ç”¨ã—ã¦ã€ã‚³ãƒ”ãƒ¼ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã‚’å¤ªæ–‡å­—ã«ã—ã¦ä¸‹ã•ã„"),300,TRUE);
 		return;
 	}
 
@@ -12657,7 +12657,7 @@ void CFileListCreatorDlg::Copy_Func()
 	if ( CheckFileName() == TRUE) {
 		int myResult;
 
-		myResult = MessageBox(_T("ƒŠƒXƒgã‚Ìƒtƒ@ƒCƒ‹–¼‚ğ‚±‚ê‚©‚çƒRƒs[‚·‚éo—Íƒtƒ@ƒCƒ‹–¼‚Æ‚µ‚Ü‚·‚©H"),_T("o—Íƒtƒ@ƒCƒ‹–¼"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ãƒªã‚¹ãƒˆä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã“ã‚Œã‹ã‚‰ã‚³ãƒ”ãƒ¼ã™ã‚‹å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã—ã¾ã™ã‹ï¼Ÿ"),_T("å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å"),MB_YESNOCANCEL);
 		if(myResult==IDYES){
 			FileNameOnListFLG = TRUE;
 		}
@@ -12665,12 +12665,12 @@ void CFileListCreatorDlg::Copy_Func()
 
 	int myResult;
 
-    myResult = MessageBox(_T("ƒRƒs[‚µ‚½ƒtƒ@ƒCƒ‹‚Ì•Û‘¶æ‚ğw’è‚µ‚Ü‚·‚©H\r\nu‚¢‚¢‚¦v‚ğ‘I‘ğ‚µ‚½ê‡‚ÍAƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚È‚Ç‚Ì\r\nƒfƒtƒHƒ‹ƒgƒtƒHƒ‹ƒ_‚É•Û‘¶‚³‚ê‚Ü‚·B\r\n\r\n(\•ª‚È‹ó‚«—e—Ê‚ª‚ ‚éƒtƒHƒ‹ƒ_‚ğw’è‚µ‚Ä‰º‚³‚¢B) "),_T("•Û‘¶æ w’è"),MB_YESNOCANCEL);
+    myResult = MessageBox(_T("ã‚³ãƒ”ãƒ¼ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿å­˜å…ˆã‚’æŒ‡å®šã—ã¾ã™ã‹ï¼Ÿ\r\nã€Œã„ã„ãˆã€ã‚’é¸æŠã—ãŸå ´åˆã¯ã€ãƒã‚¤ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆãªã©ã®\r\nãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã«ä¿å­˜ã•ã‚Œã¾ã™ã€‚\r\n\r\n(ååˆ†ãªç©ºãå®¹é‡ãŒã‚ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡å®šã—ã¦ä¸‹ã•ã„ã€‚) "),_T("ä¿å­˜å…ˆ æŒ‡å®š"),MB_YESNOCANCEL);
 
 	CString myPathname=_T("");
 
 	if(myResult==IDYES){
-		CFileListCreatorDlg::StatusStringSet(_T("•Û‘¶æ w’è"),300,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ä¿å­˜å…ˆ æŒ‡å®š"),300,FALSE);
 		UpdateData(FALSE);
 
 		//int myResult;
@@ -12692,19 +12692,19 @@ void CFileListCreatorDlg::Copy_Func()
 		ULARGE_INTEGER unTotalNumberOfFreeBytes;
 		BOOL bRet = GetDiskFreeSpaceEx( szFolder, &unFreeBytesAvailable, &unTotalNumberOfBytes, &unTotalNumberOfFreeBytes );
 		if( bRet ){
-			// unFreeBytesAvailable.QuadPart;     ŒÄ‚Ño‚µ‘¤‚ª—˜—p‚Å‚«‚éƒoƒCƒg”
-			// unTotalNumberOfBytes.QuadPart;     ƒfƒBƒXƒN‘S‘Ì‚ÌƒoƒCƒg”
-			// unTotalNumberOfFreeBytes.QuadPart; ƒfƒBƒXƒN‘S‘Ì‚Ì‹ó‚«ƒoƒCƒg”
+			// unFreeBytesAvailable.QuadPart;     å‘¼ã³å‡ºã—å´ãŒåˆ©ç”¨ã§ãã‚‹ãƒã‚¤ãƒˆæ•°
+			// unTotalNumberOfBytes.QuadPart;     ãƒ‡ã‚£ã‚¹ã‚¯å…¨ä½“ã®ãƒã‚¤ãƒˆæ•°
+			// unTotalNumberOfFreeBytes.QuadPart; ãƒ‡ã‚£ã‚¹ã‚¯å…¨ä½“ã®ç©ºããƒã‚¤ãƒˆæ•°
 
 			Total_Bytes_Bold();
 
-			CFileListCreatorDlg::StatusStringSet(_T("•Û‘¶æƒhƒ‰ƒCƒu‚Ì‹ó‚«—e—ÊF " + ByteCalculation(unTotalNumberOfFreeBytes.QuadPart,TRUE)) ,300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ä¿å­˜å…ˆãƒ‰ãƒ©ã‚¤ãƒ–ã®ç©ºãå®¹é‡ï¼š " + ByteCalculation(unTotalNumberOfFreeBytes.QuadPart,TRUE)) ,300,FALSE);
 			UpdateData(FALSE);
 
 			if(BoldByteSum >= unTotalNumberOfFreeBytes.QuadPart){
 				int myResult;
 
-				myResult = MessageBox(_T("•Û‘¶æƒhƒ‰ƒCƒu‚Ì ‹ó‚«—e—Ê‚ª " + ByteCalculation(BoldByteSum - unTotalNumberOfFreeBytes.QuadPart,TRUE) + " •s‘«‚µ‚Ä‚¢‚Ü‚·Bˆ—‚ğ‘±s‚µ‚Ü‚·‚©H"),_T("‹ó‚«—e—Ê•s‘«"),MB_YESNOCANCEL);
+				myResult = MessageBox(_T("ä¿å­˜å…ˆãƒ‰ãƒ©ã‚¤ãƒ–ã® ç©ºãå®¹é‡ãŒ " + ByteCalculation(BoldByteSum - unTotalNumberOfFreeBytes.QuadPart,TRUE) + " ä¸è¶³ã—ã¦ã„ã¾ã™ã€‚å‡¦ç†ã‚’ç¶šè¡Œã—ã¾ã™ã‹ï¼Ÿ"),_T("ç©ºãå®¹é‡ä¸è¶³"),MB_YESNOCANCEL);
 
 				if(myResult!=IDYES){
 					return;
@@ -12714,10 +12714,10 @@ void CFileListCreatorDlg::Copy_Func()
 		}
 
 		if(myPathname==_T("")){
-			CFileListCreatorDlg::StatusStringSet(_T("ƒRƒs[‹@”\ƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ã‚³ãƒ”ãƒ¼æ©Ÿèƒ½ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 			return;
 		}else{
-			CFileListCreatorDlg::StatusStringSet(_T("•Û‘¶æ Œˆ’è"),300,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("ä¿å­˜å…ˆ æ±ºå®š"),300,FALSE);
 		}
 	}
 
@@ -12756,7 +12756,7 @@ void CFileListCreatorDlg::Copy_Func()
 		CopyToSavePath.Replace(_T("\\\\"),_T("\\"));
 
     }else if (myResult == IDCANCEL || myPathname == _T("") ){
-        CFileListCreatorDlg::StatusStringSet(_T("ƒRƒs[‹@”\ƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+        CFileListCreatorDlg::StatusStringSet(_T("ã‚³ãƒ”ãƒ¼æ©Ÿèƒ½ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
         return;
     }
 
@@ -12828,17 +12828,17 @@ void CFileListCreatorDlg::Copy_Func()
     
 	for (i = 0;i<=CFileListCreatorDlg::m_xcList.GetItemCount()-1;i++){
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-			//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+			//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 		}
 
 		int FormatDataNum = CFileListCreatorDlg::m_xcList.GetItemData(i);
@@ -12851,7 +12851,7 @@ void CFileListCreatorDlg::Copy_Func()
 			}
 			if (Bold_CNT_IDX <= Bold_SUM_CNT) {
 				CString str;
-				str.Format(_T("‘¾•¶š‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚½ƒtƒHƒ‹ƒ_‚ÉƒRƒs[’† (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
+				str.Format(_T("å¤ªæ–‡å­—ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
 				CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 			}
 
@@ -12862,7 +12862,7 @@ void CFileListCreatorDlg::Copy_Func()
 			//http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking
 
 			if ( PathFileExists(FullPathString)){
-			//ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é(ã‘‚«ƒRƒs[‚ğ‹–‰Â)
+			//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(ä¸Šæ›¸ãã‚³ãƒ”ãƒ¼ã‚’è¨±å¯)
 				if ( FileNameOnListFLG == TRUE ){
 					CString tempFileName;
 					tempFileName = CFileListCreatorDlg::m_xcList.GetItemText(i,3);
@@ -12874,7 +12874,7 @@ void CFileListCreatorDlg::Copy_Func()
 				myResult = CopyFile(static_cast<LPCTSTR>(FullPathString),static_cast<LPCTSTR>(FileName), FALSE);
 				if (Bold_CNT_IDX <= Bold_SUM_CNT) {
 					CString str;
-					str.Format(_T("‘¾•¶š‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚½ƒtƒHƒ‹ƒ_‚ÉƒRƒs[’† (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
+					str.Format(_T("å¤ªæ–‡å­—ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
 					CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 				}
 				Bold_CNT_IDX = Bold_CNT_IDX + 1;
@@ -12883,7 +12883,7 @@ void CFileListCreatorDlg::Copy_Func()
 
 		if (Bold_CNT_IDX <= Bold_SUM_CNT) {
 			CString str;
-			str.Format(_T("‘¾•¶š‚Ìƒtƒ@ƒCƒ‹‚ğw’è‚µ‚½ƒtƒHƒ‹ƒ_‚ÉƒRƒs[’† (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
+			str.Format(_T("å¤ªæ–‡å­—ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Bold_CNT_IDX ,Bold_SUM_CNT);
 			CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 		}
     }
@@ -12892,7 +12892,7 @@ void CFileListCreatorDlg::Copy_Func()
     if(Bold_SUM_CNT >= 1){
 
 		if(Bold_CNT_IDX == 0){
-			CFileListCreatorDlg::StatusStringSet(_T("EasySelect ‚Å‘¾•¶š‚É‚µ‚½ƒtƒ@ƒCƒ‹‚ª‚PŒ‚à‘¶İ‚µ‚Ü‚¹‚ñ"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("EasySelect ã§å¤ªæ–‡å­—ã«ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ãŒï¼‘ä»¶ã‚‚å­˜åœ¨ã—ã¾ã›ã‚“"),300,TRUE);
 			CString FolderPath;
 		
 			FolderPath = CopyToSavePath + FolderName + _T("\\");
@@ -12908,14 +12908,14 @@ void CFileListCreatorDlg::Copy_Func()
 		
 			//if ( PathIsDirectory(FolderPath) ) {  //http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking
 			//	//http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
-			//	//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+			//	//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 			//	//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"),  _T("/select,") + FullPathToFileName(FileName) , FolderPath, SW_SHOWNORMAL );
 			//	ShellExecute(NULL, _T("open"), FolderPath, NULL, NULL, SW_SHOWNORMAL);
 			//}
 			return;
 		}
 
-		MessageBox(FolderName + _T(" ‚Æ‚¢‚¤ƒtƒHƒ‹ƒ_‚Éƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ü‚µ‚½"), _T("ƒRƒs[I—¹"), MB_OK);
+		MessageBox(FolderName + _T(" ã¨ã„ã†ãƒ•ã‚©ãƒ«ãƒ€ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸ"), _T("ã‚³ãƒ”ãƒ¼çµ‚äº†"), MB_OK);
         CString FolderPath;
 		
 		FolderPath = CopyToSavePath + FolderName + _T("\\");
@@ -12926,11 +12926,11 @@ void CFileListCreatorDlg::Copy_Func()
 		FolderPath.Replace(_T("\\"),_T("\\\\"));
 
 		//http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
-		//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+		//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 		//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"),  _T("/select,") + FullPathToFileName(FileName) , FolderPath, SW_SHOWNORMAL );
 		ShellExecute(NULL, _T("open"), FolderPath, NULL, NULL, SW_SHOWNORMAL);
     }else{
-		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ‚ğg—p‚µ‚ÄAƒRƒs[‚µ‚½‚¢ƒAƒCƒeƒ€‚ğ‘¾•¶š‚É‚µ‚Ä‰º‚³‚¢"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("EasySelect ã‚’ä½¿ç”¨ã—ã¦ã€ã‚³ãƒ”ãƒ¼ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã‚’å¤ªæ–‡å­—ã«ã—ã¦ä¸‹ã•ã„"),300,TRUE);
         CString FolderPath;
 		
 		FolderPath = CopyToSavePath + FolderName + _T("\\");
@@ -12946,7 +12946,7 @@ void CFileListCreatorDlg::Copy_Func()
 		
 		//if ( PathIsDirectory(FolderPath) ) {  //http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking
 		//	//http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
-		//	//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+		//	//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 		//	//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"),  _T("/select,") + FullPathToFileName(FileName) , FolderPath, SW_SHOWNORMAL );
 		//	ShellExecute(NULL, _T("open"), FolderPath, NULL, NULL, SW_SHOWNORMAL);
 		//}
@@ -12955,7 +12955,7 @@ void CFileListCreatorDlg::Copy_Func()
 
 void CFileListCreatorDlg::OnCopyCopy()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	Copy_Func();
 }
 
@@ -12995,7 +12995,7 @@ CTime CFileListCreatorDlg::item_Date(CString FullPathString, CString strFileSpec
 
 		if(pFile.GetStatus(status))    // virtual member function
 		{
-			//TRACE(_T("C³“ú = %s\n"), status.m_mtime);
+			//TRACE(_T("ä¿®æ­£æ—¥ = %s\n"), status.m_mtime);
 			//MessageBox(status.m_mtime);
 			cTime = status.m_mtime;
 			myDate = cTime.Format(_T("%Y/%m/%d %H:%M:%S")); //Format(tdate, "yyyy/mm/dd")
@@ -13007,7 +13007,7 @@ CTime CFileListCreatorDlg::item_Date(CString FullPathString, CString strFileSpec
 	catch (CFileException* pEx)
 	{
 
-		//pEx->ReportError();  //ƒAƒ‰[ƒg‚Ío‚³‚È‚¢
+		//pEx->ReportError();  //ã‚¢ãƒ©ãƒ¼ãƒˆã¯å‡ºã•ãªã„
 		pEx->Delete();
 		myFileName ="";
 		myFileSize = "";
@@ -13063,7 +13063,7 @@ ULONGLONG CFileListCreatorDlg::item_Byte(CString FullPathString, CString strFile
 	catch (CFileException* pEx)
 	{
 
-		//pEx->ReportError();  //ƒAƒ‰[ƒg‚Ío‚³‚È‚¢
+		//pEx->ReportError();  //ã‚¢ãƒ©ãƒ¼ãƒˆã¯å‡ºã•ãªã„
 		pEx->Delete();
 		myFileName ="";
 		myFileSize = "";
@@ -13088,7 +13088,7 @@ CTime CFileListCreatorDlg::inFolder_Date(CString strTrgDir, CString strFileSpec,
     BOOL         bWorking = finder.FindFile(tempPathName);
     CString      str;
 
-	StatusStringSet(_T("ƒtƒHƒ‹ƒ_“àƒAƒCƒeƒ€ŒŸo’†@¨ “ú•tî•ñæ“¾"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("ãƒ•ã‚©ãƒ«ãƒ€å†…ã‚¢ã‚¤ãƒ†ãƒ æ¤œå‡ºä¸­ã€€â†’ æ—¥ä»˜æƒ…å ±å–å¾—"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 	int err = 0;
 
@@ -13123,7 +13123,7 @@ ULONGLONG CFileListCreatorDlg::inFolder_Byte(CString strTrgDir, CString strFileS
     BOOL         bWorking = finder.FindFile(tempPathName);
     CString      str;
 
-	StatusStringSet(_T("ƒtƒHƒ‹ƒ_“àƒAƒCƒeƒ€ŒŸo’†@¨ ƒf[ƒ^ƒTƒCƒYæ“¾"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("ãƒ•ã‚©ãƒ«ãƒ€å†…ã‚¢ã‚¤ãƒ†ãƒ æ¤œå‡ºä¸­ã€€â†’ ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºå–å¾—"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 
 	int err = 0;
@@ -13160,24 +13160,24 @@ CString CFileListCreatorDlg::inFolder_AllFile(CString strTrgDir, CString strFile
     BOOL         bWorking = finder.FindFile(tempPathName);
     CString      str;
 
-	StatusStringSet(_T("ƒtƒHƒ‹ƒ_“àƒAƒCƒeƒ€ŒŸo’†"),0,FALSE); //•ÏX 2012.06.14
+	StatusStringSet(_T("ãƒ•ã‚©ãƒ«ãƒ€å†…ã‚¢ã‚¤ãƒ†ãƒ æ¤œå‡ºä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 	int err = 0;
 
    while (bWorking)
    {
 
-		MSG msg; //’Ç‰Á 2011.10.12
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2011.10.12
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-			//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+			//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 		}
 
       bWorking = finder.FindNextFile();
@@ -13239,7 +13239,7 @@ void CFileListCreatorDlg::iTunesAlbumList_Items(int index)
 	UpdateData();
 	lvi.mask = LVIF_TEXT;
 
-	// ƒtƒ‹ƒpƒX
+	// ãƒ•ãƒ«ãƒ‘ã‚¹
 	if (!err)
 	{
 
@@ -13295,7 +13295,7 @@ void CFileListCreatorDlg::iTunesAlbumList_Items(int index)
 				//myFileName = FolderPath;
 				FullPathString.Replace(_T("\\"), _T(" - "));
 				myFileName = FullPathString;
-				// ƒtƒ@ƒCƒ‹–¼
+				// ãƒ•ã‚¡ã‚¤ãƒ«å
 				if (!err)
 				{
 					lvi.iItem = index;
@@ -13321,17 +13321,17 @@ void CFileListCreatorDlg::iTunesAlbumList_Items(int index)
 
 void CFileListCreatorDlg::iTunesAlbumList_Func(){
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
-		StatusStringSet(_T("iTunes Album–¼ ƒ`ƒFƒbƒN Às’†"),0,FALSE); //•ÏX 2012.06.14
+		StatusStringSet(_T("iTunes Albumå ãƒã‚§ãƒƒã‚¯ å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 		int myResult;
 		if(m_xcList.GetSelectedCount()==0){
-			myResult = MessageBox(_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒŠƒXƒgã‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚ğŠÈ—ª‰»‚µ‚Ü‚·‚©H"),_T("iTunesAlbumList"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç°¡ç•¥åŒ–ã—ã¾ã™ã‹ï¼Ÿ"),_T("iTunesAlbumList"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = 0;
 
@@ -13340,12 +13340,12 @@ void CFileListCreatorDlg::iTunesAlbumList_Func(){
 					index++;
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("iTunes Album–¼ ƒ`ƒFƒbƒN ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("iTunes Albumå ãƒã‚§ãƒƒã‚¯ ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
 		if(m_xcList.GetSelectedCount()>=1){
-			myResult = MessageBox(_T("ƒŠƒXƒgã‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚ğŠÈ—ª‰»‚µ‚Ü‚·‚©H\r\n(u‚¢‚¢‚¦v‚ğ‰Ÿ‚·‚Æ ‘I‘ğ‚³‚ê‚½ƒAƒCƒeƒ€‚Ì‚İŠÈ—ª‰»)"),_T("iTunesAlbumList"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç°¡ç•¥åŒ–ã—ã¾ã™ã‹ï¼Ÿ\r\n(ã€Œã„ã„ãˆã€ã‚’æŠ¼ã™ã¨ é¸æŠã•ã‚ŒãŸã‚¢ã‚¤ãƒ†ãƒ ã®ã¿ç°¡ç•¥åŒ–)"),_T("iTunesAlbumList"),MB_YESNOCANCEL);
 			if (myResult==IDYES){
 				int index = 0;
 
@@ -13361,7 +13361,7 @@ void CFileListCreatorDlg::iTunesAlbumList_Func(){
 					iTunesAlbumList_Items(index);
 				}
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("iTunes Album–¼ ƒ`ƒFƒbƒN ƒLƒƒƒ“ƒZƒ‹"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("iTunes Albumå ãƒã‚§ãƒƒã‚¯ ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,FALSE);
 				return;
 			}
 		}
@@ -13372,7 +13372,7 @@ void CFileListCreatorDlg::iTunesAlbumList_Func(){
 
 	inFolder_Func();
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -13380,11 +13380,11 @@ void CFileListCreatorDlg::iTunesAlbumList_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("iTunes Album–¼ ƒ`ƒFƒbƒN I—¹"),300,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("iTunes Albumå ãƒã‚§ãƒƒã‚¯ çµ‚äº†"),300,TRUE);
 
 }
 
@@ -13419,20 +13419,20 @@ void CFileListCreatorDlg::inFolder_Func(){
 	int index = 0;
 
 	while(index < CFileListCreatorDlg::m_xcList.GetItemCount()){
-		MSG msg; //’Ç‰Á 2012.04.04
-		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+		MSG msg; //è¿½åŠ  2012.04.04
+		if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 			if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 				if (msg.wParam == VK_ESCAPE){
 					ESCAPE_FLG = TRUE;
-					break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+					break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 				}
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-			//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+			//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 		}
 
-		// ƒtƒ‹ƒpƒX
+		// ãƒ•ãƒ«ãƒ‘ã‚¹
 		if (!err)
 		{
 
@@ -13447,7 +13447,7 @@ void CFileListCreatorDlg::inFolder_Func(){
 			ULONGLONG tempByte = 0;
 			tempByte = inFolder_Byte(FullPathString, _T("*.*"), 0);
 
-			// ‚¨‚¨‚æ‚»‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
+			// ãŠãŠã‚ˆãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 			if (!err)
 			{
 				lvi.iItem = index;
@@ -13464,7 +13464,7 @@ void CFileListCreatorDlg::inFolder_Func(){
 			}
 
 
-			// ƒtƒ@ƒCƒ‹ƒTƒCƒY
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
 			if (!err)
 			{
 				lvi.iItem = index;
@@ -13485,7 +13485,7 @@ void CFileListCreatorDlg::inFolder_Func(){
 
 
 			if (CFileListCreatorDlg::m_xcList.GetItemText(index,7)==_T("")){
-				//C³ŠÔ
+				//ä¿®æ­£æ™‚é–“
 				CString myTime;
 				myTime=_T("");
 
@@ -13502,7 +13502,7 @@ void CFileListCreatorDlg::inFolder_Func(){
 			}
 
 			if (CFileListCreatorDlg::m_xcList.GetItemText(index,6)==_T("")){
-				//C³“ú
+				//ä¿®æ­£æ—¥
 				CString myDate;
 				myDate=_T("");
 				myDate = tempTime.Format(_T("%Y/%m/%d"));
@@ -13521,7 +13521,7 @@ void CFileListCreatorDlg::inFolder_Func(){
 		}
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -13529,14 +13529,14 @@ void CFileListCreatorDlg::inFolder_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
 
 void CFileListCreatorDlg::OnItunesAlbumlist()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg::iTunesAlbumList_Func();
 }
 
@@ -13546,12 +13546,12 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 
 	if ( FileOutputFLG == TRUE ){
 		if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-			CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 			return;
 		}else{
 
 			LastPrevItemCount = m_xcList.GetItemCount();
-			CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+			CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 			int myResult;
 
@@ -13560,11 +13560,11 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 			CString CopyToSavePath;
 
 			if(m_xcList.GetSelectedCount()>=1){
-				myResult = MessageBox(_T("ƒtƒ@ƒCƒ‹–¼‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t‰Á‚µA‚»‚Ìƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ü‚·B\r\n\r\nƒtƒ@ƒCƒ‹‚Ì•Û‘¶æ‚ğw’è‚µ‚Ü‚·‚©H\r\nu‚¢‚¢‚¦v‚ğ‘I‘ğ‚µ‚½ê‡‚ÍAƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚È‚Ç‚ÌƒfƒtƒHƒ‹ƒgƒtƒHƒ‹ƒ_‚É•Û‘¶‚³‚ê‚Ü‚·B\r\n\r\n\r\n (\•ª‚È‹ó‚«—e—Ê‚ª‚ ‚éƒtƒHƒ‹ƒ_‚ğw’è‚µ‚Ä‰º‚³‚¢B)"),_T("•Û‘¶æİ’èŠm”F"),MB_YESNOCANCEL);
+				myResult = MessageBox(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜åŠ ã—ã€ãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚\r\n\r\nãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿å­˜å…ˆã‚’æŒ‡å®šã—ã¾ã™ã‹ï¼Ÿ\r\nã€Œã„ã„ãˆã€ã‚’é¸æŠã—ãŸå ´åˆã¯ã€ãƒã‚¤ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆãªã©ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã«ä¿å­˜ã•ã‚Œã¾ã™ã€‚\r\n\r\n\r\n (ååˆ†ãªç©ºãå®¹é‡ãŒã‚ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡å®šã—ã¦ä¸‹ã•ã„ã€‚)"),_T("ä¿å­˜å…ˆè¨­å®šç¢ºèª"),MB_YESNOCANCEL);
 
-				CFileListCreatorDlg::StatusStringSet(_T("‰¹Šyƒtƒ@ƒCƒ‹–¼•ÒW Às’†"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("éŸ³æ¥½ãƒ•ã‚¡ã‚¤ãƒ«åç·¨é›† å®Ÿè¡Œä¸­"),300,TRUE);
 			}else{
-				MessageBox(_T("ƒtƒ@ƒCƒ‹‚ğ‘I‘ğó‘Ô‚É‚µ‚Ä‰º‚³‚¢"),_T("”ñ‘I‘ğ"),MB_YESNOCANCEL);
+				MessageBox(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠçŠ¶æ…‹ã«ã—ã¦ä¸‹ã•ã„"),_T("éé¸æŠ"),MB_YESNOCANCEL);
 				return;
 			}
 
@@ -13616,7 +13616,7 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 				CopyToSavePath.Replace(_T("\\\\"),_T("\\"));
 
 			}else if (myResult == IDCANCEL || myPathname == _T("") ){
-				CFileListCreatorDlg::StatusStringSet(_T("‰¹Šyƒtƒ@ƒCƒ‹–¼•ÒW ƒLƒƒƒ“ƒZƒ‹"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("éŸ³æ¥½ãƒ•ã‚¡ã‚¤ãƒ«åç·¨é›† ã‚­ãƒ£ãƒ³ã‚»ãƒ«"),300,TRUE);
 				return;
 			}
             
@@ -13655,17 +13655,17 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 			while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
 					(index, LVNI_ALL | LVNI_SELECTED)) != -1){
 
-				MSG msg; //’Ç‰Á 2011.10.12
-				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+				MSG msg; //è¿½åŠ  2011.10.12
+				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 					if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 						if (msg.wParam == VK_ESCAPE){
 							ESCAPE_FLG = TRUE;
-							break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+							break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 						}
 					}
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
-					//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+					//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 				}
 
 				CString FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
@@ -13691,23 +13691,23 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 				//http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking
 
 				if ( PathFileExists(FullPathString)){
-				//ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é(ã‘‚«ƒRƒs[‚ğ‹–‰Â)
+				//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(ä¸Šæ›¸ãã‚³ãƒ”ãƒ¼ã‚’è¨±å¯)
 					myResult = CopyFile(static_cast<LPCTSTR>(FullPathString),static_cast<LPCTSTR>(FileName), FALSE);
 					CString str;
-					str.Format(_T("ƒtƒ@ƒCƒ‹–¼‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t‰Á•ƒRƒs[’† (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
+					str.Format(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜åŠ ï¼†ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
 					CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 					Add_Artist_CNT_IDX = Add_Artist_CNT_IDX + 1;
 				}
 
 				CString str;
-				str.Format(_T("ƒtƒ@ƒCƒ‹–¼‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t‰Á•ƒRƒs[’† (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
+				str.Format(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜åŠ ï¼†ã‚³ãƒ”ãƒ¼ä¸­ (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
 				CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 			}
 			if(Add_Artist_SUM_CNT >= 1){
 				if(Add_Artist_CNT_IDX == 0){
-					CFileListCreatorDlg::StatusStringSet(_T("‘I‘ğ‚µ‚½ƒAƒCƒeƒ€‚Íƒ[ƒJƒ‹ƒhƒ‰ƒCƒu‚É‚PŒ‚à‘¶İ‚µ‚Ü‚¹‚ñ"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("é¸æŠã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã¯ãƒ­ãƒ¼ã‚«ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ–ã«ï¼‘ä»¶ã‚‚å­˜åœ¨ã—ã¾ã›ã‚“"),300,TRUE);
 				}else{
-					CFileListCreatorDlg::StatusStringSet(_T("‹óƒtƒHƒ‹ƒ_ŒŸõŠJn"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("ç©ºãƒ•ã‚©ãƒ«ãƒ€æ¤œç´¢é–‹å§‹"),300,TRUE);
 				}
 
 					CString FileName;
@@ -13719,17 +13719,17 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 					while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
 							(index, LVNI_ALL | LVNI_SELECTED)) != -1){
 
-						MSG msg; //’Ç‰Á 2011.10.12
-						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+						MSG msg; //è¿½åŠ  2011.10.12
+						if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 							if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 								if (msg.wParam == VK_ESCAPE){
 									ESCAPE_FLG = TRUE;
-									break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+									break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 								}
 							}
 							TranslateMessage(&msg);
 							DispatchMessage(&msg);
-							//continue; //ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é‚Æ‚«‚ÍƒRƒƒ“ƒg‰»
+							//continue; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ã¨ãã¯ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 						}
 
 						CString FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
@@ -13748,7 +13748,7 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 						Add_Artist_CNT_IDX++;
 
 						CString str;
-						str.Format(_T("‹óƒtƒHƒ‹ƒ_‚ğŒŸõ•íœ’† (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
+						str.Format(_T("ç©ºãƒ•ã‚©ãƒ«ãƒ€ã‚’æ¤œç´¢ï¼†å‰Šé™¤ä¸­ (%d/%d) ") ,Add_Artist_CNT_IDX ,Add_Artist_SUM_CNT);
 						CFileListCreatorDlg::StatusStringSet(str,0,FALSE);
 					}
 
@@ -13766,7 +13766,7 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 		
 					RemoveDirectory(FolderPath); //http://oshiete.goo.ne.jp/qa/2899033.html
 
-					// ƒfƒBƒŒƒNƒgƒŠ‚ğˆêŠ‡íœ‚·‚é
+					// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä¸€æ‹¬å‰Šé™¤ã™ã‚‹
 					// http://www.mfc-programming.com/2011/etc/mfc307.html
 
 					//CString dir = FolderPath;
@@ -13774,20 +13774,20 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 					//dir.SetAt(dir.GetLength()-1,0);
  
 					//SHFILEOPSTRUCT drive;
-					//drive.hwnd  = this->m_hWnd;       // ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-					//drive.wFunc = FO_DELETE;        // Às‚·‚é‘€ì
-					//drive.pFrom = dir;          // ‘ÎÛƒtƒ@ƒCƒ‹–¼
-					//drive.pTo   = NULL;         // –Ú“Iƒtƒ@ƒCƒ‹–¼
-					//drive.fFlags=  FOF_ALLOWUNDO ;   // ƒtƒ‰ƒO
+					//drive.hwnd  = this->m_hWnd;       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+					//drive.wFunc = FO_DELETE;        // å®Ÿè¡Œã™ã‚‹æ“ä½œ
+					//drive.pFrom = dir;          // å¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«å
+					//drive.pTo   = NULL;         // ç›®çš„ãƒ•ã‚¡ã‚¤ãƒ«å
+					//drive.fFlags=  FOF_ALLOWUNDO ;   // ãƒ•ãƒ©ã‚°
  
 					//SHFileOperation(&drive);
 
 
 					if ( PathIsDirectory(FolderPath) ) {  //http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking
 						//http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
-						CFileListCreatorDlg::StatusStringSet(FolderName + _T(" ‚Æ‚¢‚¤ƒtƒHƒ‹ƒ_‚Éƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ü‚µ‚½"),0,FALSE);
+						CFileListCreatorDlg::StatusStringSet(FolderName + _T(" ã¨ã„ã†ãƒ•ã‚©ãƒ«ãƒ€ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸ"),0,FALSE);
 						
-						MessageBox(FolderName + _T(" ‚Æ‚¢‚¤ƒtƒHƒ‹ƒ_‚Éƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ü‚µ‚½"), _T("‰¹Šyƒtƒ@ƒCƒ‹–¼•ÒW I—¹"), MB_OK);
+						MessageBox(FolderName + _T(" ã¨ã„ã†ãƒ•ã‚©ãƒ«ãƒ€ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸ"), _T("éŸ³æ¥½ãƒ•ã‚¡ã‚¤ãƒ«åç·¨é›† çµ‚äº†"), MB_OK);
 						
 						CString FolderPath;
 		
@@ -13796,11 +13796,11 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 						FolderPath.Replace(_T("\\"),_T("\\\\"));
 
 						//http://msdn.microsoft.com/ja-jp/library/cc422072.aspx
-						//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+						//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 						//ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"),  _T("/select,") + FullPathToFileName(FileName) , FolderPath, SW_SHOWNORMAL );
 						ShellExecute(NULL, _T("open"), FolderPath, NULL, NULL, SW_SHOWNORMAL);
 					}else{
-						CFileListCreatorDlg::StatusStringSet(_T("‘I‘ğ‚µ‚½ƒAƒCƒeƒ€‚Íƒ[ƒJƒ‹ƒhƒ‰ƒCƒu‚É‚PŒ‚à‘¶İ‚µ‚Ü‚¹‚ñ"),300,TRUE);
+						CFileListCreatorDlg::StatusStringSet(_T("é¸æŠã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã¯ãƒ­ãƒ¼ã‚«ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ–ã«ï¼‘ä»¶ã‚‚å­˜åœ¨ã—ã¾ã›ã‚“"),300,TRUE);
 					}
 					//return;
 			}
@@ -13810,11 +13810,11 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 
 		//Call StatusStringSet("")
     
-		//Worksheets("WORK").Cells(4, 2).Value = ""  ''•Û‘¶æƒpƒXî•ñíœ
+		//Worksheets("WORK").Cells(4, 2).Value = ""  ''ä¿å­˜å…ˆãƒ‘ã‚¹æƒ…å ±å‰Šé™¤
 	}else if (FileOutputFLG == FALSE){
 
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 		//LVITEM       lvi;
 		int          err = 0;	
@@ -13840,7 +13840,7 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 		CString tempCnt;
 
 		if(myCnt==0){
-			myResult = MessageBox(_T("ƒŠƒXƒgã‚·‚×‚Ä‚ÌƒAƒCƒeƒ€‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t—^‚µ‚Ü‚·‚©H"),_T("ƒA[ƒeƒBƒXƒg–¼ •t—^"),MB_YESNOCANCEL);
+			myResult = MessageBox(_T("ãƒªã‚¹ãƒˆä¸Šã™ã¹ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸ã—ã¾ã™ã‹ï¼Ÿ"),_T("ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆå ä»˜ä¸"),MB_YESNOCANCEL);
 			if(myResult == IDYES){
 				index = 0;
 				while(index < CFileListCreatorDlg::m_xcList.GetItemCount())
@@ -13849,14 +13849,14 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 					FullPathString =_T("");
 					myFileName=_T("");
 
-					// ƒtƒ‹ƒpƒX
+					// ãƒ•ãƒ«ãƒ‘ã‚¹
 					if (!err)
 					{
 						FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
 						//FullPathString.Replace(_T("%"),_T("%%"));
 					}
 
-					// ƒtƒ@ƒCƒ‹–¼
+					// ãƒ•ã‚¡ã‚¤ãƒ«å
 					if (!err)
 					{
 						myFileName = CFileListCreatorDlg::m_xcList.GetItemText(index,3);
@@ -13871,12 +13871,12 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 						//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 			            lvi.iItem = index;
 				 		lvi.iSubItem = 3;
-						lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(myFileName));//ƒtƒ@ƒCƒ‹–¼
+						lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(myFileName));//ãƒ•ã‚¡ã‚¤ãƒ«å
 			            if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 					}
 					index++;
 				}
-				CFileListCreatorDlg::StatusStringSet(_T("ƒA[ƒeƒBƒXƒg–¼‚ğ•t—^‚µ‚Ü‚µ‚½"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸ã—ã¾ã—ãŸ"),300,TRUE);
 
 			}
 		}else if(myCnt>=1){
@@ -13889,14 +13889,14 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 				FullPathString =_T("");
 				myFileName=_T("");
 
-				// ƒtƒ‹ƒpƒX
+				// ãƒ•ãƒ«ãƒ‘ã‚¹
 				if (!err)
 				{
 					FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
 					//FullPathString.Replace(_T("%"),_T("%%"));
 				}
 
-				// ƒtƒ@ƒCƒ‹–¼
+				// ãƒ•ã‚¡ã‚¤ãƒ«å
 				if (!err)
 				{
 					myFileName = CFileListCreatorDlg::m_xcList.GetItemText(index,3);
@@ -13911,7 +13911,7 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 					//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 			        lvi.iItem = index;
 				 	lvi.iSubItem = 3;
-					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(myFileName));//ƒtƒ@ƒCƒ‹–¼
+					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(myFileName));//ãƒ•ã‚¡ã‚¤ãƒ«å
 			        if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 				}
 
@@ -13920,11 +13920,11 @@ void CFileListCreatorDlg::iTunes_Add_Artist_Func(BOOL FileOutputFLG){
 
 			//CString tempCnt;
 			tempCnt = _T("");
-			if(myCnt>=1){ //’Ç‰Á 2012.06.14
+			if(myCnt>=1){ //è¿½åŠ  2012.06.14
 				tempCnt.Format(_T("%d"),myCnt);
-				tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t—^‚µ‚Ü‚µ‚½");
+				tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸ã—ã¾ã—ãŸ");
 			}else{
-				tempCnt=_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßAƒA[ƒeƒBƒXƒg–¼‚ğ•t—^‚Å‚«‚Ü‚¹‚ñ");
+				tempCnt=_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸ã§ãã¾ã›ã‚“");
 			}
 			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 		}
@@ -14059,16 +14059,16 @@ CString CFileListCreatorDlg::iTunes_Add_Artist_Items(BOOL FileOutputFLG, CString
 
 void CFileListCreatorDlg::OnItunesAddartiststr()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	if(m_xcList.GetItemCount() >= 1) {
 		int myResult;
 
-		myResult = MessageBox(_T("ƒŠƒXƒgã‚Ìƒtƒ@ƒCƒ‹–¼‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t—^‚µ‚Ü‚·‚©H\r\n\r\nu‚Í‚¢vƒŠƒXƒgã‚Ìƒtƒ@ƒCƒ‹–¼‚ÉƒA[ƒeƒBƒXƒg–¼‚ğ•t—^\r\nu‚¢‚¢‚¦vƒtƒ@ƒCƒ‹–¼‚ğ•ÏX‚µ‚½ã‚Åƒtƒ@ƒCƒ‹‚ğƒRƒs[") ,_T("ˆ—‘I‘ğ"), MB_YESNOCANCEL );
+		myResult = MessageBox(_T("ãƒªã‚¹ãƒˆä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸ã—ã¾ã™ã‹ï¼Ÿ\r\n\r\nã€Œã¯ã„ã€ãƒªã‚¹ãƒˆä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆåã‚’ä»˜ä¸\r\nã€Œã„ã„ãˆã€ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å¤‰æ›´ã—ãŸä¸Šã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼") ,_T("å‡¦ç†é¸æŠ"), MB_YESNOCANCEL );
 		
 		if (myResult == IDNO){
 			iTunes_Add_Artist_Func(TRUE);
@@ -14081,24 +14081,24 @@ void CFileListCreatorDlg::OnItunesAddartiststr()
 
 void CFileListCreatorDlg::OnEditlistReplace()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	FindIDX = -1;
 
-	//ƒ‚[ƒ_ƒŒƒX‚P
+	//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 	CDialog *m_pDlg;
 	m_pDlg = new ReplaceDlg(this);
 	m_pDlg->Create(IDD_DIALOG_Replace);
 
 	m_pDlg->ShowWindow(true);
 
-	////ƒ‚[ƒ_ƒ‹
+	////ãƒ¢ãƒ¼ãƒ€ãƒ«
 	//ReplaceDlg m_dlg;
 	//m_dlg.DoModal();
 }
@@ -14106,15 +14106,15 @@ void CFileListCreatorDlg::OnEditlistReplace()
 
 void CFileListCreatorDlg::OnMenuSelectallcancellation()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SelectALL_CancellationFunc();
 }
 
 CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 {
-	//yŒã‚Åzƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©H‚àŠm‚©‚ß‚éB
+	//ã€å¾Œã§ã€‘ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ï¼Ÿã‚‚ç¢ºã‹ã‚ã‚‹ã€‚
 
-	CFileListCreatorDlg::StatusStringSet(_T("“ú•tî•ñ‚ğã‘‚«"),0,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("æ—¥ä»˜æƒ…å ±ã‚’ä¸Šæ›¸ã"),0,FALSE);
 
 	//LVITEM       lvi;
 	//int          index = 0;
@@ -14140,7 +14140,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 	myTime = _T("");
 
 
-	//http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking ‚ÅƒtƒHƒ‹ƒ_‚âƒtƒ@ƒCƒ‹‚Ì‘¶İŠm”F‚ğ‚·‚é
+	//http://oshiete.goo.ne.jp/qa/3399080.html?from=navi_ranking ã§ãƒ•ã‚©ãƒ«ãƒ€ã‚„ãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨ç¢ºèªã‚’ã™ã‚‹
 
 
 
@@ -14168,7 +14168,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 			if(pFile.GetStatus(status))    // virtual member function
 			{
 
-				//C³ŠÔ
+				//ä¿®æ­£æ™‚é–“
 				if (!err)
 				{
 					workDate = CFileListCreatorDlg::m_xcList.GetItemText(workRow, 7);
@@ -14190,7 +14190,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 						}
 						else
 						{
-							TRACE("‰ğÍ•s”\\n");
+							TRACE("è§£æä¸èƒ½\n");
 						}
 					}			
 				}
@@ -14219,7 +14219,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 	
 
 
-		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,7)==_T("")){			//C³ŠÔ
+		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,7)==_T("")){			//ä¿®æ­£æ™‚é–“
 			if (!err)
 			{
 				lvi.iItem = workRow;
@@ -14231,7 +14231,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 			}
 		//}
 
-		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,6)==_T("")){			//C³“ú
+		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,6)==_T("")){			//ä¿®æ­£æ—¥
 			if (!err)
 			{
 				lvi.iItem = workRow;
@@ -14253,7 +14253,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 
 
 		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,7)==_T("")){
-			//C³ŠÔ
+			//ä¿®æ­£æ™‚é–“
 			CString myTime;
 			myTime=_T("");
 
@@ -14270,7 +14270,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 		//}
 
 		//if (CFileListCreatorDlg::m_xcList.GetItemText(workRow,6)==_T("")){
-			//C³“ú
+			//ä¿®æ­£æ—¥
 			CString myDate;
 			myDate=_T("");
 			myDate = tempTime.Format(_T("%Y/%m/%d"));
@@ -14287,7 +14287,7 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 		UpdateData(FALSE);
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -14295,11 +14295,11 @@ CString CFileListCreatorDlg::fileUpdatedRecently(CString fpath,int workRow)
 		return _T("");
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("“ú•tî•ñ‚ğã‘‚«FI—¹"),0,FALSE);
+	CFileListCreatorDlg::StatusStringSet(_T("æ—¥ä»˜æƒ…å ±ã‚’ä¸Šæ›¸ãï¼šçµ‚äº†"),0,FALSE);
 	return myTime;
 }
 
@@ -14316,19 +14316,19 @@ CTime CFileListCreatorDlg::CStringToDate(CString strDate)
 		 }
 	}
 	
-	//MessageBox(_T("•s³‚È“ú•tF") + strDate);
+	//MessageBox(_T("ä¸æ­£ãªæ—¥ä»˜ï¼š") + strDate);
 
 	return CTime(0);
 }
 
 void CFileListCreatorDlg::OnFilterDatefilter()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//LastPrevItemCount = m_xcList.GetItemCount();
-	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-	//ƒ‚[ƒ_ƒŒƒX‚P
+	//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 	CDialog *m_pDlg;
 	m_pDlg = new DateFilterDlg(this);
 	m_pDlg->Create(IDD_DIALOG_DateFilter);
@@ -14421,13 +14421,13 @@ int CFileListCreatorDlg::SetToBoldAndRedInversion(int workRow)
 
 	if ( m_xvChkEasySelect == TRUE ){
 		if (FormatDataNum == 12){
-			FormatDataNum = 11; //ƒm[ƒ}ƒ‹‚É
+			FormatDataNum = 11; //ãƒãƒ¼ãƒãƒ«ã«
 		}else if(FormatDataNum == 22){
-			FormatDataNum = 21; //ƒm[ƒ}ƒ‹‚É
+			FormatDataNum = 21; //ãƒãƒ¼ãƒãƒ«ã«
 		}else if(FormatDataNum == 11){
-			FormatDataNum = 12; //‘¾•¶š‚É
+			FormatDataNum = 12; //å¤ªæ–‡å­—ã«
 		}else if(FormatDataNum == 21 ){ 
-			FormatDataNum = 22; //‘¾•¶š‚É
+			FormatDataNum = 22; //å¤ªæ–‡å­—ã«
 		}else{
 			FormatDataNum = 11;
 		}
@@ -14436,13 +14436,13 @@ int CFileListCreatorDlg::SetToBoldAndRedInversion(int workRow)
 
 	//if ( m_xvChkRedOnMode == TRUE ){
 	//	if(FormatDataNum == 21){
-	//		FormatDataNum = 11; //•F‚É
+	//		FormatDataNum = 11; //é»’è‰²ã«
 	//	}else if(FormatDataNum == 22){
-	//		FormatDataNum = 12; //•F‚É
+	//		FormatDataNum = 12; //é»’è‰²ã«
 	//	}else if (FormatDataNum == 11){
-	//		FormatDataNum == 21; //ÔF‚É
+	//		FormatDataNum == 21; //èµ¤è‰²ã«
 	//	}else if (FormatDataNum == 12){
-	//		FormatDataNum = 22; //ÔF‚É
+	//		FormatDataNum = 22; //èµ¤è‰²ã«
 	//	}else{
 	//		FormatDataNum = 11;
 	//	}
@@ -14509,35 +14509,35 @@ int CFileListCreatorDlg::SetToBoldAndRedInversion(int workRow)
 
 void CFileListCreatorDlg::OnBnClickedCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(m_xcList.GetItemCount() >= 1) {
-		if (ListDataNoChange_FLG == TRUE){ //’Ç‰Á 2012.05.13
+		if (ListDataNoChange_FLG == TRUE){ //è¿½åŠ  2012.05.13
 			CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),0,TRUE);
 
 			AutoSaveMode_ReadOrWrite_Func(_T("write"));
 			UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
-			delete PrevListPtr; //’Ç‰Á 2012.05.13
-			delete NowListPtr; //’Ç‰Á 2012.05.13
-			delete WorkListPtr; //’Ç‰Á 2012.05.13
+			delete PrevListPtr; //è¿½åŠ  2012.05.13
+			delete NowListPtr; //è¿½åŠ  2012.05.13
+			delete WorkListPtr; //è¿½åŠ  2012.05.13
 
 			CDialogEx::OnOK();
 
 		}else{
-			int myResult = MessageBox(_T("ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚Ä‚©‚çI—¹‚µ‚Ü‚·‚©H"),_T("Quit confirmation"),MB_YESNOCANCEL);
+			int myResult = MessageBox(_T("ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ã¦ã‹ã‚‰çµ‚äº†ã—ã¾ã™ã‹ï¼Ÿ"),_T("Quit confirmation"),MB_YESNOCANCEL);
 			if(myResult == IDYES){
 				OnMenuFileSave();
 			
-				CFileListCreatorDlg::StatusStringSet(_T("AutoSave Š®—¹"),0,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("AutoSave å®Œäº†"),0,FALSE);
 				//CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),500,TRUE);
 
 				AutoSaveMode_ReadOrWrite_Func(_T("write"));
 				UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
-				delete PrevListPtr; //’Ç‰Á 2012.05.13
-				delete NowListPtr; //’Ç‰Á 2012.05.13
-				delete WorkListPtr; //’Ç‰Á 2012.05.13
+				delete PrevListPtr; //è¿½åŠ  2012.05.13
+				delete NowListPtr; //è¿½åŠ  2012.05.13
+				delete WorkListPtr; //è¿½åŠ  2012.05.13
 
 				CDialogEx::OnOK();
 			}else if(myResult == IDNO){
@@ -14548,9 +14548,9 @@ void CFileListCreatorDlg::OnBnClickedCancel()
 	}else{
 		OnMenuFileSave();
 
-		delete PrevListPtr; //’Ç‰Á 2012.05.13
-		delete NowListPtr; //’Ç‰Á 2012.05.13
-		delete WorkListPtr; //’Ç‰Á 2012.05.13
+		delete PrevListPtr; //è¿½åŠ  2012.05.13
+		delete NowListPtr; //è¿½åŠ  2012.05.13
+		delete WorkListPtr; //è¿½åŠ  2012.05.13
 
 		CDialogEx::OnOK();
 	}
@@ -14577,7 +14577,7 @@ void CFileListCreatorDlg::OnBnClickedCancel()
 
 void CFileListCreatorDlg::OnBnClickedChkAutosave()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_AutoSave);
 	
@@ -14593,7 +14593,7 @@ void CFileListCreatorDlg::OnBnClickedChkAutosave()
 
 void CFileListCreatorDlg::OnAutosaveAutosaveon()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_AutoSave);
 	
 	m_xvChkAutoSave = TRUE;
@@ -14603,7 +14603,7 @@ void CFileListCreatorDlg::OnAutosaveAutosaveon()
 
 void CFileListCreatorDlg::OnAutosaveAutosaveoff()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_AutoSave);
 	
 	m_xvChkAutoSave = FALSE;
@@ -14638,10 +14638,10 @@ void CFileListCreatorDlg::AutoSaveMode_ReadOrWrite_Func(CString mySwitch)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -14649,7 +14649,7 @@ void CFileListCreatorDlg::AutoSaveMode_ReadOrWrite_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -14684,7 +14684,7 @@ void CFileListCreatorDlg::AutoSaveMode_ReadOrWrite_Func(CString mySwitch)
 
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = WriteData1;
@@ -14693,7 +14693,7 @@ void CFileListCreatorDlg::AutoSaveMode_ReadOrWrite_Func(CString mySwitch)
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 	}
 
@@ -14718,7 +14718,7 @@ void CFileListCreatorDlg::AutoSaveMode_ReadOrWrite_Func(CString mySwitch)
 			m_Dlg->m_xvChkAutoSave = TRUE;
 		}
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 	}
 }
@@ -14750,10 +14750,10 @@ void CFileListCreatorDlg::UseUNDO_Mode_ReadOrWrite_Func(CString mySwitch)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -14761,7 +14761,7 @@ void CFileListCreatorDlg::UseUNDO_Mode_ReadOrWrite_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -14796,7 +14796,7 @@ void CFileListCreatorDlg::UseUNDO_Mode_ReadOrWrite_Func(CString mySwitch)
 
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = WriteData1;
@@ -14805,7 +14805,7 @@ void CFileListCreatorDlg::UseUNDO_Mode_ReadOrWrite_Func(CString mySwitch)
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 	}
 
@@ -14830,14 +14830,14 @@ void CFileListCreatorDlg::UseUNDO_Mode_ReadOrWrite_Func(CString mySwitch)
 			m_Dlg->m_xvChkUseUNDO = FALSE;
 		}
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 	}
 }
 
 void CFileListCreatorDlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if (m_xvChkAutoSave == TRUE){
 		//CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -14851,37 +14851,37 @@ void CFileListCreatorDlg::OnBnClickedOk()
 		//m_xvChkRedOn=TRUE;
 
 		//m_Dlg->g_RadioModifyDate=1;
-		//m_Dlg->g_RadioRemarksColumn=2; //Œã‚Å•Ï‚¦‚é
+		//m_Dlg->g_RadioRemarksColumn=2; //å¾Œã§å¤‰ãˆã‚‹
 		//m_Dlg->g_ChkCopyOn=TRUE;
 		//m_Dlg->g_ChkRedOn=TRUE;
 
 		//m_Dlg->GetStrFormat_Func();
 		//m_Dlg->ExportFileList(TRUE);
 		//m_Dlg->SetStrFormat_Func();
-		if (ListDataNoChange_FLG == TRUE){ //’Ç‰Á 2012.05.13
+		if (ListDataNoChange_FLG == TRUE){ //è¿½åŠ  2012.05.13
 			CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),0,TRUE);
 
 			AutoSaveMode_ReadOrWrite_Func(_T("write"));
 			UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
-			delete PrevListPtr; //’Ç‰Á 2012.05.13
-			delete NowListPtr; //’Ç‰Á 2012.05.13
-			delete WorkListPtr; //’Ç‰Á 2012.05.13
+			delete PrevListPtr; //è¿½åŠ  2012.05.13
+			delete NowListPtr; //è¿½åŠ  2012.05.13
+			delete WorkListPtr; //è¿½åŠ  2012.05.13
 			
 			CDialogEx::OnOK();
 		}else{
 
 			OnMenuFileSave();
 			
-			CFileListCreatorDlg::StatusStringSet(_T("AutoSave Š®—¹"),0,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("AutoSave å®Œäº†"),0,FALSE);
 			//CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),500,TRUE);
 
 			AutoSaveMode_ReadOrWrite_Func(_T("write"));
 			UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
-			delete PrevListPtr; //’Ç‰Á 2012.05.13
-			delete NowListPtr; //’Ç‰Á 2012.05.13
-			delete WorkListPtr; //’Ç‰Á 2012.05.13
+			delete PrevListPtr; //è¿½åŠ  2012.05.13
+			delete NowListPtr; //è¿½åŠ  2012.05.13
+			delete WorkListPtr; //è¿½åŠ  2012.05.13
 
 			CDialogEx::OnOK();
 		}
@@ -14889,9 +14889,9 @@ void CFileListCreatorDlg::OnBnClickedOk()
 		AutoSaveMode_ReadOrWrite_Func(_T("write"));
 		UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
-		delete PrevListPtr; //’Ç‰Á 2012.05.13
-		delete NowListPtr; //’Ç‰Á 2012.05.13
-		delete WorkListPtr; //’Ç‰Á 2012.05.13
+		delete PrevListPtr; //è¿½åŠ  2012.05.13
+		delete NowListPtr; //è¿½åŠ  2012.05.13
+		delete WorkListPtr; //è¿½åŠ  2012.05.13
 
 		CDialogEx::OnOK();
 	}
@@ -14900,15 +14900,15 @@ void CFileListCreatorDlg::OnBnClickedOk()
 
 void CFileListCreatorDlg::OnMenuFileSave()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
 		return;
 	}
 
-	m_Dlg->g_RadioModifyDate=0;  //C³“ú•\¦
-	m_Dlg->g_RadioRemarksColumn=0; //”õl—“•\¦
+	m_Dlg->g_RadioModifyDate=0;  //ä¿®æ­£æ—¥è¡¨ç¤º
+	m_Dlg->g_RadioRemarksColumn=0; //å‚™è€ƒæ¬„è¡¨ç¤º
 	m_Dlg->g_ChkCopyOn=TRUE;
 	m_Dlg->g_ChkRedOn=TRUE;
 
@@ -14916,7 +14916,7 @@ void CFileListCreatorDlg::OnMenuFileSave()
 	m_Dlg->ExportFileList(TRUE);
 	m_Dlg->SetStrFormat_Func();
 
-	ListDataNoChange_FLG = TRUE; //’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = TRUE; //è¿½åŠ  2012.05.13
 
 	m_Dlg->SetWindowText(_T("FileListCreator"));
 
@@ -14926,18 +14926,18 @@ void CFileListCreatorDlg::OnMenuFileSave()
 
 void CFileListCreatorDlg::AutoImportFileList(){
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
-	//// ƒtƒ‹ƒpƒX‚ğ•ª‰ğ
+	//// ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’åˆ†è§£
 	//TCHAR szDir[_MAX_DIR];
 	//TCHAR szDrive[_MAX_DRIVE];
 	//TCHAR szFName[_MAX_FNAME];
 	//TCHAR szExt[_MAX_EXT];
 	//_splitpath(szPath,szDrive,szDir,szFName,szExt);
 	//
-	//// ƒtƒHƒ‹ƒ_Aƒtƒ@ƒCƒ‹–¼æ“¾
+	//// ãƒ•ã‚©ãƒ«ãƒ€ã€ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 	//TCHAR szFilePath[_MAX_PATH];
 	//TCHAR szFileName[_MAX_PATH];
 	//sprintf(szFilePath,"%s%s",szDrive,szDir);
@@ -14959,20 +14959,20 @@ void CFileListCreatorDlg::AutoImportFileList(){
 	
 	if ( PathFileExists(importFilePath) ){
 		DoWithCnt = 0;
-		TotalItemsCount = CFileListCreatorDlg::FileListItemsCount(importFilePath); //’Ç‰Á 2012.07.26
+		TotalItemsCount = CFileListCreatorDlg::FileListItemsCount(importFilePath); //è¿½åŠ  2012.07.26
 	}
 
 	if ( PathFileExists(importFilePath) ){
 		CFileListCreatorDlg::importFileList_Func(importFilePath,FALSE);
 
-		CFileListCreatorDlg::SetStrFormat_Func(); //’Ç‰Á 2012.04.04
-		CFileListCreatorDlg::Total_Bytes_Bold(); //’Ç‰Á 2012.04.04
-		CFileListCreatorDlg::Total_Bytes_Func(); //’Ç‰Á 2012.04.04
-		CFileListCreatorDlg::ItemCount_Func(TRUE); //’Ç‰Á 2012.04.04
+		CFileListCreatorDlg::SetStrFormat_Func(); //è¿½åŠ  2012.04.04
+		CFileListCreatorDlg::Total_Bytes_Bold(); //è¿½åŠ  2012.04.04
+		CFileListCreatorDlg::Total_Bytes_Func(); //è¿½åŠ  2012.04.04
+		CFileListCreatorDlg::ItemCount_Func(TRUE); //è¿½åŠ  2012.04.04
 	}
 
-	ListDataNoChange_FLG = TRUE; //’Ç‰Á 2012.05.13
-	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = TRUE; //è¿½åŠ  2012.05.13
+	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -14985,15 +14985,15 @@ void CFileListCreatorDlg::AutoImportFileList(){
 
 void CFileListCreatorDlg::OnFileRecovery()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	int myResult = MessageBox(_T("Œ»İ‚ÌƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğíœ‚µ‚ÄA‘O‰ñ‚Ìƒf[ƒ^‚Å•œ‹A‚µ‚Ü‚·‚©H"),_T("Recovery confirmation"),MB_YESNOCANCEL);
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	int myResult = MessageBox(_T("ç¾åœ¨ã®ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤ã—ã¦ã€å‰å›ã®ãƒ‡ãƒ¼ã‚¿ã§å¾©å¸°ã—ã¾ã™ã‹ï¼Ÿ"),_T("Recovery confirmation"),MB_YESNOCANCEL);
 	if(myResult == IDYES){
 
 		// Delete all of the items from the list view control.
 		CFileListCreatorDlg::m_xcList.DeleteAllItems();
 		//ASSERT(m_myListCtrl.GetItemCount() == 0);
 
-		CFileListCreatorDlg::StatusStringSet(_T("‚·‚×‚Äíœ‚µ‚Ü‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã™ã¹ã¦å‰Šé™¤ã—ã¾ã—ãŸ"),300,TRUE);
 		CString tempCnt;
 		tempCnt = _T("");
 
@@ -15007,8 +15007,8 @@ void CFileListCreatorDlg::OnFileRecovery()
 		AutoImportFileList();
 		SetStrFormat_Func();
 
-		ListDataNoChange_FLG = TRUE; //’Ç‰Á 2012.05.13
-		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = TRUE; //è¿½åŠ  2012.05.13
+		//AfxGetMainWnd()->SetWindowText(_T("FileListCreator")); //è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -15036,7 +15036,7 @@ CString CFileListCreatorDlg::myStrToLower_Func(CString FileSpecStr)
 	//delete[] lpsz;
 
 	 for(i=0;i<sizeOfString;i++){
-		 if(lpsz[i]=='\0')/*•¶š—ñ‚ÌI‚í‚è‚È‚ç”²‚¯‚é*/{
+		 if(lpsz[i]=='\0')/*æ–‡å­—åˆ—ã®çµ‚ã‚ã‚Šãªã‚‰æŠœã‘ã‚‹*/{
 			break;
 		 }else if(isupper(lpsz[i])){
 			lpsz[i]=tolower(lpsz[i]);
@@ -15065,7 +15065,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -15073,7 +15073,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 	//CurDir = szCurrentDir;
 
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -15095,20 +15095,20 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 	}
 
 	//MessageBox (CurDir + _T("\\") + SaveFileName + _T(".flc"));
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
 		//http://www.g-ishihara.com/mfc_fi_01.htm
 		if (mySwitch == _T("m3u_read_temp")){
 			//if (!stdFile1.Open(CurDir + _T("\\") + _T("temp.flc.m3u"),
 			//	CFile::modeReadWrite | CFile::shareDenyNone | 
-			//	CFile::modeCreate | CFile::modeNoTruncate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText  //CFile::modeNoTruncate //ƒRƒƒ“ƒg‰» 2012.07.12
+			//	CFile::modeCreate | CFile::modeNoTruncate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText  //CFile::modeNoTruncate //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.12
 		}
 
 		if (mySwitch == _T("m3u_read")){
-			if (!stdFile1.Open(CurDir + _T("\\") + SaveFileName, //_T(".m3u"), //íœ 2012.07.12
+			if (!stdFile1.Open(CurDir + _T("\\") + SaveFileName, //_T(".m3u"), //å‰Šé™¤ 2012.07.12
 				CFile::modeReadWrite | CFile::shareDenyNone | 
-				CFile::modeCreate | CFile::modeNoTruncate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText  //CFile::modeNoTruncate //ƒRƒƒ“ƒg‰» 2012.07.12
+				CFile::modeCreate | CFile::modeNoTruncate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText  //CFile::modeNoTruncate //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.12
 		}
 
 		if (mySwitch == _T("wpl_read")){
@@ -15129,7 +15129,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 	}
 
 
-	if(mySwitch == _T("m3u_write")){ //write //Œã‚ÅƒR[ƒfƒBƒ“ƒO
+	if(mySwitch == _T("m3u_write")){ //write //å¾Œã§ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
 		CString PlayListData=_T("");
 
 		CString TempStr;
@@ -15146,7 +15146,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 		TempStr = BuffList;
 
 		while (i<=TempStr.GetLength()-1){
-			//TempStr = BuffList; //ƒRƒƒ“ƒg‰» 2012.07.12
+			//TempStr = BuffList; //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.07.12
 
 			if (TempStr.Mid(i,1) == _T("\"")){
 				if(QuotStartFLG == FALSE){
@@ -15159,14 +15159,14 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 
 					FileName = TempStr.Mid(StartIDX+1,EndIDX-StartIDX-1);
 					i++;
-					//‚±‚±‚ÉFileName‚ğˆ—‚·‚é•¶‚ğ‘‚¢‚Ä‰º‚³‚¢I
+					//ã“ã“ã«FileNameã‚’å‡¦ç†ã™ã‚‹æ–‡ã‚’æ›¸ã„ã¦ä¸‹ã•ã„ï¼
 					PlayListData = PlayListData + _T("\n") + _T("#EXTINF:0,") + FileName.Mid(myReverseFind(FileName, _T("\\"),FileName.GetLength()-1) + 1) + _T("\n") + FileName + _T("\n");
 				}
 			}
 			i++;
 		}
 
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = PlayListData;
@@ -15175,7 +15175,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 		
 		CString FolderPath = CurDir + _T("\\");
@@ -15185,7 +15185,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 		//SavePath.Replace(_T("\\"),_T("\\\\"));
 
 		//if(FullPath.Right(1)!=_T("\\")){
-			//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+			//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 			if (SaveFileName!=_T("temp.flc")){
 				ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T("/select,") + SaveFileName + _T(".m3u") , FolderPath , SW_SHOWNORMAL );
 			}
@@ -15197,7 +15197,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 	}
 
 	if (mySwitch == _T("m3u_read_temp")){
-		//// (6)ƒNƒ[ƒY(–¾¦“I)
+		//// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		//stdFile1.Close();
 		return  CurDir + _T("\\") + _T("temp.flc.m3u");
 	}
@@ -15216,7 +15216,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 			}
 		}
 		
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 
 		//MessageBox(inputData);
@@ -15224,7 +15224,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 		return inputData;
 	}
 
-	if(mySwitch == _T("wpl_write")){ //write //Œã‚ÅƒR[ƒfƒBƒ“ƒO
+	if(mySwitch == _T("wpl_write")){ //write //å¾Œã§ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
 	//http://www.sutosoft.com/oldroom/devdiary/20020504.html
 		
 		//setlocale(LC_CTYPE, "");
@@ -15239,7 +15239,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
  			file.Close();
  			src.ReleaseBuffer(iLength);
  	
- 			// ƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚ñ‚Å‚é‚ªAUTF-8 ‚Ì BOM(EF, BB, BF)‚Ìˆµ‚¢‚Í‘åä•v‚©H
+ 			// ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚“ã§ã‚‹ãŒã€UTF-8 ã® BOM(EF, BB, BF)ã®æ‰±ã„ã¯å¤§ä¸ˆå¤«ã‹ï¼Ÿ
  			//
  			static const BYTE utf8_bom[3] = { 0xEF, 0xBB, 0xBF };
  	
@@ -15249,19 +15249,19 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
  	
  			//CStringA dest;
  			if (UTF8ToShiftJIS(src, &dest)) {
- 				// •¶šƒR[ƒh‚ª S-JIS ‚È‚Ì‚ÅAANSIƒo[ƒWƒ‡ƒ“‚ğ–¾¦“I‚Ég—p‚·‚é•K—v‚ª‚ ‚é
- 				// (MessageBox ‚Å‚Í‚È‚­‚ÄAMessageBoxA)
+ 				// æ–‡å­—ã‚³ãƒ¼ãƒ‰ãŒ S-JIS ãªã®ã§ã€ANSIãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’æ˜ç¤ºçš„ã«ä½¿ç”¨ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+ 				// (MessageBox ã§ã¯ãªãã¦ã€MessageBoxA)
  				//
- 				//::MessageBoxA(m_hWnd, dest, "‚Ä‚·‚Æ", MB_OK);
+ 				//::MessageBoxA(m_hWnd, dest, "ã¦ã™ã¨", MB_OK);
  			}
 		 }
 
 		//http://www.s-cradle.com/developer/sophiaframework/sf_reference/ref.SFXTextEncoding.html
 		//UTF8ToShiftJIS( SFXAnsiStringConstRef source , SFXAnsiStringPtr destination );
-		//•¶šƒGƒ“ƒR[ƒh‚ğ UTF-8 ‚©‚ç Shift_JIS ‚É•ÏŠ·‚µ‚Ü‚·B
+		//æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’ UTF-8 ã‹ã‚‰ Shift_JIS ã«å¤‰æ›ã—ã¾ã™ã€‚
 
 
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = dest;
@@ -15271,7 +15271,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 			END_CATCH
 		}
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 
 		return _T("");
@@ -15297,20 +15297,20 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 						CString tempStr; 
 						
 						tempStr = rstr.Mid(startIDX + myTag.GetLength(), EndIDX - startIDX - myTag.GetLength());
-					//================== •¶šQÆ ==================
+					//================== æ–‡å­—å‚ç…§ ==================
 						tempStr.Replace(_T("&apos;"), _T("'"));
 						tempStr.Replace(_T("&cric;"), _T("^"));
 						tempStr.Replace(_T("&tilde;"), _T("~"));
 						tempStr.Replace(_T("&ndash;"), _T("-"));
-						tempStr.Replace(_T("&lsquo;"), _T("e"));
-						tempStr.Replace(_T("&rsquo;"), _T("f"));
+						tempStr.Replace(_T("&lsquo;"), _T("â€˜"));
+						tempStr.Replace(_T("&rsquo;"), _T("â€™"));
 						tempStr.Replace(_T("&sbquo;"), _T(","));
-						tempStr.Replace(_T("&amp;"), _T("&")); //ÅŒãH
+						tempStr.Replace(_T("&amp;"), _T("&")); //æœ€å¾Œï¼Ÿ
 
 	//'                    tempStr = Replace(tempStr, "&ensp;", "[]")
 	//'                    tempStr = Replace(tempStr, "&emsp;", "[]")
     
-					//================== •¶šQÆ END ==================
+					//================== æ–‡å­—å‚ç…§ END ==================
 						if(tempStr.Left(2)!=_T("..")){
 							inputData +=_T(" \"") + tempStr + _T("\"");
 						}else if (tempStr.Left(2)==_T("..")){
@@ -15397,7 +15397,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 									tempPath = _T("Z:\\")+tempStr;
 									if (PathFileExists(tempPath)) break;
 								default:
-									CFileListCreatorDlg::StatusStringSet(_T("Zƒhƒ‰ƒCƒu‚Ü‚Å’Tõ‚µ‚Ü‚µ‚½‚ªA‚¢‚­‚Â‚©‚Ì‘Š‘ÎƒpƒX‚ªâ‘ÎƒpƒX‚É•ÏŠ·‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+									CFileListCreatorDlg::StatusStringSet(_T("Zãƒ‰ãƒ©ã‚¤ãƒ–ã¾ã§æ¢ç´¢ã—ã¾ã—ãŸãŒã€ã„ãã¤ã‹ã®ç›¸å¯¾ãƒ‘ã‚¹ãŒçµ¶å¯¾ãƒ‘ã‚¹ã«å¤‰æ›ã§ãã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 									break;
 							}
 							if (PathFileExists(tempPath)) inputData +=_T(" \"") + tempPath + _T("\"");
@@ -15415,7 +15415,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 
 		return inputData;
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	}
 
 	return _T("");
@@ -15425,7 +15425,7 @@ CString CFileListCreatorDlg::ReadOrWritePlayList_Func(CString mySwitch,CString F
 //	//http://oshiete.goo.ne.jp/qa/6356162.html
 //
 //	//http://www.sutosoft.com/oldroom/devdiary/20020504.html
-//  ªBOOL UTF8ToShiftJIS(const CString& src, CString* dest)ª
+//  â†‘BOOL UTF8ToShiftJIS(const CString& src, CString* dest)â†‘
 
 // http://oshiete.goo.ne.jp/qa/6908823.html
 BOOL CFileListCreatorDlg::UTF8ToShiftJIS(const CStringA& src, CStringA* dest)
@@ -15442,8 +15442,8 @@ BOOL CFileListCreatorDlg::UTF8ToShiftJIS(const CStringA& src, CStringA* dest)
  	
  	if (iLength == 0) return FALSE;
  	
- 	// Unicode -> S-JIS ‚ÍACString •W€‚Ì•ÏŠ·‚ğg—p‚·‚éB
- 	// ‰½‚©–â‘è‚ª‚ ‚éê‡‚ÍA::WideCharToMultiByte ‚Ìg—p‚ğŒŸ“¢‚·‚éB
+ 	// Unicode -> S-JIS ã¯ã€CString æ¨™æº–ã®å¤‰æ›ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
+ 	// ä½•ã‹å•é¡ŒãŒã‚ã‚‹å ´åˆã¯ã€::WideCharToMultiByte ã®ä½¿ç”¨ã‚’æ¤œè¨ã™ã‚‹ã€‚
  	//
  	*dest = temp;
  	
@@ -15461,17 +15461,17 @@ BOOL CFileListCreatorDlg::UTF8ToShiftJIS(const CStringA& src, CStringA* dest)
 
 
 /* http://d.hatena.ne.jp/shikaku/20090519/p3
-¡[CPP][VC]LPCSTR‚È‚Ç‚ÌVC++‚Ì•´‚ç‚í‚µ‚¢’è‹`‚ÌˆÓ–¡
+â– [CPP][VC]LPCSTRãªã©ã®VC++ã®ç´›ã‚‰ã‚ã—ã„å®šç¾©ã®æ„å‘³
 
-ˆêŒ©³‘Ì•s–¾‚ÌVC++ƒIƒŠƒWƒiƒ‹’è‹`B‚æ[‚­‚İ‚ê‚Îˆá‚¢‚ª•ª‚©‚éB–¼‘O	ˆÓ–¡
-LP	–iƒ|ƒCƒ“ƒ^j
+ä¸€è¦‹æ­£ä½“ä¸æ˜ã®VC++ã‚ªãƒªã‚¸ãƒŠãƒ«å®šç¾©ã€‚ã‚ˆãƒ¼ãã¿ã‚Œã°é•ã„ãŒåˆ†ã‹ã‚‹ã€‚åå‰	æ„å‘³
+LP	ï¼Šï¼ˆãƒã‚¤ãƒ³ã‚¿ï¼‰
 C	const
 TSTR	TCHAR(char)
 STR	char
-WSTR	WCHAR(ƒ†ƒjƒR[ƒh—pF2byte)
+WSTR	WCHAR(ãƒ¦ãƒ‹ã‚³ãƒ¼ãƒ‰ç”¨ï¼š2byte)
 
 
-‚ä‚¦‚É’è‹`	³‘Ì
+ã‚†ãˆã«å®šç¾©	æ­£ä½“
 LPSTR	char*
 LPCSTR	const char*
 LPTSTR	TCHAR*
@@ -15480,23 +15480,23 @@ LPWSTR	WCHAR*
 LPCWSTR	const WCHAR*
 
 
-‚Æ‚È‚éB*/
+ã¨ãªã‚‹ã€‚*/
 
 void CFileListCreatorDlg::OnMenuFilePrint()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		MessageBox(_T("ˆóü‹@”\‚ÍAƒŠƒXƒg‚ğHTML‚ÉExport‚µ‚Ä‚©‚çAInternet Explorer‚È‚Ç‚Ìƒuƒ‰ƒEƒU[‚©‚çˆóü‚µ‚Ä‚­‚¾‚³‚¢B(Œ»İ‚ÌƒAƒCƒeƒ€”‚Í‚O‚È‚Ì‚ÅA‚Ü‚¸‚ÍƒAƒCƒeƒ€‚ğƒŠƒXƒg‚É’Ç‰Á‚µ‚Ä‰º‚³‚¢)") ,_T("ˆóü‹@”\‚É‚Â‚¢‚Ä"),MB_OK);
+		MessageBox(_T("å°åˆ·æ©Ÿèƒ½ã¯ã€ãƒªã‚¹ãƒˆã‚’HTMLã«Exportã—ã¦ã‹ã‚‰ã€Internet Explorerãªã©ã®ãƒ–ãƒ©ã‚¦ã‚¶ãƒ¼ã‹ã‚‰å°åˆ·ã—ã¦ãã ã•ã„ã€‚(ç¾åœ¨ã®ã‚¢ã‚¤ãƒ†ãƒ æ•°ã¯ï¼ãªã®ã§ã€ã¾ãšã¯ã‚¢ã‚¤ãƒ†ãƒ ã‚’ãƒªã‚¹ãƒˆã«è¿½åŠ ã—ã¦ä¸‹ã•ã„)") ,_T("å°åˆ·æ©Ÿèƒ½ã«ã¤ã„ã¦"),MB_OK);
 		return;
 	}else{
 
 	int myResult;
-	myResult = MessageBox(_T("ˆóü‹@”\‚ÍAƒŠƒXƒg‚ğHTML‚ÉExport‚µ‚Ä‚©‚çAInternet Explorer‚È‚Ç‚Ìƒuƒ‰ƒEƒU[‚©‚çˆóü‚µ‚Ä‚­‚¾‚³‚¢BŒ»İ‚Ìƒf[ƒ^‚ğExport‚µ‚Ü‚·‚©H") ,_T("ˆóü‹@”\‚É‚Â‚¢‚Ä"),MB_YESNOCANCEL );
+	myResult = MessageBox(_T("å°åˆ·æ©Ÿèƒ½ã¯ã€ãƒªã‚¹ãƒˆã‚’HTMLã«Exportã—ã¦ã‹ã‚‰ã€Internet Explorerãªã©ã®ãƒ–ãƒ©ã‚¦ã‚¶ãƒ¼ã‹ã‚‰å°åˆ·ã—ã¦ãã ã•ã„ã€‚ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’Exportã—ã¾ã™ã‹ï¼Ÿ") ,_T("å°åˆ·æ©Ÿèƒ½ã«ã¤ã„ã¦"),MB_YESNOCANCEL );
 
 		if (IDYES == myResult){
 
-			StatusStringSet(_T("Export Às’†"),0,FALSE); //•ÏX 2012.06.14
+			StatusStringSet(_T("Export å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 			g_NoDrawFLG = TRUE;
 
@@ -15510,9 +15510,9 @@ void CFileListCreatorDlg::OnMenuFilePrint()
 
 			delete m_dlg;
 			
-			CFileListCreatorDlg::StatusStringSet(_T("Export I—¹"),300,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("Export çµ‚äº†"),300,TRUE);
 
-			//RedrawWindow(); //’Ç‰Á 2012.05.04
+			//RedrawWindow(); //è¿½åŠ  2012.05.04
 		}
 	}
 }
@@ -15520,12 +15520,12 @@ void CFileListCreatorDlg::OnMenuFilePrint()
 
 void CFileListCreatorDlg::OnFilterKeywords()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//LastPrevItemCount = m_xcList.GetItemCount();
-	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-	//ƒ‚[ƒ_ƒŒƒX‚P
+	//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 	CDialog *m_pDlg;
 	m_pDlg = new KeywordDlg(this);
 	m_pDlg->Create(IDD_DIALOG_Keywords);
@@ -15561,16 +15561,16 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 	//case WM_MOUSEWHEEL: //http://hpcgi1.nifty.com/MADIA/Vcbbs/wwwlng.cgi?print+200504/05040028.txt
 		//if((short)HIWORD(wParam) > 0)
 		//{
-		//	// ƒzƒC[ƒ‹‚ğã•ûŒü‚ÉƒXƒNƒ[ƒ‹‚µ‚½
+		//	// ãƒ›ã‚¤ãƒ¼ãƒ«ã‚’ä¸Šæ–¹å‘ã«ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã—ãŸ
 		//}
 		//else
 		//if((short)HIWORD(wParam) < 0)
 		//{
-		//	// ƒzƒC[ƒ‹‚ğ‰º•ûŒü‚ÉƒXƒNƒ[ƒ‹‚µ‚½
+		//	// ãƒ›ã‚¤ãƒ¼ãƒ«ã‚’ä¸‹æ–¹å‘ã«ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã—ãŸ
 		//}
 
 		//if (m_xcList.GetSelectedCount()>=1 && ListInsertItemFLG == FALSE){
-		//	RedrawWindow();  //’Ç‰Á 2012.06.21 //XP‘Îô  //ƒ}ƒEƒX‚Ì“Á«H
+		//	RedrawWindow();  //è¿½åŠ  2012.06.21 //XPå¯¾ç­–  //ãƒã‚¦ã‚¹ã®ç‰¹æ€§ï¼Ÿ
 		//}
 
 		//return 0;
@@ -15579,12 +15579,12 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 			if (pMsg->wParam == VK_RETURN){
 				if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
 
-					lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+					lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 					lvi.iItem = LastSelectedRow;
 					lvi.iSubItem = LastSelectedColumn;
 					
-					::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //’Ç‰Á 2012.05.20
+					::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //è¿½åŠ  2012.05.20
 
 					CString UpadateItem;
 					((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(UpadateItem);
@@ -15594,14 +15594,14 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(UpadateItem));
 					if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 					UpdateData(FALSE);
-					StatusStringSet(_T("ƒZƒ‹‚Ìƒf[ƒ^‚ğXV‚µ‚Ü‚µ‚½"),0,TRUE);
+					StatusStringSet(_T("ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã—ã¾ã—ãŸ"),0,TRUE);
 
 					if (LastEditStr != UpadateItem) {
-						ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
-						AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //’Ç‰Á 2012.05.13
+						ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
+						AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //è¿½åŠ  2012.05.13
 					}
-					EditCellShow(LastSelectedRow ,LastSelectedColumn);//ƒRƒƒ“ƒg‰» 2012.05.20
-					//((CEdit*)GetDlgItem(IDC_EDIT_Item))->SetWindowText(UpadateItem); //’Ç‰Á 2012.05.13
+					EditCellShow(LastSelectedRow ,LastSelectedColumn);//ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.20
+					//((CEdit*)GetDlgItem(IDC_EDIT_Item))->SetWindowText(UpadateItem); //è¿½åŠ  2012.05.13
 					UpdateData(FALSE);
 				}
 				return 0;
@@ -15611,11 +15611,11 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 			if (pMsg->wParam == WM_VSCROLL){
 				if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
 					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 					EditCellShow(LastSelectedRow ,LastSelectedColumn);
 				}
-				//UpdateData(FALSE);  //’Ç‰Á 2012.06.14 //XP‘Îô ›
-				//RedrawWindow();  //’Ç‰Á 2012.06.14 //XP‘Îô‚É‚È‚ç‚È‚¢ ~
+				//UpdateData(FALSE);  //è¿½åŠ  2012.06.14 //XPå¯¾ç­– â—‹
+				//RedrawWindow();  //è¿½åŠ  2012.06.14 //XPå¯¾ç­–ã«ãªã‚‰ãªã„ Ã—
 				return 0;
 			}
 		}
@@ -15634,7 +15634,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 			if (pMsg->wParam == VK_F2){
 				if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-					CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å•ÒWƒ‚[ƒh‚ÉØ‚è‘Ö‚¦‚ç‚ê‚Ü‚¹‚ñ"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã¾ã›ã‚“"),300,TRUE);
 					return 0;
 				}
 				if (m_xvChkEditCellMode == FALSE){
@@ -15645,25 +15645,25 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					//LastSelectedRow = -1;
 					//LastSelectedColumn = -1;
 
-					CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚â ”õl—“ ‚Ì •ÒWƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½ (ƒZƒ‹‚ğƒNƒŠƒbƒN‚·‚é‚©AƒNƒŠƒbƒNŒã –îˆóƒL[‚Å‘f‘‚­ˆÚ“®AEnter‚ÅŠm’è)"),300,TRUE);
-					m_xvStrEditCellMode = _T("F@•ÒWƒ‚[ƒh");
+					CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã‚„ å‚™è€ƒæ¬„ ã® ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ (ã‚»ãƒ«ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã‹ã€ã‚¯ãƒªãƒƒã‚¯å¾Œ çŸ¢å°ã‚­ãƒ¼ã§ç´ æ—©ãç§»å‹•ã€Enterã§ç¢ºå®š)"),300,TRUE);
+					m_xvStrEditCellMode = _T("ï¼šã€€ç·¨é›†ãƒ¢ãƒ¼ãƒ‰");
 					UpdateData(FALSE);
 
 					CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-					//ƒ`ƒFƒbƒN‚ğŠO‚·
+					//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 					chkbox1->SetCheck(0);
 					m_xvChkEasySelect = FALSE;
 
-					CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-					//ƒ`ƒFƒbƒN‚ğŠO‚·
+					CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+					//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 					chkbox2->SetCheck(0);
 					m_xvChkRedOnMode = FALSE;
 
 					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+					//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 					m_xvStrEasySelectMode = _T("");
-					m_xvStrRedOnMode = _T(""); //’Ç‰Á 2012.04.17
+					m_xvStrRedOnMode = _T(""); //è¿½åŠ  2012.04.17
 					UpdateData(FALSE);	
 
 					//EditCellShow(LastSelectedRow ,LastSelectedColumn);
@@ -15677,7 +15677,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 			if (pMsg->wParam == VK_ESCAPE){
 				EditCellShow(LastSelectedRow ,LastSelectedColumn);
-				CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚Ì“ü—Í‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"),0,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ã®å…¥åŠ›ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"),0,FALSE);
 				return 0;
 			}
 		}
@@ -15685,7 +15685,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 		if ( ::GetKeyState( VK_CONTROL ) < 0 ) {
 			if (pMsg->wParam == VK_DELETE){
 				if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-					CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 					return 0;
 				}else{
 					CFileListCreatorDlg::DeleteSelectedCells_Func();
@@ -15696,9 +15696,9 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 			switch ( (int)pMsg->wParam ) {
 			case _T('A'):
 				if( pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || CellSizeFixMode == _T("FilePath")){
-					/* ‘S‘I‘ğ */
+					/* å…¨é¸æŠ */
 					::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-					::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+					::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 					SelectALL_Func();
 				}
 
@@ -15709,21 +15709,21 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				}
 				break;
 			case _T('S'):
-				/* •Û‘¶ */
+				/* ä¿å­˜ */
 				OnMenuFileSave();
 			
-				CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,FALSE);
+				CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,FALSE);
 				break;
 			case _T('F'):
-				/* ŒŸõ */
+				/* æ¤œç´¢ */
 				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
-				//::ShowWindow(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace),SW_HIDE);//’Ç‰Á2011.10.14
+				//::ShowWindow(::GetDlgItem(m_hWnd,IDD_DIALOG_Replace),SW_HIDE);//è¿½åŠ 2011.10.14
 
 				FindIDX = -1;
 
-				//ƒ‚[ƒ_ƒŒƒX‚P
+				//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 				CDialog *m_pDlg;
 				m_pDlg = new ReplaceDlg(this);
 				m_pDlg->Create(IDD_DIALOG_Replace);
@@ -15731,24 +15731,24 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				m_pDlg->ShowWindow(true);
 				break;
 			//case _T('G'):
-			//	/* Ÿ‚ğŒŸõ */
+			//	/* æ¬¡ã‚’æ¤œç´¢ */
 
 			case _T('Z'):
-				/* ƒAƒ“ƒhƒD */
+				/* ã‚¢ãƒ³ãƒ‰ã‚¥ */
 				if(pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					CString UpadateItem;
 
 					UpadateItem = m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn);
 					((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(UpadateItem);
 
-					StatusStringSet(_T("•ÒW’†‚Ì•¶š‚ğ•œ‹A‚µ‚Ü‚µ‚½"),300,TRUE);
+					StatusStringSet(_T("ç·¨é›†ä¸­ã®æ–‡å­—ã‚’å¾©å¸°ã—ã¾ã—ãŸ"),300,TRUE);
 				}else{
 					if (m_xvChkUseUNDO == FALSE) {
-						CFileListCreatorDlg::StatusStringSet(_T("UNDO‹@”\‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚Ü‚¹‚ñ\r\n( uUse UNDO/REDOv‚Éƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢ )"),0,TRUE);
+						CFileListCreatorDlg::StatusStringSet(_T("UNDOæ©Ÿèƒ½ãŒæœ‰åŠ¹ã«ãªã£ã¦ã„ã¾ã›ã‚“\r\n( ã€ŒUse UNDO/REDOã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ )"),0,TRUE);
 					}else{
 						if (ESCAPE_FLG == FALSE) {
 							ESCAPE_FLG = TRUE;
-							StatusStringSet(_T("Às’†‚Ìˆ—‚ğ’â~‚µ‚Ü‚µ‚½"),300,TRUE);
+							StatusStringSet(_T("å®Ÿè¡Œä¸­ã®å‡¦ç†ã‚’åœæ­¢ã—ã¾ã—ãŸ"),300,TRUE);
 						}
 						OnEditlistUndo();
 						ESCAPE_FLG = FALSE;
@@ -15756,38 +15756,38 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				}
 				break;
 			//case _T('X'):
-			//	/* ƒJƒbƒg */
+			//	/* ã‚«ãƒƒãƒˆ */
 			//	break;
-			case _T('C'): //’Ç‰Á 2012.05.25
-				/* ƒRƒs[ */
+			case _T('C'): //è¿½åŠ  2012.05.25
+				/* ã‚³ãƒ”ãƒ¼ */
 				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
-					if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //’Ç‰Á 2012.05.26
+					if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //è¿½åŠ  2012.05.26
 						int myResult;
-						myResult = MessageBox(_T("EasySelectƒ‚[ƒhEÔFƒ}[ƒLƒ“ƒOƒ‚[ƒhE•ÒWƒ‚[ƒh‚Å‚ÍAƒRƒs[‚Å‚«‚Ü‚¹‚ñB’Êíƒ‚[ƒh‚É•ÏX‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+						myResult = MessageBox(_T("EasySelectãƒ¢ãƒ¼ãƒ‰ãƒ»èµ¤è‰²ãƒãƒ¼ã‚­ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãƒ»ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ã‚³ãƒ”ãƒ¼ã§ãã¾ã›ã‚“ã€‚é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 
 						if (IDYES == myResult){
 							CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox1->SetCheck(0);
 							m_xvChkEasySelect = FALSE;
 
-							CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox2->SetCheck(0);
 							m_xvChkRedOnMode = FALSE;
 
-							CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //’Ç‰Á 2012.05.26
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //è¿½åŠ  2012.05.26
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox3->SetCheck(0);
 							m_xvChkEditCellMode = FALSE;
 
-							m_xvStrEasySelectMode = _T(""); //’Ç‰Á 2012.05.26
+							m_xvStrEasySelectMode = _T(""); //è¿½åŠ  2012.05.26
 							m_xvStrRedOnMode = _T("");
-							m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+							m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 
-							::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //’Ç‰Á2012.05.30
-							::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //’Ç‰Á2012.05.30
+							::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //è¿½åŠ 2012.05.30
+							::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //è¿½åŠ 2012.05.30
 
 							UpdateData(FALSE);
 							//RedrawWindow();
@@ -15795,7 +15795,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 						//return 0;
 					}
 				}
-				//StatusStringSet(_T("’Êíƒ‚[ƒh‚Ì‚İg—p‚Å‚«‚Ü‚·"),300,TRUE);
+				//StatusStringSet(_T("é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã®ã¿ä½¿ç”¨ã§ãã¾ã™"),300,TRUE);
 
 				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
 					if ( m_xvChkEditCellMode == FALSE ) {
@@ -15803,42 +15803,42 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 							CString CopyText;
 							CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn);
 							CFileListCreatorDlg::SetClipboardText(const_cast<LPTSTR>(static_cast<LPCTSTR>(CopyText)));
-							StatusStringSet(_T("«ÅŒã‚ÉƒNƒŠƒbƒN‚µ‚½ƒZƒ‹‚Ì•¶š‚ğƒRƒs[‚µ‚Ü‚µ‚½«\r\n" + CopyText),0,FALSE);
+							StatusStringSet(_T("â†“æœ€å¾Œã«ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚»ãƒ«ã®æ–‡å­—ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸâ†“\r\n" + CopyText),0,FALSE);
 						}
 					}
 				}
 
 				//EditCellShow(LastSelectedRow ,LastSelectedColumn);
 				break;
-			case _T('V'): //’Ç‰Á 2012.05.25
-				/* ƒy[ƒXƒg */
+			case _T('V'): //è¿½åŠ  2012.05.25
+				/* ãƒšãƒ¼ã‚¹ãƒˆ */
 				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
-					if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //’Ç‰Á 2012.05.26
+					if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //è¿½åŠ  2012.05.26
 						int myResult;
-						myResult = MessageBox(_T("EasySelectƒ‚[ƒhEÔFƒ}[ƒLƒ“ƒOƒ‚[ƒhE•ÒWƒ‚[ƒh‚Å‚ÍAƒy[ƒXƒg‚Å‚«‚Ü‚¹‚ñB’Êíƒ‚[ƒh‚É•ÏX‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+						myResult = MessageBox(_T("EasySelectãƒ¢ãƒ¼ãƒ‰ãƒ»èµ¤è‰²ãƒãƒ¼ã‚­ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãƒ»ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ãƒšãƒ¼ã‚¹ãƒˆã§ãã¾ã›ã‚“ã€‚é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 						if (IDYES == myResult){
 							CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox1->SetCheck(0);
 							m_xvChkEasySelect = FALSE;
 
-							CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox2->SetCheck(0);
 							m_xvChkRedOnMode = FALSE;
 
-							CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //’Ç‰Á 2012.05.26
-							//ƒ`ƒFƒbƒN‚ğŠO‚·
+							CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //è¿½åŠ  2012.05.26
+							//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 							chkbox3->SetCheck(0);
 							m_xvChkEditCellMode = FALSE;
 
-							m_xvStrEasySelectMode = _T(""); //’Ç‰Á 2012.05.26
+							m_xvStrEasySelectMode = _T(""); //è¿½åŠ  2012.05.26
 							m_xvStrRedOnMode = _T("");
-							m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+							m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 
-							::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //’Ç‰Á2012.05.30
-							::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //’Ç‰Á2012.05.30
+							::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //è¿½åŠ 2012.05.30
+							::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //è¿½åŠ 2012.05.30
 
 							UpdateData(FALSE);
 							//RedrawWindow();
@@ -15847,8 +15847,8 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					}
 				}
 				UpdateData();
-				lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
-//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+				lvi.mask = LVIF_TEXT;  // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
+//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
 					if ( m_xvChkEditCellMode == FALSE ) {
@@ -15857,14 +15857,14 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 								if(m_xcList.GetSelectedCount()>=1){
 
 									LastPrevItemCount = m_xcList.GetItemCount();
-									CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+									CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 									int index = -1;
 
 									while ((index = m_xcList.GetNextItem
 											(index, LVNI_ALL | LVNI_SELECTED)) != -1){
 											CString CopyText;
-											CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //’Ç‰Á 2012.05.26
+											CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //è¿½åŠ  2012.05.26
 											CopyText= CFileListCreatorDlg::GetClipboardText(CopyText);
 
 
@@ -15878,41 +15878,41 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 									}
 
 									if (LastSelectedColumn == 3){
-										StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼—“ ‚Éƒf[ƒ^‚ğ“\‚è•t‚¯‚Ü‚µ‚½"),0,TRUE);
+										StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«åæ¬„ ã«ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã¾ã—ãŸ"),0,TRUE);
 									}
 									if (LastSelectedColumn == 8){
-										StatusStringSet(_T("”õl—“ ‚Éƒf[ƒ^‚ğ“\‚è•t‚¯‚Ü‚µ‚½"),0,TRUE);
+										StatusStringSet(_T("å‚™è€ƒæ¬„ ã«ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã¾ã—ãŸ"),0,TRUE);
 									}
 								}
 							}else{
-								StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚Æ ”õl—“ ‚É‚Ì‚İ ƒf[ƒ^‚ğ“\‚è•t‚¯‚é–‚ª‚Å‚«‚Ü‚·"),300,TRUE);
+								StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã¨ å‚™è€ƒæ¬„ ã«ã®ã¿ ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã‚‹äº‹ãŒã§ãã¾ã™"),300,TRUE);
 								return 0;
 							}
 						}
 					}
 				}
 
-				ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+				ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
-				if (ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+				if (ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 					SetWindowText(_T("FileListCreator (*)"));
 					if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
-						SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+						SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 					}
 				}
 				break;
 
 
 			case _T('Q'):
-				/* I—¹ */
+				/* çµ‚äº† */
 
-				if (ESCAPE_FLG == FALSE) { //’Ç‰Á 2012.05.03
+				if (ESCAPE_FLG == FALSE) { //è¿½åŠ  2012.05.03
 					ESCAPE_FLG = TRUE;
-					StatusStringSet(_T("Às’†‚Ìˆ—‚ğ’â~‚µ‚Ü‚µ‚½"),300,TRUE);
+					StatusStringSet(_T("å®Ÿè¡Œä¸­ã®å‡¦ç†ã‚’åœæ­¢ã—ã¾ã—ãŸ"),300,TRUE);
 				}
 
 				//if (IDYES == myResult){
-					//ƒtƒ@ƒCƒ‹•Û‘¶ˆ—
+					//ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜å‡¦ç†
 					AutoSaveMode_ReadOrWrite_Func(_T("write"));
 					UseUNDO_Mode_ReadOrWrite_Func(_T("write"));
 
@@ -15941,12 +15941,12 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				break;
 
 			case _T('D'):
-				//ƒ‚[ƒ_ƒŒƒX‚P
+				//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 				CFileListCreatorDlg::OnFilterDatefilter();
 				break;
 
 			case _T('K'):
-				//ƒ‚[ƒ_ƒŒƒX‚P
+				//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 				CFileListCreatorDlg::OnFilterKeywords();
 				break;
 
@@ -15956,36 +15956,36 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				break;
 
 			case _T('I'):
-				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd){ //Ctrl + Delete ‚ÌŒã‚ÅÀs
+				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd){ //Ctrl + Delete ã®å¾Œã§å®Ÿè¡Œ
 					if(AnyfileImport == FALSE){
 						int myResult;
-						myResult = MessageBox(_T("‰ß‹‚Ìƒo[ƒWƒ‡ƒ“‚Åì‚Á‚½ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğæ‚è‚ß‚éƒ‚[ƒh‚É‚µ‚Ü‚·‚©H\r\n‚½‚¾‚µAFileListCreator‚Åì‚ç‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ğæ‚è‚ñ‚¾ê‡AƒGƒ‰[‚É‚È‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B") ,_T("ƒCƒ“ƒ|[ƒgŠm”F"), MB_YESNOCANCEL );
+						myResult = MessageBox(_T("éå»ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ä½œã£ãŸãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–ã‚Šè¾¼ã‚ã‚‹ãƒ¢ãƒ¼ãƒ‰ã«ã—ã¾ã™ã‹ï¼Ÿ\r\nãŸã ã—ã€FileListCreatorã§ä½œã‚‰ã‚Œã¦ã„ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–ã‚Šè¾¼ã‚“ã å ´åˆã€ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚") ,_T("ã‚¤ãƒ³ãƒãƒ¼ãƒˆç¢ºèª"), MB_YESNOCANCEL );
 
 						if (IDYES == myResult){
 							AnyfileImport = TRUE;
-							StatusStringSet(_T("‰ß‹‚Ìƒo[ƒWƒ‡ƒ“‚Åì‚Á‚½ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ğæ‚è‚ß‚é‚æ‚¤‚É‚µ‚Ü‚µ‚½\r\n(–ß‚·ê‡‚ÍAÄ“x Ctrl + I ‚ğ‰Ÿ‚µ‚Ä‰º‚³‚¢)"),0,TRUE);
+							StatusStringSet(_T("éå»ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ä½œã£ãŸãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’å–ã‚Šè¾¼ã‚ã‚‹ã‚ˆã†ã«ã—ã¾ã—ãŸ\r\n(æˆ»ã™å ´åˆã¯ã€å†åº¦ Ctrl + I ã‚’æŠ¼ã—ã¦ä¸‹ã•ã„)"),0,TRUE);
 
 							//CFileListCreatorDlg::importFileList();
 						}else{
-							StatusStringSet(_T("’Êí‚Ìæ‚è‚İƒ‚[ƒh‚Å‚·"),0,FALSE);
+							StatusStringSet(_T("é€šå¸¸ã®å–ã‚Šè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§ã™"),0,FALSE);
 						}
 					}else{
 						AnyfileImport = FALSE;
-						StatusStringSet(_T("’Êí‚Ìæ‚è‚İƒ‚[ƒh‚É–ß‚µ‚Ü‚µ‚½"),0,TRUE);
+						StatusStringSet(_T("é€šå¸¸ã®å–ã‚Šè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã«æˆ»ã—ã¾ã—ãŸ"),0,TRUE);
 					}
 				}
 				break;
 
 			default:
 				//ReplaceDlg ReplaceDlg_CLASS;
-				/* ‚»‚Ì‘¼ */
+				/* ãã®ä»– */
 				break;
 			}
 			return 0;
 		}
 
 
-		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd){ //Ctrl + Delete ‚ÌŒã‚ÅÀs
+		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd){ //Ctrl + Delete ã®å¾Œã§å®Ÿè¡Œ
 			if (pMsg->wParam == VK_DELETE){
 				DeleteSelectedRows_Func();
 				return 0;
@@ -15998,9 +15998,9 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
 						LastSelectedRow++;
 						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("«‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+						StatusStringSet(_T("â†“ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 					}else{
-						StatusStringSet(_T("ƒŠƒXƒg‚ÌÅIs‚É’B‚µ‚Ü‚µ‚½"),300,TRUE);
+						StatusStringSet(_T("ãƒªã‚¹ãƒˆã®æœ€çµ‚è¡Œã«é”ã—ã¾ã—ãŸ"),300,TRUE);
 					}
 					break;
 				}
@@ -16008,32 +16008,32 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					if (LastSelectedRow >= 1){
 						LastSelectedRow--;
 						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("ª‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+						StatusStringSet(_T("â†‘ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 					}else{
-						StatusStringSet(_T("ƒŠƒXƒg‚Ìæ“ª‚É’B‚µ‚Ü‚µ‚½"),300,TRUE);
+						StatusStringSet(_T("ãƒªã‚¹ãƒˆã®å…ˆé ­ã«é”ã—ã¾ã—ãŸ"),300,TRUE);
 					}
 					break;
 				}
-				//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+				//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 				if (pMsg->wParam == VK_RIGHT){
 					if (LastSelectedColumn==3){
 						LastSelectedColumn = 8;
 						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("¨‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+						StatusStringSet(_T("â†’ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 					}else if (LastSelectedColumn==8){
 						if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
 							LastSelectedRow++;
 
 							LastSelectedColumn = 3;
 							EditCellShow(LastSelectedRow ,LastSelectedColumn);
-							StatusStringSet(_T("¨‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+							StatusStringSet(_T("â†’ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 						}else{
-							StatusStringSet(_T("ƒŠƒXƒg‚ÌÅIs‚É’B‚µ‚Ü‚µ‚½"),300,TRUE);
+							StatusStringSet(_T("ãƒªã‚¹ãƒˆã®æœ€çµ‚è¡Œã«é”ã—ã¾ã—ãŸ"),300,TRUE);
 						}
 					}
 					break;
 				}
-				//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+				//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 				if (pMsg->wParam == VK_LEFT){
 					if (LastSelectedColumn==3){
 						if (LastSelectedRow >= 1){
@@ -16041,14 +16041,14 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 
 							LastSelectedColumn = 8;
 							EditCellShow(LastSelectedRow ,LastSelectedColumn);
-							StatusStringSet(_T("©‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+							StatusStringSet(_T("â†ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 						}else{
-							StatusStringSet(_T("ƒŠƒXƒg‚Ìæ“ª‚É’B‚µ‚Ü‚µ‚½"),300,TRUE);
+							StatusStringSet(_T("ãƒªã‚¹ãƒˆã®å…ˆé ­ã«é”ã—ã¾ã—ãŸ"),300,TRUE);
 						}
 					}else if (LastSelectedColumn==8){
 						LastSelectedColumn = 3;
 						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("©‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½"),0,FALSE);
+						StatusStringSet(_T("â†ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ"),0,FALSE);
 					}
 					break;
 				}
@@ -16059,7 +16059,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 	case WM_LBUTTONDBLCLK:
 		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 			if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-				CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å•ÒWƒ‚[ƒh‚ÉØ‚è‘Ö‚¦‚ç‚ê‚Ü‚¹‚ñ"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã¾ã›ã‚“"),300,TRUE);
 				return 0;
 			}
 			if (m_xvChkEditCellMode == FALSE){
@@ -16070,25 +16070,25 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				//LastSelectedRow = -1;
 				//LastSelectedColumn = -1;
 
-				CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚â ”õl—“ ‚Ì •ÒWƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½ (ƒZƒ‹‚ğƒNƒŠƒbƒN‚·‚é‚©AƒNƒŠƒbƒNŒã –îˆóƒL[‚Å‘f‘‚­ˆÚ“®AEnter‚ÅŠm’è)"),300,TRUE);
-				m_xvStrEditCellMode = _T("F@•ÒWƒ‚[ƒh");
+				CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã‚„ å‚™è€ƒæ¬„ ã® ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ (ã‚»ãƒ«ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã‹ã€ã‚¯ãƒªãƒƒã‚¯å¾Œ çŸ¢å°ã‚­ãƒ¼ã§ç´ æ—©ãç§»å‹•ã€Enterã§ç¢ºå®š)"),300,TRUE);
+				m_xvStrEditCellMode = _T("ï¼šã€€ç·¨é›†ãƒ¢ãƒ¼ãƒ‰");
 				UpdateData(FALSE);
 
 				CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox1->SetCheck(0);
 				m_xvChkEasySelect = FALSE;
 
-				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox2->SetCheck(0);
 				m_xvChkRedOnMode = FALSE;
 
 				//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-				//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+				//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 				m_xvStrEasySelectMode = _T("");
-				m_xvStrRedOnMode = _T(""); //’Ç‰Á 2012.04.17
+				m_xvStrRedOnMode = _T(""); //è¿½åŠ  2012.04.17
 				UpdateData(FALSE);	
 
 				EditCellShow(LastSelectedRow ,LastSelectedColumn);
@@ -16097,12 +16097,12 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				m_xvChkEditCellMode = FALSE;
 
 				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 				//LastSelectedRow = -1;
 				//LastSelectedColumn = -1;
 
-				CFileListCreatorDlg::StatusStringSet(_T("’Êí‚Ìƒ‚[ƒh‚Å‚· (ƒZƒ‹“à‚ÌƒeƒLƒXƒg‚Í•ÒW‚Å‚«‚Ü‚¹‚ñ)"),300,TRUE);
-				m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+				CFileListCreatorDlg::StatusStringSet(_T("é€šå¸¸ã®ãƒ¢ãƒ¼ãƒ‰ã§ã™ (ã‚»ãƒ«å†…ã®ãƒ†ã‚­ã‚¹ãƒˆã¯ç·¨é›†ã§ãã¾ã›ã‚“)"),300,TRUE);
+				m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 				UpdateData(FALSE);	
 			}
 			RedrawWindow();
@@ -16117,7 +16117,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 
 void CFileListCreatorDlg::OnBnClickedBtnNosavequit()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//free(prevData);
 	//prevData = NULL;
@@ -16138,9 +16138,9 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 
-	//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -16148,7 +16148,7 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 	//CurDir = szCurrentDir;
 
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -16174,16 +16174,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16193,16 +16193,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16212,16 +16212,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16231,16 +16231,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16250,16 +16250,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16269,16 +16269,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16289,16 +16289,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16308,16 +16308,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16327,16 +16327,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16346,16 +16346,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16365,16 +16365,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16384,16 +16384,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16403,16 +16403,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16425,16 +16425,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 		CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeTex
 
 
-	// (2)‘‚«‚İ
+	// (2)æ›¸ãè¾¼ã¿
 	if (!err)
 	{
-		wstr = _T("");//‰Šú‰»
+		wstr = _T("");//åˆæœŸåŒ–
 
 		TRY {stdFile1.WriteString(wstr);}
 		CATCH (CFileException, eP) {err = 1;}
 		END_CATCH
 	}
-	// (6)ƒNƒ[ƒY(–¾¦“I)
+	// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 	stdFile1.Close();
 
 	//===========================================================================================
@@ -16442,16 +16442,16 @@ void CFileListCreatorDlg::PreferenceFileClear_Func()
 
 void CFileListCreatorDlg::OnOptionPreferencefileclear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	int myResult;
-	myResult = MessageBox(_T("‘Sİ’èƒtƒ@ƒCƒ‹‚ğ‰Šú‰»‚µ‚Ü‚·‚©H") ,_T("‰Šú‰»Šm”F"), MB_YESNOCANCEL );
+	myResult = MessageBox(_T("å…¨è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆæœŸåŒ–ã—ã¾ã™ã‹ï¼Ÿ") ,_T("åˆæœŸåŒ–ç¢ºèª"), MB_YESNOCANCEL );
 
 	if (IDYES == myResult){
-		//ƒtƒ@ƒCƒ‹•Û‘¶ˆ—
+		//ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜å‡¦ç†
 		CFileListCreatorDlg::PreferenceFileClear_Func();
 
-		CFileListCreatorDlg::StatusStringSet(_T("‘Sİ’èƒtƒ@ƒCƒ‹‚ğ‰Šú‰»‚µ‚Ü‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("å…¨è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆæœŸåŒ–ã—ã¾ã—ãŸ"),300,TRUE);
 	}
 }
 
@@ -16459,13 +16459,13 @@ void CFileListCreatorDlg::OnOptionPreferencefileclear()
 void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	//LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
-	//if (m_xvChkEditCellMode == TRUE) ::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//’Ç‰Á2011.10.08
+	//if (m_xvChkEditCellMode == TRUE) ::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//è¿½åŠ 2011.10.08
 
-	//NotInversion = TRUE; //‘¾•¶šEÔF ‚Æ‚à‚É”½“]‚µ‚È‚¢
+	//NotInversion = TRUE; //å¤ªæ–‡å­—ãƒ»èµ¤è‰² ã¨ã‚‚ã«åè»¢ã—ãªã„
 
-    Invalidate();  //ƒRƒƒ“ƒg‰»‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢HH
+    Invalidate();  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ–ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„ï¼Ÿï¼Ÿ
 
     //HWND hWnd1 =  ::GetDlgItem (m_hWnd,IDC_LIST);
     LPNMITEMACTIVATE temp = (LPNMITEMACTIVATE) pNMHDR;
@@ -16488,11 +16488,11 @@ void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
         ::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),
             SW_HIDE);
 		
-		RedrawWindow();//’Ç‰Á 2011.10.09//XPƒ}ƒVƒ“‚ÌEasySelectÄ•`‰æ‘Îô
+		RedrawWindow();//è¿½åŠ  2011.10.09//XPãƒã‚·ãƒ³ã®EasySelectå†æç”»å¯¾ç­–
 		return;
 	}
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 	//LastSelectedRow  = nItem;
 	//if(nSubItem==3 || nSubItem==8){
 	//	LastSelectedColumn = nSubItem;
@@ -16502,24 +16502,24 @@ void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if ( m_xvChkEditCellMode==FALSE ) {
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
         return ;
 	}
 
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-    if((nSubItem == 0 || nSubItem == -1 || nItem == -1) || (nSubItem != 3 && nSubItem != 8)){ //2011.09.22•ÏX
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+    if((nSubItem == 0 || nSubItem == -1 || nItem == -1) || (nSubItem != 3 && nSubItem != 8)){ //2011.09.22å¤‰æ›´
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
         return ;
 	}
 
-	 //’Ç‰Á 2012.05.20
-	m_xcList.SetItemState(LastSelectedRow,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX //’Ç‰Á 2012.05.20
-	!LVIS_FOCUSED | !LVIS_SELECTED,    // ó‘Ô
-	LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+	 //è¿½åŠ  2012.05.20
+	m_xcList.SetItemState(LastSelectedRow,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ //è¿½åŠ  2012.05.20
+	!LVIS_FOCUSED | !LVIS_SELECTED,    // çŠ¶æ…‹
+	LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
-	// ¥‚±‚±‚©‚ç‹³‚¦‚Ä’¸‚¢‚½•”•ª¥
+	// â–¼ã“ã“ã‹ã‚‰æ•™ãˆã¦é ‚ã„ãŸéƒ¨åˆ†â–¼
 
 	HWND hWnd1 =  ::GetDlgItem (m_hWnd,IDC_LIST);
 
@@ -16531,7 +16531,7 @@ void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 	//if (m_xvChkEditCellMode == TRUE){
 	//	if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
-	//		m_xvEditItem = m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //’Ç‰Á 2012.05.27 //OnEnChangeEditItem‚©‚çˆÚ“®
+	//		m_xvEditItem = m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //è¿½åŠ  2012.05.27 //OnEnChangeEditItemã‹ã‚‰ç§»å‹•
 	//		//::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item));
 	//	}
 	//}
@@ -16539,20 +16539,20 @@ void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
 	RECT rect1;
 	RECT rect2;
 
-	// ListView‚Ì—Ìˆææ“¾
-	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_LIST ), &rect1 ); //w‚ğ‘å•¶š‚É‚µ‚Ü‚µ‚½B‚ ‚°‘«‚Æ‚è‚Å‚·‚İ‚Ü‚¹‚ñB
-	// ƒ_ƒCƒAƒƒO‚Ì—Ìˆææ“¾
+	// ListViewã®é ˜åŸŸå–å¾—
+	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_LIST ), &rect1 ); //wã‚’å¤§æ–‡å­—ã«ã—ã¾ã—ãŸã€‚ã‚ã’è¶³ã¨ã‚Šã§ã™ã¿ã¾ã›ã‚“ã€‚
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®é ˜åŸŸå–å¾—
 	::GetWindowRect( m_hWnd, &rect2 );
 
-	// ƒ_ƒCƒAƒƒO‚ÌƒNƒ‰ƒCƒAƒ“ƒgÀ•W‚É•ÏŠ·
-	this->ScreenToClient( &rect1 );  //Scren ¨ Screen ‚É’¼‚µ‚Ü‚µ‚½A‚·‚×‚Ä‹L‰¯‚Å‘Å‚Á‚Ä‚éŠ‚ª¦‚¢‚Å‚·I
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåº§æ¨™ã«å¤‰æ›
+	this->ScreenToClient( &rect1 );  //Scren â†’ Screen ã«ç›´ã—ã¾ã—ãŸã€ã™ã¹ã¦è¨˜æ†¶ã§æ‰“ã£ã¦ã‚‹æ‰€ãŒå‡„ã„ã§ã™ï¼
 	this->ScreenToClient( &rect2 );
 
 	int x = rect1.left - rect2.left;
 
     if(nItem != -1) 
     ::SetWindowPos(::GetDlgItem(m_hWnd,IDC_EDIT_Item),
-		//HWND_TOP,rect.left+x,rect.top+4,//•ÏX‘O
+		//HWND_TOP,rect.left+x,rect.top+4,//å¤‰æ›´å‰
 		HWND_TOP,rect.left + x,
 			rect.top + rect1.top + 2,
         rect.right-rect.left - 3,
@@ -16561,22 +16561,22 @@ void CFileListCreatorDlg::OnNMClickList(NMHDR *pNMHDR, LRESULT *pResult)
 
     ::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item));
 
-	//::SetWindowText(::GetDlgItem(m_hWnd,IDC_EDIT_Item),_T("")); //’Ç‰Á 2012.05.20
-	//if (str!=_T("")){ //’Ç‰Á 2012.05.20
+	//::SetWindowText(::GetDlgItem(m_hWnd,IDC_EDIT_Item),_T("")); //è¿½åŠ  2012.05.20
+	//if (str!=_T("")){ //è¿½åŠ  2012.05.20
 		//Set the listItem text in the EditBox
 		::SetWindowText(::GetDlgItem(m_hWnd,IDC_EDIT_Item),str);
 	//}
 
 	if(nItem != -1) 
-	::SetWindowPos(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow), //–îˆó IDC_STATIC_Arrow ‚Ìã‚ÉAƒOƒŠƒbƒhü‚ª•`‰æ‚³‚ê‚Ä‚µ‚Ü‚¢‚Ü‚·ƒÒ
+	::SetWindowPos(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow), //çŸ¢å° IDC_STATIC_Arrow ã®ä¸Šã«ã€ã‚°ãƒªãƒƒãƒ‰ç·šãŒæç”»ã•ã‚Œã¦ã—ã¾ã„ã¾ã™Ï…
 		HWND_TOP,rect.left + x - 17,
 			rect.top + rect1.top + 4,
 					17,
 					12 ,NULL);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//’Ç‰Á2011.10.08
-	// £‚±‚±‚Ü‚Å‹³‚¦‚Ä’¸‚¢‚½•”•ª£
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//è¿½åŠ 2011.10.08
+	// â–²ã“ã“ã¾ã§æ•™ãˆã¦é ‚ã„ãŸéƒ¨åˆ†â–²
 
-	UpdateData(FALSE);  //’Ç‰Á 2012.06.14 //XP‘Îô ›
+	UpdateData(FALSE);  //è¿½åŠ  2012.06.14 //XPå¯¾ç­– â—‹
     *pResult = 0;
 }
 
@@ -16593,19 +16593,19 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 	}
 
 	if (m_xvChkEditCellMode == TRUE){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚â ”õl—“ ‚Ì •ÒWƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½ \r\n (ƒZƒ‹‚ğƒNƒŠƒbƒN‚·‚é‚©AƒNƒŠƒbƒNŒã –îˆóƒL[‚Å‘f‘‚­ˆÚ“®AEnter‚ÅŠm’è)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã‚„ å‚™è€ƒæ¬„ ã® ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ \r\n (ã‚»ãƒ«ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã‹ã€ã‚¯ãƒªãƒƒã‚¯å¾Œ çŸ¢å°ã‚­ãƒ¼ã§ç´ æ—©ãç§»å‹•ã€Enterã§ç¢ºå®š)"),0,FALSE);
 	}
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
-	::SetWindowText(::GetDlgItem(m_hWnd,IDC_EDIT_Item),_T("")); //ƒRƒƒ“ƒg‰» 2012.05.20
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
+	::SetWindowText(::GetDlgItem(m_hWnd,IDC_EDIT_Item),_T("")); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.20
 
-	m_xcList.SetItemState(workRow,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-	!LVIS_FOCUSED | !LVIS_SELECTED,    // ó‘Ô
-	LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+	m_xcList.SetItemState(workRow,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	!LVIS_FOCUSED | !LVIS_SELECTED,    // çŠ¶æ…‹
+	LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 	//UpdateWindow();
 
-    //Invalidate();  //ƒRƒƒ“ƒg‰»‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+    //Invalidate();  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ–ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
 
     HWND hWnd1 =  ::GetDlgItem (m_hWnd,IDC_LIST);
     RECT rect;
@@ -16619,17 +16619,17 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 	LastSelectedRow  = nItem;
 	LastSelectedColumn = nSubItem;
 
-	////0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-    if((nSubItem == 0 || nSubItem == -1 || nItem == -1) || (nSubItem != 3 && nSubItem != 8)){ //2011.09.22•ÏX
+	////0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+    if((nSubItem == 0 || nSubItem == -1 || nItem == -1) || (nSubItem != 3 && nSubItem != 8)){ //2011.09.22å¤‰æ›´
 		//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
   //      return ;
 		nSubItem = 3;
 		LastSelectedColumn = nSubItem;
 
-		if (nItem == -1) {//’Ç‰Á2011.11.10
-			::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);//’Ç‰Á2011.11.10
-			::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.11.10
+		if (nItem == -1) {//è¿½åŠ 2011.11.10
+			::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);//è¿½åŠ 2011.11.10
+			::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.11.10
 			return;
 		}
 	}
@@ -16655,7 +16655,7 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 
 	// http://oshiete.goo.ne.jp/qa/7124281.html
 	
-	// ¥‚±‚±‚©‚ç‹³‚¦‚Ä’¸‚¢‚½•”•ª¥
+	// â–¼ã“ã“ã‹ã‚‰æ•™ãˆã¦é ‚ã„ãŸéƒ¨åˆ†â–¼
 
     //Get the Rectange of the listControl
     ListView_GetSubItemRect(hWnd1,nItem,
@@ -16670,12 +16670,12 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 
 	//rect2 = rect1;
 
-	// ListView‚Ì—Ìˆææ“¾
+	// ListViewã®é ˜åŸŸå–å¾—
 	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_LIST ), &rect1 );
-	// ƒ_ƒCƒAƒƒO‚Ì—Ìˆææ“¾
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®é ˜åŸŸå–å¾—
 	::GetWindowRect( m_hWnd, &rect2 );
 
-	// ƒ_ƒCƒAƒƒO‚ÌƒNƒ‰ƒCƒAƒ“ƒgÀ•W‚É•ÏŠ·
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåº§æ¨™ã«å¤‰æ›
 	this->ScreenToClient( &rect1 );
 	this->ScreenToClient( &rect2 );
 
@@ -16683,7 +16683,7 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 
     if(nItem != -1) 
     ::SetWindowPos(::GetDlgItem(m_hWnd,IDC_EDIT_Item),
-		//HWND_TOP,rect.left+x,rect.top+4,//•ÏX‘O
+		//HWND_TOP,rect.left+x,rect.top+4,//å¤‰æ›´å‰
 		HWND_TOP,rect.left + x,
 			rect.top + rect1.top + 2,
         rect.right-rect.left - 3,
@@ -16701,24 +16701,24 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 			rect.top + rect1.top + 4,
 					17,
 					12 ,NULL);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//’Ç‰Á2011.10.08
-	// £‚±‚±‚Ü‚Å‹³‚¦‚Ä’¸‚¢‚½•”•ª£
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//è¿½åŠ 2011.10.08
+	// â–²ã“ã“ã¾ã§æ•™ãˆã¦é ‚ã„ãŸéƒ¨åˆ†â–²
 
 
 
- //   ::SetWindowPos(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),//’Ç‰Á2011.10.08
-	//	//HWND_TOP,rect.left+x,rect.top+4,//•ÏX‘O
+ //   ::SetWindowPos(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),//è¿½åŠ 2011.10.08
+	//	//HWND_TOP,rect.left+x,rect.top+4,//å¤‰æ›´å‰
 	//	HWND_TOP,rect.left + x - 17,
 	//		rect.top + rect1.top + 2,
  //       17,
  //       12 ,NULL);
-	//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//’Ç‰Á2011.10.08
-	UpdateData(FALSE);  //’Ç‰Á 2012.06.14 //XP‘Îô ›
+	//::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_SHOW);//è¿½åŠ 2011.10.08
+	UpdateData(FALSE);  //è¿½åŠ  2012.06.14 //XPå¯¾ç­– â—‹
 }
 
 void CFileListCreatorDlg::OnBnClickedBtnQuit()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//free(prevData);
 	//prevData = NULL;
@@ -16728,7 +16728,7 @@ void CFileListCreatorDlg::OnBnClickedBtnQuit()
 	//workData = NULL;
 
 	if (m_xvChkAutoSave == TRUE){
-		if (ListDataNoChange_FLG == TRUE){ //’Ç‰Á 2012.05.13
+		if (ListDataNoChange_FLG == TRUE){ //è¿½åŠ  2012.05.13
 			CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),0,TRUE);
 			
 			AutoSaveMode_ReadOrWrite_Func(_T("write"));
@@ -16738,7 +16738,7 @@ void CFileListCreatorDlg::OnBnClickedBtnQuit()
 		}else{
 			OnMenuFileSave();
 			
-			CFileListCreatorDlg::StatusStringSet(_T("AutoSave Š®—¹"),0,FALSE);
+			CFileListCreatorDlg::StatusStringSet(_T("AutoSave å®Œäº†"),0,FALSE);
 			//CFileListCreatorDlg::StatusStringSet(_T("See you, again!!"),500,TRUE);
 
 			AutoSaveMode_ReadOrWrite_Func(_T("write"));
@@ -16753,19 +16753,19 @@ void CFileListCreatorDlg::OnBnClickedBtnQuit()
 
 		CDialogEx::OnOK();
 	}
-			///EndDialog(FALSE); //•ÏX 2012.05.26
+			///EndDialog(FALSE); //å¤‰æ›´ 2012.05.26
 			//AfxGetMainWnd()->PostMessage(WM_CLOSE);
 }
 
 
 void CFileListCreatorDlg::OnEnChangeEditItem()
 {
-	// TODO:  ‚±‚ê‚ª RICHEDIT ƒRƒ“ƒgƒ[ƒ‹‚Ìê‡A‚±‚ÌƒRƒ“ƒgƒ[ƒ‹‚ª
-	// ‚±‚Ì’Ê’m‚ğ‘—M‚·‚é‚É‚ÍACDialogEx::OnInitDialog() ŠÖ”‚ğƒI[ƒo[ƒ‰ƒCƒh‚µA
-	// CRichEditCtrl().SetEventMask() ‚ğ
-	// OR ó‘Ô‚Ì ENM_CHANGE ƒtƒ‰ƒO‚ğƒ}ƒXƒN‚É“ü‚ê‚ÄŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
+	// TODO:  ã“ã‚ŒãŒ RICHEDIT ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®å ´åˆã€ã“ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãŒ
+	// ã“ã®é€šçŸ¥ã‚’é€ä¿¡ã™ã‚‹ã«ã¯ã€CDialogEx::OnInitDialog() é–¢æ•°ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ã€
+	// CRichEditCtrl().SetEventMask() ã‚’
+	// OR çŠ¶æ…‹ã® ENM_CHANGE ãƒ•ãƒ©ã‚°ã‚’ãƒã‚¹ã‚¯ã«å…¥ã‚Œã¦å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
-	// TODO:  ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO:  ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„ã€‚
 
 	CString CurStr ;
 	((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(CurStr);
@@ -16774,7 +16774,7 @@ void CFileListCreatorDlg::OnEnChangeEditItem()
 		if (CurStr.GetLength() > 260){
 			CurStr = CurStr.Left(260);
 			//LengthOver = TRUE;
-			CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒgƒ{ƒbƒNƒX“à‚ÌŠi”[•¶š”§ŒÀ‚ğƒI[ƒo[‚µ‚Ü‚µ‚½\r\n(¶‚©‚ç260•¶š•ª ƒeƒLƒXƒg‚ğØ‚èæ‚è‚Ü‚·)"),0,TRUE);
+			CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å†…ã®æ ¼ç´æ–‡å­—æ•°åˆ¶é™ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ã¾ã—ãŸ\r\n(å·¦ã‹ã‚‰260æ–‡å­—åˆ† ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆ‡ã‚Šå–ã‚Šã¾ã™)"),0,TRUE);
 			((CEdit*)GetDlgItem(IDC_EDIT_Item))->SetWindowText(CurStr);
 			UpdateData(FALSE);
 		}
@@ -16792,21 +16792,21 @@ void CFileListCreatorDlg::OnEnChangeEditItem()
 
 void CFileListCreatorDlg::OnEnKillfocusEditItem()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
 }
 
 
 void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	//LastPrevItemCount = m_xcList.GetItemCount();
-	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	//CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if (m_xvChkEditCellMode == FALSE){
 		m_xvChkEditCellMode = TRUE;
@@ -16816,25 +16816,25 @@ void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 		//LastSelectedRow = -1;
 		//LastSelectedColumn = -1;
 
-		CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚â ”õl—“ ‚Ì •ÒWƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½ \r\n (ƒZƒ‹‚ğƒNƒŠƒbƒN‚·‚é‚©AƒNƒŠƒbƒNŒã –îˆóƒL[‚Å‘f‘‚­ˆÚ“®AEnter‚ÅŠm’è)"),300,TRUE);
-		m_xvStrEditCellMode = _T("F@•ÒWƒ‚[ƒh");
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã‚„ å‚™è€ƒæ¬„ ã® ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ \r\n (ã‚»ãƒ«ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã‹ã€ã‚¯ãƒªãƒƒã‚¯å¾Œ çŸ¢å°ã‚­ãƒ¼ã§ç´ æ—©ãç§»å‹•ã€Enterã§ç¢ºå®š)"),300,TRUE);
+		m_xvStrEditCellMode = _T("ï¼šã€€ç·¨é›†ãƒ¢ãƒ¼ãƒ‰");
 		UpdateData(FALSE);
 
 		CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-		//ƒ`ƒFƒbƒN‚ğŠO‚·
+		//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 		chkbox1->SetCheck(0);
 		m_xvChkEasySelect = FALSE;
 
-		CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-		//ƒ`ƒFƒbƒN‚ğŠO‚·
+		CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+		//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 		chkbox2->SetCheck(0);
 		m_xvChkRedOnMode = FALSE;
 
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 		m_xvStrEasySelectMode = _T("");
-		m_xvStrRedOnMode = _T(""); //’Ç‰Á 2012.04.17
+		m_xvStrRedOnMode = _T(""); //è¿½åŠ  2012.04.17
 		UpdateData(FALSE);	
 
 		EditCellShow(LastSelectedRow ,LastSelectedColumn);
@@ -16842,13 +16842,13 @@ void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 		m_xvChkEditCellMode = FALSE;
 
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 		//LastSelectedRow = -1;
 		//LastSelectedColumn = -1;
 
-		CFileListCreatorDlg::StatusStringSet(_T("’Êí‚Ìƒ‚[ƒh‚Å‚· (ƒZƒ‹“à‚ÌƒeƒLƒXƒg‚Í•ÒW‚Å‚«‚Ü‚¹‚ñ)"),300,FALSE);
-		m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+		CFileListCreatorDlg::StatusStringSet(_T("é€šå¸¸ã®ãƒ¢ãƒ¼ãƒ‰ã§ã™ (ã‚»ãƒ«å†…ã®ãƒ†ã‚­ã‚¹ãƒˆã¯ç·¨é›†ã§ãã¾ã›ã‚“)"),300,FALSE);
+		m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 		UpdateData(FALSE);	
 	}
 	RedrawWindow();
@@ -16857,18 +16857,18 @@ void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 
 void CFileListCreatorDlg::OnBnClickedBtnSetseqNum()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SetSEQ_NUM_Func(TRUE);
 }
 
 BOOL CFileListCreatorDlg::CheckRemarksColumn(){
 	//_wsetlocale(LC_ALL, _T("jpn"));
-	StatusStringSet(_T("”õl—“‚Ìƒf[ƒ^ƒ`ƒFƒbƒN’†"),0,FALSE);
+	StatusStringSet(_T("å‚™è€ƒæ¬„ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ä¸­"),0,FALSE);
 
 	//LVITEM       lvi;
 	CString      str;	
 	
-	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
     
 	int workRow;
@@ -16879,7 +16879,7 @@ BOOL CFileListCreatorDlg::CheckRemarksColumn(){
 
 	while (workRow < CFileListCreatorDlg::m_xcList.GetItemCount()){
 
-	     	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	     	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 		int columnIDX=8;
 	        
@@ -16894,18 +16894,18 @@ BOOL CFileListCreatorDlg::CheckRemarksColumn(){
 	}
 	//_wsetlocale(LC_ALL, _T(""));
 
-	StatusStringSet(_T("”õl—“‚Ìƒ`ƒFƒbƒNŠ®—¹"),0,FALSE);
+	StatusStringSet(_T("å‚™è€ƒæ¬„ã®ãƒã‚§ãƒƒã‚¯å®Œäº†"),0,FALSE);
 	return ExistFLG;
 }
 
 BOOL CFileListCreatorDlg::CheckFileName(){
 	//_wsetlocale(LC_ALL, _T("jpn"));
-	StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ƒ`ƒFƒbƒN’†"),0,FALSE);
+	StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ãƒã‚§ãƒƒã‚¯ä¸­"),0,FALSE);
 
 	//LVITEM       lvi;
 	CString      str;	
 	
-	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+	lvi.mask =  LVIF_TEXT ;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
     
 	int workRow;
@@ -16916,7 +16916,7 @@ BOOL CFileListCreatorDlg::CheckFileName(){
 
 	while (workRow < CFileListCreatorDlg::m_xcList.GetItemCount()){
 
-	     	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	     	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 		int FormatDataNum = CFileListCreatorDlg::m_xcList.GetItemData(workRow);
 
@@ -16936,20 +16936,20 @@ BOOL CFileListCreatorDlg::CheckFileName(){
 	}
 	//_wsetlocale(LC_ALL, _T(""));
 
-	StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ƒ`ƒFƒbƒNŠ®—¹"),0,FALSE);
+	StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ãƒã‚§ãƒƒã‚¯å®Œäº†"),0,FALSE);
 	return ChangeFLG;
 }
 
 void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if( CFileListCreatorDlg::m_xcList.GetItemCount() <=0){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	ESCAPE_FLG = FALSE;
 
@@ -16974,7 +16974,7 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 
 	if(myCnt==0){
 
-		importFileResult = MessageBox(_T("‚·‚×‚Ä‚ÌƒvƒŒƒCƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚·‚©H"),_T("“WŠJŠm”F"), MB_YESNOCANCEL );
+		importFileResult = MessageBox(_T("ã™ã¹ã¦ã®ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã™ã‹ï¼Ÿ"),_T("å±•é–‹ç¢ºèª"), MB_YESNOCANCEL );
 		if ( importFileResult == IDYES ){
 			index = 0;
 
@@ -16982,13 +16982,13 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 			{
 				if (ESCAPE_FLG == TRUE) break;
 
-				MSG msg; //’Ç‰Á 2011.10.22
+				MSG msg; //è¿½åŠ  2011.10.22
 
-				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 					if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 						if (msg.wParam == VK_ESCAPE){
 							ESCAPE_FLG = TRUE;
-							break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+							break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 						}
 					}
 					TranslateMessage(&msg);
@@ -17001,29 +17001,29 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 				if ( myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".m3u")))) == _T(".m3u") || myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".wpl")))) == _T(".wpl") || myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".txt")))) == _T(".txt") ){
 					if ( myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".txt")))) == _T(".txt") ) {
 						if ( iTunesPlayList_Import_Func( tempPath, _T("CheckMusicListFile") ) == TRUE ) {
-							m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-							LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-							LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+							m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+							LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+							LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 							CFileListCreatorDlg::ExpandMusicListFile_Func(tempPath);
 							myCnt++;
 						}else{
-							m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-							!(LVIS_FOCUSED | LVIS_SELECTED),    // ó‘Ô
-							LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+							m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+							!(LVIS_FOCUSED | LVIS_SELECTED),    // çŠ¶æ…‹
+							LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 						}
 					}else{ // *.m3u *.wpl
-						m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-						LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-						LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+						m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+						LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+						LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 						CFileListCreatorDlg::ExpandMusicListFile_Func(tempPath);
 						myCnt++;
 					}
 				}else{
-					m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-					!LVIS_SELECTED,    // ó‘Ô //”ñ‘I‘ğó‘Ô
-					LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+					m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+					!LVIS_SELECTED,    // çŠ¶æ…‹ //éé¸æŠçŠ¶æ…‹
+					LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 				}
 				index ++;
 			}
@@ -17041,13 +17041,13 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 		{
 			if (ESCAPE_FLG == TRUE) break;
 
-			MSG msg; //’Ç‰Á 2011.10.22
+			MSG msg; //è¿½åŠ  2011.10.22
 
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -17060,25 +17060,25 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 			if ( myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".m3u")))) == _T(".m3u") || myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".wpl")))) == _T(".wpl") || myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".txt")))) == _T(".txt") ){
 					if ( myStrToLower_Func(m_xcList.GetItemText(index,2).Right(GetStrLen_Func(_T(".txt")))) == _T(".txt") ) {
 						if ( iTunesPlayList_Import_Func( tempPath, _T("CheckMusicListFile") ) == TRUE ) {
-							m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-							LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-							LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+							m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+							LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+							LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 
 							CFileListCreatorDlg::ExpandMusicListFile_Func(tempPath);
 							myCnt++;
 						}else{
-							m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-							!(LVIS_FOCUSED | LVIS_SELECTED),    // ó‘Ô
-							LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+							m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+							!(LVIS_FOCUSED | LVIS_SELECTED),    // çŠ¶æ…‹
+							LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 						}
 					}else{ // *.m3u *.wpl
 						CFileListCreatorDlg::ExpandMusicListFile_Func(tempPath);
 						myCnt++;
 					}
 			}else{ 
-				m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-				!LVIS_SELECTED,    // ó‘Ô //”ñ‘I‘ğó‘Ô
-				LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+				m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				!LVIS_SELECTED,    // çŠ¶æ…‹ //éé¸æŠçŠ¶æ…‹
+				LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 			}
 
 			//CFileListCreatorDlg::ItemCount_Func(TRUE);
@@ -17086,11 +17086,11 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 	}
 
 	tempCnt = _T("");
-	if(myCnt>=1){ //’Ç‰Á 2012.06.14
+	if(myCnt>=1){ //è¿½åŠ  2012.06.14
 		tempCnt.Format(_T("%d"),myCnt);
-		tempCnt=tempCnt + _T(" Œ‚ÌƒvƒŒƒCƒŠƒXƒg‚ğ“WŠJ‚µ‚Ü‚µ‚½");
+		tempCnt=tempCnt + _T(" ä»¶ã®ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆã‚’å±•é–‹ã—ã¾ã—ãŸ");
 	}else{
-		tempCnt=_T("ƒvƒŒƒCƒŠƒXƒg‚ª–³‚¢‚½‚ßAƒŠƒXƒg‚ğ“WŠJ‚Å‚«‚Ü‚¹‚ñ");
+		tempCnt=_T("ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆãŒç„¡ã„ãŸã‚ã€ãƒªã‚¹ãƒˆã‚’å±•é–‹ã§ãã¾ã›ã‚“");
 	}
 	CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 	CFileListCreatorDlg::SetStrFormat_Func();
@@ -17100,7 +17100,7 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 	CFileListCreatorDlg::ItemCount_Func(TRUE);
 
 	if (myCnt>=1){
-		ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+		ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 		CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -17108,9 +17108,9 @@ void CFileListCreatorDlg::OnMenuExpandMusicListFile()
 			return;
 		}
 
-		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+		if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 			m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-			SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+			SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 		}
 	}
 
@@ -17135,7 +17135,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -17143,7 +17143,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 	//CurDir = szCurrentDir;
 
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -17180,13 +17180,13 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 			CFile::modeCreate | CFile::modeNoTruncate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText
 
 		while (!err) {
-			MSG msg; //’Ç‰Á 2011.10.22
+			MSG msg; //è¿½åŠ  2011.10.22
 
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -17204,7 +17204,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 			}
 		}
 		
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 
 		return;
@@ -17230,7 +17230,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
  			file.Close();
  			src.ReleaseBuffer(iLength);
  	
- 			// ƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚ñ‚Å‚é‚ªAUTF-8 ‚Ì BOM(EF, BB, BF)‚Ìˆµ‚¢‚Í‘åä•v‚©H
+ 			// ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚“ã§ã‚‹ãŒã€UTF-8 ã® BOM(EF, BB, BF)ã®æ‰±ã„ã¯å¤§ä¸ˆå¤«ã‹ï¼Ÿ
  			//
  			static const BYTE utf8_bom[3] = { 0xEF, 0xBB, 0xBF };
  	
@@ -17240,19 +17240,19 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
  	
  			//CStringA dest;
  			if (UTF8ToShiftJIS(src, &dest)) {
- 				// •¶šƒR[ƒh‚ª S-JIS ‚È‚Ì‚ÅAANSIƒo[ƒWƒ‡ƒ“‚ğ–¾¦“I‚Ég—p‚·‚é•K—v‚ª‚ ‚é
- 				// (MessageBox ‚Å‚Í‚È‚­‚ÄAMessageBoxA)
+ 				// æ–‡å­—ã‚³ãƒ¼ãƒ‰ãŒ S-JIS ãªã®ã§ã€ANSIãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’æ˜ç¤ºçš„ã«ä½¿ç”¨ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+ 				// (MessageBox ã§ã¯ãªãã¦ã€MessageBoxA)
  				//
- 				//::MessageBoxA(m_hWnd, dest, "‚Ä‚·‚Æ", MB_OK);
+ 				//::MessageBoxA(m_hWnd, dest, "ã¦ã™ã¨", MB_OK);
  			}
 		 }
 
 		//http://www.s-cradle.com/developer/sophiaframework/sf_reference/ref.SFXTextEncoding.html
 		//UTF8ToShiftJIS( SFXAnsiStringConstRef source , SFXAnsiStringPtr destination );
-		//•¶šƒGƒ“ƒR[ƒh‚ğ UTF-8 ‚©‚ç Shift_JIS ‚É•ÏŠ·‚µ‚Ü‚·B
+		//æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’ UTF-8 ã‹ã‚‰ Shift_JIS ã«å¤‰æ›ã—ã¾ã™ã€‚
 
 
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = dest;
@@ -17262,7 +17262,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 			END_CATCH
 		}
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 
 
@@ -17274,13 +17274,13 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 		err = 0;
 
 		while (!err) {
-			MSG msg; //’Ç‰Á 2011.10.22
+			MSG msg; //è¿½åŠ  2011.10.22
 
-			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+			if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 				if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 					if (msg.wParam == VK_ESCAPE){
 						ESCAPE_FLG = TRUE;
-						break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+						break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 					}
 				}
 				TranslateMessage(&msg);
@@ -17303,20 +17303,20 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 						CString tempStr; 
                 
 						tempStr = rstr.Mid(startIDX + myTag.GetLength(), EndIDX - startIDX - myTag.GetLength());
-					//================== •¶šQÆ ==================
+					//================== æ–‡å­—å‚ç…§ ==================
 						tempStr.Replace(_T("&apos;"), _T("'"));
 						tempStr.Replace(_T("&cric;"), _T("^"));
 						tempStr.Replace(_T("&tilde;"), _T("~"));
 						tempStr.Replace(_T("&ndash;"), _T("-"));
-						tempStr.Replace(_T("&lsquo;"), _T("e"));
-						tempStr.Replace(_T("&rsquo;"), _T("f"));
+						tempStr.Replace(_T("&lsquo;"), _T("â€˜"));
+						tempStr.Replace(_T("&rsquo;"), _T("â€™"));
 						tempStr.Replace(_T("&sbquo;"), _T(","));
-						tempStr.Replace(_T("&amp;"), _T("&")); //ÅŒãH
+						tempStr.Replace(_T("&amp;"), _T("&")); //æœ€å¾Œï¼Ÿ
 
 	//'                    tempStr = Replace(tempStr, "&ensp;", "[]")
 	//'                    tempStr = Replace(tempStr, "&emsp;", "[]")
     
-					//================== •¶šQÆ END ==================
+					//================== æ–‡å­—å‚ç…§ END ==================
 						if(tempStr.Left(2)!=_T("..")){
 							//inputData +=_T(" \"") + tempStr + _T("\"");
 							if( PathFileExists(tempStr) ){
@@ -17406,7 +17406,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 									tempPath = _T("Z:\\")+tempStr;
 									if (PathFileExists(tempPath)) break;
 								default:
-									CFileListCreatorDlg::StatusStringSet(_T("Zƒhƒ‰ƒCƒu‚Ü‚Å’Tõ‚µ‚Ü‚µ‚½‚ªA‚¢‚­‚Â‚©‚Ì‘Š‘ÎƒpƒX‚ªâ‘ÎƒpƒX‚É•ÏŠ·‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+									CFileListCreatorDlg::StatusStringSet(_T("Zãƒ‰ãƒ©ã‚¤ãƒ–ã¾ã§æ¢ç´¢ã—ã¾ã—ãŸãŒã€ã„ãã¤ã‹ã®ç›¸å¯¾ãƒ‘ã‚¹ãŒçµ¶å¯¾ãƒ‘ã‚¹ã«å¤‰æ›ã§ãã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 									break;
 							}
 							if (PathFileExists(tempPath)) ListInsertItem(tempPath);
@@ -17422,7 +17422,7 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 
 		DeleteFile(CurDir + _T("\\") + SaveFileName + _T(".flc"));
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 
 		return;
 	}
@@ -17443,9 +17443,9 @@ void CFileListCreatorDlg::ExpandMusicListFile_Func(CString MusicListFilePath)
 
 void CFileListCreatorDlg::OnRepeateditemcheckBydatasize()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 	SameItemCheck(_T("SameItemCheck_By_DataSize"));
 
 }
@@ -17454,20 +17454,20 @@ void CFileListCreatorDlg::OnRepeateditemcheckBydatasize()
 
 void CFileListCreatorDlg::OnRepeateditemcheckByfilename()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SameItemCheck(_T("SameItemCheck_BY_FileName"));
 }
 
 void CFileListCreatorDlg::OnRepeateditemcheckBymodifytime()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SameItemCheck(_T("SameItemCheck_By_ModifyTime"));
 }
 
 
 void CFileListCreatorDlg::OnRepeateditemcheckByallinfo()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	SameItemCheck(_T("SameItemCheck_By_ALL_INFO"));
 }
 
@@ -17498,27 +17498,27 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 	}
 
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-	//StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼Aƒtƒ@ƒCƒ‹—e—ÊAC³“ú‚É‚æ‚èAd•¡ƒ`ƒFƒbƒN"),0,FALSE);
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+	//StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã€ãƒ•ã‚¡ã‚¤ãƒ«å®¹é‡ã€ä¿®æ­£æ—¥æ™‚ã«ã‚ˆã‚Šã€é‡è¤‡ãƒã‚§ãƒƒã‚¯"),0,FALSE);
 
 	//int LastRow = CFileListCreatorDlg::m_xcList.GetItemCount();
 
 	struct itemStruct
 	{
-		CString	RepetitionNum;	//ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
+		CString	RepetitionNum;	//ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
 
-		//int		Num;		//’Ê‚µ”Ô†
-		CString	FullPath;	//ƒtƒ@ƒCƒ‹ƒpƒX
-		CString	FileName;	//ƒtƒ@ƒCƒ‹–¼
-		//CString	ApproximateByte;	//‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY//ƒoƒCƒg
-		CString	AccurateByte;		//ÀÛ‚Ìƒf[ƒ^ƒTƒCƒY//ÀƒoƒCƒg
+		//int		Num;		//é€šã—ç•ªå·
+		CString	FullPath;	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+		CString	FileName;	//ãƒ•ã‚¡ã‚¤ãƒ«å
+		//CString	ApproximateByte;	//ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//ãƒã‚¤ãƒˆ
+		CString	AccurateByte;		//å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º//å®Ÿãƒã‚¤ãƒˆ
 		
-		//TCHAR	ModifyDate[20];		//C³“ú
-		//CTime	ModifyTime;		//C³ŠÔ
+		//TCHAR	ModifyDate[20];		//ä¿®æ­£æ—¥
+		//CTime	ModifyTime;		//ä¿®æ­£æ™‚é–“
 		
-		CString	ModifyTime;		//C³ŠÔ
+		CString	ModifyTime;		//ä¿®æ­£æ™‚é–“
 		
-		//TCHAR	RemarksColumn[100];		//”õl—“
+		//TCHAR	RemarksColumn[100];		//å‚™è€ƒæ¬„
 	//} item[] = 
 	//	{_T(""),_T(""),_T(""),_T(""),_T(""),
 	};
@@ -17534,18 +17534,18 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 
 	//MessageBox(itemNum);
 
-	for (i = 0; i < CFileListCreatorDlg::m_xcList.GetItemCount(); i++) //‰Šú‰»
+	for (i = 0; i < CFileListCreatorDlg::m_xcList.GetItemCount(); i++) //åˆæœŸåŒ–
 	{
 
-		item[i].RepetitionNum = _T(""); //ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
-		item[i].FileName = _T(""); //ƒtƒ@ƒCƒ‹–¼
-		item[i].AccurateByte = _T(""); //ƒf[ƒ^ƒTƒCƒY
-		item[i].ModifyTime = _T(""); //C³ŠÔ
+		item[i].RepetitionNum = _T(""); //ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
+		item[i].FileName = _T(""); //ãƒ•ã‚¡ã‚¤ãƒ«å
+		item[i].AccurateByte = _T(""); //ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+		item[i].ModifyTime = _T(""); //ä¿®æ­£æ™‚é–“
 	}
 
 //http://homepage2.nifty.com/assua/aosite/cpp/cpp_intro/cpb12.html
 
-//C++‚Ìê‡F
+//C++ã®å ´åˆï¼š
 //struct Test{
 //int n;
 //char ch;
@@ -17559,18 +17559,18 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 	int dd;
 
 	//  for( cc = 0;cc<33333;cc++){
-	//      myitem[cc][0] = _T(""); //ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[
-	//      myitem[cc][1] = _T(""); //ƒtƒ@ƒCƒ‹–¼
-	//		myitem[cc][2] = _T(""); //ƒf[ƒ^ƒTƒCƒY
-	//		myitem[cc][3] = _T(""); //C³ŠÔ
+	//      myitem[cc][0] = _T(""); //ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼
+	//      myitem[cc][1] = _T(""); //ãƒ•ã‚¡ã‚¤ãƒ«å
+	//		myitem[cc][2] = _T(""); //ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+	//		myitem[cc][3] = _T(""); //ä¿®æ­£æ™‚é–“
 	//}
 
     cc = 1;
-    dd = 1; //ƒRƒƒ“ƒg‰»
+    dd = 1; //ã‚³ãƒ¡ãƒ³ãƒˆåŒ–
 
 	if(mySwitch == _T("SameItemCheck_BY_FileName")){
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-		StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼‚É‚æ‚èAd•¡ƒ`ƒFƒbƒN"),0,FALSE);
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+		StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚ˆã‚Šã€é‡è¤‡ãƒã‚§ãƒƒã‚¯"),0,FALSE);
 		index = 0;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -17583,7 +17583,7 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 
 			if(FullPathString != _T("")){
 				if (FullPathString.Right(1) ==_T("\\")){
-					item[index].FileName = FullPathToFileName(FullPathString.Left(FullPathString.GetLength()-1)); //’Ç‰Á 2012.04.04
+					item[index].FileName = FullPathToFileName(FullPathString.Left(FullPathString.GetLength()-1)); //è¿½åŠ  2012.04.04
 				}else{
 					item[index].FileName = FullPathToFileName(FullPathString);
 				}
@@ -17594,9 +17594,9 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 				if (item[dd].FileName == item[index].FileName){
 					if (item[index].RepetitionNum != _T("")){
 						item[dd].RepetitionNum = item[index].RepetitionNum;
-						//" d•¡”Ô†—“‚ÉŠù‚Éd•¡‚m‚‚ªA“ü‚Á‚Ä‚¢‚é‚Æ‚«"
+						//" é‡è¤‡ç•ªå·æ¬„ã«æ—¢ã«é‡è¤‡ï¼®ï½ãŒã€å…¥ã£ã¦ã„ã‚‹ã¨ã"
 					}else{
-						//cc // " ƒCƒ“ƒNƒŠƒƒ“ƒgcc"
+						//cc // " ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆcc"
 							CString str;
 							if (cc>=INT_MAX){
 								str = _T("MAX-Value");
@@ -17626,14 +17626,14 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 					UpdateData(FALSE);
 				}
 			}
-			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //’Ç‰Á 2012.04.04
+			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //è¿½åŠ  2012.04.04
 			index++;
 
 			UpdateData(FALSE);
 		}
 	}else if(mySwitch == _T("SameItemCheck_By_DataSize")){
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-		StatusStringSet(_T("ƒtƒ@ƒCƒ‹—e—Ê‚É‚æ‚èAd•¡ƒ`ƒFƒbƒN"),0,FALSE);
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+		StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å®¹é‡ã«ã‚ˆã‚Šã€é‡è¤‡ãƒã‚§ãƒƒã‚¯"),0,FALSE);
 		index = 0;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -17660,9 +17660,9 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 				if (item[dd].AccurateByte == item[index].AccurateByte){
 					if (item[index].RepetitionNum != _T("")){
 						item[dd].RepetitionNum = item[index].RepetitionNum;
-						//" d•¡”Ô†—“‚ÉŠù‚Éd•¡‚m‚‚ªA“ü‚Á‚Ä‚¢‚é‚Æ‚«"
+						//" é‡è¤‡ç•ªå·æ¬„ã«æ—¢ã«é‡è¤‡ï¼®ï½ãŒã€å…¥ã£ã¦ã„ã‚‹ã¨ã"
 					}else{
-						//cc // " ƒCƒ“ƒNƒŠƒƒ“ƒgcc"
+						//cc // " ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆcc"
 							CString str;
 							if (cc>=INT_MAX){
 								str = _T("MAX-Value");
@@ -17691,14 +17691,14 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 					UpdateData(FALSE);
 				}
 			}
-			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //’Ç‰Á 2012.04.04
+			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //è¿½åŠ  2012.04.04
 			index++;
 
 			UpdateData(FALSE);
 		}
 	}else if(mySwitch == _T("SameItemCheck_By_ModifyTime")){
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-		StatusStringSet(_T("ƒtƒ@ƒCƒ‹C³“ú‚É‚æ‚èAd•¡ƒ`ƒFƒbƒN"),0,FALSE);
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+		StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ä¿®æ­£æ—¥æ™‚ã«ã‚ˆã‚Šã€é‡è¤‡ãƒã‚§ãƒƒã‚¯"),0,FALSE);
 		index = 0;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -17732,9 +17732,9 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 				if (item[dd].ModifyTime == item[index].ModifyTime){
 					if (item[index].RepetitionNum != _T("")){
 						item[dd].RepetitionNum = item[index].RepetitionNum;
-						//" d•¡”Ô†—“‚ÉŠù‚Éd•¡‚m‚‚ªA“ü‚Á‚Ä‚¢‚é‚Æ‚«"
+						//" é‡è¤‡ç•ªå·æ¬„ã«æ—¢ã«é‡è¤‡ï¼®ï½ãŒã€å…¥ã£ã¦ã„ã‚‹ã¨ã"
 					}else{
-						//cc // " ƒCƒ“ƒNƒŠƒƒ“ƒgcc"
+						//cc // " ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆcc"
 							CString str;
 							if (cc>=INT_MAX){
 								str = _T("MAX-Value");
@@ -17763,14 +17763,14 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 					UpdateData(FALSE);
 				}
 			}
-			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //’Ç‰Á 2012.04.04
+			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //è¿½åŠ  2012.04.04
 			index++;
 
 			UpdateData(FALSE);
 		}
 	}else if(mySwitch == _T("SameItemCheck_By_ALL_INFO")){
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
-		StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼Aƒtƒ@ƒCƒ‹—e—ÊAC³“ú‚É‚æ‚èAd•¡ƒ`ƒFƒbƒN"),0,FALSE);
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
+		StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«åã€ãƒ•ã‚¡ã‚¤ãƒ«å®¹é‡ã€ä¿®æ­£æ—¥æ™‚ã«ã‚ˆã‚Šã€é‡è¤‡ãƒã‚§ãƒƒã‚¯"),0,FALSE);
 		index = 0;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
@@ -17783,7 +17783,7 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 
 			if(FullPathString != _T("")){
 				if (FullPathString.Right(1) ==_T("\\")){
-					item[index].FileName = FullPathToFileName(FullPathString.Left(FullPathString.GetLength()-1)); //’Ç‰Á 2012.04.04
+					item[index].FileName = FullPathToFileName(FullPathString.Left(FullPathString.GetLength()-1)); //è¿½åŠ  2012.04.04
 				}else{
 					item[index].FileName = FullPathToFileName(FullPathString);
 				}
@@ -17807,9 +17807,9 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 				if (item[dd].FileName == item[index].FileName && item[dd].AccurateByte == item[index].AccurateByte && item[dd].ModifyTime == item[index].ModifyTime){
 					if (item[index].RepetitionNum != _T("")){
 						item[dd].RepetitionNum = item[index].RepetitionNum;
-						//" d•¡”Ô†—“‚ÉŠù‚Éd•¡‚m‚‚ªA“ü‚Á‚Ä‚¢‚é‚Æ‚«"
+						//" é‡è¤‡ç•ªå·æ¬„ã«æ—¢ã«é‡è¤‡ï¼®ï½ãŒã€å…¥ã£ã¦ã„ã‚‹ã¨ã"
 					}else{
-						//cc // " ƒCƒ“ƒNƒŠƒƒ“ƒgcc"
+						//cc // " ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆcc"
 							CString str;
 							if (cc>=INT_MAX){
 								str = _T("MAX-Value");
@@ -17838,34 +17838,34 @@ void CFileListCreatorDlg::SameItemCheck(CString mySwitch)
 					UpdateData(FALSE);
 				}
 			}
-			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //’Ç‰Á 2012.04.04
+			CFileListCreatorDlg::m_xcList.EnsureVisible(index, FALSE); //è¿½åŠ  2012.04.04
 			index++;
 
 			UpdateData(FALSE);
 		}
 	}
-	RedrawWindow();  //’Ç‰Á2011.12.10 //XP‘ÎôFÄ•`‰æ
+	RedrawWindow();  //è¿½åŠ 2011.12.10 //XPå¯¾ç­–ï¼šå†æç”»
 	
-	CFileListCreatorDlg::OnSortSortitemsbyrepetitionnum(); //’Ç‰Á 2012.04.04
+	CFileListCreatorDlg::OnSortSortitemsbyrepetitionnum(); //è¿½åŠ  2012.04.04
 	
-	//for (i = 0; i < CFileListCreatorDlg::m_xcList.GetItemCount(); i++) //‰Šú‰»
+	//for (i = 0; i < CFileListCreatorDlg::m_xcList.GetItemCount(); i++) //åˆæœŸåŒ–
 	//{
 		//delete item[];
 	//}
 	delete [] item;
 
-	//free(array);//–Y‚ê‚¸‚É
+	//free(array);//å¿˜ã‚Œãšã«
 }
 
 
 
 void CFileListCreatorDlg::OnBnClickedBtnCurrentdirectoryopen()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	_wsetlocale(LC_ALL, _T("jpn"));
 
-	//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -17873,23 +17873,23 @@ void CFileListCreatorDlg::OnBnClickedBtnCurrentdirectoryopen()
 	//CurDir = szCurrentDir;
 
 	//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+	// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 	TCHAR szPath[_MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH);
 
 	////http://rararahp.cool.ne.jp/vc/vctips/api.htm
-	//// ƒJƒŒƒ“ƒgƒtƒHƒ‹ƒ_‚ğæ“¾‚·‚é
+	//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã‚’å–å¾—ã™ã‚‹
 	//TCHAR szCurrentDir[_MAX_PATH];
 	//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 
-	//// ƒtƒ‹ƒpƒX‚ğ•ª‰ğ
+	//// ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’åˆ†è§£
 	//TCHAR szDir[_MAX_DIR];
 	//TCHAR szDrive[_MAX_DRIVE];
 	//TCHAR szFName[_MAX_FNAME];
 	//TCHAR szExt[_MAX_EXT];
 	//_splitpath(szPath,szDrive,szDir,szFName,szExt);
 	//
-	//// ƒtƒHƒ‹ƒ_Aƒtƒ@ƒCƒ‹–¼æ“¾
+	//// ãƒ•ã‚©ãƒ«ãƒ€ã€ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 	//TCHAR szFilePath[_MAX_PATH];
 	//TCHAR szFileName[_MAX_PATH];
 	//sprintf(szFilePath,"%s%s",szDrive,szDir);
@@ -17907,22 +17907,22 @@ void CFileListCreatorDlg::OnBnClickedBtnCurrentdirectoryopen()
 	//http://gurizuri0505.halfmoon.jp/develop/cplusplus/cstdiofile
 	 _wsetlocale(LC_ALL, _T(""));
 
-	TRACE("Ÿ%SŸ",CurDir);
+	TRACE("â—†%Sâ—†",CurDir);
 
 	//FolderPath.Replace(_T("\\"),_T("\\\\"));
 	//http://oshiete.goo.ne.jp/qa/976818.html
-	////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+	////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 	//ShellExecute(NULL, _T("open"), CurDir, NULL, NULL, SW_SHOWNORMAL);
 
 
-	SetCurrentDirectory(CurDir);  //•K—v
-	//šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+	SetCurrentDirectory(CurDir);  //å¿…è¦
+	//â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 	ShellExecute( NULL, _T("open"), _T("C:\\WINDOWS\\EXPLORER.EXE"), _T(".\\") , NULL, SW_SHOWNORMAL );
 
 
 
 
-	////šƒGƒNƒXƒvƒ[ƒ‰‚ÅŠJ‚­
+	////â˜…ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ã§é–‹ã
 	//ShellExecute( NULL, _T("explore"), CurDir +_T("\\\\") , NULL , NULL, SW_SHOWNORMAL );
 
 	//ShellExecute( NULL, _T("open"), CurDir, szPath , NULL , SW_SHOWNORMAL );
@@ -17932,7 +17932,7 @@ void CFileListCreatorDlg::OnBnClickedBtnCurrentdirectoryopen()
 
 void CFileListCreatorDlg::OnOptionCurrentdirectoryopen()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CFileListCreatorDlg::OnBnClickedBtnCurrentdirectoryopen();
 }
@@ -17940,10 +17940,10 @@ void CFileListCreatorDlg::OnOptionCurrentdirectoryopen()
 
 void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		//LVITEM	   lvi;
@@ -17957,7 +17957,7 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 		BOOL ExistFLG = FALSE;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
-			//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+			//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 			lvi.iItem = index;
 			lvi.iSubItem = 0;			
 
@@ -17968,17 +17968,17 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 		}
 
 		if (ExistFLG == FALSE) {
-			StatusStringSet(_T("d•¡ƒiƒ“ƒo[‚Ì—“‚É‚Íƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚Ü‚¹‚ñ"),0,TRUE);
+			StatusStringSet(_T("é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã®æ¬„ã«ã¯ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ã„ã¾ã›ã‚“"),0,TRUE);
 			return;
 		}
 	}
 
 	int myResult;
-	myResult = MessageBox(_T("d•¡ƒiƒ“ƒo[‚ğ‚·‚×‚Äíœ‚µ‚Ü‚·‚©H") ,_T("íœŠm”F"), MB_YESNOCANCEL );
+	myResult = MessageBox(_T("é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã‚’ã™ã¹ã¦å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ") ,_T("å‰Šé™¤ç¢ºèª"), MB_YESNOCANCEL );
 
 
 	if (IDYES == myResult){
-		StatusStringSet(_T("d•¡ƒiƒ“ƒo[‚ğíœ’†"),0,FALSE);
+		StatusStringSet(_T("é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã‚’å‰Šé™¤ä¸­"),0,FALSE);
 
 		//LVITEM	   lvi;
 		int		  index = 0;
@@ -17988,7 +17988,7 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 
 		index = 0;
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
-			//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+			//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 			lvi.iItem = index;
 			lvi.iSubItem = 0;			
 
@@ -17996,14 +17996,14 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 			CFileListCreatorDlg::m_xcList.SetItem(&lvi);
 			index++;
 		}
-		StatusStringSet(_T("d•¡ƒiƒ“ƒo[‚ğíœ‚µ‚Ü‚µ‚½"),300,TRUE);
-		RedrawWindow(); //’Ç‰Á 2012.04.05 //XP‘Îô
+		StatusStringSet(_T("é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã‚’å‰Šé™¤ã—ã¾ã—ãŸ"),300,TRUE);
+		RedrawWindow(); //è¿½åŠ  2012.04.05 //XPå¯¾ç­–
 	}else{
-		StatusStringSet(_T("d•¡ƒiƒ“ƒo[‚Ìíœ‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"),300,TRUE);
+		StatusStringSet(_T("é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã®å‰Šé™¤ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -18011,7 +18011,7 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -18019,10 +18019,10 @@ void CFileListCreatorDlg::OnEditlistClearrepetitionnum()
 
 void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		//LVITEM	   lvi;
@@ -18036,7 +18036,7 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 		BOOL ExistFLG = FALSE;
 
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
-			//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+			//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 			lvi.iItem = index;
 			lvi.iSubItem = 8;			
 
@@ -18047,20 +18047,20 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 		}
 
 		if (ExistFLG == FALSE) {
-			StatusStringSet(_T("”õl—“‚É‚Íƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚Ü‚¹‚ñ"),0,TRUE);
+			StatusStringSet(_T("å‚™è€ƒæ¬„ã«ã¯ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ã„ã¾ã›ã‚“"),0,TRUE);
 			return;
 		}
 	}
 
 	int myResult;
-	myResult = MessageBox(_T("”õl—“‚Ì•¶š‚ğ‚·‚×‚Äíœ‚µ‚Ü‚·‚©H") ,_T("íœŠm”F"), MB_YESNOCANCEL );
+	myResult = MessageBox(_T("å‚™è€ƒæ¬„ã®æ–‡å­—ã‚’ã™ã¹ã¦å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ") ,_T("å‰Šé™¤ç¢ºèª"), MB_YESNOCANCEL );
 
 
 	if (IDYES == myResult){
 		LastPrevItemCount = m_xcList.GetItemCount();
-		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-		StatusStringSet(_T("”õl—“‚ğíœ’†"),0,FALSE);
+		StatusStringSet(_T("å‚™è€ƒæ¬„ã‚’å‰Šé™¤ä¸­"),0,FALSE);
 
 		//LVITEM	   lvi;
 		int		  index = 0;
@@ -18070,7 +18070,7 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 
 		index = 0;
 		while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
-			//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+			//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 			lvi.iItem = index;
 			lvi.iSubItem = 8;			
 
@@ -18078,15 +18078,15 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 			CFileListCreatorDlg::m_xcList.SetItem(&lvi);
 			index++;
 		}
-		StatusStringSet(_T("”õl—“‚ğíœ‚µ‚Ü‚µ‚½"),300,TRUE);
-		RedrawWindow(); //’Ç‰Á 2012.04.05 //XP‘Îô
+		StatusStringSet(_T("å‚™è€ƒæ¬„ã‚’å‰Šé™¤ã—ã¾ã—ãŸ"),300,TRUE);
+		RedrawWindow(); //è¿½åŠ  2012.04.05 //XPå¯¾ç­–
 	}else{
-		StatusStringSet(_T("”õl—“‚Ìíœ‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"),300,TRUE);
+		StatusStringSet(_T("å‚™è€ƒæ¬„ã®å‰Šé™¤ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -18094,7 +18094,7 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 }
@@ -18102,14 +18102,14 @@ void CFileListCreatorDlg::OnEditlistClearremarkscolumn()
 
 void CFileListCreatorDlg::OnLanguageJapanese()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 
     CMenu    cMenu;
     int      err = 0;
     
 
-    // ƒƒjƒ…[‚ğƒ[ƒh
+    // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰
     if (!err) if (!cMenu.LoadMenu(IDR_MENU2)) err = 1;
 
     SetMenu(&cMenu); //http://www.gidforums.com/t-17869.html
@@ -18121,8 +18121,8 @@ void CFileListCreatorDlg::OnLanguageJapanese()
 	//http://rarara.cafe.coocan.jp/cgi-bin/lng/vc/vclng.cgi?print+200609/06090009.txt
 
 
-	// CMainFrameƒNƒ‰ƒXˆÈŠO‚È‚ç‚ÎAAfxGetMainWnd()->GetMenu()‚Åæ“¾‚·‚éB this->AfxGetMainWnd()->GetMenu()
-	CMenu* pMenu = &cMenu; //•ÏX 2012.04.14
+	// CMainFrameã‚¯ãƒ©ã‚¹ä»¥å¤–ãªã‚‰ã°ã€AfxGetMainWnd()->GetMenu()ã§å–å¾—ã™ã‚‹ã€‚ this->AfxGetMainWnd()->GetMenu()
+	CMenu* pMenu = &cMenu; //å¤‰æ›´ 2012.04.14
 	CMenu* pSubMenu;
 	CMenu* pSubMenu2;
 	CMenu* pSubMenu3;
@@ -18130,310 +18130,310 @@ void CFileListCreatorDlg::OnLanguageJapanese()
 	UINT id;
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹ (&F)" ) );
+	pMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ« (&F)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 0 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒŠƒXƒgæ‚è‚İ (&I)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒªã‚¹ãƒˆå–ã‚Šè¾¼ã¿ (&I)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒŠƒXƒgo—Í (&E)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒªã‚¹ãƒˆå‡ºåŠ› (&E)" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒRƒs[ (&C)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚³ãƒ”ãƒ¼ (&C)" ) );
 
 		id = pSubMenu->GetMenuItemID( 3 );
-		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "ˆóü (&P)" ) );
+		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "å°åˆ· (&P)" ) );
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹•œ‹A (&R)" ) );
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«å¾©å¸° (&R)" ) );
 
 		id = pSubMenu->GetMenuItemID( 5 );
-		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "©“®•Û‘¶ (&A)" ) );
+		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "è‡ªå‹•ä¿å­˜ (&A)" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 5 );
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒIƒ“(&O)" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚ªãƒ³(&O)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒIƒt" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚ªãƒ•" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "•Û‘¶ (&S) (Ctrl + S)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ä¿å­˜ (&S) (Ctrl + S)" ) );
 
 		id = pSubMenu->GetMenuItemID( 7 );
-		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "I—¹(&Q) (Ctrl + Q)" ) );
+		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "çµ‚äº†(&Q) (Ctrl + Q)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ŒŸõ (&S)" ) );
+	pMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "æ¤œç´¢ (&S)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 1 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ˆêŠ‡ŒŸõ (&P)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ä¸€æ‹¬æ¤œç´¢ (&P)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "’€ŸŒŸõ (&S)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "é€æ¬¡æ¤œç´¢ (&S)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒŠƒXƒg•ÒW (&E)" ) );
+	pMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒªã‚¹ãƒˆç·¨é›† (&E)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 2 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "Œ³‚É–ß‚· (&U) (Ctrl + Z)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "å…ƒã«æˆ»ã™ (&U) (Ctrl + Z)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹î•ñ•œ‹A (&R)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«æƒ…å ±å¾©å¸° (&R)" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "Šg’£qî•ñíœ (&D)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "æ‹¡å¼µå­æƒ…å ±å‰Šé™¤ (&D)" ) );
 
 		id = pSubMenu->GetMenuItemID( 3 );
-		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒfƒBƒŒƒNƒgƒŠî•ñ•t‰Á (&A)" ) );
+		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæƒ…å ±ä»˜åŠ  (&A)" ) );
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "‚·‚×‚Ä‘I‘ğ (Ctrl + A)" ) );
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ã™ã¹ã¦é¸æŠ (Ctrl + A)" ) );
 
 		id = pSubMenu->GetMenuItemID( 5 );
-		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "‚·‚×‚Ä‚Ì‘I‘ğ‚ğ‰ğœ (&C)" ) );
+		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "ã™ã¹ã¦ã®é¸æŠã‚’è§£é™¤ (&C)" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒAƒCƒeƒ€–¼ ŒŸõ•’uŠ· (Ctrl + F)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¢ã‚¤ãƒ†ãƒ å æ¤œç´¢ï¼†ç½®æ› (Ctrl + F)" ) );
 
 		id = pSubMenu->GetMenuItemID( 7 );
-		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "˜A”Ô•t—^ (&N)" ) );
+		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "é€£ç•ªä»˜ä¸ (&N)" ) );
 
 		id = pSubMenu->GetMenuItemID( 8 );
-		pSubMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "d•¡ƒiƒ“ƒo[‚ğíœ" ) );
+		pSubMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã‚’å‰Šé™¤" ) );
 
 		id = pSubMenu->GetMenuItemID( 9 );
-		pSubMenu->ModifyMenu( 9, MF_BYPOSITION | MF_STRING, id, TEXT( "”õl—“‚ğíœ" ) );
+		pSubMenu->ModifyMenu( 9, MF_BYPOSITION | MF_STRING, id, TEXT( "å‚™è€ƒæ¬„ã‚’å‰Šé™¤" ) );
 
 		id = pSubMenu->GetMenuItemID( 10 );
-		pSubMenu->ModifyMenu( 10, MF_BYPOSITION | MF_STRING, id, TEXT( "‹­’²‚³‚ê‚Ä‚¢‚È‚¢ƒAƒCƒeƒ€‚ğíœ (&E)" ) );
+		pSubMenu->ModifyMenu( 10, MF_BYPOSITION | MF_STRING, id, TEXT( "å¼·èª¿ã•ã‚Œã¦ã„ãªã„ã‚¢ã‚¤ãƒ†ãƒ ã‚’å‰Šé™¤ (&E)" ) );
 
 		id = pSubMenu->GetMenuItemID( 11 );
-		pSubMenu->ModifyMenu( 11, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒ\[ƒg‚Æƒ}[ƒW (&S)" ) );
+		pSubMenu->ModifyMenu( 11, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚½ãƒ¼ãƒˆã¨ãƒãƒ¼ã‚¸ (&S)" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 11 );
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "d•¡ƒiƒ“ƒo[‚Åƒ\[ƒg (&N)" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã§ã‚½ãƒ¼ãƒˆ (&N)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹–¼‚Åƒ\[ƒg (&F)" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«åã§ã‚½ãƒ¼ãƒˆ (&F)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 2 );
-			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒf[ƒ^ƒTƒCƒY‚Åƒ\[ƒg (&S)" ) );
+			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã§ã‚½ãƒ¼ãƒˆ (&S)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 3 );
-			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "“ú•t‚Åƒ\[ƒg (&D)" ) );
+			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "æ—¥ä»˜ã§ã‚½ãƒ¼ãƒˆ (&D)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 4 );
-			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒpƒXî•ñ‚Åƒ\[ƒg (&P)" ) );
+			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‘ã‚¹æƒ…å ±ã§ã‚½ãƒ¼ãƒˆ (&P)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 5 );
-			pSubMenu2->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "‘®î•ñ‚Åƒ\[ƒg" ) );
+			pSubMenu2->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "æ›¸å¼æƒ…å ±ã§ã‚½ãƒ¼ãƒˆ" ) );
 
 			id = pSubMenu2->GetMenuItemID( 6 );
 			pSubMenu2->ModifyMenu( 6, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 			id = pSubMenu2->GetMenuItemID( 7 );
-			pSubMenu2->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒ}[ƒW (&M)" ) );
+			pSubMenu2->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒãƒ¼ã‚¸ (&M)" ) );
 
 		id = pSubMenu->GetMenuItemID( 12 );
-		pSubMenu->ModifyMenu( 12, MF_BYPOSITION | MF_STRING, id, TEXT( "d•¡ƒtƒ@ƒCƒ‹ƒ`ƒFƒbƒN" ) );
+		pSubMenu->ModifyMenu( 12, MF_BYPOSITION | MF_STRING, id, TEXT( "é‡è¤‡ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚§ãƒƒã‚¯" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 12 );
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹–¼‚Åƒ`ƒFƒbƒN (&F)" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«åã§ãƒã‚§ãƒƒã‚¯ (&F)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒf[ƒ^ƒTƒCƒY‚Åƒ`ƒFƒbƒN (&D)" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã§ãƒã‚§ãƒƒã‚¯ (&D)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 2 );
-			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "C³“ú‚Åƒ`ƒFƒbƒN (&T)" ) );
+			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ä¿®æ­£æ—¥æ™‚ã§ãƒã‚§ãƒƒã‚¯ (&T)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 3 );
-			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‹L‚R‚Â‚Ìî•ñ‚Åƒ`ƒFƒbƒN (&A)" ) );
+			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "ä¸Šè¨˜ï¼“ã¤ã®æƒ…å ±ã§ãƒã‚§ãƒƒã‚¯ (&A)" ) );
 
 		id = pSubMenu->GetMenuItemID( 13 );
-		pSubMenu->ModifyMenu( 13, MF_BYPOSITION | MF_STRING, id, TEXT( "iTunes‚ÅŠÇ—‚³‚ê‚½ƒtƒ@ƒCƒ‹‚É‘Î‚µ‚Ä... (&I)" ) );
+		pSubMenu->ModifyMenu( 13, MF_BYPOSITION | MF_STRING, id, TEXT( "iTunesã§ç®¡ç†ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã—ã¦... (&I)" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 13 );
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒA[ƒeƒBƒXƒgî•ñ•t—^" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¢ãƒ¼ãƒ†ã‚£ã‚¹ãƒˆæƒ…å ±ä»˜ä¸" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒAƒ‹ƒoƒ€ƒŠƒXƒgì¬" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¢ãƒ«ãƒãƒ ãƒªã‚¹ãƒˆä½œæˆ" ) );
 
 		id = pSubMenu->GetMenuItemID( 14 );
-		pSubMenu->ModifyMenu( 14, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒBƒ‹ƒ^[‚Åi‚è‚İ (&F)" ) );
+		pSubMenu->ModifyMenu( 14, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ã§çµã‚Šè¾¼ã¿ (&F)" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 14 );
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "“ú•tƒtƒBƒ‹ƒ^[ (&D) (Ctrl + D)" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "æ—¥ä»˜ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ (&D) (Ctrl + D)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒL[ƒ[ƒhƒtƒBƒ‹ƒ^[ (&K) (Ctrl + K)" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ (&K) (Ctrl + K)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "‘I‘ğƒAƒCƒeƒ€‚ğ...(&I)" ) );
+	pMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "é¸æŠã‚¢ã‚¤ãƒ†ãƒ ã‚’...(&I)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 3 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒRƒs[ (&C) (Ctrl + C)" ) ); //’Ç‰Á 2012.05.30
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚³ãƒ”ãƒ¼ (&C) (Ctrl + C)" ) ); //è¿½åŠ  2012.05.30
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "“\‚è•t‚¯ (&P) (Ctrl + V)" ) ); //’Ç‰Á 2012.05.30
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "è²¼ã‚Šä»˜ã‘ (&P) (Ctrl + V)" ) ); //è¿½åŠ  2012.05.30
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒZƒ‹íœ (&D) (Ctrl + Delete)" ) ); //’Ç‰Á 2012.05.31
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚»ãƒ«å‰Šé™¤ (&D) (Ctrl + Delete)" ) ); //è¿½åŠ  2012.05.31
 
 		id = pSubMenu->GetMenuItemID( 3 );
-		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "síœ (Delete)" ) ); //•ÏX 2012.05.31
+		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "è¡Œå‰Šé™¤ (Delete)" ) ); //å¤‰æ›´ 2012.05.31
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) ); //’Ç‰Á 2012.05.30
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) ); //è¿½åŠ  2012.05.30
 
 		id = pSubMenu->GetMenuItemID( 5 );
-		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "‘¾•¶š‚É (&B)" ) );
+		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "å¤ªæ–‡å­—ã« (&B)" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "Ô•¶š‚É (&R)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "èµ¤æ–‡å­—ã« (&R)" ) );
 
 		id = pSubMenu->GetMenuItemID( 7 );
-		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "‹­’²î•ñ‰ğœ (&C)" ) );
+		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "å¼·èª¿æƒ…å ±è§£é™¤ (&C)" ) );
 
 		id = pSubMenu->GetMenuItemID( 8 );
 		pSubMenu->ModifyMenu( 8, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 9 );
-		pSubMenu->ModifyMenu( 9, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒŠƒXƒgƒtƒ@ƒCƒ‹“WŠJ (&E)" ) );
+		pSubMenu->ModifyMenu( 9, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å±•é–‹ (&E)" ) );
 
 		id = pSubMenu->GetMenuItemID( 10 );
 		pSubMenu->ModifyMenu( 10, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 11 );
-		pSubMenu->ModifyMenu( 11, MF_BYPOSITION | MF_STRING, id, TEXT( "‰¹ŠyƒvƒŒƒCƒŠƒXƒg“WŠJ (&M)" ) );
+		pSubMenu->ModifyMenu( 11, MF_BYPOSITION | MF_STRING, id, TEXT( "éŸ³æ¥½ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆå±•é–‹ (&M)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒRƒs[ (&C)" ) );
+	pMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚³ãƒ”ãƒ¼ (&C)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 4 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒC[ƒW[ƒZƒŒƒNƒgƒIƒ“ (&O)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¤ãƒ¼ã‚¸ãƒ¼ã‚»ãƒ¬ã‚¯ãƒˆã‚ªãƒ³ (&O)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒC[ƒW[ƒZƒŒƒNƒgƒIƒt" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¤ãƒ¼ã‚¸ãƒ¼ã‚»ãƒ¬ã‚¯ãƒˆã‚ªãƒ•" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒRƒs[ (&C)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚³ãƒ”ãƒ¼ (&C)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒ\[ƒg (&S)" ) );
+	pMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚½ãƒ¼ãƒˆ (&S)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 5 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "d•¡ƒiƒ“ƒo[‚Åƒ\[ƒg (&N)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ã§ã‚½ãƒ¼ãƒˆ (&N)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹–¼‚Åƒ\[ƒg (&F)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«åã§ã‚½ãƒ¼ãƒˆ (&F)" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒf[ƒ^ƒTƒCƒY‚Åƒ\[ƒg (&S)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã§ã‚½ãƒ¼ãƒˆ (&S)" ) );
 
 		id = pSubMenu->GetMenuItemID( 3 );
-		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "“ú•t‚Åƒ\[ƒg (&D)" ) );
+		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "æ—¥ä»˜ã§ã‚½ãƒ¼ãƒˆ (&D)" ) );
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒpƒXî•ñ‚Åƒ\[ƒg (&P)" ) );
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ‘ã‚¹æƒ…å ±ã§ã‚½ãƒ¼ãƒˆ (&P)" ) );
 
 		id = pSubMenu->GetMenuItemID( 5 );
-		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "‘®î•ñ‚Åƒ\[ƒg" ) );
+		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "æ›¸å¼æƒ…å ±ã§ã‚½ãƒ¼ãƒˆ" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
 		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 7 );
-		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒ}[ƒW (&M)" ) );
+		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒãƒ¼ã‚¸ (&M)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ŠJ‚­ (&O)" ) );
+	pMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "é–‹ã (&O)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 6 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒGƒNƒXƒvƒ[ƒ‰[‚ÅŠJ‚­ (&E)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©ãƒ¼ã§é–‹ã (&E)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒƒfƒBƒAƒvƒŒƒCƒ„[‚ÅŠJ‚­ (&M)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ¡ãƒ‡ã‚£ã‚¢ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§é–‹ã (&M)" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ŠÖ˜A•t‚¯‚³‚ê‚½ƒAƒvƒŠ‚ÅŠJ‚­ (&C)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "é–¢é€£ä»˜ã‘ã•ã‚ŒãŸã‚¢ãƒ—ãƒªã§é–‹ã (&C)" ) );
 
 		id = pSubMenu->GetMenuItemID( 3 );
 		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING | MF_GRAYED, id, TEXT( "ƒo[ƒ`ƒƒƒ‹ ƒuƒ‰ƒEƒU[ (&V)" ) );
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING | MF_GRAYED, id, TEXT( "ãƒãƒ¼ãƒãƒ£ãƒ« ãƒ–ãƒ©ã‚¦ã‚¶ãƒ¼ (&V)" ) );
 
 		id = pSubMenu->GetMenuItemID( 5 );
 		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒVƒ‡[ƒgƒJƒbƒg‚ğŠJ‚­ (&L)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’é–‹ã (&L)" ) );
 
 		id = pSubMenu->GetMenuItemID( 7 );
 		pSubMenu->ModifyMenu( 7, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) );
 
 		id = pSubMenu->GetMenuItemID( 8 );
-		pSubMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "‹­’²‚³‚ê‚½‰¹Šy‚ğŠJ‚­ (&P)" ) );
+		pSubMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "å¼·èª¿ã•ã‚ŒãŸéŸ³æ¥½ã‚’é–‹ã (&P)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒIƒvƒVƒ‡ƒ“ (&O)" ) );
+	pMenu->ModifyMenu( 7, MF_BYPOSITION | MF_STRING, id, TEXT( "ã‚ªãƒ—ã‚·ãƒ§ãƒ³ (&O)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 7 );
 
 		id = pSubMenu->GetMenuItemID( 0 );
-		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒo[ƒWƒ‡ƒ“ (&V)" ) );
+		pSubMenu->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ (&V)" ) );
 
 		id = pSubMenu->GetMenuItemID( 1 );
-		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "•Ö—˜‚Èî•ñ (&T)" ) );
+		pSubMenu->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "ä¾¿åˆ©ãªæƒ…å ± (&T)" ) );
 
 		id = pSubMenu->GetMenuItemID( 2 );
-		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒƒbƒZ[ƒW (&M)" ) );
+		pSubMenu->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ (&M)" ) );
 
 		id = pSubMenu->GetMenuItemID( 3 );
-		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "Œ¾Œê (&L)" ) );
+		pSubMenu->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "è¨€èª (&L)" ) );
 
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 3 );
 			
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "‰pŒê (&E) (Ctrl + L)" ) );
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "è‹±èª (&E) (Ctrl + L)" ) );
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "“ú–{Œê (&J)" ) );
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "æ—¥æœ¬èª (&J)" ) );
 
 
 		id = pSubMenu->GetMenuItemID( 4 );
-		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "‘Sİ’èƒtƒ@ƒCƒ‹ƒNƒŠƒA (&P)" ) );
+		pSubMenu->ModifyMenu( 4, MF_BYPOSITION | MF_STRING, id, TEXT( "å…¨è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒªã‚¢ (&P)" ) );
 
 		id = pSubMenu->GetMenuItemID( 5 );
-		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "“–ƒAƒvƒŠ‚ª‚ ‚éƒtƒHƒ‹ƒ_‚ğŠJ‚­ (&O)" ) );
+		pSubMenu->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "å½“ã‚¢ãƒ—ãƒªãŒã‚ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’é–‹ã (&O)" ) );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ƒtƒ@ƒCƒ‹ƒpƒX‚Ì§ŒÀƒ`ƒFƒbƒN (&C)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®åˆ¶é™ãƒã‚§ãƒƒã‚¯ (&C)" ) );
 
 	id = pMenu->GetMenuItemID( 0 );
 	pMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "ALL FUNC (&A)" ) );
@@ -18607,19 +18607,19 @@ void CFileListCreatorDlg::OnLanguageJapanese()
 			
 
 			id = pSubMenu2->GetMenuItemID( 0 );
-			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "Copy (&C) (Ctrl + C)" ) ); //’Ç‰Á 2012.05.30
+			pSubMenu2->ModifyMenu( 0, MF_BYPOSITION | MF_STRING, id, TEXT( "Copy (&C) (Ctrl + C)" ) ); //è¿½åŠ  2012.05.30
 
 			id = pSubMenu2->GetMenuItemID( 1 );
-			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "Paste (&P) (Ctrl + V)" ) ); //’Ç‰Á 2012.05.30
+			pSubMenu2->ModifyMenu( 1, MF_BYPOSITION | MF_STRING, id, TEXT( "Paste (&P) (Ctrl + V)" ) ); //è¿½åŠ  2012.05.30
 
 			id = pSubMenu2->GetMenuItemID( 2 );
-			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "Delete Cell (&D) (Ctrl + Delete)" ) ); //’Ç‰Á 2012.05.31
+			pSubMenu2->ModifyMenu( 2, MF_BYPOSITION | MF_STRING, id, TEXT( "Delete Cell (&D) (Ctrl + Delete)" ) ); //è¿½åŠ  2012.05.31
 
 			id = pSubMenu2->GetMenuItemID( 3 );
-			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "Delete Row (Delete)" ) ); //•ÏX 2012.05.30
+			pSubMenu2->ModifyMenu( 3, MF_BYPOSITION | MF_STRING, id, TEXT( "Delete Row (Delete)" ) ); //å¤‰æ›´ 2012.05.30
 
 			id = pSubMenu2->GetMenuItemID( 4 );
-			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) ); //’Ç‰Á 2012.05.30
+			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_SEPARATOR, id, TEXT( "" ) ); //è¿½åŠ  2012.05.30
 
 			id = pSubMenu2->GetMenuItemID( 5 );
 			pSubMenu2->ModifyMenu( 5, MF_BYPOSITION | MF_STRING, id, TEXT( "Bold (&B)" ) );
@@ -18770,22 +18770,22 @@ void CFileListCreatorDlg::OnLanguageJapanese()
 
 void CFileListCreatorDlg::OnLanguageEnglish()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
     CMenu    cMenu;
     int      err = 0;
     
-    // ƒƒjƒ…[‚ğƒ[ƒh
+    // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰
     if (!err) if (!cMenu.LoadMenu(IDR_MENU2)) err = 1;
 
 	SetMenu(&cMenu); //http://www.gidforums.com/t-17869.html
 
 	SelectedLanguage = _T("English");
 
-	//============================================== XP‘Îô (MF_GRAYED) ===================================================
+	//============================================== XPå¯¾ç­– (MF_GRAYED) ===================================================
 
-	// CMainFrameƒNƒ‰ƒXˆÈŠO‚È‚ç‚ÎAAfxGetMainWnd()->GetMenu()‚Åæ“¾‚·‚éB this->AfxGetMainWnd()->GetMenu()
-	CMenu* pMenu = &cMenu; //•ÏX 2012.04.14
+	// CMainFrameã‚¯ãƒ©ã‚¹ä»¥å¤–ãªã‚‰ã°ã€AfxGetMainWnd()->GetMenu()ã§å–å¾—ã™ã‚‹ã€‚ this->AfxGetMainWnd()->GetMenu()
+	CMenu* pMenu = &cMenu; //å¤‰æ›´ 2012.04.14
 	CMenu* pSubMenu;
 	CMenu* pSubMenu2;
 	CMenu* pSubMenu3;
@@ -18803,18 +18803,18 @@ void CFileListCreatorDlg::OnLanguageEnglish()
 
 
 	id = pMenu->GetMenuItemID( 0 );
-	pMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "‚·‚×‚Ä‚Ì‹@”\ (&A)" ) );
+	pMenu->ModifyMenu( 8, MF_BYPOSITION | MF_STRING, id, TEXT( "ã™ã¹ã¦ã®æ©Ÿèƒ½ (&A)" ) );
 
 		pSubMenu = pMenu->GetSubMenu( 8 );
 
 		id = pSubMenu->GetMenuItemID( 6 );
-		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "ŠJ‚­ (&O)" ) );
+		pSubMenu->ModifyMenu( 6, MF_BYPOSITION | MF_STRING, id, TEXT( "é–‹ã (&O)" ) );
 
 			pSubMenu2 = pSubMenu->GetSubMenu( 6 );
 
 
 			id = pSubMenu2->GetMenuItemID( 4 );
-			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_STRING | MF_GRAYED, id, TEXT( "ƒo[ƒ`ƒƒƒ‹ ƒuƒ‰ƒEƒU[ (&V)" ) );
+			pSubMenu2->ModifyMenu( 4, MF_BYPOSITION | MF_STRING | MF_GRAYED, id, TEXT( "ãƒãƒ¼ãƒãƒ£ãƒ« ãƒ–ãƒ©ã‚¦ã‚¶ãƒ¼ (&V)" ) );
 
 	pMenu->DestroyMenu();
 	pSubMenu->DestroyMenu();
@@ -18824,7 +18824,7 @@ void CFileListCreatorDlg::OnLanguageEnglish()
 	DrawMenuBar();
 	//=========================================================================================================
 
-	// ƒƒjƒ…[‚ğ”jŠü
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ç ´æ£„
     //cMenu.DestroyMenu();
 
 	//http://social.msdn.microsoft.com/Forums/en-US/vcgeneral/thread/24f3924a-053a-4c9d-91c1-7af278353374/
@@ -18836,26 +18836,26 @@ void CFileListCreatorDlg::ChangeLanguage()
 {
 	if (SelectedLanguage == _T("Japanese")) {
 		CFileListCreatorDlg::OnLanguageEnglish();
-		CFileListCreatorDlg::StatusStringSet(_T("ƒƒjƒ…[‚ğ‰pŒê‚É•ÏX‚µ‚Ü‚µ‚½ (Ä“x Ctrl + L ‚ğ‰Ÿ‚·‚Æ“ú–{Œê‚É‚È‚è‚Ü‚·)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è‹±èªã«å¤‰æ›´ã—ã¾ã—ãŸ (å†åº¦ Ctrl + L ã‚’æŠ¼ã™ã¨æ—¥æœ¬èªã«ãªã‚Šã¾ã™)"),0,FALSE);
 	}else if (SelectedLanguage == _T("English")){
 		CFileListCreatorDlg::OnLanguageJapanese();
-		CFileListCreatorDlg::StatusStringSet(_T("ƒƒjƒ…[‚ğ“ú–{Œê‚É•ÏX‚µ‚Ü‚µ‚½ (Ä“x Ctrl + L ‚ğ‰Ÿ‚·‚Æ‰pŒê‚É‚È‚è‚Ü‚·)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’æ—¥æœ¬èªã«å¤‰æ›´ã—ã¾ã—ãŸ (å†åº¦ Ctrl + L ã‚’æŠ¼ã™ã¨è‹±èªã«ãªã‚Šã¾ã™)"),0,FALSE);
 	}else{
 		CFileListCreatorDlg::OnLanguageEnglish();
-		CFileListCreatorDlg::StatusStringSet(_T("ƒƒjƒ…[‚ğ‰pŒê‚É•ÏX‚µ‚Ü‚µ‚½ (Ctrl + L ‚ğ„‚·‚Æ“ú–{Œê‚É‚È‚è‚Ü‚·)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è‹±èªã«å¤‰æ›´ã—ã¾ã—ãŸ (Ctrl + L ã‚’æ¨ã™ã¨æ—¥æœ¬èªã«ãªã‚Šã¾ã™)"),0,FALSE);
 	}
 }
 
 void CFileListCreatorDlg::OnOpenbyVirtualbrowser()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	MessageBox(_T("“–‹@”\‚Íì¬’†‚Å‚·B"),_T("FileList Creator"),MB_OK);
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	MessageBox(_T("å½“æ©Ÿèƒ½ã¯ä½œæˆä¸­ã§ã™ã€‚"),_T("FileList Creator"),MB_OK);
 }
 
 
 void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//LVITEM       lvi;
 	int          i, index = 0;
 	int          err = 0;
@@ -18864,7 +18864,7 @@ void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 	CString SeparateDirectoryStr;
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	UpdateData();
 	lvi.mask = LVIF_TEXT;
@@ -18875,7 +18875,7 @@ void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 
 	while (index < CFileListCreatorDlg::m_xcList.GetItemCount()){
 
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 		FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
 
@@ -18905,13 +18905,13 @@ void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 				{
 					CString str;
 
-					str.Format(_T("%d ƒoƒCƒg"),nLen);
+					str.Format(_T("%d ãƒã‚¤ãƒˆ"),nLen);
 
 					//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 					lvi.iItem = index;
 	 				lvi.iSubItem =8;
-					//lvi.pszText = _T("[‚·‚¬‚éƒpƒX");		//”õl—“
-					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("[‚·‚¬‚éƒpƒX")));		//”õl—“
+					//lvi.pszText = _T("æ·±ã™ãã‚‹ãƒ‘ã‚¹");		//å‚™è€ƒæ¬„
+					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("æ·±ã™ãã‚‹ãƒ‘ã‚¹")));		//å‚™è€ƒæ¬„
 					if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 				}
 				ErrFLG = TRUE;
@@ -18955,18 +18955,18 @@ void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 						//http://www.kab-studio.biz/Programing/Codian/MxA/09.html
 
 						//http://oshiete.goo.ne.jp/qa/7150644.html
-						if (nLen>31 * 2){ //‚l‚‚ƒ@‚g‚e‚r  ‚R‚P•¶š(31Byte)‚Ì§ŒÀ‚ğó‚¯‚é iTunes‚à“¯—lH
+						if (nLen>31 * 2){ //ï¼­ï½ï½ƒã€€ï¼¨ï¼¦ï¼³  ï¼“ï¼‘æ–‡å­—(31Byte)ã®åˆ¶é™ã‚’å—ã‘ã‚‹ iTunesã‚‚åŒæ§˜ï¼Ÿ
 							if (!err)
 							{
 								CString str;
 
-								str.Format(_T("%d Byte:ƒtƒHƒ‹ƒ_–¼‚Ü‚½‚Íƒtƒ@ƒCƒ‹–¼‚ª’·‰ß‚¬‚Ü‚·"),nLen);
+								str.Format(_T("%d Byte:ãƒ•ã‚©ãƒ«ãƒ€åã¾ãŸã¯ãƒ•ã‚¡ã‚¤ãƒ«åãŒé•·éãã¾ã™"),nLen);
 
 								//lvi.mask = LVIF_TEXT | LVIF_PARAM;
 								lvi.iItem = index;
 	 							lvi.iSubItem =8;
-								//lvi.pszText = _T("[‚·‚¬‚éƒpƒX");		//”õl—“
-								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));		//”õl—“
+								//lvi.pszText = _T("æ·±ã™ãã‚‹ãƒ‘ã‚¹");		//å‚™è€ƒæ¬„
+								lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(str));		//å‚™è€ƒæ¬„
 								if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
 							}
 							ErrFLG = TRUE;
@@ -18985,9 +18985,9 @@ void CFileListCreatorDlg::OnOptionFilepathlimitcheck()
 	}
 
 	if( ErrFLG == TRUE ){
-		CFileListCreatorDlg::StatusStringSet(_T("ƒGƒ‰[‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½ \r\n (iTunes‚È‚Ç‚Ì‰¹Šyƒ\ƒtƒg‚É‚¨‚¢‚Ä“ÇƒGƒ‰[‚ª”­¶‚·‚é‰Â”\«‚ª‚ ‚è‚Ü‚·)"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ã‚¨ãƒ©ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸ \r\n (iTunesãªã©ã®éŸ³æ¥½ã‚½ãƒ•ãƒˆã«ãŠã„ã¦èª­è¾¼ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã™ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™)"),300,TRUE);
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒgã ‘S‚Ä‚ÌƒAƒCƒeƒ€‚É‚¨‚¢‚ÄƒGƒ‰[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆä¸Š å…¨ã¦ã®ã‚¢ã‚¤ãƒ†ãƒ ã«ãŠã„ã¦ã‚¨ãƒ©ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}
 	//m_xcList.SetItemData(index,11);
 
@@ -19009,8 +19009,8 @@ void CFileListCreatorDlg::CreateWorkArray(){
 
 void CFileListCreatorDlg::OnEditlistUndo()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
-	if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDO‹@”\‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚Ü‚¹‚ñ\r\n( uUse UNDO/REDOv‚Éƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢ )"),0,TRUE);
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
+	if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDOæ©Ÿèƒ½ãŒæœ‰åŠ¹ã«ãªã£ã¦ã„ã¾ã›ã‚“\r\n( ã€ŒUse UNDO/REDOã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ )"),0,TRUE);
 
 	if (m_xvChkUseUNDO == FALSE) return;
 
@@ -19028,7 +19028,7 @@ void CFileListCreatorDlg::OnEditlistUndo()
 		CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("PrevData"));
 	}
 
-	LastNowItemCount = CFileListCreatorDlg::m_xcList.GetItemCount(); //‘Ş”ğ
+	LastNowItemCount = CFileListCreatorDlg::m_xcList.GetItemCount(); //é€€é¿
 	m_xcList.DeleteAllItems();
 
 
@@ -19051,17 +19051,17 @@ void CFileListCreatorDlg::OnEditlistUndo()
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() >= LastSelectedRow){
 		m_xcList.EnsureVisible(LastSelectedRow, FALSE);
 
-		m_xcList.SetItemState(LastSelectedRow,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-		LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-		LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+		m_xcList.SetItemState(LastSelectedRow,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+		LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 	}else{
 		m_xcList.EnsureVisible(0, FALSE);
 	}
 
 	if (UNDO_FLG == TRUE){
-		CFileListCreatorDlg::StatusStringSet(_T("UNDO I—¹"),0,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("UNDO çµ‚äº†"),0,TRUE);
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("REDO I—¹"),0,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("REDO çµ‚äº†"),0,TRUE);
 	}
 	
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() >= 1 || MiniWindowFLG == FALSE){
@@ -19072,7 +19072,7 @@ void CFileListCreatorDlg::OnEditlistUndo()
 
 	RedrawWindow();
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -19080,9 +19080,9 @@ void CFileListCreatorDlg::OnEditlistUndo()
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
-		SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 	
 
@@ -19094,7 +19094,7 @@ void CFileListCreatorDlg::OnEditlistUndo()
 
 void CFileListCreatorDlg::pop_Func(int ItemCount,CString targetName){
 
-	//if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDO‹@”\‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚Ü‚¹‚ñ\r\n( uUse UNDO/REDOv‚Éƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢ )"),0,TRUE);
+	//if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDOæ©Ÿèƒ½ãŒæœ‰åŠ¹ã«ãªã£ã¦ã„ã¾ã›ã‚“\r\n( ã€ŒUse UNDO/REDOã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ )"),0,TRUE);
 
 	if (m_xvChkUseUNDO == FALSE) return;
 
@@ -19106,9 +19106,9 @@ void CFileListCreatorDlg::pop_Func(int ItemCount,CString targetName){
     int err = 0;
 
 	if (UNDO_FLG == TRUE){
-		CFileListCreatorDlg::StatusStringSet(_T("UNDO Às’†"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("UNDO å®Ÿè¡Œä¸­"),0,FALSE);
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("REDO Às’†"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("REDO å®Ÿè¡Œä¸­"),0,FALSE);
 	}
 
 	if (targetName==_T("prevData")){
@@ -19261,18 +19261,18 @@ void CFileListCreatorDlg::pop_Func(int ItemCount,CString targetName){
 ///void CFileListCreatorDlg::DuplicateList(CMylistCtrl *outList, CMylistCtrl *inList){
 void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 
-	//if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDO‹@”\‚ª—LŒø‚É‚È‚Á‚Ä‚¢‚Ü‚¹‚ñ\r\n( uUse UNDO/REDOv‚Éƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢ )"),0,TRUE);
+	//if (m_xvChkUseUNDO == FALSE) CFileListCreatorDlg::StatusStringSet(_T("UNDOæ©Ÿèƒ½ãŒæœ‰åŠ¹ã«ãªã£ã¦ã„ã¾ã›ã‚“\r\n( ã€ŒUse UNDO/REDOã€ã«ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„ )"),0,TRUE);
 
-	if (m_xvChkUseUNDO == FALSE && ShellExecuteOpenFLG == FALSE) return; //ShellExecuteOpenFLG = FALSE; //Ÿ‘P‚Ìô //Œã‚Å’¼‚· //’Ç‰Á 2012.06.14
+	if (m_xvChkUseUNDO == FALSE && ShellExecuteOpenFLG == FALSE) return; //ShellExecuteOpenFLG = FALSE; //æ¬¡å–„ã®ç­– //å¾Œã§ç›´ã™ //è¿½åŠ  2012.06.14
 
 	g_NoDrawFLG = TRUE;
 	//http://atashi.net/inu/ja/notes/stl_vector_sort.html
 	//http://www.geocities.jp/ky_webid/cpp/library/002.html
 
 	if (UNDO_FLG == TRUE){
-		CFileListCreatorDlg::StatusStringSet(_T("UNDOƒf[ƒ^ ‘Ş”ğ’†"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("UNDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­"),0,FALSE);
 	}else{
-		CFileListCreatorDlg::StatusStringSet(_T("REDOƒf[ƒ^ ‘Ş”ğ’†"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("REDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­"),0,FALSE);
 	}
 
 	int iTemp = 1;
@@ -19285,7 +19285,7 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 		int SubItemNo;
 		//int err = 0;
 
-		vecPrev.clear(); //Œã‚ÅŠm”F
+		vecPrev.clear(); //å¾Œã§ç¢ºèª
 
 		ItemNo = 0;
 		while ( ItemNo < ItemCount )
@@ -19345,29 +19345,29 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 			//vecPrev.erase(it);
 
 			vector<ListItemStruct>::iterator it = vecPrev.begin();
-			advance(it,ItemNo); // #include <iterator> needed.  //‚¢‚Á‚½‚ñíœ
+			advance(it,ItemNo); // #include <iterator> needed.  //ã„ã£ãŸã‚“å‰Šé™¤
 
-			vecPrev.push_back( *PrevListPtr );//V‚µ‚¢ƒf[ƒ^‚ğ‘ã“ü
+			vecPrev.push_back( *PrevListPtr );//æ–°ã—ã„ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 			ItemNo++;
 
 			if (UNDO_FLG == TRUE){
 				CString tempStatus;
-				tempStatus.Format(_T("UNDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("UNDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}else{
 				CString tempStatus;
-				tempStatus.Format(_T("REDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("REDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}
 		}
 
-		//// ƒeƒXƒg•\¦
+		//// ãƒ†ã‚¹ãƒˆè¡¨ç¤º
 		//for ( int i = 0; i < vecPrev.size(); i ++ ) {
-		//	MessageBox( _T("vecPrev: ") + vecPrev[i].FullPath ); //yAz
+		//	MessageBox( _T("vecPrev: ") + vecPrev[i].FullPath ); //ã€Aã€‘
 		//}
 	}
 
@@ -19380,7 +19380,7 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 		//int err = 0;
 
 
-		vecNow.clear(); //Œã‚ÅŠm”F
+		vecNow.clear(); //å¾Œã§ç¢ºèª
 
 		ItemNo = 0;
 		while ( ItemNo < ItemCount )
@@ -19440,29 +19440,29 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 			//vecNow.erase(it);
 
 			vector<ListItemStruct>::iterator it = vecNow.begin();
-			advance(it,ItemNo); // #include <iterator> needed.  //‚¢‚Á‚½‚ñíœ
+			advance(it,ItemNo); // #include <iterator> needed.  //ã„ã£ãŸã‚“å‰Šé™¤
 
-			vecNow.push_back( *NowListPtr );//V‚µ‚¢ƒf[ƒ^‚ğ‘ã“ü
+			vecNow.push_back( *NowListPtr );//æ–°ã—ã„ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 			ItemNo++;
 
 			if (UNDO_FLG == TRUE){
 				CString tempStatus;
-				tempStatus.Format(_T("UNDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("UNDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}else{
 				CString tempStatus;
-				tempStatus.Format(_T("REDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("REDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}
 		}
 
-		//// ƒeƒXƒg•\¦
+		//// ãƒ†ã‚¹ãƒˆè¡¨ç¤º
 		//for ( int i = 0; i < vecNow.size(); i ++ ) {
-		//	MessageBox( _T("vecNow: ") + vecNow[i].FullPath ); //yAz
+		//	MessageBox( _T("vecNow: ") + vecNow[i].FullPath ); //ã€Aã€‘
 		//}
 	}
 
@@ -19473,7 +19473,7 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 		//int err = 0;
 
 
-		vecWork.clear(); //Œã‚ÅŠm”F
+		vecWork.clear(); //å¾Œã§ç¢ºèª
 
 		ItemNo = 0;
 		while ( ItemNo < ItemCount )
@@ -19532,29 +19532,29 @@ void CFileListCreatorDlg::push_back_Func(int ItemCount,CString targetName){
 			//vecWork.erase(it);
 
 			vector<ListItemStruct>::iterator it = vecWork.begin();
-			advance(it,ItemNo); // #include <iterator> needed.  //‚¢‚Á‚½‚ñíœ
+			advance(it,ItemNo); // #include <iterator> needed.  //ã„ã£ãŸã‚“å‰Šé™¤
 
-			vecWork.push_back( *WorkListPtr );//V‚µ‚¢ƒf[ƒ^‚ğ‘ã“ü
+			vecWork.push_back( *WorkListPtr );//æ–°ã—ã„ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 			ItemNo++;
 
 			if (UNDO_FLG == TRUE){
 				CString tempStatus;
-				tempStatus.Format(_T("UNDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("UNDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}else{
 				CString tempStatus;
-				tempStatus.Format(_T("REDOƒf[ƒ^ ‘Ş”ğ’† ( %d / %d ) ") , iTemp,iCount);					
+				tempStatus.Format(_T("REDOãƒ‡ãƒ¼ã‚¿ é€€é¿ä¸­ ( %d / %d ) ") , iTemp,iCount);					
 				StatusStringSet(tempStatus,0,FALSE);
 				UpdateData(FALSE);
 				iTemp++;
 			}
 		}
 
-		//// ƒeƒXƒg•\¦
+		//// ãƒ†ã‚¹ãƒˆè¡¨ç¤º
 		//for ( int i = 0; i < vecWork.size(); i ++ ) {
-		//	MessageBox( _T("vecWork: ") + vecWork[i].FullPath ); //yAz
+		//	MessageBox( _T("vecWork: ") + vecWork[i].FullPath ); //ã€Aã€‘
 		//}
 	}
 	g_NoDrawFLG = FALSE;
@@ -19611,14 +19611,14 @@ void CFileListCreatorDlg::DuplicateList(){
 void CFileListCreatorDlg::OnLvnDeleteitemList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 	////http://q.hatena.ne.jp/1180853478
-	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //’Ç‰Á 2012.05.13
+	//AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //è¿½åŠ  2012.05.13
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -19626,7 +19626,7 @@ void CFileListCreatorDlg::OnLvnDeleteitemList(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 	}
 
-	if (ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -19637,10 +19637,10 @@ void CFileListCreatorDlg::OnLvnDeleteitemList(NMHDR *pNMHDR, LRESULT *pResult)
 void CFileListCreatorDlg::OnLvnItemchangingList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//LVITEM lvItem;
-	//lvItem.mask			= LVIF_TEXT | LVIF_IMAGE | LVIF_STATE | LVIF_INDENT |  LVCF_SUBITEM; //’Ç‰Á 2012.05.16 LVCF_SUBITEM’Ç‰Á
+	//lvItem.mask			= LVIF_TEXT | LVIF_IMAGE | LVIF_STATE | LVIF_INDENT |  LVCF_SUBITEM; //è¿½åŠ  2012.05.16 LVCF_SUBITEMè¿½åŠ 
 
 
 	//CString tempStr;
@@ -19677,7 +19677,7 @@ void CFileListCreatorDlg::OnLvnItemchangingList(NMHDR *pNMHDR, LRESULT *pResult)
 			if (CurStr.GetLength() > 260){
 				CurStr = CurStr.Left(260);
 				//LengthOver = TRUE;
-				CFileListCreatorDlg::StatusStringSet(_T("ƒŠƒXƒgƒ{ƒbƒNƒX“à‚ÌŠi”[•¶š”§ŒÀ‚ğƒI[ƒo[‚µ‚Ü‚µ‚½\r\n(¶‚©‚ç260•¶š•ª ƒeƒLƒXƒg‚ğØ‚èæ‚è‚Ü‚·)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å†…ã®æ ¼ç´æ–‡å­—æ•°åˆ¶é™ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ã¾ã—ãŸ\r\n(å·¦ã‹ã‚‰260æ–‡å­—åˆ† ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆ‡ã‚Šå–ã‚Šã¾ã™)"),0,TRUE);
 				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(CurStr));
 				CFileListCreatorDlg::m_xcList.SetItem(&lvi);
 				UpdateData(FALSE);
@@ -19692,16 +19692,16 @@ void CFileListCreatorDlg::OnLvnItemchangingList(NMHDR *pNMHDR, LRESULT *pResult)
 void CFileListCreatorDlg::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	if (m_xvChkEditCellMode == TRUE){
 		if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
-			lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ƒf[ƒ^‚ÌXV‚É•K—vII
+			lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°æ™‚ã«å¿…è¦ï¼ï¼
 
 			lvi.iItem = LastSelectedRow;
 			lvi.iSubItem = LastSelectedColumn;
 					
-			::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //’Ç‰Á 2012.05.20
+			::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //è¿½åŠ  2012.05.20
 
 			CString UpadateItem;
 			((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(UpadateItem);
@@ -19711,14 +19711,14 @@ void CFileListCreatorDlg::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 			if (LastEditStr != UpadateItem) {
 
 				int myResult;
-				myResult = MessageBox(_T("•ÒW’†‚Ìƒf[ƒ^‚ğŠm’è‚µ‚Ä‚©‚çƒ\[ƒgˆ—‚ğÀs‚µ‚Ü‚·‚©H\r\nu‚Í‚¢vƒf[ƒ^XV•ƒ\[ƒgˆ—\r\nu‚¢‚¢‚¦vƒf[ƒ^‚ğXV‚¹‚¸‚Éƒ\[ƒgˆ—\r\nuƒLƒƒƒ“ƒZƒ‹vƒf[ƒ^‚ÌXV‚àƒ\[ƒg‚àÀs‚µ‚È‚¢") ,_T("•Û‘¶Šm”F"), MB_YESNOCANCEL );
+				myResult = MessageBox(_T("ç·¨é›†ä¸­ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç¢ºå®šã—ã¦ã‹ã‚‰ã‚½ãƒ¼ãƒˆå‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™ã‹ï¼Ÿ\r\nã€Œã¯ã„ã€ãƒ‡ãƒ¼ã‚¿æ›´æ–°ï¼†ã‚½ãƒ¼ãƒˆå‡¦ç†\r\nã€Œã„ã„ãˆã€ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã›ãšã«ã‚½ãƒ¼ãƒˆå‡¦ç†\r\nã€Œã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã‚‚ã‚½ãƒ¼ãƒˆã‚‚å®Ÿè¡Œã—ãªã„") ,_T("ä¿å­˜ç¢ºèª"), MB_YESNOCANCEL );
 
 				if (IDYES == myResult){
 					lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(UpadateItem));
 					if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) //err = 1;
 					UpdateData(FALSE);
 
-					StatusStringSet(_T("ƒZƒ‹‚Ìƒf[ƒ^‚ğXV‚µ‚Ü‚µ‚½"),0,TRUE);
+					StatusStringSet(_T("ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã—ã¾ã—ãŸ"),0,TRUE);
 
 					LastSelectedRow=-1;
 					//LastSelectedColumn=-1;
@@ -19727,207 +19727,207 @@ void CFileListCreatorDlg::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 				}
 			}
 			CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode);
-			//ƒ`ƒFƒbƒN‚ğŠO‚·
+			//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 			chkbox1->SetCheck(0);
 
 			m_xvChkEditCellMode = FALSE;
 
 			::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-			::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+			::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 
-			CFileListCreatorDlg::StatusStringSet(_T("’Êí‚Ìƒ‚[ƒh‚Å‚· (ƒZƒ‹“à‚ÌƒeƒLƒXƒg‚Í•ÒW‚Å‚«‚Ü‚¹‚ñ)"),0,TRUE);
-			m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+			CFileListCreatorDlg::StatusStringSet(_T("é€šå¸¸ã®ãƒ¢ãƒ¼ãƒ‰ã§ã™ (ã‚»ãƒ«å†…ã®ãƒ†ã‚­ã‚¹ãƒˆã¯ç·¨é›†ã§ãã¾ã›ã‚“)"),0,TRUE);
+			m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 			UpdateData(FALSE);
 
-			::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //’Ç‰Á 2012.05.20
+			::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //è¿½åŠ  2012.05.20
 		}
 	}
 
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
-	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //’Ç‰Á 2012.05.24
+	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //è¿½åŠ  2012.05.24
 
 	CFileListCreatorDlg::GetStrFormat_Func();
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
-	StatusStringSet(_T("Sort Às’†"),0,FALSE); //•ÏX 2012.06.14
-	RenumberItem();				// SortItemsŠÖ”‚ğŒÄ‚Ño‚·‘O‚É‚Í•K‚¸Às
+	StatusStringSet(_T("Sort å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
+	RenumberItem();				// SortItemsé–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã¯å¿…ãšå®Ÿè¡Œ
 
 	//pNMLV->iSubItem;
-//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 
 	switch(pNMLV->iSubItem){
 	case 0:
 		{
-			keyColumn = 0; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-			static BOOL bSort = TRUE;			// static‚Å’è‹`‚·‚é‚±‚Æ //d•¡ƒiƒ“ƒo[‚ªŒ©‚ê‚é‚æ‚¤‚Éí‚É‚s‚q‚t‚d
+			keyColumn = 0; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+			static BOOL bSort = TRUE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨ //é‡è¤‡ãƒŠãƒ³ãƒãƒ¼ãŒè¦‹ã‚Œã‚‹ã‚ˆã†ã«å¸¸ã«ï¼´ï¼²ï¼µï¼¥
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			//bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			//bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 
 	case 1:
 		{
-			keyColumn = 1; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 1; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(˜A”Ô ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é€£ç•ª æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(˜A”Ô ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é€£ç•ª é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 
 	case 2:
 		{
-			keyColumn = 2; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 2; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 
 	case 3:
 		{
-			keyColumn = 3; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 3; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å é™é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å æ˜‡é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 
 	case 4:
 		{
-			keyColumn = 5; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 5; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 	case 5:
 		{
-			keyColumn = 5; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 5; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 
 	case 6:
 		{
-			keyColumn = 7; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 7; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 	case 7:
 		{
-			keyColumn = 7; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 7; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 	case 8:
 		{
-			keyColumn = 8; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 8; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(”õl—“ ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(å‚™è€ƒæ¬„ æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(”õl—“ ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(å‚™è€ƒæ¬„ é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 	case 9:
 		{
-			keyColumn = 9;//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ 9:‘®î•ñ
-			static BOOL bSort = FALSE;			// static‚Å’è‹`‚·‚é‚±‚Æ
+			keyColumn = 9;//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ 9:æ›¸å¼æƒ…å ±
+			static BOOL bSort = FALSE;			// staticã§å®šç¾©ã™ã‚‹ã“ã¨
 			m_xcList.SortItems(CompareFunc, bSort);
 
 			if (bSort == FALSE) { 
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(‘® ¸‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ›¸å¼ æ˜‡é †)"),0,TRUE);
 			}else{
-				CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(‘® ~‡)"),0,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ›¸å¼ é™é †)"),0,TRUE);
 			}
 			SortColumnDrawCaption(pNMLV->iSubItem, bSort);
-			bSort = !bSort;				// bSort‚ªFALSE‚È‚çTRUEATRUE‚È‚çFALSE‚É‚·‚é
+			bSort = !bSort;				// bSortãŒFALSEãªã‚‰TRUEã€TRUEãªã‚‰FALSEã«ã™ã‚‹
 		}
 		break;
 	}
 
 	//CFileListCreatorDlg::m_xcList.EnsureVisible(0, FALSE);
-	CFileListCreatorDlg::SortEnsureVisible_Func(); //’Ç‰Á 2012.06.01
+	CFileListCreatorDlg::SortEnsureVisible_Func(); //è¿½åŠ  2012.06.01
 
 	CFileListCreatorDlg::SetStrFormat_Func();
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -19935,7 +19935,7 @@ void CFileListCreatorDlg::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -19946,39 +19946,39 @@ void CFileListCreatorDlg::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CFileListCreatorDlg::SortColumnDrawCaption(int workColumn, BOOL SortFLG){
 
-	LVCOLUMN    lvc;//•ÏX2011.05.13
+	LVCOLUMN    lvc;//å¤‰æ›´2011.05.13
     int         i;
 
-	TCHAR	caption[][32] = {_T("d•¡No."), _T("No."), _T("ƒtƒ@ƒCƒ‹ƒpƒX"), _T("ƒtƒ@ƒCƒ‹–¼"),_T("ƒoƒCƒg"), _T("ÀƒoƒCƒg"),_T("C³“ú"),_T("C³ŠÔ"),_T("”õl—“"),_T("‘®î•ñ")};
+	TCHAR	caption[][32] = {_T("é‡è¤‡No."), _T("No."), _T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹"), _T("ãƒ•ã‚¡ã‚¤ãƒ«å"),_T("ãƒã‚¤ãƒˆ"), _T("å®Ÿãƒã‚¤ãƒˆ"),_T("ä¿®æ­£æ—¥"),_T("ä¿®æ­£æ™‚é–“"),_T("å‚™è€ƒæ¬„"),_T("æ›¸å¼æƒ…å ±")};
     const int   clmNum = sizeof caption /sizeof caption[0];
     int         err = 0;
 
 	m_xcList.SetExtendedStyle( LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT |
-    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ƒRƒƒ“ƒg‰» 2012.05.19
+    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.19
 
-	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //’Ç‰Á 2012.05.24
+	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST)); //è¿½åŠ  2012.05.24
 
-    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // —LŒøƒtƒ‰ƒO
+    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // æœ‰åŠ¹ãƒ•ãƒ©ã‚°
     for (i = 0; i < clmNum; i++)
     {
-		lvc.iSubItem    = i;            // ƒTƒuƒAƒCƒeƒ€”Ô†
-        lvc.pszText     = caption[i];   // Œ©o‚µƒeƒLƒXƒg
+		lvc.iSubItem    = i;            // ã‚µãƒ–ã‚¢ã‚¤ãƒ†ãƒ ç•ªå·
+        lvc.pszText     = caption[i];   // è¦‹å‡ºã—ãƒ†ã‚­ã‚¹ãƒˆ
 
 		if (i == workColumn) {
-		//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+		//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 
 			switch(workColumn){
 			case 0:
 				{
-					//keyColumn = 0; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
+					//keyColumn = 0; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("d•¡No. £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("é‡è¤‡No. â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(d•¡ƒAƒCƒeƒ€ ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("d•¡No. ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é‡è¤‡ã‚¢ã‚¤ãƒ†ãƒ  é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("é‡è¤‡No. â–¼")));
 					}
 				}
 				break;
@@ -19986,122 +19986,122 @@ void CFileListCreatorDlg::SortColumnDrawCaption(int workColumn, BOOL SortFLG){
 
 			case 1:
 				{
-					//keyColumn = 1; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
+					//keyColumn = 1; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(˜A”Ô ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("No. £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é€£ç•ª æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("No. â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(˜A”Ô ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("No. ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(é€£ç•ª é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("No. â–¼")));
 					}
 				}
 				break;
 
 			case 2:
 				{
-					//keyColumn = 2; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+					//keyColumn = 2; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒtƒ@ƒCƒ‹ƒpƒX £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹ƒpƒX ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒtƒ@ƒCƒ‹ƒpƒX ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ â–¼")));
 					}
 				}
 				break;
 
 			case 3:
 				{
-					//keyColumn = 3; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+					//keyColumn = 3; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒtƒ@ƒCƒ‹–¼ ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒ•ã‚¡ã‚¤ãƒ«å â–¼")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒtƒ@ƒCƒ‹–¼ ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒtƒ@ƒCƒ‹–¼ £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ•ã‚¡ã‚¤ãƒ«å æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒ•ã‚¡ã‚¤ãƒ«å â–²")));
 					}
 				}
 				break;
 
 			case 4:
 				{
-					//keyColumn = 5; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
+					//keyColumn = 5; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒoƒCƒg £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒã‚¤ãƒˆ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ƒoƒCƒg ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ãƒã‚¤ãƒˆ â–¼")));
 					}
 				}
 				break;
 			case 5:
 				{
-					//keyColumn = 5; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ // ƒf[ƒ^ƒTƒCƒY‚Í4‚É‚µ‚½
+					//keyColumn = 5; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯4ã«ã—ãŸ
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ÀƒoƒCƒg £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("å®Ÿãƒã‚¤ãƒˆ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(ƒf[ƒ^ƒTƒCƒY ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ÀƒoƒCƒg ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("å®Ÿãƒã‚¤ãƒˆ â–¼")));
 					}
 				}
 				break;
 
 			case 6:
 				{
-					//keyColumn = 7; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+					//keyColumn = 7; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("C³“ú £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ä¿®æ­£æ—¥ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("C³“ú ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ä¿®æ­£æ—¥ â–¼")));
 					}
 				}
 				break;
 			case 7:
 				{
-					//keyColumn = 7; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+					//keyColumn = 7; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("C³ŠÔ £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ä¿®æ­£æ™‚é–“ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(C³“ú ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("C³ŠÔ ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(ä¿®æ­£æ—¥ é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("ä¿®æ­£æ™‚é–“ â–¼")));
 					}
 				}
 				break;
 			case 8:
 				{
-					//keyColumn = 8; //keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ
+					//keyColumn = 8; //keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(”õl—“ ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("”õl—“ £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(å‚™è€ƒæ¬„ æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("å‚™è€ƒæ¬„ â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(”õl—“ ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("”õl—“ ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(å‚™è€ƒæ¬„ é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("å‚™è€ƒæ¬„ â–¼")));
 					}
 				}
 				break;
 			case 9:
 				{
-					//keyColumn = 9;//keyColumn 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 5:ƒf[ƒ^ƒTƒCƒY 7:C³ŠÔ 9:‘®î•ñ
+					//keyColumn = 9;//keyColumn 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 7:ä¿®æ­£æ™‚é–“ 9:æ›¸å¼æƒ…å ±
 
 					if (SortFLG == FALSE) { 
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(‘® ¸‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("‘®î•ñ £")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ›¸å¼ æ˜‡é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("æ›¸å¼æƒ…å ± â–²")));
 					}else{
-						//CFileListCreatorDlg::StatusStringSet(_T("Sort I—¹F(‘® ~‡)"),300,TRUE);
-						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("‘®î•ñ ¥")));
+						//CFileListCreatorDlg::StatusStringSet(_T("Sort çµ‚äº†ï¼š(æ›¸å¼ é™é †)"),300,TRUE);
+						lvc.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(_T("æ›¸å¼æƒ…å ± â–¼")));
 					}
 				}
 				break;
@@ -20118,9 +20118,9 @@ void CFileListCreatorDlg::SortColumnDrawCaption(int workColumn, BOOL SortFLG){
 void CFileListCreatorDlg::OnLvnInsertitemList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
-	//SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+	//SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 
 	*pResult = 0;
 }
@@ -20129,9 +20129,9 @@ void CFileListCreatorDlg::OnLvnInsertitemList(NMHDR *pNMHDR, LRESULT *pResult)
 void CFileListCreatorDlg::OnLvnDeleteallitemsList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
-	SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+	SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 
 	*pResult = 0;
 }
@@ -20139,27 +20139,27 @@ void CFileListCreatorDlg::OnLvnDeleteallitemsList(NMHDR *pNMHDR, LRESULT *pResul
 
 void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	RECT rect1;
 	//RECT rect2;
 
-	// ListView‚Ì—Ìˆææ“¾
+	// ListViewã®é ˜åŸŸå–å¾—
 	::GetWindowRect( ::GetDlgItem( m_hWnd, IDC_LIST ), &rect1 );
 
-	// ƒ_ƒCƒAƒƒO‚ÌƒNƒ‰ƒCƒAƒ“ƒgÀ•W‚É•ÏŠ·
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåº§æ¨™ã«å¤‰æ›
 	this->ScreenToClient( &rect1 );
 
-    LVCOLUMN    lvc;//•ÏX2011.05.13
+    LVCOLUMN    lvc;//å¤‰æ›´2011.05.13
     int         i;
-	TCHAR		caption[][32] = {_T("d•¡No."), _T("No."), _T("ƒtƒ@ƒCƒ‹ƒpƒX"), _T("ƒtƒ@ƒCƒ‹–¼"),_T("ƒoƒCƒg"), _T("ÀƒoƒCƒg"),_T("C³“ú"),_T("C³ŠÔ"),_T("”õl—“"),_T("‘®î•ñ")};
+	TCHAR		caption[][32] = {_T("é‡è¤‡No."), _T("No."), _T("ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹"), _T("ãƒ•ã‚¡ã‚¤ãƒ«å"),_T("ãƒã‚¤ãƒˆ"), _T("å®Ÿãƒã‚¤ãƒˆ"),_T("ä¿®æ­£æ—¥"),_T("ä¿®æ­£æ™‚é–“"),_T("å‚™è€ƒæ¬„"),_T("æ›¸å¼æƒ…å ±")};
     const int   clmNum = sizeof caption /sizeof caption[0];
     int         err = 0;
 
 	int LIST_WIDTH;
 
 
-	LIST_WIDTH = rect1.right - rect1.left - 25 ; //ƒXƒNƒ[ƒ‹ƒo[‚Ì‘å‚«‚³A‚Q‚T‚Æ‚µ‚Äˆø‚­
+	LIST_WIDTH = rect1.right - rect1.left - 25 ; //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼ã®å¤§ãã•ã€ï¼’ï¼•ã¨ã—ã¦å¼•ã
 
 
 	int FileName_WIDTH_SUM;
@@ -20173,9 +20173,9 @@ void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 	//double Ratio_WIDTH;
 
 	m_xcList.SetExtendedStyle( LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT |
-    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ƒRƒƒ“ƒg‰» 2012.05.19
+    LVS_EX_GRIDLINES); //LVS_EX_CHECKBOXES | //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.05.19
 
-    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // —LŒøƒtƒ‰ƒO
+    lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;    // æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 
 	if (CellSizeFixMode == _T("Init")){
 		CellSizeFixMode = _T("FileName");
@@ -20185,57 +20185,57 @@ void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 		CellSizeFixMode = _T("FileName");
 	}
 
-	//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 	if (CellSizeFixMode == _T("FileName")){
 		for (i = 0; i < clmNum; i++)
 		{
-			lvc.iSubItem    = i;            // ƒTƒuƒAƒCƒeƒ€”Ô†
-			lvc.pszText     = caption[i];   // Œ©o‚µƒeƒLƒXƒg
+			lvc.iSubItem    = i;            // ã‚µãƒ–ã‚¢ã‚¤ãƒ†ãƒ ç•ªå·
+			lvc.pszText     = caption[i];   // è¦‹å‡ºã—ãƒ†ã‚­ã‚¹ãƒˆ
 			switch(i){
 				case 0:
-					lvc.cx          =  LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          =  LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 1:
-					lvc.cx          = LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 2:
-					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 3:
-					lvc.cx          = LIST_WIDTH  * 470 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 470 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 4:
-					lvc.cx          = LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 80 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 5:
-					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 6:
-					lvc.cx          = LIST_WIDTH  * 110 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 110 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 7:
-					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 8:
 					lvc.cx          = LIST_WIDTH - tempSum;
-					//lvc.cx          = LIST_WIDTH  * 110 / FileName_WIDTH_SUM;          // ‰¡•
+					//lvc.cx          = LIST_WIDTH  * 110 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 9:
-					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FileName_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				default:
-					MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+					MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 					break;
 			
 			}
@@ -20243,60 +20243,60 @@ void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 			UpdateData(FALSE);
 		}
 
-		CFileListCreatorDlg::StatusStringSet(_T("’Êíƒ‚[ƒh‚ÅƒZƒ‹‚ÌƒTƒCƒY‚ğ’²®‚µ‚Ü‚µ‚½"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã§ã‚»ãƒ«ã®ã‚µã‚¤ã‚ºã‚’èª¿æ•´ã—ã¾ã—ãŸ"),0,FALSE);
 
 	}else if (CellSizeFixMode == _T("FilePath")){
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 		for (i = 0; i < clmNum; i++)
 		{
-			lvc.iSubItem    = i;            // ƒTƒuƒAƒCƒeƒ€”Ô†
-			lvc.pszText     = caption[i];   // Œ©o‚µƒeƒLƒXƒg
+			lvc.iSubItem    = i;            // ã‚µãƒ–ã‚¢ã‚¤ãƒ†ãƒ ç•ªå·
+			lvc.pszText     = caption[i];   // è¦‹å‡ºã—ãƒ†ã‚­ã‚¹ãƒˆ
 			switch(i){
 				case 0:
-					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 1:
-					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 2:
-					lvc.cx          = LIST_WIDTH  * 600 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 600 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 3:
-					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 4:
-					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 80 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 5:
-					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 6:
-					lvc.cx          = LIST_WIDTH  * 110 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 110 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 7:
-					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 8:
 					lvc.cx          = LIST_WIDTH - tempSum;
-					//lvc.cx          = LIST_WIDTH  * 110 / FilePath_WIDTH_SUM;          // ‰¡•
+					//lvc.cx          = LIST_WIDTH  * 110 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				case 9:
-					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // ‰¡•
+					lvc.cx          = LIST_WIDTH  * 0 / FilePath_WIDTH_SUM;          // æ¨ªå¹…
 					tempSum += lvc.cx;
 					break;
 				default:
-					MessageBox(_T("•s³‚È—ñ‚Å‚·B"));
+					MessageBox(_T("ä¸æ­£ãªåˆ—ã§ã™ã€‚"));
 					break;
 			
 			}
@@ -20304,9 +20304,9 @@ void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 			UpdateData(FALSE);
 		}
 
-		CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ‹ƒpƒXƒ‚[ƒh‚ÅƒZƒ‹‚ÌƒTƒCƒY‚ğ’²®‚µ‚Ü‚µ‚½\r\n(ƒpƒXî•ñ‚ğ•ÒW‚·‚é‚É‚Í Ctrl+F ‚ÅƒeƒLƒXƒg’uŠ·‚µ‚Ä‰º‚³‚¢)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ãƒ«ãƒ‘ã‚¹ãƒ¢ãƒ¼ãƒ‰ã§ã‚»ãƒ«ã®ã‚µã‚¤ã‚ºã‚’èª¿æ•´ã—ã¾ã—ãŸ\r\n(ãƒ‘ã‚¹æƒ…å ±ã‚’ç·¨é›†ã™ã‚‹ã«ã¯ Ctrl+F ã§ãƒ†ã‚­ã‚¹ãƒˆç½®æ›ã—ã¦ä¸‹ã•ã„)"),0,FALSE);
 	}
-	RedrawWindow(); //’Ç‰Á 2012.07.02
+	RedrawWindow(); //è¿½åŠ  2012.07.02
 }
 
 
@@ -20325,29 +20325,29 @@ void CFileListCreatorDlg::OnBnClickedBtnCellsizefix()
 //http://www11.ocn.ne.jp/~ikalu/win32api/0014.html
 BOOL CFileListCreatorDlg::SetClipboardText(LPCTSTR lpszText)
 {
-	//HWND  hWnd = ::GetDesktopWindow(); //’Ç‰Á 2012.05.26
+	//HWND  hWnd = ::GetDesktopWindow(); //è¿½åŠ  2012.05.26
 
 	//if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-	//	CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+	//	CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	//	return 0;
 	//}
 
-	// ƒNƒŠƒbƒvƒ{[ƒh‚ÉƒeƒLƒXƒg‚ğ‘‚«‚Ş
-    if(!::OpenClipboard(NULL)) { //•ÏX NULL¨hWnd
+	// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›¸ãè¾¼ã‚€
+    if(!::OpenClipboard(NULL)) { //å¤‰æ›´ NULLâ†’hWnd
         //MessageBoxA(NULL,
-        //    "‘¼‚ÌƒEƒBƒ“ƒhƒE‚ªŠù‚ÉƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚¢‚Ä‚¢‚é‚È‚Ç‚ÌŒ´ˆö‚Å Clipboard ŠÖ”‚Í¸”s‚Ü‚µ‚½B",
+        //    "ä»–ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒæ—¢ã«ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ã„ã¦ã„ã‚‹ãªã©ã®åŸå› ã§ Clipboard é–¢æ•°ã¯å¤±æ•—ã¾ã—ãŸã€‚",
         //    "error_message", MB_OK | MB_ICONERROR);
 
-		StatusStringSet(_T("ƒGƒ‰[F‘¼‚ÌƒEƒBƒ“ƒhƒE‚ªŠù‚ÉƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚¢‚Ä‚¢‚Ü‚·"),0,FALSE);
+		StatusStringSet(_T("ã‚¨ãƒ©ãƒ¼ï¼šä»–ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒæ—¢ã«ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ã„ã¦ã„ã¾ã™"),0,FALSE);
         return 0;
     }
     if(!::EmptyClipboard()) {
-        // ƒNƒŠƒbƒvƒ{[ƒh‚ğ‹ó‚É‚µAƒNƒŠƒbƒvƒ{[ƒh“à‚Ìƒf[ƒ^‚Ìƒnƒ“ƒhƒ‹‚ğ‰ğ•ú‚·‚éB
-        // “¯‚ÉAƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚¢‚½ƒEƒBƒ“ƒhƒE‚ÉAƒNƒŠƒbƒvƒ{[ƒh‚ÌŠ—LŒ ‚ğ—^‚¦‚éB
+        // ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’ç©ºã«ã—ã€ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰å†…ã®ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’è§£æ”¾ã™ã‚‹ã€‚
+        // åŒæ™‚ã«ã€ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ã„ãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ã€ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã®æ‰€æœ‰æ¨©ã‚’ä¸ãˆã‚‹ã€‚
         //MessageBoxA(NULL,
-        //    "‘¼‚ÌƒEƒBƒ“ƒhƒE‚ªŠù‚ÉƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚¢‚Ä‚¢‚é‚È‚Ç‚ÌŒ´ˆö‚Å Clipboard ŠÖ”‚Í¸”s‚Ü‚µ‚½B",
+        //    "ä»–ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒæ—¢ã«ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ã„ã¦ã„ã‚‹ãªã©ã®åŸå› ã§ Clipboard é–¢æ•°ã¯å¤±æ•—ã¾ã—ãŸã€‚",
         //    "error_message", MB_OK | MB_ICONERROR);
-		StatusStringSet(_T("ƒGƒ‰[F‘¼‚ÌƒEƒBƒ“ƒhƒE‚ªŠù‚ÉƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚¢‚Ä‚¢‚Ü‚·"),0,FALSE);
+		StatusStringSet(_T("ã‚¨ãƒ©ãƒ¼ï¼šä»–ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒæ—¢ã«ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ã„ã¦ã„ã¾ã™"),0,FALSE);
         return 0;
     };
 
@@ -20372,49 +20372,49 @@ BOOL CFileListCreatorDlg::SetClipboardText(LPCTSTR lpszText)
 //http://www.alpha-net.ne.jp/users2/uk413/vc/VCT_Clip.html
 CString CFileListCreatorDlg::GetClipboardText(CString strText)
 {
-	//HWND  hWnd = ::GetDesktopWindow(); //’Ç‰Á 2012.05.26
+	//HWND  hWnd = ::GetDesktopWindow(); //è¿½åŠ  2012.05.26
 
 	//CString strText;
 	//strText.Empty();
 
 	//if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-	//	CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+	//	CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	//	return strText;
 	//}
 
-	// ƒNƒŠƒbƒvƒ{[ƒh‚ÌƒI[ƒvƒ“
-	if( !::OpenClipboard(NULL) )//•ÏX NULL¨hWnd
+	// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã®ã‚ªãƒ¼ãƒ—ãƒ³
+	if( !::OpenClipboard(NULL) )//å¤‰æ›´ NULLâ†’hWnd
 		return strText;
 
-	// ƒNƒŠƒbƒvƒ{[ƒh‚ÉƒeƒLƒXƒgƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚é‚©‚ğ’²‚×‚é
+	// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ã„ã‚‹ã‹ã‚’èª¿ã¹ã‚‹
 
 
 	if( ::IsClipboardFormatAvailable(CF_UNICODETEXT)){
-		// ƒNƒŠƒbƒvƒ{[ƒh‚©‚çƒf[ƒ^‚ğæ“¾‚µAstrText‚ÖƒRƒs[
+		// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€strTextã¸ã‚³ãƒ”ãƒ¼
 		HANDLE hMem = ::GetClipboardData(CF_UNICODETEXT);
 
-		//if (hMem!=NULL){//’Ç‰Á 2012.05.26
+		//if (hMem!=NULL){//è¿½åŠ  2012.05.26
 			LPTSTR pMem = (LPTSTR)::GlobalLock(hMem);
 			::lstrcpy((LPTSTR)(LPCTSTR)strText, pMem); //http://msdn.microsoft.com/ja-jp/library/ey142t48(v=vs.80).aspx //http://www.ruche-home.net/program/tips/unicode
 			::GlobalUnlock(hMem);
-			//::GlobalFree(hMem);//’Ç‰Á 2012.05.26
+			//::GlobalFree(hMem);//è¿½åŠ  2012.05.26
 		//}
-		::CloseClipboard();//’Ç‰Á 2012/05.30 //http://sgry.jp/blog/tag/programming/page/2/ //•K—v
+		::CloseClipboard();//è¿½åŠ  2012/05.30 //http://sgry.jp/blog/tag/programming/page/2/ //å¿…è¦
 		return strText;
 	}else if( ::IsClipboardFormatAvailable(CF_TEXT)){
-		// ƒNƒŠƒbƒvƒ{[ƒh‚©‚çƒf[ƒ^‚ğæ“¾‚µAstrText‚ÖƒRƒs[
+		// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€strTextã¸ã‚³ãƒ”ãƒ¼
 		HANDLE hMem = ::GetClipboardData(CF_TEXT);
 
-		//if (hMem!=NULL){//’Ç‰Á 2012.05.26
+		//if (hMem!=NULL){//è¿½åŠ  2012.05.26
 			LPTSTR pMem = (LPTSTR)::GlobalLock(hMem);
 			::lstrcpy((LPTSTR)(LPCTSTR)strText, pMem); //http://msdn.microsoft.com/ja-jp/library/ey142t48(v=vs.80).aspx //http://www.ruche-home.net/program/tips/unicode
 			::GlobalUnlock(hMem);
-			//::GlobalFree(hMem);//’Ç‰Á 2012.05.26
+			//::GlobalFree(hMem);//è¿½åŠ  2012.05.26
 		//}
-		::CloseClipboard();//’Ç‰Á 2012/05.30 //http://sgry.jp/blog/tag/programming/page/2/ //•K—v
+		::CloseClipboard();//è¿½åŠ  2012/05.30 //http://sgry.jp/blog/tag/programming/page/2/ //å¿…è¦
 		return strText;
 	}else{
-		::CloseClipboard();//’Ç‰Á 2012/05.26 //http://sgry.jp/blog/tag/programming/page/2/ //•K—v
+		::CloseClipboard();//è¿½åŠ  2012/05.26 //http://sgry.jp/blog/tag/programming/page/2/ //å¿…è¦
 		return strText;
 	}
 
@@ -20425,43 +20425,43 @@ CString CFileListCreatorDlg::GetClipboardText(CString strText)
 
 void CFileListCreatorDlg::OnMenuSetclipboardtext()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
 
 	//HWND hwnd = GetSafeHwnd();
 	
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	//if(hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
-		if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //’Ç‰Á 2012.05.26
+		if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //è¿½åŠ  2012.05.26
 			int myResult;
-			myResult = MessageBox(_T("EasySelectƒ‚[ƒhEÔFƒ}[ƒLƒ“ƒOƒ‚[ƒhE•ÒWƒ‚[ƒh‚Å‚ÍAƒRƒs[‚Å‚«‚Ü‚¹‚ñB’Êíƒ‚[ƒh‚É•ÏX‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+			myResult = MessageBox(_T("EasySelectãƒ¢ãƒ¼ãƒ‰ãƒ»èµ¤è‰²ãƒãƒ¼ã‚­ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãƒ»ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ã‚³ãƒ”ãƒ¼ã§ãã¾ã›ã‚“ã€‚é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 			if (IDYES == myResult){
 				CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox1->SetCheck(0);
 				m_xvChkEasySelect = FALSE;
 
-				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox2->SetCheck(0);
 				m_xvChkRedOnMode = FALSE;
 
-				CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //’Ç‰Á 2012.05.26
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //è¿½åŠ  2012.05.26
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox3->SetCheck(0);
 				m_xvChkEditCellMode = FALSE;
 
-				m_xvStrEasySelectMode = _T(""); //’Ç‰Á 2012.05.26
+				m_xvStrEasySelectMode = _T(""); //è¿½åŠ  2012.05.26
 				m_xvStrRedOnMode = _T("");
-				m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+				m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //’Ç‰Á2012.05.30
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //’Ç‰Á2012.05.30
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //è¿½åŠ 2012.05.30
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //è¿½åŠ 2012.05.30
 
 				UpdateData(FALSE);
 				//RedrawWindow();
@@ -20478,7 +20478,7 @@ void CFileListCreatorDlg::OnMenuSetclipboardtext()
 				CString CopyText;
 				CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn);
 				CFileListCreatorDlg::SetClipboardText(const_cast<LPTSTR>(static_cast<LPCTSTR>(CopyText)));
-				StatusStringSet(_T("«ÅŒã‚ÉƒNƒŠƒbƒN‚µ‚½ƒZƒ‹‚Ì•¶š‚ğƒRƒs[‚µ‚Ü‚µ‚½«\r\n" + CopyText),0,FALSE);
+				StatusStringSet(_T("â†“æœ€å¾Œã«ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚»ãƒ«ã®æ–‡å­—ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸâ†“\r\n" + CopyText),0,FALSE);
 			}
 		}
 	//}
@@ -20488,44 +20488,44 @@ void CFileListCreatorDlg::OnMenuSetclipboardtext()
 
 void CFileListCreatorDlg::OnMenuGetclipboardtext()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
 	//HWND hwnd = GetSafeHwnd();
 
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}
 
 	//if(hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
 		//MessageBox(_T("in"));
-		if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //’Ç‰Á 2012.05.26
+		if ( m_xvChkEasySelect == TRUE || m_xvChkRedOnMode == TRUE || m_xvChkEditCellMode == TRUE) { //è¿½åŠ  2012.05.26
 			int myResult;
-			myResult = MessageBox(_T("EasySelectƒ‚[ƒhEÔFƒ}[ƒLƒ“ƒOƒ‚[ƒhE•ÒWƒ‚[ƒh‚Å‚ÍAƒy[ƒXƒg‚Å‚«‚Ü‚¹‚ñB’Êíƒ‚[ƒh‚É•ÏX‚µ‚Ü‚·‚©H") ,_T("ƒ‚[ƒhŠm”F"), MB_YESNOCANCEL );
+			myResult = MessageBox(_T("EasySelectãƒ¢ãƒ¼ãƒ‰ãƒ»èµ¤è‰²ãƒãƒ¼ã‚­ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ãƒ»ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ãƒšãƒ¼ã‚¹ãƒˆã§ãã¾ã›ã‚“ã€‚é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ") ,_T("ãƒ¢ãƒ¼ãƒ‰ç¢ºèª"), MB_YESNOCANCEL );
 
 			if (IDYES == myResult){
 				CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_EasySelect);
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox1->SetCheck(0);
 				m_xvChkEasySelect = FALSE;
 
-				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //’Ç‰Á 2012.04.17
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHK_RedOnMode); //è¿½åŠ  2012.04.17
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox2->SetCheck(0);
 				m_xvChkRedOnMode = FALSE;
 
-				CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //’Ç‰Á 2012.05.26
-				//ƒ`ƒFƒbƒN‚ğŠO‚·
+				CButton* chkbox3 = (CButton*)GetDlgItem(IDC_CHK_EditCellMode); //è¿½åŠ  2012.05.26
+				//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 				chkbox3->SetCheck(0);
 				m_xvChkEditCellMode = FALSE;
 
-				m_xvStrEasySelectMode = _T(""); //’Ç‰Á 2012.05.26
+				m_xvStrEasySelectMode = _T(""); //è¿½åŠ  2012.05.26
 				m_xvStrRedOnMode = _T("");
-				m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+				m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //’Ç‰Á2012.05.30
-				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //’Ç‰Á2012.05.30
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE); //è¿½åŠ 2012.05.30
+				::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE); //è¿½åŠ 2012.05.30
 
 				UpdateData(FALSE);
 				//RedrawWindow();
@@ -20536,8 +20536,8 @@ void CFileListCreatorDlg::OnMenuGetclipboardtext()
 	int err;
 
 	UpdateData();
-	lvi.mask = LVIF_TEXT; // | LVCF_SUBITEM‚ğ‚Â‚¯‚Ä‚Í‚È‚ç‚È‚¢ //d—v 2012.05.31
-//0:ƒtƒ@ƒCƒ‹d•¡¯•Êƒiƒ“ƒo[ 1:’Ê‚µ”Ô† 2:ƒtƒ‹ƒpƒX 3:ƒtƒ@ƒCƒ‹–¼ 4:‚¨‚¨‚æ‚»‚Ìƒf[ƒ^ƒTƒCƒY 5:ƒf[ƒ^ƒTƒCƒY 6:C³“ú 7:C³ŠÔ 8:”õl—“ 9:‘®î•ñ
+	lvi.mask = LVIF_TEXT; // | LVCF_SUBITEMã‚’ã¤ã‘ã¦ã¯ãªã‚‰ãªã„ //é‡è¦ 2012.05.31
+//0:ãƒ•ã‚¡ã‚¤ãƒ«é‡è¤‡è­˜åˆ¥ãƒŠãƒ³ãƒãƒ¼ 1:é€šã—ç•ªå· 2:ãƒ•ãƒ«ãƒ‘ã‚¹ 3:ãƒ•ã‚¡ã‚¤ãƒ«å 4:ãŠãŠã‚ˆãã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 5:ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º 6:ä¿®æ­£æ—¥ 7:ä¿®æ­£æ™‚é–“ 8:å‚™è€ƒæ¬„ 9:æ›¸å¼æƒ…å ±
 
 	//if(hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
 	if (m_xvChkEditCellMode == FALSE){
@@ -20546,14 +20546,14 @@ void CFileListCreatorDlg::OnMenuGetclipboardtext()
 				if(m_xcList.GetSelectedCount()>=1){
 
 					LastPrevItemCount = m_xcList.GetItemCount();
-					CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+					CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 					int index = -1;
 
 					while ((index = m_xcList.GetNextItem
 							(index, LVNI_ALL | LVNI_SELECTED)) != -1){
 							CString CopyText;
-							CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //’Ç‰Á 2012.05.26
+							CopyText= CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn); //è¿½åŠ  2012.05.26
 							CopyText= CFileListCreatorDlg::GetClipboardText(CopyText);
 
 							lvi.iItem = index;
@@ -20566,40 +20566,40 @@ void CFileListCreatorDlg::OnMenuGetclipboardtext()
 					}
 
 					if (LastSelectedColumn == 3){
-						StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼—“ ‚Éƒf[ƒ^‚ğ“\‚è•t‚¯‚Ü‚µ‚½"),0,TRUE);
+						StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«åæ¬„ ã«ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã¾ã—ãŸ"),0,TRUE);
 					}
 					if (LastSelectedColumn == 8){
-						StatusStringSet(_T("”õl—“ ‚Éƒf[ƒ^‚ğ“\‚è•t‚¯‚Ü‚µ‚½"),0,TRUE);
+						StatusStringSet(_T("å‚™è€ƒæ¬„ ã«ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã¾ã—ãŸ"),0,TRUE);
 					}
 				}
 			}else{
-				StatusStringSet(_T("ƒtƒ@ƒCƒ‹–¼ ‚Æ ”õl—“ ‚É‚Ì‚İ ƒf[ƒ^‚ğ“\‚è•t‚¯‚é–‚ª‚Å‚«‚Ü‚·"),300,TRUE);
+				StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«å ã¨ å‚™è€ƒæ¬„ ã«ã®ã¿ ãƒ‡ãƒ¼ã‚¿ã‚’è²¼ã‚Šä»˜ã‘ã‚‹äº‹ãŒã§ãã¾ã™"),300,TRUE);
 				return;
 			}
 		}
 
 	}
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
-	if (ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		SetWindowText(_T("FileListCreator (*)"));
-		SortColumnDrawCaption(-1,FALSE); //’Ç‰Á 2012.05.24
+		SortColumnDrawCaption(-1,FALSE); //è¿½åŠ  2012.05.24
 	}
 }
 
 
 void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á2011.10.08
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ 2011.10.08
 
 	if (LastSelectedColumn!=3 && LastSelectedColumn!=8){
-		MessageBox(_T("uƒtƒ@ƒCƒ‹–¼vu”õl—“v‚Ì‚İíœ‚Å‚«‚Ü‚·B•¡”ƒZƒ‹‚àíœ‰Â”\‚Å‚·B"),_T("íœ‘ÎÛŠO’Ê’m"),MB_OK);
+		MessageBox(_T("ã€Œãƒ•ã‚¡ã‚¤ãƒ«åã€ã€Œå‚™è€ƒæ¬„ã€ã®ã¿å‰Šé™¤ã§ãã¾ã™ã€‚è¤‡æ•°ã‚»ãƒ«ã‚‚å‰Šé™¤å¯èƒ½ã§ã™ã€‚"),_T("å‰Šé™¤å¯¾è±¡å¤–é€šçŸ¥"),MB_OK);
 		return;
 	}
 
 	LastPrevItemCount = m_xcList.GetItemCount();
-	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
     int        index = -1;
     CString    str;
@@ -20619,11 +20619,11 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 	CString tempCnt;
 
 	if ( LastSelectedColumn == 3 ){
-		myResult = MessageBox(_T("Œ»İ‘I‘ğ‚³‚ê‚Ä‚¢‚éƒZƒ‹ (ƒtƒ@ƒCƒ‹–¼—“) ‚ğíœ‚µ‚Ü‚·‚©H"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹ã‚»ãƒ« (ãƒ•ã‚¡ã‚¤ãƒ«åæ¬„) ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
 	}
 
 	if ( LastSelectedColumn == 8 ){
-		myResult = MessageBox(_T("Œ»İ‘I‘ğ‚³‚ê‚Ä‚¢‚éƒZƒ‹ (”õl—“) ‚ğíœ‚µ‚Ü‚·‚©H"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		myResult = MessageBox(_T("ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹ã‚»ãƒ« (å‚™è€ƒæ¬„) ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
 	}
 
 	if(myResult == IDYES){
@@ -20643,11 +20643,11 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 
 		tempCnt = _T("");
 
-		if(myCnt>=1){ //’Ç‰Á 2012,06.14
+		if(myCnt>=1){ //è¿½åŠ  2012,06.14
 			tempCnt.Format(_T("%d"),myCnt);
-			tempCnt=tempCnt + _T(" Œ‚ÌƒAƒCƒeƒ€‚ğíœ‚µ‚Ü‚µ‚½");
+			tempCnt=tempCnt + _T(" ä»¶ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’å‰Šé™¤ã—ã¾ã—ãŸ");
 		}else{
-			tempCnt=_T("ƒAƒCƒeƒ€‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßAƒAƒCƒeƒ€‚ğíœ‚Å‚«‚Ü‚¹‚ñ");
+			tempCnt=_T("ã‚¢ã‚¤ãƒ†ãƒ ãŒé¸æŠã•ã‚Œã¦ã„ãªã„ãŸã‚ã€ã‚¢ã‚¤ãƒ†ãƒ ã‚’å‰Šé™¤ã§ãã¾ã›ã‚“");
 		}
 		CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
 
@@ -20671,7 +20671,7 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 	CFileListCreatorDlg::Total_Bytes_Func();
 	CFileListCreatorDlg::ItemCount_Func(TRUE);
 
-	ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -20679,7 +20679,7 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 		return;
 	}
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -20689,9 +20689,9 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 
 void CFileListCreatorDlg::OnMenuDeletecell()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
-		CFileListCreatorDlg::StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 		return;
 	}else{
 		CFileListCreatorDlg::DeleteSelectedCells_Func();
@@ -20700,7 +20700,7 @@ void CFileListCreatorDlg::OnMenuDeletecell()
 
 void CFileListCreatorDlg::SortEnsureVisible_Func()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg::m_xcList.EnsureVisible(0, FALSE);
 
 	//LVITEM	   lvi;
@@ -20713,19 +20713,19 @@ void CFileListCreatorDlg::SortEnsureVisible_Func()
 
 		m_xcList.EnsureVisible(index, FALSE);
 
-		//m_xcList.SetItemState(index,     // ƒtƒH[ƒJƒX•‘I‘ğó‘Ô‚É‚µ‚½‚¢ƒAƒCƒeƒ€‚ÌƒCƒ“ƒfƒbƒNƒX
-		//LVIS_FOCUSED | LVIS_SELECTED,    // ó‘Ô
-		//LVIS_FOCUSED | LVIS_SELECTED);    // ƒ}ƒXƒN
+		//m_xcList.SetItemState(index,     // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ï¼†é¸æŠçŠ¶æ…‹ã«ã—ãŸã„ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		//LVIS_FOCUSED | LVIS_SELECTED,    // çŠ¶æ…‹
+		//LVIS_FOCUSED | LVIS_SELECTED);    // ãƒã‚¹ã‚¯
 		UpdateData(FALSE);
 	}
-	//RedrawWindow(); //’Ç‰Á 2012.04.05 //XP‘Îô
+	//RedrawWindow(); //è¿½åŠ  2012.04.05 //XPå¯¾ç­–
 }
 
 void CFileListCreatorDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
 
-	// TODO: ‚±‚±‚ÉƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 
 	//RECT CurRect;
@@ -20739,11 +20739,11 @@ void CFileListCreatorDlg::OnSize(UINT nType, int cx, int cy)
 		CurRect.right-CurRect.left - 20*2,
 		initListSize.bottom-initListSize.top + (CurRect.bottom - initWindowSize.bottom) ,NULL);
 
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);//’Ç‰Á 2012.06.28
-	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//’Ç‰Á 2012.06.28
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);//è¿½åŠ  2012.06.28
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//è¿½åŠ  2012.06.28
 
-	//CFileListCreatorDlg::StatusStringSet(_T("’Êí‚Ìƒ‚[ƒh‚Å‚· (ƒZƒ‹“à‚ÌƒeƒLƒXƒg‚Í•ÒW‚Å‚«‚Ü‚¹‚ñ)"),300,TRUE);
-	//m_xvStrEditCellMode = _T("F@’Êíƒ‚[ƒh");
+	//CFileListCreatorDlg::StatusStringSet(_T("é€šå¸¸ã®ãƒ¢ãƒ¼ãƒ‰ã§ã™ (ã‚»ãƒ«å†…ã®ãƒ†ã‚­ã‚¹ãƒˆã¯ç·¨é›†ã§ãã¾ã›ã‚“)"),300,TRUE);
+	//m_xvStrEditCellMode = _T("ï¼šã€€é€šå¸¸ãƒ¢ãƒ¼ãƒ‰");
 	//UpdateData(FALSE);
 
 
@@ -20982,7 +20982,7 @@ void CFileListCreatorDlg::OnSize(UINT nType, int cx, int cy)
 
 
 	RedrawWindow();
-	//CFileListCreatorDlg::StatusStringSet(_T("uCellSizeFixvƒ{ƒ^ƒ“‚ÅƒZƒ‹•‚ğ’²®‚·‚é–‚ª‚Å‚«‚Ü‚·\r\n(‰Ÿ‚·“x‚É ƒtƒ‹ƒpƒX^ƒtƒ@ƒCƒ‹–¼ ‚Ìƒ‚[ƒh‚ª“ü‚ê‘Ö‚í‚è‚Ü‚·)"),0,FALSE);
+	//CFileListCreatorDlg::StatusStringSet(_T("ã€ŒCellSizeFixã€ãƒœã‚¿ãƒ³ã§ã‚»ãƒ«å¹…ã‚’èª¿æ•´ã™ã‚‹äº‹ãŒã§ãã¾ã™\r\n(æŠ¼ã™åº¦ã« ãƒ•ãƒ«ãƒ‘ã‚¹ï¼ãƒ•ã‚¡ã‚¤ãƒ«å ã®ãƒ¢ãƒ¼ãƒ‰ãŒå…¥ã‚Œæ›¿ã‚ã‚Šã¾ã™)"),0,FALSE);
 
 	//::ShowWindow(::GetDlgItem(m_hWnd,IDC_LIST),SW_SHOW);
 	//GetDlgItem( IDC_LIST )->MoveWindow( &rect1, TRUE );
@@ -20991,7 +20991,7 @@ void CFileListCreatorDlg::OnSize(UINT nType, int cx, int cy)
 
 void CFileListCreatorDlg::OnBnClickedBtnMiniwindow()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
@@ -21033,7 +21033,7 @@ void CFileListCreatorDlg::OnBnClickedBtnMiniwindow()
 
 void CFileListCreatorDlg::OnBnClickedBtnRedrawwindow()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	Total_Bytes_Bold();
 	Total_Bytes_Func();
@@ -21059,14 +21059,14 @@ void CFileListCreatorDlg::OnBnClickedBtnRedrawwindow()
 		::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_DRAG_ON_ME),SW_HIDE);
 	}
 
-	CFileListCreatorDlg::StatusStringSet(_T("ƒEƒBƒ“ƒhƒE‘S‘Ì‚ğÄ•`‰æ‚µ‚Ü‚µ‚½"),0,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å…¨ä½“ã‚’å†æç”»ã—ã¾ã—ãŸ"),0,TRUE);
 	RedrawWindow();
 }
 
 
 void CFileListCreatorDlg::OnBnClickedChkUseundo()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHK_UseUNDO);
@@ -21096,10 +21096,10 @@ void CFileListCreatorDlg::SpeakFunc(CString myText)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -21107,18 +21107,18 @@ void CFileListCreatorDlg::SpeakFunc(CString myText)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
-		//// ƒtƒ‹ƒpƒX‚ğ•ª‰ğ
+		//// ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’åˆ†è§£
 		//TCHAR szDir[_MAX_DIR];
 		//TCHAR szDrive[_MAX_DRIVE];
 		//TCHAR szFName[_MAX_FNAME];
 		//TCHAR szExt[_MAX_EXT];
 		//_splitpath(szPath,szDrive,szDir,szFName,szExt);
 		//
-		//// ƒtƒHƒ‹ƒ_Aƒtƒ@ƒCƒ‹–¼æ“¾
+		//// ãƒ•ã‚©ãƒ«ãƒ€ã€ãƒ•ã‚¡ã‚¤ãƒ«åå–å¾—
 		//TCHAR szFilePath[_MAX_PATH];
 		//TCHAR szFileName[_MAX_PATH];
 		//sprintf(szFilePath,"%s%s",szDrive,szDir);
@@ -21147,12 +21147,12 @@ void CFileListCreatorDlg::SpeakFunc(CString myText)
 			CFile::modeCreate | CFile::typeText)) err = 1;// | CFile::modeNoTruncate | CFile::typeText
 
 
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = _T("CreateObject(\"SAPI.SpVoice\").Speak \"") +  myText + _T("\"");
 			
-			//CreateObject("SAPI.SpVoice").Speak "Š¿š‰¼–¼Œğ‚¶‚è•¶"
+			//CreateObject("SAPI.SpVoice").Speak "æ¼¢å­—ä»®åäº¤ã˜ã‚Šæ–‡"
 
 			TRY {stdFile.WriteString(wstr);}
 			CATCH (CFileException, eP) {err = 1;}
@@ -21160,7 +21160,7 @@ void CFileListCreatorDlg::SpeakFunc(CString myText)
 		}
 
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile.Close();
 		
 		if (!err)
@@ -21194,7 +21194,7 @@ BOOL CFileListCreatorDlg::iTunesPlayList_Import_Func(CString FullPath,CString my
 	CString       wstr, rstr;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
 		if ( PathFileExists( FullPath ) ){
@@ -21206,13 +21206,13 @@ BOOL CFileListCreatorDlg::iTunesPlayList_Import_Func(CString FullPath,CString my
 			int k;
 			k = 0;
 			while (!err) {
-				MSG msg; //’Ç‰Á 2011.10.22
+				MSG msg; //è¿½åŠ  2011.10.22
 
-				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ƒƒbƒZ[ƒW‚ğæ“¾‚µ‚½ê‡0ˆÈŠO‚ª•Ô‚é
+				if ( PeekMessage(&msg,NULL,0,0,PM_REMOVE) ) { // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸå ´åˆ0ä»¥å¤–ãŒè¿”ã‚‹
 					if(msg.hwnd != GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
 						if (msg.wParam == VK_ESCAPE){
 							ESCAPE_FLG = TRUE;
-							break; //I—¹BƒƒbƒZ[ƒWƒ‹[ƒv‚ğ”²‚¯‚éB
+							break; //çµ‚äº†ã€‚ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹ã€‚
 						}
 					}
 					TranslateMessage(&msg);
@@ -21230,7 +21230,7 @@ BOOL CFileListCreatorDlg::iTunesPlayList_Import_Func(CString FullPath,CString my
 					//MessageBox(tempStr,_T("TRACE"), MB_YESNOCANCEL );
 
 					if ( mySwitch == _T("CheckMusicListFile") ){
-						if ( tempStr != _T("êŠ") ){
+						if ( tempStr != _T("å ´æ‰€") ){
 							stdFile1.Close();
 							fclose(fp);
 							return FALSE;
@@ -21258,7 +21258,7 @@ BOOL CFileListCreatorDlg::iTunesPlayList_Import_Func(CString FullPath,CString my
 				k++;
 			}
 
-			// (6)ƒNƒ[ƒY(–¾¦“I)
+			// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 			stdFile1.Close();
 			fclose(fp);
 		}
@@ -21268,30 +21268,30 @@ BOOL CFileListCreatorDlg::iTunesPlayList_Import_Func(CString FullPath,CString my
 
 //void CFileListCreatorDlg::OnLvnEndScrollList(NMHDR *pNMHDR, LRESULT *pResult)
 //{
-//	// ‚±‚Ì‹@”\‚Í Internet Explorer 5.5 ‚©‚»‚êˆÈ~‚Ìƒo[ƒWƒ‡ƒ“‚ğ•K—v‚Æ‚µ‚Ü‚·B
-//	// ƒVƒ“ƒ{ƒ‹ _WIN32_IE ‚Í >= 0x0560 ‚É‚È‚ç‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
+//	// ã“ã®æ©Ÿèƒ½ã¯ Internet Explorer 5.5 ã‹ãã‚Œä»¥é™ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’å¿…è¦ã¨ã—ã¾ã™ã€‚
+//	// ã‚·ãƒ³ãƒœãƒ« _WIN32_IE ã¯ >= 0x0560 ã«ãªã‚‰ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
 //	LPNMLVSCROLL pStateChanged = reinterpret_cast<LPNMLVSCROLL>(pNMHDR);
-//	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+//	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 //	*pResult = 0;
 //}
 
 
 void CFileListCreatorDlg::OnMenuCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//OnCancel();
 
 	//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
 
-	CFileListCreatorDlg::StatusStringSet(_T("‰EƒNƒŠƒbƒNƒƒjƒ…[‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½"),0,TRUE);
+	CFileListCreatorDlg::StatusStringSet(_T("å³ã‚¯ãƒªãƒƒã‚¯ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ"),0,TRUE);
 
 	//PostMessage(WM_KEYDOWN, VK_ESCAPE, 0);;
 
-	//// ƒEƒBƒ“ƒhƒE‚©‚çƒƒjƒ…[ƒo[‚ğíœ
+	//// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‹ã‚‰ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ã‚’å‰Šé™¤
 	//SetMenu( IDR_MENU1, NULL );
-	//// ƒƒjƒ…[ƒo[ƒŠƒ\[ƒX‚ğ”jŠü‚·‚é
+	//// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ãƒªã‚½ãƒ¼ã‚¹ã‚’ç ´æ£„ã™ã‚‹
 	//DestroyMenu( hMenu );
 
-	//PostMessage(WM_NULL); // ‚±‚Ìˆ—‚à–Y‚ê‚¸‚ÉI
+	//PostMessage(WM_NULL); // ã“ã®å‡¦ç†ã‚‚å¿˜ã‚Œãšã«ï¼
     return;
 }

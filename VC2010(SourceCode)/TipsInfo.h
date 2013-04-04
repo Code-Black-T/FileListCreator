@@ -1,21 +1,21 @@
-#pragma once
+Ôªø#pragma once
 
 
-// TipsInfo É_ÉCÉAÉçÉO
+// TipsInfo „ÉÄ„Ç§„Ç¢„É≠„Ç∞
 
 class TipsInfo : public CDialogEx
 {
 	DECLARE_DYNAMIC(TipsInfo)
 
 public:
-	TipsInfo(CWnd* pParent = NULL);   // ïWèÄÉRÉìÉXÉgÉâÉNÉ^Å[
+	TipsInfo(CWnd* pParent = NULL);   // Ê®ôÊ∫ñ„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº
 	virtual ~TipsInfo();
 
-// É_ÉCÉAÉçÉO ÉfÅ[É^
+// „ÉÄ„Ç§„Ç¢„É≠„Ç∞ „Éá„Éº„Çø
 	enum { IDD = IDD_DIALOG_Tips };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ÉTÉ|Å[Ég
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV „Çµ„Éù„Éº„Éà
 
 	DECLARE_MESSAGE_MAP()
 };

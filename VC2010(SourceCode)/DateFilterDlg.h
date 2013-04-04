@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #include "afxwin.h"
 
 
-// DateFilterDlg ƒ_ƒCƒAƒƒO
+// DateFilterDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 class DateFilterDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(DateFilterDlg)
 
 public:
-	DateFilterDlg(CWnd* pParent = NULL);   // •W€ƒRƒ“ƒXƒgƒ‰ƒNƒ^[
+	DateFilterDlg(CWnd* pParent = NULL);   // æ¨™æº–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
 	virtual ~DateFilterDlg();
 
-	virtual BOOL OnInitDialog();//T’Ç‰Á
+	virtual BOOL OnInitDialog();//Tè¿½åŠ 
 
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	enum { IDD = IDD_DIALOG_DateFilter };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã‚µãƒãƒ¼ãƒˆ
 
-	virtual BOOL PreTranslateMessage(MSG* pMsg); //’Ç‰Á2012.04.04
+	virtual BOOL PreTranslateMessage(MSG* pMsg); //è¿½åŠ 2012.04.04
 	DECLARE_MESSAGE_MAP()
 public:
 	CComboBox m_xcCombo_StartDate;

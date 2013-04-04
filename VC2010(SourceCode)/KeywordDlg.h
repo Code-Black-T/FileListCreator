@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #include "afxwin.h"
 
 
-// KeywordDlg ƒ_ƒCƒAƒƒO
+// KeywordDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 class KeywordDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(KeywordDlg)
 
 public:
-	KeywordDlg(CWnd* pParent = NULL);   // •W€ƒRƒ“ƒXƒgƒ‰ƒNƒ^[
+	KeywordDlg(CWnd* pParent = NULL);   // æ¨™æº–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ¼
 	virtual ~KeywordDlg();
 
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	enum { IDD = IDD_DIALOG_Keywords };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã‚µãƒãƒ¼ãƒˆ
 	
-	// ¶¬‚³‚ê‚½AƒƒbƒZ[ƒWŠ„‚è“–‚ÄŠÖ”
-	virtual BOOL OnInitDialog(); //’Ç‰Á2011.08.17
-	virtual BOOL PreTranslateMessage(MSG* pMsg); //’Ç‰Á2011.09.02
+	// ç”Ÿæˆã•ã‚ŒãŸã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‰²ã‚Šå½“ã¦é–¢æ•°
+	virtual BOOL OnInitDialog(); //è¿½åŠ 2011.08.17
+	virtual BOOL PreTranslateMessage(MSG* pMsg); //è¿½åŠ 2011.09.02
 
 	DECLARE_MESSAGE_MAP()
 public:

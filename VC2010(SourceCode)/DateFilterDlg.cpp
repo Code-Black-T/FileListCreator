@@ -1,19 +1,19 @@
-// DateFilterDlg.cpp : À‘•ƒtƒ@ƒCƒ‹
+ï»¿// DateFilterDlg.cpp : å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
 #include "FileListCreator.h"
 
-//’Ç‰Á¥
+//è¿½åŠ â–¼
 #include "FileListCreatorDlg.h"
-#include <time.h>//•s—vH
-//’Ç‰Á£
+#include <time.h>//ä¸è¦ï¼Ÿ
+//è¿½åŠ â–²
 
 #include "DateFilterDlg.h"
 #include "afxdialogex.h"
 
 
-// DateFilterDlg ƒ_ƒCƒAƒƒO
+// DateFilterDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 IMPLEMENT_DYNAMIC(DateFilterDlg, CDialogEx)
 
@@ -59,7 +59,7 @@ BEGIN_MESSAGE_MAP(DateFilterDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// DateFilterDlg ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰[
+// DateFilterDlg ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 
 
 BOOL DateFilterDlg::OnInitDialog()
@@ -91,7 +91,7 @@ void DateFilterDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= DateFilterDlg::m_xcCombo_TargetDate.GetCount() -1){
 				CString ComboText;
-				DateFilterDlg::m_xcCombo_TargetDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				DateFilterDlg::m_xcCombo_TargetDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					DateFilterDlg::m_xcCombo_TargetDate.SetCurSel(k);
@@ -126,7 +126,7 @@ void DateFilterDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= DateFilterDlg::m_xcCombo_StartDate.GetCount() -1){
 				CString ComboText;
-				DateFilterDlg::m_xcCombo_StartDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				DateFilterDlg::m_xcCombo_StartDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					DateFilterDlg::m_xcCombo_StartDate.SetCurSel(k);
@@ -161,7 +161,7 @@ void DateFilterDlg::ExistCheckFunc(CString mySwitch)
 
 			while (k <= DateFilterDlg::m_xcCombo_EndDate.GetCount() -1){
 				CString ComboText;
-				DateFilterDlg::m_xcCombo_EndDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒXk”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+				DateFilterDlg::m_xcCombo_EndDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹kç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 
 				if(ComboText == EditData){
 					DateFilterDlg::m_xcCombo_EndDate.SetCurSel(k);
@@ -207,7 +207,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= DateFilterDlg::m_xcCombo_TargetDate.GetCount() -1){
 			CString ComboText;
-			DateFilterDlg::m_xcCombo_TargetDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			DateFilterDlg::m_xcCombo_TargetDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData1 = WriteData1 + ComboText + _T("\n");
 			}
@@ -219,7 +219,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= DateFilterDlg::m_xcCombo_StartDate.GetCount() -1){
 			CString ComboText;
-			DateFilterDlg::m_xcCombo_StartDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			DateFilterDlg::m_xcCombo_StartDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData2 = WriteData2 + ComboText + _T("\n");
 			}
@@ -231,7 +231,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 		while (k <= DateFilterDlg::m_xcCombo_EndDate.GetCount() -1){
 			CString ComboText;
-			DateFilterDlg::m_xcCombo_EndDate.GetLBText(k, ComboText); // ƒCƒ“ƒfƒbƒNƒX0”Ô–Ú‚Ì•¶š—ñ‚ğæ“¾
+			DateFilterDlg::m_xcCombo_EndDate.GetLBText(k, ComboText); // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹0ç•ªç›®ã®æ–‡å­—åˆ—ã‚’å–å¾—
 			if(k<=ComboBox_MAX){
 				WriteData3 = WriteData3 + ComboText + _T("\n");
 			}
@@ -244,10 +244,10 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	LPTSTR        rstrBuf = NULL;
 	int           err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -255,7 +255,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -290,7 +290,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = WriteData1;
@@ -299,12 +299,12 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 	}
 
 
-	//2ŒÂ–Ú‚Ìƒtƒ@ƒCƒ‹‚ğƒI[ƒvƒ“
+	//2å€‹ç›®ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 
 	CStdioFile    stdFile2;
 	//CString       wstr, rstr;
@@ -314,10 +314,10 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	//int           err = 0;
 	err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -325,7 +325,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -360,7 +360,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = WriteData2;
@@ -369,12 +369,12 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile2.Close();
 	}
 
 
-	//3ŒÂ–Ú‚Ìƒtƒ@ƒCƒ‹‚ğƒI[ƒvƒ“
+	//3å€‹ç›®ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 
 	CStdioFile    stdFile3;
 	//CString       wstr, rstr;
@@ -384,10 +384,10 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 	//int           err = 0;
 	err = 0;
 
-	// (1)“Ç‚İ‘‚«—p‚ÉƒI[ƒvƒ“
+	// (1)èª­ã¿æ›¸ãç”¨ã«ã‚ªãƒ¼ãƒ—ãƒ³
 	if (!err)
 	{
-		//// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚Ìæ“¾
+		//// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å–å¾—
 		//TCHAR szCurrentDir[_MAX_PATH];
 		//GetCurrentDirectory(_MAX_PATH,szCurrentDir);
 	
@@ -395,7 +395,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		//CurDir = szCurrentDir;
 
 		//http://rararahp.cool.ne.jp/vc/vctips/api.htm
-		// Àsƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXæ“¾
+		// å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹å–å¾—
 		TCHAR szPath[_MAX_PATH];
 		GetModuleFileName( NULL, szPath, MAX_PATH);
 
@@ -430,7 +430,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 
 	if(mySwitch == _T("write")){ //write
-		// (2)‘‚«‚İ
+		// (2)æ›¸ãè¾¼ã¿
 		if (!err)
 		{
 			wstr = WriteData3;
@@ -439,7 +439,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 			CATCH (CFileException, eP) {err = 1;}
 			END_CATCH
 		}
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile3.Close();
 	}
 
@@ -472,7 +472,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		k = 0;
 		while (!err) {
 			if (stdFile3.ReadString(rstr) == FALSE) err = 1;
-			if (!err && (k<ComboBox_MAX)){ //•ÏX 2012.07.11
+			if (!err && (k<ComboBox_MAX)){ //å¤‰æ›´ 2012.07.11
 				DateFilterDlg::m_xcCombo_EndDate.InsertString(k,rstr);
 			}
 
@@ -480,7 +480,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 		}
 		DateFilterDlg::m_xcCombo_EndDate.SetCurSel(0);
 
-		// (6)ƒNƒ[ƒY(–¾¦“I)
+		// (6)ã‚¯ãƒ­ãƒ¼ã‚º(æ˜ç¤ºçš„)
 		stdFile1.Close();
 		stdFile2.Close();
 		stdFile3.Close();
@@ -490,7 +490,7 @@ void DateFilterDlg::ReadOrWriteComboData_Func(CString mySwitch)
 
 void DateFilterDlg::OnBnClickedOk()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnOK();
 }
 
@@ -564,17 +564,17 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 		}
 		else
 		{
-			TRACE("‰ğÍ•s”\\n");
+			TRACE("è§£æä¸èƒ½\n");
 			ParseDateFLG = FALSE;
 		}
 	}else{
 		ParseDateFLG = FALSE;
 	}
 
-    if (ParseDateFLG == FALSE) { //EditDate == _T("") || //ƒRƒƒ“ƒg‰» 2012.06.01
+    if (ParseDateFLG == FALSE) { //EditDate == _T("") || //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.01
 
         //if (m_Dlg->ProhibitFileName(FullPathString, TRUE)) {
-            m_Dlg->fileUpdatedRecently(FullPathString, workRow); //ƒRƒƒ“ƒg‰» 2012.06.01
+            m_Dlg->fileUpdatedRecently(FullPathString, workRow); //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.01
 		//}
         
         //Worksheets("FileList").Cells(6 + workRow, 8).Value = myDate;
@@ -607,12 +607,12 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 					if (mySwitch == _T("Red")){
 						FormatDataNum = m_Dlg->SetToRed(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 					if (mySwitch == _T("Bold")){
 						FormatDataNum = m_Dlg->SetToBold(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 				}
 			}
@@ -624,12 +624,12 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 					if (mySwitch == _T("Red")){
 						FormatDataNum = m_Dlg->SetToRed(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 					if (mySwitch == _T("Bold")){
 						FormatDataNum = m_Dlg->SetToBold(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 				}
 			}
@@ -641,12 +641,12 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 					if (mySwitch == _T("Red")){
 						FormatDataNum = m_Dlg->SetToRed(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 					if (mySwitch == _T("Bold")){
 						FormatDataNum = m_Dlg->SetToBold(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 				}
 			}
@@ -655,16 +655,16 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 		if (ParseDateFLG == TRUE) {
 			if (strTargetDate!=_T("") && myDate!=_T("") && m_xvChkTargetDate == TRUE){
 				if (m_Dlg->CStringToDate(myDate) == TargetDate) {
-					//MessageBox (_T("“ú•t‚ª“™‚µ‚¢G") + myDate);
+					//MessageBox (_T("æ—¥ä»˜ãŒç­‰ã—ã„ï¼›") + myDate);
 					if (mySwitch == _T("Red")){
 						FormatDataNum = m_Dlg->SetToRed(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 					if (mySwitch == _T("Bold")){
 						FormatDataNum = m_Dlg->SetToBold(FormatDataNum);
 
-						m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+						m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 					}
 				}
 			}
@@ -683,7 +683,7 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 		if (myDate != _T("")){
     
 			//if (ParseDateFLG == TRUE) {
-			//	//ğŒ•¶ Œ©’¼‚µ
+			//	//æ¡ä»¶æ–‡ è¦‹ç›´ã—
 			//	if (strStartDate!=_T("") && myDate!=_T("") && strEndDate == _T("") && strTargetDate == _T("")){
 			//		if (StartDate <= m_Dlg->CStringToDate(myDate)){
 			//			DEL_FLG = TRUE;
@@ -777,10 +777,10 @@ BOOL DateFilterDlg::DateMatch(int workRow, CString mySwitch,CString strTargetDat
 	UpdateData(FALSE);
 
 
-	//m_Dlg->ListDataNoChange_FLG = FALSE;//’Ç‰Á 2012.05.13
+	//m_Dlg->ListDataNoChange_FLG = FALSE;//è¿½åŠ  2012.05.13
 
 
-	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //’Ç‰Á 2012.05.13
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //è¿½åŠ  2012.05.13
 		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
 	}
 
@@ -878,8 +878,8 @@ void DateFilterDlg::EmphasisByDate(CString mySwitch)
                 m_Dlg->fileUpdatedRecently(FullPathString, workRow);
 			}            
             if (DateMatch(workRow, mySwitch,strTargetDate,strStartDate,strEndDate) == TRUE){
-				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //’Ç‰Á 2012.04.04  //ƒRƒƒ“ƒg‰» 2012.06.10
-				m_Dlg->ItemCount_Func(TRUE); //’Ç‰Á2012.04.04
+				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //è¿½åŠ  2012.04.04  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.10
+				m_Dlg->ItemCount_Func(TRUE); //è¿½åŠ 2012.04.04
 
 				m_Dlg->m_xcList.DeleteItem(workRow);
 			}else{
@@ -897,8 +897,8 @@ void DateFilterDlg::EmphasisByDate(CString mySwitch)
 		while (workRow<m_Dlg->m_xcList.GetItemCount()){
 			FormatDataNum = m_Dlg->m_xcList.GetItemData(workRow);
 			if ( FormatDataNum == 11) {
-				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //’Ç‰Á 2012.04.04  //ƒRƒƒ“ƒg‰» 2012.06.10
-				m_Dlg->ItemCount_Func(TRUE); //’Ç‰Á2012.04.04
+				m_Dlg->m_xcList.EnsureVisible(workRow, FALSE); //è¿½åŠ  2012.04.04  //ã‚³ãƒ¡ãƒ³ãƒˆåŒ– 2012.06.10
+				m_Dlg->ItemCount_Func(TRUE); //è¿½åŠ 2012.04.04
 
 				m_Dlg->m_xcList.DeleteItem(workRow);
 			}else{
@@ -933,9 +933,9 @@ void DateFilterDlg::EmphasisByDate(CString mySwitch)
 
 void DateFilterDlg::OnBnClickedBtnTargetred()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(m_xvChkDateSpan != TRUE && m_xvChkTargetDate != TRUE){
-		MessageBox(_T("Span ‚© Target ‚É ƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢") ,_T("ƒ`ƒFƒbƒN–¢İ’è"), MB_OK );
+		MessageBox(_T("Span ã‹ Target ã« ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„") ,_T("ãƒã‚§ãƒƒã‚¯æœªè¨­å®š"), MB_OK );
 		return;
 	}
 
@@ -954,17 +954,17 @@ void DateFilterDlg::OnBnClickedBtnTargetred()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("DateFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("DateFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		EmphasisByDate(_T("Red"));
 	}
 
-	m_Dlg->StatusStringSet(_T("DateFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("DateFilter çµ‚äº†"),300,TRUE);
 
 	UpdateData(FALSE);
 
@@ -978,13 +978,13 @@ void DateFilterDlg::OnBnClickedBtnTargetred()
 	ExistCheckFunc(_T("EndDate"));
 
 	ReadOrWriteComboData_Func(_T("write"));
-	RedrawWindow();  //UpdateWindow();‚©‚ç•ÏX //•ÏX 2012.06.01
+	RedrawWindow();  //UpdateWindow();ã‹ã‚‰å¤‰æ›´ //å¤‰æ›´ 2012.06.01
 }
 
 
 void DateFilterDlg::OnBnClickedBtnOverwritedate()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
 
 	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
@@ -1009,9 +1009,9 @@ void DateFilterDlg::OnBnClickedBtnOverwritedate()
 
 void DateFilterDlg::OnBnClickedBtnTargetbold()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(m_xvChkDateSpan != TRUE && m_xvChkTargetDate != TRUE){
-		MessageBox(_T("Span ‚© Target ‚É ƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢") ,_T("ƒ`ƒFƒbƒN–¢İ’è"), MB_OK );
+		MessageBox(_T("Span ã‹ Target ã« ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„") ,_T("ãƒã‚§ãƒƒã‚¯æœªè¨­å®š"), MB_OK );
 		return;
 	}
 
@@ -1030,17 +1030,17 @@ void DateFilterDlg::OnBnClickedBtnTargetbold()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("DateFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("DateFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		EmphasisByDate(_T("Bold"));
 	}
 
-	m_Dlg->StatusStringSet(_T("DateFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("DateFilter çµ‚äº†"),300,TRUE);
 
 	UpdateData(FALSE);
 
@@ -1054,15 +1054,15 @@ void DateFilterDlg::OnBnClickedBtnTargetbold()
 	ExistCheckFunc(_T("EndDate"));
 
 	ReadOrWriteComboData_Func(_T("write"));
-	RedrawWindow();  //UpdateWindow();‚©‚ç•ÏX //•ÏX 2012.06.01
+	RedrawWindow();  //UpdateWindow();ã‹ã‚‰å¤‰æ›´ //å¤‰æ›´ 2012.06.01
 }
 
 
 void DateFilterDlg::OnBnClickedBtnExcludelist1()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	if(m_xvChkDateSpan != TRUE && m_xvChkTargetDate != TRUE){
-		MessageBox(_T("Span ‚© Target ‚É ƒ`ƒFƒbƒN‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢") ,_T("ƒ`ƒFƒbƒN–¢İ’è"), MB_OK );
+		MessageBox(_T("Span ã‹ Target ã« ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã¦ãã ã•ã„") ,_T("ãƒã‚§ãƒƒã‚¯æœªè¨­å®š"), MB_OK );
 		return;
 	}
 
@@ -1081,17 +1081,17 @@ void DateFilterDlg::OnBnClickedBtnExcludelist1()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("DateFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("DateFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		EmphasisByDate(_T("ExcludeLIST"));
 	}
 
-	m_Dlg->StatusStringSet(_T("DateFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("DateFilter çµ‚äº†"),300,TRUE);
 
 	UpdateData(FALSE);
 
@@ -1105,13 +1105,13 @@ void DateFilterDlg::OnBnClickedBtnExcludelist1()
 	ExistCheckFunc(_T("EndDate"));
 
 	ReadOrWriteComboData_Func(_T("write"));
-	RedrawWindow();  //UpdateWindow();‚©‚ç•ÏX //•ÏX 2012.06.01
+	RedrawWindow();  //UpdateWindow();ã‹ã‚‰å¤‰æ›´ //å¤‰æ›´ 2012.06.01
 }
 
 
 void DateFilterDlg::OnBnClickedBtnExcludelist2()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CString StartDate;
 	CString EndDate;
@@ -1128,17 +1128,17 @@ void DateFilterDlg::OnBnClickedBtnExcludelist2()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("DateFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("DateFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		EmphasisByDate(_T("ExcludeLIST2"));
 	}
 
-	m_Dlg->StatusStringSet(_T("DateFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("DateFilter çµ‚äº†"),300,TRUE);
 
 	UpdateData(FALSE);
 
@@ -1152,14 +1152,14 @@ void DateFilterDlg::OnBnClickedBtnExcludelist2()
 	ExistCheckFunc(_T("EndDate"));
 
 	ReadOrWriteComboData_Func(_T("write"));
-	RedrawWindow();  //UpdateWindow();‚©‚ç•ÏX //•ÏX 2012.06.01
+	RedrawWindow();  //UpdateWindow();ã‹ã‚‰å¤‰æ›´ //å¤‰æ›´ 2012.06.01
 }
 
 
 void DateFilterDlg::OnBnClickedBtnFormatcancellation()
 {
 
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CString StartDate;
 	CString EndDate;
@@ -1176,18 +1176,18 @@ void DateFilterDlg::OnBnClickedBtnFormatcancellation()
 	}
 
 	m_Dlg->LastPrevItemCount = m_Dlg->m_xcList.GetItemCount();
-	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //•ÏX 2012.05.02
+	m_Dlg->push_back_Func(m_Dlg->LastPrevItemCount,_T("prevData")); //å¤‰æ›´ 2012.05.02
 
 	if(m_Dlg->m_xcList.GetItemCount() < 1) {
-		m_Dlg->StatusStringSet(_T("ƒf[ƒ^‚ª‚È‚¢‚Ì‚Å‰½‚às‚í‚ê‚Ü‚¹‚ñ‚Å‚µ‚½"),300,TRUE);
+		m_Dlg->StatusStringSet(_T("ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã®ã§ä½•ã‚‚è¡Œã‚ã‚Œã¾ã›ã‚“ã§ã—ãŸ"),300,TRUE);
 	}else{
-		m_Dlg->StatusStringSet(_T("DateFilter Às’†"),0,FALSE); //•ÏX 2012.06.14
+		m_Dlg->StatusStringSet(_T("DateFilter å®Ÿè¡Œä¸­"),0,FALSE); //å¤‰æ›´ 2012.06.14
 
 		EmphasisByDate(_T("FormatCancellation"));
 
 	}
 
-	m_Dlg->StatusStringSet(_T("DateFilter I—¹"),300,TRUE);
+	m_Dlg->StatusStringSet(_T("DateFilter çµ‚äº†"),300,TRUE);
 
 	UpdateData(FALSE);
 
@@ -1202,13 +1202,13 @@ void DateFilterDlg::OnBnClickedBtnFormatcancellation()
 
 	ReadOrWriteComboData_Func(_T("write"));
 
-	RedrawWindow();  //UpdateWindow();‚©‚ç•ÏX //•ÏX 2012.06.01
+	RedrawWindow();  //UpdateWindow();ã‹ã‚‰å¤‰æ›´ //å¤‰æ›´ 2012.06.01
 }
 
 
 void DateFilterDlg::OnBnClickedBtnAlldateclear()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	m_xcCombo_TargetDate.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 	m_xcCombo_StartDate.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
@@ -1218,19 +1218,19 @@ void DateFilterDlg::OnBnClickedBtnAlldateclear()
 
 void DateFilterDlg::OnBnClickedBtnDateSettoday()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 
 	CTime    cTime;
 	CString  str;
 
-	cTime = CTime::GetCurrentTime();           // Œ»İ
-	str = cTime.Format("%Y/%m/%d");   // "YYYY/mm/dd HH:MM:SS"Œ`®‚Ì•¶š—ñ‚ğæ“¾
+	cTime = CTime::GetCurrentTime();           // ç¾åœ¨æ™‚åˆ»
+	str = cTime.Format("%Y/%m/%d");   // "YYYY/mm/dd HH:MM:SS"å½¢å¼ã®æ™‚åˆ»æ–‡å­—åˆ—ã‚’å–å¾—
 
 	m_xcCombo_TargetDate.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(str)));
 	m_xcCombo_StartDate.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 	m_xcCombo_EndDate.SetWindowText(const_cast<LPTSTR>(static_cast<LPCTSTR>(_T(""))));
 
-	//’Ç‰Á 2012.07.11
+	//è¿½åŠ  2012.07.11
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_DateSpan);
 	chkbox1->SetCheck(0);
 
@@ -1244,14 +1244,14 @@ void DateFilterDlg::OnBnClickedBtnDateSettoday()
 
 void DateFilterDlg::OnBnClickedCancel()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CDialogEx::OnCancel();
 }
 
 
 void DateFilterDlg::OnBnClickedCheckDatespan()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_TargetDate);
 	
@@ -1269,14 +1269,14 @@ void DateFilterDlg::OnBnClickedCheckDatespan()
 
 void DateFilterDlg::OnBnClickedCheckTargetdate()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	//http://www.ujasiri.com/prglib/vc/compo/vc_chkboxsap.html
 	CButton* chkbox2 = (CButton*)GetDlgItem(IDC_CHECK_DateSpan);
 
 	if (m_xvChkTargetDate == FALSE){ //.GetCheck()
 		m_xvChkTargetDate = TRUE;
 		m_xvChkDateSpan = FALSE;
-		//ƒ`ƒFƒbƒN‚ğŠO‚·
+		//ãƒã‚§ãƒƒã‚¯ã‚’å¤–ã™
 		chkbox2->SetCheck(0);
 	}else{
 		m_xvChkTargetDate = FALSE;
@@ -1288,7 +1288,7 @@ void DateFilterDlg::OnBnClickedCheckTargetdate()
 
 void DateFilterDlg::OnCbnSetfocusComboStartdate()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_DateSpan);
 	chkbox1->SetCheck(1);
 
@@ -1302,7 +1302,7 @@ void DateFilterDlg::OnCbnSetfocusComboStartdate()
 
 void DateFilterDlg::OnCbnSetfocusComboEnddate()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_DateSpan);
 	chkbox1->SetCheck(1);
 
@@ -1317,7 +1317,7 @@ void DateFilterDlg::OnCbnSetfocusComboEnddate()
 
 void DateFilterDlg::OnCbnSetfocusComboTargetdate()
 {
-	// TODO: ‚±‚±‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰[ ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã“ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 	CButton* chkbox1 = (CButton*)GetDlgItem(IDC_CHECK_DateSpan);
 	chkbox1->SetCheck(0);
 
@@ -1345,12 +1345,12 @@ BOOL DateFilterDlg::PreTranslateMessage (MSG* pMsg)
 				switch ( (int)pMsg->wParam ) {
 
 				case _T('D'):
-					//ƒ‚[ƒ_ƒŒƒX‚P
+					//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 					m_Dlg->OnFilterDatefilter();
 					break;
 
 				case _T('K'):
-					//ƒ‚[ƒ_ƒŒƒX‚P
+					//ãƒ¢ãƒ¼ãƒ€ãƒ¬ã‚¹ï¼‘
 					m_Dlg->OnFilterKeywords();
 					break;
 
@@ -1359,20 +1359,20 @@ BOOL DateFilterDlg::PreTranslateMessage (MSG* pMsg)
 					break;
 
 				case _T('Z'):
-					/* ƒAƒ“ƒhƒD */
+					/* ã‚¢ãƒ³ãƒ‰ã‚¥ */
 					if (m_Dlg->ESCAPE_FLG == FALSE) {
 						m_Dlg->ESCAPE_FLG = TRUE;
-						m_Dlg->StatusStringSet(_T("Às’†‚Ìˆ—‚ğ’â~‚µ‚Ü‚µ‚½"),300,TRUE);
+						m_Dlg->StatusStringSet(_T("å®Ÿè¡Œä¸­ã®å‡¦ç†ã‚’åœæ­¢ã—ã¾ã—ãŸ"),300,TRUE);
 					}
 					m_Dlg->OnEditlistUndo();
 					m_Dlg->ESCAPE_FLG = FALSE;
 					break;
 
 				case _T('S'):
-					/* •Û‘¶ */
+					/* ä¿å­˜ */
 					m_Dlg->OnMenuFileSave();
 			
-					m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚Ü‚µ‚½"),300,FALSE);
+					m_Dlg->CFileListCreatorDlg::StatusStringSet(_T("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ã¾ã—ãŸ"),300,FALSE);
 					break;
 				}
 			}
