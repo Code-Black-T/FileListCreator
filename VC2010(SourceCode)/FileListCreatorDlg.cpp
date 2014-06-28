@@ -19,6 +19,22 @@
 
 //▲isdigit関数 用 2011.05.30▲
 
+//▼isdigit関数 用 2014.06.28▼
+#define _UNICODE    //追加 2014.06.28
+#define UNICODE    //追加 2014.06.28
+#define _AFXDLL    //追加 2014.06.28
+
+#include <afx.h>    //追加 2014.06.28
+#include <tchar.h>    //追加 2014.06.28
+//#include <string.h>
+
+//#include <iostream>
+#include <algorithm> // 必須!    //追加 2014.06.28
+
+typedef std::basic_string<TCHAR> tstring;
+
+//▲std::copy 用 2014.06.28▲
+
 //SFXTextEncoding
 //文字エンコードを変換するためのクラスです。
 
@@ -1397,7 +1413,7 @@ void CFileListCreatorDlg::ExportFileList(BOOL AutoSaveFLG){ //削除 BOOL ReExpo
 
 	if (ListDataNoChange_FLG == TRUE && AutoSaveFLG == TRUE) return; //追加 2012.05.13
 
-	FLC_CurrentVersion= _T("FileListCreator 2.8.6 (VC++)");
+	FLC_CurrentVersion= _T("FileListCreator 2.8.7 (VC++)");
 
 
     CFileListCreatorDlg::StatusStringSet(_T("HTML 出力中"),0,FALSE);
@@ -7113,6 +7129,8 @@ BOOL CFileListCreatorDlg::OnInitDialog()
 	UNDO_FLG = TRUE;
 
 	ShellExecuteOpenFLG = FALSE;
+
+	CtrlEnterMSG = FALSE;
 
 	ListInsertItemFLG = FALSE; //TRUEの時はスクロール時、RedrawWindow();しない
 
@@ -15574,9 +15592,11 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 		//}
 
 		//return 0;
+	//case  WM_IME_ENDCOMPOSITION:
+
 	case WM_KEYUP:
 		if(pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd ){
-			if (pMsg->wParam == VK_RETURN){
+			if (pMsg->wParam == VK_RETURN && ::GetKeyState( VK_CONTROL ) < 0 ){
 				if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
 
 					lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //データの更新時に必要！！
@@ -15645,7 +15665,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					//LastSelectedRow = -1;
 					//LastSelectedColumn = -1;
 
-					CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 矢印キーで素早く移動、Enterで確定)"),300,TRUE);
+					CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 Ctrl + 矢印キー で移動、 Ctrl + Enter で確定)"),300,TRUE);
 					m_xvStrEditCellMode = _T("：　編集モード");
 					UpdateData(FALSE);
 
@@ -15664,12 +15684,17 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 
 					m_xvStrEasySelectMode = _T("");
 					m_xvStrRedOnMode = _T(""); //追加 2012.04.17
-					UpdateData(FALSE);	
+					UpdateData(FALSE);
 
 					//EditCellShow(LastSelectedRow ,LastSelectedColumn);
 				}
 
 				EditCellShow(LastSelectedRow ,LastSelectedColumn);
+
+				if (CtrlEnterMSG == FALSE){
+					MessageBox(_T("編集したセルの値を確定するには、Ctrl + Enter を押して下さい。"),_T("Ctrl + Enterで確定"),MB_OK);
+					CtrlEnterMSG = TRUE;
+				}
 				return 0;
 			}
 		}
@@ -15682,8 +15707,28 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 
+		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
+			if (pMsg->wParam == VK_DELETE  &&  ::GetKeyState( VK_SHIFT ) < 0 ){
+
+				if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
+					CFileListCreatorDlg::StatusStringSet(_T("データがないので編集モードに切り替えられません"),300,TRUE);
+					return 0;
+				}
+				if (m_xvChkEditCellMode == FALSE){
+					RemoveFileToTrash();
+					return 0;
+				}else{
+					CFileListCreatorDlg::StatusStringSet(_T("通常のモードです (ファイルは削除できません)"),300,TRUE);
+					m_xvStrEditCellMode = _T("：　通常モード");
+					UpdateData(FALSE);	
+				}
+				RedrawWindow();
+				break;
+			}
+		}
+
 		if ( ::GetKeyState( VK_CONTROL ) < 0 ) {
-			if (pMsg->wParam == VK_DELETE){
+			if (pMsg->wParam == VK_DELETE  &&  ! ( ::GetKeyState( VK_SHIFT ) < 0 ) ){
 				if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
 					CFileListCreatorDlg::StatusStringSet(_T("データがないので何も行われませんでした"),300,TRUE);
 					return 0;
@@ -15693,6 +15738,76 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				}
 			}
 
+			if ( m_xvChkEditCellMode == TRUE ) {
+				if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd){
+					if (pMsg->wParam == VK_DOWN && ::GetKeyState( VK_CONTROL ) < 0 ){
+						PressArrowKeyToSave();  //追加 2014.06.20
+
+						if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
+							LastSelectedRow++;
+							EditCellShow(LastSelectedRow ,LastSelectedColumn);
+							StatusStringSet(_T("↓が押されました"),0,FALSE);
+						}else{
+							StatusStringSet(_T("リストの最終行に達しました"),300,TRUE);
+						}
+						break;
+					}
+					if (pMsg->wParam == VK_UP && ::GetKeyState( VK_CONTROL ) < 0 ){
+						PressArrowKeyToSave();  //追加 2014.06.20
+
+						if (LastSelectedRow >= 1){
+							LastSelectedRow--;
+							EditCellShow(LastSelectedRow ,LastSelectedColumn);
+							StatusStringSet(_T("↑が押されました"),0,FALSE);
+						}else{
+							StatusStringSet(_T("リストの先頭に達しました"),300,TRUE);
+						}
+						break;
+					}
+					//0:ファイル重複識別ナンバー 1:通し番号 2:フルパス 3:ファイル名 4:おおよそのデータサイズ 5:データサイズ 6:修正日 7:修正時間 8:備考欄 9:書式情報
+					if (pMsg->wParam == VK_RIGHT && ::GetKeyState( VK_CONTROL ) < 0 ){
+						PressArrowKeyToSave();  //追加 2014.06.20
+
+						if (LastSelectedColumn==3){
+							LastSelectedColumn = 8;
+							EditCellShow(LastSelectedRow ,LastSelectedColumn);
+							StatusStringSet(_T("→が押されました"),0,FALSE);
+						}else if (LastSelectedColumn==8){
+							if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
+								LastSelectedRow++;
+
+								LastSelectedColumn = 3;
+								EditCellShow(LastSelectedRow ,LastSelectedColumn);
+								StatusStringSet(_T("→が押されました"),0,FALSE);
+							}else{
+								StatusStringSet(_T("リストの最終行に達しました"),300,TRUE);
+							}
+						}
+						break;
+					}
+					//0:ファイル重複識別ナンバー 1:通し番号 2:フルパス 3:ファイル名 4:おおよそのデータサイズ 5:データサイズ 6:修正日 7:修正時間 8:備考欄 9:書式情報
+					if (pMsg->wParam == VK_LEFT && ::GetKeyState( VK_CONTROL ) < 0 ){
+						PressArrowKeyToSave();  //追加 2014.06.20
+
+						if (LastSelectedColumn==3){
+							if (LastSelectedRow >= 1){
+								LastSelectedRow--;
+
+								LastSelectedColumn = 8;
+								EditCellShow(LastSelectedRow ,LastSelectedColumn);
+								StatusStringSet(_T("←が押されました"),0,FALSE);
+							}else{
+								StatusStringSet(_T("リストの先頭に達しました"),300,TRUE);
+							}
+						}else if (LastSelectedColumn==8){
+							LastSelectedColumn = 3;
+							EditCellShow(LastSelectedRow ,LastSelectedColumn);
+							StatusStringSet(_T("←が押されました"),0,FALSE);
+						}
+						break;
+					}
+				}
+			}
 			switch ( (int)pMsg->wParam ) {
 			case _T('A'):
 				if( pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || CellSizeFixMode == _T("FilePath")){
@@ -15986,72 +16101,9 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 
 
 		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd){ //Ctrl + Delete の後で実行
-			if (pMsg->wParam == VK_DELETE){
+			if (pMsg->wParam == VK_DELETE && ! ( ::GetKeyState( VK_SHIFT ) < 0 )){
 				DeleteSelectedRows_Func();
 				return 0;
-			}
-		}
-
-		if ( m_xvChkEditCellMode == TRUE ) {
-			if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd || pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd){
-				if (pMsg->wParam == VK_DOWN){
-					if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
-						LastSelectedRow++;
-						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("↓が押されました"),0,FALSE);
-					}else{
-						StatusStringSet(_T("リストの最終行に達しました"),300,TRUE);
-					}
-					break;
-				}
-				if (pMsg->wParam == VK_UP){
-					if (LastSelectedRow >= 1){
-						LastSelectedRow--;
-						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("↑が押されました"),0,FALSE);
-					}else{
-						StatusStringSet(_T("リストの先頭に達しました"),300,TRUE);
-					}
-					break;
-				}
-				//0:ファイル重複識別ナンバー 1:通し番号 2:フルパス 3:ファイル名 4:おおよそのデータサイズ 5:データサイズ 6:修正日 7:修正時間 8:備考欄 9:書式情報
-				if (pMsg->wParam == VK_RIGHT){
-					if (LastSelectedColumn==3){
-						LastSelectedColumn = 8;
-						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("→が押されました"),0,FALSE);
-					}else if (LastSelectedColumn==8){
-						if (LastSelectedRow < CFileListCreatorDlg::m_xcList.GetItemCount() -1){
-							LastSelectedRow++;
-
-							LastSelectedColumn = 3;
-							EditCellShow(LastSelectedRow ,LastSelectedColumn);
-							StatusStringSet(_T("→が押されました"),0,FALSE);
-						}else{
-							StatusStringSet(_T("リストの最終行に達しました"),300,TRUE);
-						}
-					}
-					break;
-				}
-				//0:ファイル重複識別ナンバー 1:通し番号 2:フルパス 3:ファイル名 4:おおよそのデータサイズ 5:データサイズ 6:修正日 7:修正時間 8:備考欄 9:書式情報
-				if (pMsg->wParam == VK_LEFT){
-					if (LastSelectedColumn==3){
-						if (LastSelectedRow >= 1){
-							LastSelectedRow--;
-
-							LastSelectedColumn = 8;
-							EditCellShow(LastSelectedRow ,LastSelectedColumn);
-							StatusStringSet(_T("←が押されました"),0,FALSE);
-						}else{
-							StatusStringSet(_T("リストの先頭に達しました"),300,TRUE);
-						}
-					}else if (LastSelectedColumn==8){
-						LastSelectedColumn = 3;
-						EditCellShow(LastSelectedRow ,LastSelectedColumn);
-						StatusStringSet(_T("←が押されました"),0,FALSE);
-					}
-					break;
-				}
 			}
 		}
 
@@ -16070,7 +16122,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				//LastSelectedRow = -1;
 				//LastSelectedColumn = -1;
 
-				CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 矢印キーで素早く移動、Enterで確定)"),300,TRUE);
+				CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 Ctrl + 矢印キー で移動、 Ctrl + Enter で確定)"),300,TRUE);
 				m_xvStrEditCellMode = _T("：　編集モード");
 				UpdateData(FALSE);
 
@@ -16092,6 +16144,11 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 				UpdateData(FALSE);	
 
 				EditCellShow(LastSelectedRow ,LastSelectedColumn);
+
+				if (CtrlEnterMSG == FALSE){
+					MessageBox(_T("編集したセルの値を確定するには、Ctrl + Enter を押して下さい。"),_T("Ctrl + Enterで確定"),MB_OK);
+					CtrlEnterMSG = TRUE;
+				}
 				return 0;
 			}else{
 				m_xvChkEditCellMode = FALSE;
@@ -16593,7 +16650,7 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 	}
 
 	if (m_xvChkEditCellMode == TRUE){
-		CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました \r\n (セルをクリックするか、クリック後 矢印キーで素早く移動、Enterで確定)"),0,FALSE);
+		CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 Ctrl + 矢印キー で移動、 Ctrl + Enter で確定)"),300,FALSE);
 	}
 
 	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
@@ -16705,7 +16762,6 @@ void CFileListCreatorDlg::EditCellShow(int workRow,int workColumn)
 	// ▲ここまで教えて頂いた部分▲
 
 
-
  //   ::SetWindowPos(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),//追加2011.10.08
 	//	//HWND_TOP,rect.left+x,rect.top+4,//変更前
 	//	HWND_TOP,rect.left + x - 17,
@@ -16792,8 +16848,40 @@ void CFileListCreatorDlg::OnEnChangeEditItem()
 
 void CFileListCreatorDlg::OnEnKillfocusEditItem()
 {
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	//::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
+	//// TODO: ここにコントロール通知ハンドラー コードを追加します。
+	////::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
+
+	//		//if (pMsg->wParam == VK_RETURN && ::GetKeyState( VK_CONTROL ) < 0 ){
+	//			if (LastSelectedRow!=-1 && LastSelectedColumn!=-1) {
+
+	//				lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //データの更新時に必要！！
+
+	//				lvi.iItem = LastSelectedRow;
+	//				lvi.iSubItem = LastSelectedColumn;
+	//				
+	//				//::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //追加 2012.05.20
+
+	//				CString UpadateItem;
+	//				((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(UpadateItem);
+
+	//				//MessageBox (UpadateItem);
+	//				CString LastEditStr = m_xcList.GetItemText(LastSelectedRow, LastSelectedColumn);
+
+	//				lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(UpadateItem));
+	//				!CFileListCreatorDlg::m_xcList.SetItem(&lvi);//
+	//				UpdateData(FALSE);
+	//				StatusStringSet(_T("セルのデータを更新しました"),0,TRUE);
+
+	//				if (LastEditStr != UpadateItem) {
+	//					ListDataNoChange_FLG = FALSE;//追加 2012.05.13
+	//					AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //追加 2012.05.13
+	//				}
+	//				//EditCellShow(LastSelectedRow ,LastSelectedColumn);//コメント化 2012.05.20
+	//				//((CEdit*)GetDlgItem(IDC_EDIT_Item))->SetWindowText(UpadateItem); //追加 2012.05.13
+	//				UpdateData(FALSE);
+	//			}
+	//			//return 0;
+	//		//}
 }
 
 
@@ -16816,7 +16904,7 @@ void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 		//LastSelectedRow = -1;
 		//LastSelectedColumn = -1;
 
-		CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました \r\n (セルをクリックするか、クリック後 矢印キーで素早く移動、Enterで確定)"),300,TRUE);
+		CFileListCreatorDlg::StatusStringSet(_T("ファイル名 や 備考欄 の 編集モードになりました (セルをクリックするか、クリック後 Ctrl + 矢印キー で移動、 Ctrl + Enter で確定)"),300,TRUE);
 		m_xvStrEditCellMode = _T("：　編集モード");
 		UpdateData(FALSE);
 
@@ -16838,6 +16926,11 @@ void CFileListCreatorDlg::OnBnClickedChkEditcellmode()
 		UpdateData(FALSE);	
 
 		EditCellShow(LastSelectedRow ,LastSelectedColumn);
+
+		if (CtrlEnterMSG == FALSE){
+			MessageBox(_T("編集したセルの値を確定するには、Ctrl + Enter を押して下さい。"),_T("Ctrl + Enterで確定"),MB_OK);
+			CtrlEnterMSG = TRUE;
+		}
 	}else{
 		m_xvChkEditCellMode = FALSE;
 
@@ -18788,7 +18881,7 @@ void CFileListCreatorDlg::OnLanguageEnglish()
 	CMenu* pMenu = &cMenu; //変更 2012.04.14
 	CMenu* pSubMenu;
 	CMenu* pSubMenu2;
-	CMenu* pSubMenu3;
+	//CMenu* pSubMenu3;  //コメント化 2014.06.20
 
 	UINT id;
 
@@ -18819,7 +18912,7 @@ void CFileListCreatorDlg::OnLanguageEnglish()
 	pMenu->DestroyMenu();
 	pSubMenu->DestroyMenu();
 	pSubMenu2->DestroyMenu();
-	pSubMenu3->DestroyMenu();
+	//pSubMenu3->DestroyMenu();  //コメント化 2014.06.20
 
 	DrawMenuBar();
 	//=========================================================================================================
@@ -21294,4 +21387,231 @@ void CFileListCreatorDlg::OnMenuCancel()
 
 	//PostMessage(WM_NULL); // この処理も忘れずに！
     return;
+}
+
+void CFileListCreatorDlg::PressArrowKeyToSave()
+{
+	int err;
+
+	lvi.mask = LVIF_TEXT;// | LVIF_PARAM; //データの更新時に必要！！
+
+	lvi.iItem = LastSelectedRow;
+	lvi.iSubItem = LastSelectedColumn;
+					
+	::SetFocus(::GetDlgItem(m_hWnd,IDC_EDIT_Item)); //追加 2012.05.20
+
+	CString UpadateItem;
+	((CEdit*)GetDlgItem(IDC_EDIT_Item))->GetWindowText(UpadateItem);
+
+	CString LastEditStr = m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn);
+
+	lvi.pszText = const_cast<LPTSTR>(static_cast<LPCTSTR>(UpadateItem));
+	if (!CFileListCreatorDlg::m_xcList.SetItem(&lvi)) err = 1;
+	UpdateData(FALSE);
+	StatusStringSet(_T("セルのデータを更新しました"),0,TRUE);
+
+	if (LastEditStr != UpadateItem) {
+		ListDataNoChange_FLG = FALSE;//追加 2012.05.13
+		AfxGetMainWnd()->SetWindowText(_T("FileListCreator (*)")); //追加 2012.05.13
+	}
+	//((CEdit*)GetDlgItem(IDC_EDIT_Item))->SetWindowText(UpadateItem); //追加 2012.05.13
+	UpdateData(FALSE);
+
+	return;
+}
+
+
+//  http://oshiete.goo.ne.jp/qa/8655106.html
+//std::copyを使った例
+
+//int CFileListCreatorDlg::StdCopy()
+//{
+//	const wchar_t nc = L'\0';
+//	CString input = L"";
+//	input += L"abc";
+//	input += nc;
+//	input += L"def";
+//	input += nc;
+//	input += L"ghi";
+//	input += nc;
+//	input += nc;
+//
+//	_TCHAR result[16];
+//	const _TCHAR* p = static_cast<const _TCHAR*>(input);
+//	// inputの先頭から長さ分をresultにコピー
+//	std::copy(p, p+input.GetLength(), result);
+//
+//	for ( int i = 0; i < 16; ++i ) {
+//	if ( result[i] == L'\0' )
+//	std::wcout << "'\\0'" << std::endl;
+//	else
+//	std::wcout << result[i] << std::endl;
+//}
+
+
+//http://sysneitf.ifdef.jp/shell_filestotrash.html
+int CFileListCreatorDlg::RemoveFileToTrash()
+{
+// 複数ある場合は、パスを'\0'で区切る。終端は、'\0''\0'である必要がある
+    //const _TCHAR cszPath[] = _TEXT ( "C:\\a.txt\0C:\\b.txt\0" );
+
+	CString DeleteFilePath = _T("");
+
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_EDIT_Item),SW_HIDE);
+	::ShowWindow(::GetDlgItem(m_hWnd,IDC_STATIC_Arrow),SW_HIDE);//追加2011.10.08
+
+	LastPrevItemCount = m_xcList.GetItemCount();
+	CFileListCreatorDlg::push_back_Func(LastPrevItemCount,_T("prevData")); //変更 2012.05.02
+
+	int        index = -1;
+	CString    str;
+
+	int myCnt = 0;
+
+	while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
+	    (index, LVNI_ALL | LVNI_SELECTED)) != -1)
+	{
+		CString workFullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
+		workFullPathString.Replace(_T ("\\"),_T("\\\\"));
+
+		if ( workFullPathString != "" && PathFileExists(workFullPathString) ){
+			if (workFullPathString.Right(1) != _T("\\")){
+				myCnt++;
+			}
+		}
+	}
+	
+	int myResult;
+	CString tempCnt;
+
+	if(myCnt==0){
+		myResult = MessageBox(_T("削除可能なファイルを選んでから、Shift + Delete を押してください。\r\n（選択したアイテムがフォルダであるか、選択したアイテムのファイルが存在しない為、削除できませんでした）"),_T("Deletion range confirmation"),MB_OK);
+		StatusStringSet(_T("Delete File キャンセル ( 削除対象無効 )"),300,FALSE); //追加 2012.06.29
+		return -1;
+	}else if(myCnt>=1){
+
+		//CString tempCnt;
+		tempCnt = _T("");
+		tempCnt.Format(_T("%d"),myCnt);
+		
+		StatusStringSet(_T("Delete File 実行中"),0,TRUE); //追加 2012.06.29
+
+		myResult = MessageBox(_T("現在選択されている ") + tempCnt + _T(" 件のデータ（本体）を削除しますか？\r\n（削除した場合、ゴミ箱に移動します）") ,_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		if(myResult == IDYES){
+			index = -1;
+			while ((index = CFileListCreatorDlg::m_xcList.GetNextItem
+				(index, LVNI_ALL | LVNI_SELECTED)) != -1)
+			{
+
+				CString FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
+				FullPathString.Replace(_T ("\\"),_T("\\\\"));
+
+				if ( FullPathString != ""  ){
+					if ( PathFileExists(FullPathString) && FullPathString.Right(1) != _T("\\")) { //条件追加
+						StatusStringSet(_T("削除準備 → ") + FullPathString,0,FALSE);
+						//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
+
+						DeleteFilePath = DeleteFilePath + FullPathString +  _T('\0');
+						CFileListCreatorDlg::m_xcList.DeleteItem(index);
+					}else{
+						m_xcList.GetNextItem(index++, LVNI_ALL | LVNI_SELECTED);
+					}
+				}
+				index--;
+			}
+
+			DeleteFilePath = DeleteFilePath + _T('\0');
+
+			// 複数ある場合は、パスを'\0'で区切る。終端は、'\0''\0'である必要がある
+			//const _TCHAR cszPath[] = _TEXT ( "C:\\a.txt\0C:\\b.txt\0" );
+
+			//http://ttjyp682.wordpress.com/2011/01/30/visual-c-cstring%E5%9E%8B%E3%81%8B%E3%82%89tchar%E5%9E%8B%E3%81%AB%E5%9E%8B%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B/
+
+
+			const wchar_t nc = L'\0';
+
+			if ( DeleteFilePath == "" || DeleteFilePath == "\0\0" ) return -1;
+
+			//_TCHAR result[256*1000];
+
+			tstring buffer(static_cast<const _TCHAR*>( DeleteFilePath ), DeleteFilePath.GetLength());
+			const _TCHAR* cszPath = buffer.data();
+
+			//const _TCHAR* cszPath = static_cast<const _TCHAR*>( DeleteFilePath );
+
+			//// DeleteFilePathの先頭から長さ分をresultにコピー
+			//std::copy(cszPath, cszPath+DeleteFilePath.GetLength(), result);
+
+			// "c:\\a.txt"と"C:\\b.txt" をゴミ箱へファイルを移動するサンプル (シェルエミュレート)
+			SHFILEOPSTRUCT sfs;
+
+			memset ( &sfs, 0, sizeof ( SHFILEOPSTRUCT ) );
+			sfs.fFlags = FOF_NOERRORUI | FOF_SIMPLEPROGRESS | FOF_ALLOWUNDO | FOF_NOCONFIRMATION;
+			// ゴミ箱へ移動するが確認はしない FOF_ALLOWUNDO  | FOF_NOCONFIRMATION; をつける
+			
+			sfs.wFunc = FO_DELETE;
+			sfs.pFrom = cszPath;
+			
+			//MessageBox(_T( "%s\n" ),cszPath);
+
+			if ( 0 != SHFileOperation ( &sfs ) )
+			{
+				//free( cszPath );
+
+				MessageBox(_T("ゴミ箱に移動できませんでした"),_T("SHFileOperation 失敗"),MB_OK);
+				return 0;
+			}
+
+			//	delete [] cszPath;
+
+			//CString tempCnt;
+			tempCnt = _T("");
+
+			tempCnt.Format(_T("%d"),myCnt);
+			tempCnt=tempCnt + _T(" 行のデータを削除しました");
+
+			CFileListCreatorDlg::StatusStringSet(tempCnt,300,TRUE);
+			::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
+
+			tempCnt = "";
+
+			tempCnt.Format(_T("%d"),CFileListCreatorDlg::m_xcList.GetItemCount());
+			tempCnt=tempCnt + _T(" items");
+
+			m_xvStCount = const_cast<LPTSTR>(static_cast<LPCTSTR>(tempCnt));
+			//CFileListCreatorDlg::m_xcList.EnsureVisible(index-1, FALSE);
+			UpdateData(FALSE);
+
+			//free( cszPath );
+		}else{
+			StatusStringSet(_T("Delete File キャンセル"),300,FALSE); //追加 2012.06.29
+			return -1;
+		}
+	}
+
+	if(CFileListCreatorDlg::m_xcList.GetItemCount() >= 1 || MiniWindowFLG == FALSE){
+		m_xcStaticString.ShowWindow(SW_HIDE);
+	}else{
+		m_xcStaticString.ShowWindow(SW_SHOW);
+	}
+
+	CFileListCreatorDlg::Total_Bytes_Bold();
+	CFileListCreatorDlg::Total_Bytes_Func();
+	CFileListCreatorDlg::ItemCount_Func(TRUE);
+
+	ListDataNoChange_FLG = FALSE;//追加 2012.05.13
+
+	CFileListCreatorDlg* m_Dlg = (CFileListCreatorDlg*)AfxGetMainWnd();
+
+	if( (m_Dlg==NULL)||(m_Dlg->GetSafeHwnd()==NULL) ){
+		return 0;
+	}
+
+	if (m_Dlg->ListDataNoChange_FLG == FALSE){  //追加 2012.05.13
+		m_Dlg->SetWindowText(_T("FileListCreator (*)"));
+	}
+
+	::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
+
+    return 0;
 }

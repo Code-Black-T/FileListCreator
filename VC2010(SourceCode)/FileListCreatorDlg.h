@@ -522,6 +522,11 @@ public:
 	BOOL iTunesPlayList_Import_Func(CString FullPath,CString mySwitch);
 	//BOOL ALL_FileSpecs;
 	afx_msg void OnMenuCancel();
+
+	void PressArrowKeyToSave();  //追加 2014.06.20
+	int RemoveFileToTrash();  //追加 2014.06.20
+
+	BOOL CtrlEnterMSG;  //追加 2014.06.28
 };
 
 
