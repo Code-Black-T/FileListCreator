@@ -93,4 +93,5 @@ public:
 	BOOL m_xvChkKeywordFullPath;
 	afx_msg void OnBnClickedChkKeywordfullpath();
 	afx_msg void OnBnClickedKeywordsUndo();
+	afx_msg void OnBnClickedBtnSpecialfile();
 };

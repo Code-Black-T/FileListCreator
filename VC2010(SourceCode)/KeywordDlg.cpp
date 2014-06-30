@@ -74,6 +74,7 @@ BEGIN_MESSAGE_MAP(KeywordDlg, CDialogEx)
 	ON_BN_CLICKED(ID_BTN_Period, &KeywordDlg::OnBnClickedBtnPeriod)
 	ON_BN_CLICKED(IDC_CHK_KeywordFullPath, &KeywordDlg::OnBnClickedChkKeywordfullpath)
 	ON_BN_CLICKED(ID_Keywords_UNDO, &KeywordDlg::OnBnClickedKeywordsUndo)
+	ON_BN_CLICKED(ID_BTN_SpecialFile, &KeywordDlg::OnBnClickedBtnSpecialfile)
 END_MESSAGE_MAP()
 
 
@@ -1492,4 +1493,12 @@ void KeywordDlg::OnBnClickedKeywordsUndo()
 	//}
 
 	//m_Dlg->OnEditlistUndo();
+}
+
+
+void KeywordDlg::OnBnClickedBtnSpecialfile()  //追加 2014.06.30  //特殊なファイル名を挿入
+{
+	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+
+	InsertStrIntoKeywords(_T(" desktop.ini Folder.jpg .DS_Store Thumbs.db AlbumArt "));
 }

@@ -15707,7 +15707,7 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 
-		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd ){
+		if(pMsg->hwnd == GetDlgItem(IDC_LIST)->m_hWnd  || pMsg->hwnd == GetDlgItem(IDC_EDIT_Item)->m_hWnd){
 			if (pMsg->wParam == VK_DELETE  &&  ::GetKeyState( VK_SHIFT ) < 0 ){
 
 				if(CFileListCreatorDlg::m_xcList.GetItemCount() < 1) {
@@ -15718,9 +15718,14 @@ BOOL CFileListCreatorDlg::PreTranslateMessage(MSG* pMsg)
 					RemoveFileToTrash();
 					return 0;
 				}else{
-					CFileListCreatorDlg::StatusStringSet(_T("通常のモードです (ファイルは削除できません)"),300,TRUE);
-					m_xvStrEditCellMode = _T("：　通常モード");
+					if (LastSelectedColumn!=3 && LastSelectedColumn!=8){
+						RemoveFileToTrash();
+						return 0;
+					}
+					CFileListCreatorDlg::StatusStringSet(_T("編集モードです (ファイル名欄 または 備考欄 以外をクリックし 選択状態にして下さい)"),300,TRUE); //変更 2014.06.30
+					m_xvStrEditCellMode = _T("：　編集モード");
 					UpdateData(FALSE);	
+					return 0;
 				}
 				RedrawWindow();
 				break;
@@ -20711,12 +20716,17 @@ void CFileListCreatorDlg::DeleteSelectedCells_Func(){
 	int myResult;
 	CString tempCnt;
 
-	if ( LastSelectedColumn == 3 ){
-		myResult = MessageBox(_T("現在選択されているセル (ファイル名欄) を削除しますか？"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
-	}
+	if ( CFileListCreatorDlg::m_xcList.GetItemText(LastSelectedRow,LastSelectedColumn) !="" ) {  //追加 20140.06.30
+		if ( LastSelectedColumn == 3 ){
+			myResult = MessageBox(_T("現在選択されているセル (ファイル名欄) を削除しますか？"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		}
 
-	if ( LastSelectedColumn == 8 ){
-		myResult = MessageBox(_T("現在選択されているセル (備考欄) を削除しますか？"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		if ( LastSelectedColumn == 8 ){
+			myResult = MessageBox(_T("現在選択されているセル (備考欄) を削除しますか？"),_T("Deletion range confirmation"),MB_YESNOCANCEL);
+		}
+	}else{
+		StatusStringSet(_T("選択されたセルは 空欄 です"),300,FALSE);
+		return;
 	}
 
 	if(myResult == IDYES){
@@ -21485,7 +21495,7 @@ int CFileListCreatorDlg::RemoveFileToTrash()
 	CString tempCnt;
 
 	if(myCnt==0){
-		myResult = MessageBox(_T("削除可能なファイルを選んでから、Shift + Delete を押してください。\r\n（選択したアイテムがフォルダであるか、選択したアイテムのファイルが存在しない為、削除できませんでした）"),_T("Deletion range confirmation"),MB_OK);
+		myResult = MessageBox(_T("削除可能なファイルを選んでから、Shift + Delete を押してください。\r\n（選択したアイテムがフォルダであるか、選択したアイテム(ファイル)が存在しない為、削除できませんでした）"),_T("Deletion range confirmation"),MB_OK);
 		StatusStringSet(_T("Delete File キャンセル ( 削除対象無効 )"),300,FALSE); //追加 2012.06.29
 		return -1;
 	}else if(myCnt>=1){
@@ -21506,21 +21516,29 @@ int CFileListCreatorDlg::RemoveFileToTrash()
 				CString FullPathString = CFileListCreatorDlg::m_xcList.GetItemText(index,2);
 				FullPathString.Replace(_T ("\\"),_T("\\\\"));
 
-				if ( FullPathString != ""  ){
+				if ( FullPathString != "" ){
 					if ( PathFileExists(FullPathString) && FullPathString.Right(1) != _T("\\")) { //条件追加
-						StatusStringSet(_T("削除準備 → ") + FullPathString,0,FALSE);
-						//::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
+						StatusStringSet(_T("削除対象 → ") + CFileListCreatorDlg::m_xcList.GetItemText(index,2),0,FALSE);
+						::SetFocus(::GetDlgItem(m_hWnd,IDC_LIST));
 
-						DeleteFilePath = DeleteFilePath + FullPathString +  _T('\0');
-						CFileListCreatorDlg::m_xcList.DeleteItem(index);
+						string::size_type FindIDX = DeleteFilePath.Find(FullPathString);  //追加 2014.06.30
+						if( FindIDX == string::npos ){  // 検索できたかどうか
+							DeleteFilePath = DeleteFilePath + FullPathString + _T('\t');  //後で _T('\0')); に変換  //暫定策
+							CFileListCreatorDlg::m_xcList.DeleteItem(index);
+						}else{
+							StatusStringSet(_T("削除対象重複 → ") + CFileListCreatorDlg::m_xcList.GetItemText(index,2),0,FALSE);
+							CFileListCreatorDlg::m_xcList.DeleteItem(index);
+						}
 					}else{
-						m_xcList.GetNextItem(index++, LVNI_ALL | LVNI_SELECTED);
+						 m_xcList.GetNextItem(index++, LVNI_ALL | LVNI_SELECTED);
 					}
 				}
 				index--;
 			}
 
-			DeleteFilePath = DeleteFilePath + _T('\0');
+			DeleteFilePath = DeleteFilePath + _T('\t');  //後で _T('\0')); に変換  //暫定策
+
+			DeleteFilePath.Replace(_T('\t'),_T('\0'));  //_T('\0')); に変換 
 
 			// 複数ある場合は、パスを'\0'で区切る。終端は、'\0''\0'である必要がある
 			//const _TCHAR cszPath[] = _TEXT ( "C:\\a.txt\0C:\\b.txt\0" );
